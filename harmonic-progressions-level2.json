@@ -1,0 +1,115 @@
+{
+    "level": 2,
+    "description": "I VI II V I, I VI IV V I(including II6 and V7)",
+    "progressions": [
+      {
+        "chords": ["I6", "vi64", "IV", "V64", "I6"],
+        "bass": ["C3", "A2", "F2", "G2", "C3"],
+        "description": "c2-1",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i6", "bVI64", "iio6", "V64", "i6"],
+        "bass": ["C3", "Ab2", "D3", "G2", "C3"],
+        "description": "c2-2",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i6", "bVI64", "iio6", "V64", "i6"],
+        "bass": ["C4", "Ab3", "F3", "G3", "C3"],
+        "description": "c2-3",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i6", "bVI64", "iv", "V64", "i6"],
+        "bass": ["C4", "Ab3", "F3", "G3", "C4"],
+        "description": "c2-4",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "vi64", "ii6", "V64", "I6"],
+        "bass": ["C4", "A3", "F3", "G3", "C3"],
+        "description": "c2-5",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "vi64", "ii6", "V64", "I6"],
+        "bass": ["C3", "A2", "D3", "G2", "C3"],
+        "description": "c2-6",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i6", "bVI64", "iio", "V64", "i6"],
+        "bass": ["C3", "Ab2", "D3", "G2", "C3"],
+        "description": "c2-7",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I64", "vi", "IV6", "V", "I64"],
+        "bass": ["C4", "A3", "F3", "G3", "C3"],
+        "description": "c2-9",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i64", "bVI", "iio6", "V", "i6"],
+        "bass": ["C3", "Ab2", "D3", "G2", "C3"],
+        "description": "c2-10",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I64", "vi", "ii6", "V64", "I6"],
+        "bass": ["C4", "A3", "F3", "G3", "C3"],
+        "description": "c2-11",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I", "vi6", "IV64", "V6", "I"],
+        "bass": ["C4", "A3", "F3", "G3", "C3"],
+        "description": "c2-12",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i64", "bVI", "iio6", "V7no5", "i64"],
+        "bass": ["C3", "Ab2", "F2", "G2", "C3"],
+        "description": "c2-13",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["DominantSeven"]
+      },
+      {
+        "chords": ["I", "vi6", "ii", "V64", "I6"],
+        "bass": ["C4", "A3", "D4", "G3", "C4"],
+        "description": "c2-14",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i64", "bVI", "iio64", "V7no5", "i64"],
+        "bass": ["C4", "Ab3", "F3", "G3", "C3"],
+        "description": "c2-15",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["DominantSeven"]
+      },
+      {
+        "chords": ["i-a", "bVI6", "iio64", "V7no5", "i64"],
+        "bass": ["C4", "Ab3", "D4", "G3", "C3"],
+        "description": "c2-16",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["DominantSeven"]
+      }                              
+    ]
+  }
+  

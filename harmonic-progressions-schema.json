@@ -1,0 +1,66 @@
+{
+  "title": "Progression",
+  "type": "object",
+  "required": ["level", "description", "level"],
+  "properties": {
+    "level": {
+        "type": "number",
+        "title": "Level"
+    },
+    "description": {
+        "type": "string",
+        "title": "Level"
+    },
+    "progressions": {
+      "type": "array",
+      "title": "Harmonic progressions",
+      "uniqueItems": true,
+      "items": {
+        "title": "Progression",
+        "type": "object",
+        "required": ["chords", "isDiatonic", "isMajor"],
+        "properties": {
+          "chords": {
+            "type": "array",
+            "description": "Chords",
+            "minItems": 2,
+            "items": {
+              "title": "Chord",
+              "type": "string"
+            }
+          },
+          "bass": {
+            "type": "array",
+            "description": "Bass movement",
+            "minItems": 2,
+            "items": {
+              "title": "Bass Chord",
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Progression description."
+          },
+          "isDiatonic": {
+            "description": "Is the progression diatonic",
+            "type": "boolean"
+          },
+          "isMajor": {
+            "description": "Is the progression major or minor",
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Optional tags to describe description",
+            "items": {
+              "title": "tag",
+              "type": "string",
+              "enum": ["Inversion", "DominantSeven", "Plagal", "Diminished", "CircleOfFifths", "SeventhChords"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

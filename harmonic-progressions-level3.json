@@ -1,0 +1,128 @@
+{
+    "level": 3,
+    "description": "I IV I V I, I V I IV I(including V7)",
+    "progressions": [
+      {
+        "chords": ["I6", "IV", "I6", "V64", "I6"],
+        "bass": ["C3", "F2", "C3", "G2", "C3"],
+        "description": "c3-1",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "V", "I6", "IV", "I6"],
+        "bass": ["C3", "G2", "C3", "F2", "C3"],
+        "description": "c3-2",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Plagal"]
+      },
+      {
+        "chords": ["i6", "iv", "i6", "V", "i6"],
+        "bass": ["C3", "F2", "C3", "G2", "C3"],
+        "description": "c3-3",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "IV", "I64", "V", "I6"],
+        "bass": ["C3", "F3", "C3", "G2", "C3"],
+        "description": "c3-4",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "V64", "I6", "IV64", "I6"],
+        "bass": ["C3", "G2", "C2", "F2", "C2"],
+        "description": "c3-5",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Plagal"]
+      },
+      {
+        "chords": ["i6", "iv", "i6", "V64", "i6"],
+        "bass": ["C3", "F3", "C3", "G2", "C3"],
+        "description": "c3-6",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "V", "I6", "IV", "I6"],
+        "bass": ["C4", "G3", "C3", "F3", "C3"],
+        "description": "c3-7",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Plagal"]
+      },
+      {
+        "chords": ["I6", "IV", "I6", "V64", "I6"],
+        "bass": ["C2", "F2", "C3", "G2", "C2"],
+        "description": "c3-8",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i64", "V", "i6", "iv", "i6"],
+        "bass": ["C3", "G3", "C4", "F3", "C3"],
+        "description": "c3-9",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["Plagal"]
+      },
+      {
+        "chords": ["I6", "V", "I64", "IV6", "I64"],
+        "bass": ["C3", "G2", "C3", "F2", "C3"],
+        "description": "c3-10",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Plagal"]
+      },
+      {
+        "chords": ["i64", "iv", "i64", "V", "i6"],
+        "bass": ["C4", "F3", "C4", "G3", "C3"],
+        "description": "c3-11",
+        "isMajor": false,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i-a", "iv6", "i64", "V7no5", "i64"],
+        "bass": ["C3", "F4", "C3", "G4", "C3"],
+        "description": "c3-12",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["DominantSeven"]
+      },
+      {
+        "chords": ["I6", "V64", "I6", "IV64", "I"],
+        "bass": ["C3", "G2", "C3", "F3", "C3"],
+        "description": "c3-13",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Plagal"]
+      },
+      {
+        "chords": ["i64", "iv6", "i-a", "V7no5", "i64"],
+        "bass": ["C3", "F3", "C3", "G2", "C3"],
+        "description": "c3-14",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["DominantSeven"]
+      },
+      {
+        "chords": ["i64", "V7no5", "i64", "iv", "i64"],
+        "bass": ["C3", "G3", "C3", "F3", "C3"],
+        "description": "c3-15",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["DominantSeven", "Plagal"]
+      },
+      {
+        "chords": ["I6", "IV", "I64", "V7no5", "I64"],
+        "bass": ["C3", "F3", "C3", "G2", "C3"],
+        "description": "c3-16",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["DominantSeven", "Plagal"]
+      }                                        
+    ]
+  }
