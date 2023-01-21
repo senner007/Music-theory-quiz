@@ -103,13 +103,13 @@
         "tags": ["DominantSeven"]
       },
       {
-        "chords": ["i-a", "bVI6", "iio64", "V7no5", "i64"],
+        "chords": ["i-a", "bVI6-a", "iio64", "V7no5", "i64"],
         "bass": ["C4", "Ab3", "D4", "G3", "C3"],
         "description": "c2-16",
         "isMajor": false,
         "isDiatonic": true,
         "tags": ["DominantSeven"]
-      }                              
+      }                             
     ]
   }
   

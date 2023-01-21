@@ -50,10 +50,11 @@ const romanNumeralsDict = {
   iii6: ["G4", "B4", "E5"],
   iii64: ["B4", "E5", "G5"],
   iii7 : [],
-  III : [],
-  III7 : [],
-  "III+" : [],
-  "III+M7" : [],
+  bIII : ["Eb4", "G4", "Bb4"],
+  bIII6 : ["G4", "Bb4", "Eb5"],
+  bIII7 : [],
+  "bIII+" : [],
+  "bIII+M7" : [],
   iv: ["F4", "Ab4", "C5"],
   iv6: ["Ab4", "C5", "F5"],
   iv64: ["C4", "F4", "Ab4"],
@@ -70,16 +71,17 @@ const romanNumeralsDict = {
   vio : [],
   vio7 : [],
   bVI: ["Ab4", "C5", "Eb5"],
-  bVI6: ["C5", "Eb5", "Ab5"],
+  bVI6: ["C4", "Eb4", "Ab4"],
   bVI64: ["Eb4", "Ab4", "C5"],
   bVIM7: [],
   bVI7: [],
   viio: ["B4", "D5", "F5"],
   viio64: ["F4", "B4", "D5"],
-  viio6: ["D5", "F5", "B5"],
+  viio6: ["D4", "F4", "B4"],
   viio7 : [],
   vii42no5: ["A4", "B4", "D5"],
-  bVII : [],
+  bVII : ["Bb4", "D5", "F5"],
+  bVII6 : ["D4", "F4", "Bb4"],
   bVII7 : [],
 } satisfies dict;
 
@@ -110,17 +112,17 @@ type ProgressionsJSON = {
   progressions: Progression[];
 };
 
-const level_1 = JSON.parse(fs.readFileSync("harmonic-progressions.json") as any) as ProgressionsJSON;
-const level_2 = JSON.parse(fs.readFileSync("harmonic-progressions-level2.json") as any) as ProgressionsJSON;
-const level_3 = JSON.parse(fs.readFileSync("harmonic-progressions-level3.json") as any) as ProgressionsJSON;
+const level_1 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions.json") as any) as ProgressionsJSON;
+const level_2 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level2.json") as any) as ProgressionsJSON;
+const level_3 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level3.json") as any) as ProgressionsJSON;
 
-const level_20 = JSON.parse(fs.readFileSync("harmonic-progressions-circle-of-fifths.json") as any) as ProgressionsJSON;
+const level_circle_of_fiths = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths.json") as any) as ProgressionsJSON;
 
 export const progressions = [
   ...level_1.progressions,
   ...level_2.progressions,
   ...level_3.progressions,
-  ...level_20.progressions,
+  ...level_circle_of_fiths.progressions,
 ];
 
 (function JSONContentVerify() {

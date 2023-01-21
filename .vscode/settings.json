@@ -3,12 +3,12 @@
     "json.schemas": [
         {
           "fileMatch": [
-            "/harmonic-progressions.json",
-            "/harmonic-progressions-level2.json",
-            "/harmonic-progressions-level3.json",
-            "/harmonic-progressions-circle-of-fifths.json"
+            "/src/progressions/harmonic-progressions.json",
+            "/src/progressions/harmonic-progressions-level2.json",
+            "src/progressions/harmonic-progressions-level3.json",
+            "/src/progressions/harmonic-progressions-circle-of-fifths.json"
           ],
-          "url": "./harmonic-progressions-schema.json"
+          "url": "./src/progressions/harmonic-progressions-schema.json"
         }
       ]   
 }

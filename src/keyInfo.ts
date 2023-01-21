@@ -70,13 +70,13 @@ export function keyInfo(key: MajorKey | MinorKey) {
   }
 
   if (key.type === "minor") {
-    const naturalNumerals: RomanNumeralType[] = ["i", "iio", "III", "iv", "v", "bVI", "bVII"];
-    const harmonicNumerals: RomanNumeralType[] = ["i", "iio", "III+", "iv", "V", "bVI", "viio"];
-    const melodicNumerals: RomanNumeralType[] = ["i", "ii", "III+", "IV", "V", "vio", "viio"];
+    const naturalNumerals: RomanNumeralType[] = ["i", "iio", "bIII", "iv", "v", "bVI", "bVII"];
+    const harmonicNumerals: RomanNumeralType[] = ["i", "iio", "bIII+", "iv", "V", "bVI", "viio"];
+    const melodicNumerals: RomanNumeralType[] = ["i", "ii", "bIII+", "IV", "V", "vio", "viio"];
 
-    const naturalSevenths: RomanNumeralType[] = ["i7", "iio7", "III7", "iv7", "v7", "bVI7", "bVII7"];
-    const harmonicSevenths: RomanNumeralType[] = ["iM7", "iio7", "III+M7", "iv7", "V7", "bVIM7", "viio7"];
-    const melodicSevenths: RomanNumeralType[] = ["iM7", "ii7", "III+M7", "IV7", "V7", "vio7", "viio7"];
+    const naturalSevenths: RomanNumeralType[] = ["i7", "iio7", "bIII7", "iv7", "v7", "bVI7", "bVII7"];
+    const harmonicSevenths: RomanNumeralType[] = ["iM7", "iio7", "bIII+M7", "iv7", "V7", "bVIM7", "viio7"];
+    const melodicSevenths: RomanNumeralType[] = ["iM7", "ii7", "bIII+M7", "IV7", "V7", "vio7", "viio7"];
 
     // this chord is overriden since the library has this set to m6 chord and not mMaj7
     const melodicChords = [...key.melodic.chords] as string[];

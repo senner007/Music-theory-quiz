@@ -1,6 +1,6 @@
 {
     "watch": ["src"],
-    "ext": "ts",
+    "ext": "ts, json",
     "ignore": ["test/**/*.test.ts"],
     "exec": "ts-node ./src/main.ts", 
     "restartable": false
