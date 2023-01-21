@@ -116,13 +116,13 @@ const level_1 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressio
 const level_2 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level2.json") as any) as ProgressionsJSON;
 const level_3 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level3.json") as any) as ProgressionsJSON;
 
-const level_circle_of_fiths = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths.json") as any) as ProgressionsJSON;
+const level_circle_of_fifths = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths.json") as any) as ProgressionsJSON;
 
 export const progressions = [
   ...level_1.progressions,
   ...level_2.progressions,
   ...level_3.progressions,
-  ...level_circle_of_fiths.progressions,
+  ...level_circle_of_fifths.progressions,
 ];
 
 (function JSONContentVerify() {
