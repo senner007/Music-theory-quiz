@@ -11,14 +11,6 @@
         "tags": ["CircleOfFifths", "Diminished"]
       },
       {
-        "chords": ["I64", "vi", "vii42no5", "V", "vi42no5", "IV", "V742no5", "I6"],
-        "bass": ["C3", "F3", "B2", "E3", "A2", "D3", "G2", "C3"],
-        "description": "circle5th-2",
-        "isMajor": true,
-        "isDiatonic": true,
-        "tags": ["CircleOfFifths", "DominantSeven", "SeventhChords"]
-      },
-      {
         "chords": ["I-a", "IV6", "viio", "iii6", "vi", "ii6", "V", "I6"],
         "bass": ["C3", "F3", "B2", "E3", "A2", "D3", "G2", "C3"],
         "description": "circle5th-3",

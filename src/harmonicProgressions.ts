@@ -80,7 +80,7 @@ const romanNumeralsDict = {
   bVI64: ["Eb4", "Ab4", "C5"],
   bVIM7: [],
   bVI7: [],
-  "V/ii" : ["A4", "C#5", "E5", "G5"],
+  "V7/ii" : ["A4", "C#5", "E5", "G5"],
   viio: ["B4", "D5", "F5"],
   viio64: ["F4", "B4", "D5"],
   viio6: ["D4", "F4", "B4"],
@@ -127,10 +127,10 @@ const level_circle_of_fifths = JSON.parse(fs.readFileSync("src/progressions/harm
 const level_circle_of_fifths_extended = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths-extended.json") as any) as ProgressionsJSON;
 
 export const progressions = [
-  // ...level_1.progressions,
-  // ...level_2.progressions,
-  // ...level_3.progressions,
-  // ...level_circle_of_fifths.progressions,
+  ...level_1.progressions,
+  ...level_2.progressions,
+  ...level_3.progressions,
+  ...level_circle_of_fifths.progressions,
   ...level_circle_of_fifths_extended.progressions
 ];
 

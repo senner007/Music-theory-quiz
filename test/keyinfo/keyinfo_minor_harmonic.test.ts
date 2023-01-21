@@ -8,7 +8,7 @@ describe("Test Roman numerals for given chords in - Minor harmonic - key", () =>
   it("should return correct roman numeral", () => {
     expect(getNumeralBySymbol(key, ["C", "Eb", "G"])).toEqual("i");
     expect(getNumeralBySymbol(key, ["F", "D", "Ab"])).toEqual("iio6");
-    expect(getNumeralBySymbol(key, ["B", "G", "Eb"])).toEqual("III+64");
+    expect(getNumeralBySymbol(key, ["B", "G", "Eb"])).toEqual("bIII+64");
     expect(getNumeralBySymbol(key, ["F", "Ab", "C", "Eb"])).toEqual("iv7");
     expect(getNumeralBySymbol(key, ["B", "D", "G", "F"])).toEqual("V65");
     expect(getNumeralBySymbol(key, ["Eb", "Ab", "C", "G"])).toEqual("bVI43");

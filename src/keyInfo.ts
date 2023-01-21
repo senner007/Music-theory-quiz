@@ -65,6 +65,22 @@ export function keyInfo(key: MajorKey | MinorKey) {
     } as const;
   }
 
+  function getSecondaryDominantChords(seventhChordsSymbols: readonly string[], romanNumerals: RomanNumeralType[]) {
+     const seventChords = getSeventhChords(seventhChordsSymbols, romanNumerals)
+    
+    return {
+      SecondaryDominantChords : seventChords.seventhChords,
+      SecondaryDominantFirstInversionChords : seventChords.firstInversionChords,
+      SecondaryDominantSecondInversionChords : seventChords.secondInversionChords,
+      SecondaryDominantThirdInversionChords: seventChords.thirdInversionChords,
+      allSecondaryDominantChords: () => [
+        ...seventChords.seventhChords, 
+        ...seventChords.firstInversionChords, 
+        ... seventChords.secondInversionChords, 
+        ...seventChords.thirdInversionChords],
+    } as const;
+  }
+
   if (key.type === "minor") {
     const naturalNumerals: RomanNumeralType[] = ["i", "iio", "bIII", "iv", "v", "bVI", "bVII"];
     const harmonicNumerals: RomanNumeralType[] = ["i", "iio", "bIII+", "iv", "V", "bVI", "viio"];
@@ -101,13 +117,13 @@ export function keyInfo(key: MajorKey | MinorKey) {
 
   const majorNumerals: RomanNumeralType[] = ["I", "ii", "iii", "IV", "V", "vi", "viio"];
   const majorSevenths: RomanNumeralType[] = ["I7", "ii7", "iii7", "IV7", "V7", "vi7", "viio7"];
-  const secondaryDominants: RomanNumeralType[] = ["V/ii", "V7/iii", "V7/IV", "V7/V", "V7/vi"];
+  const secondaryDominants: RomanNumeralType[] = ["V7/ii", "V7/iii", "V7/IV", "V7/V", "V7/vi"];
 
   const obj = {
     ...key,
     ...getPrimaryChords(["M", "m", "m", "M", "M", "m", "dim"], majorNumerals, key.scale),
     ...getSeventhChords(key.chords, majorSevenths),
-    ...getSeventhChords(key.secondaryDominants.filter(c => c !== ""), secondaryDominants),
+    ...getSecondaryDominantChords(key.secondaryDominants.filter(c => c !== ""), secondaryDominants),
     
   } as const;
   return obj;
@@ -118,7 +134,7 @@ type KeyInfo = ReturnType<typeof keyInfo>;
 
 function getKeyChords(keyInfo: KeyInfo) {
   if (keyInfo.type === "major") {
-    return [...keyInfo.allPrimaryChords(), ...keyInfo.allSeventhChords()];
+    return [...keyInfo.allPrimaryChords(), ...keyInfo.allSeventhChords(), ...keyInfo.allSecondaryDominantChords()];
   }
   return [
     ...keyInfo.natural.allPrimaryChords(),
@@ -133,9 +149,6 @@ function getKeyChords(keyInfo: KeyInfo) {
 export function getNumeralBySymbol(keyInfo: KeyInfo, chordNotes: string[]) {
   const chordSymbols: string [] = Chord.detect(chordNotes, { assumePerfectFifth: true });
   const keyChords = getKeyChords(keyInfo);
-
-  console.log(chordSymbols)
-  console.log(keyChords)
   
   const chordsInKey = chordSymbols.filter((chord) => keyChords.map((c) => c.symbol).includes(chord));
   const chord = chordsInKey.length > 0 ? chordsInKey[0] : chordSymbols[0]
