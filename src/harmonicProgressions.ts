@@ -29,6 +29,7 @@ const romanNumeralsDict = {
   I6: ["E4", "G4", "C5"],
   I64: ["G4", "C5", "E5"],
   I7: [],
+  "V7/IV" : ["C4", "Eb4", "G4", "Bb4"],
   V: ["G4", "B4", "D5"],
   V64: ["D4", "G4", "B4"],
   V7: ["G4", "B4", "D5", "F5"],
@@ -46,6 +47,8 @@ const romanNumeralsDict = {
   iio64: ["Ab4", "D5", "F5"],
   ii6: ["F4", "A4", "D5"],
   ii64: ["A4", "D5", "F5"],
+  "V7/V": ["D4", "F#4", "A4", "C5"],
+  "V65/V": ["F#4", "A4", "C5", "D5"],
   iii: ["E4", "G4", "B4"],
   iii6: ["G4", "B4", "E5"],
   iii64: ["B4", "E5", "G5"],
@@ -55,6 +58,8 @@ const romanNumeralsDict = {
   bIII7 : [],
   "bIII+" : [],
   "bIII+M7" : [],
+  "V7/vi" : ["E4", "G#4", "B4", "D5"],
+  "V65/vi" : ["G#4", "B4", "D5", "E5"],
   iv: ["F4", "Ab4", "C5"],
   iv6: ["Ab4", "C5", "F5"],
   iv64: ["C4", "F4", "Ab4"],
@@ -75,6 +80,7 @@ const romanNumeralsDict = {
   bVI64: ["Eb4", "Ab4", "C5"],
   bVIM7: [],
   bVI7: [],
+  "V/ii" : ["A4", "C#5", "E5", "G5"],
   viio: ["B4", "D5", "F5"],
   viio64: ["F4", "B4", "D5"],
   viio6: ["D4", "F4", "B4"],
@@ -83,6 +89,7 @@ const romanNumeralsDict = {
   bVII : ["Bb4", "D5", "F5"],
   bVII6 : ["D4", "F4", "Bb4"],
   bVII7 : [],
+  "V7/iii" : ["B4", "D#5", "F#5", "A5"]
 } satisfies dict;
 
 export type RomanNumeralType = keyof typeof romanNumeralsDict;
@@ -117,12 +124,14 @@ const level_2 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressio
 const level_3 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level3.json") as any) as ProgressionsJSON;
 
 const level_circle_of_fifths = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths.json") as any) as ProgressionsJSON;
+const level_circle_of_fifths_extended = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths-extended.json") as any) as ProgressionsJSON;
 
 export const progressions = [
-  ...level_1.progressions,
-  ...level_2.progressions,
-  ...level_3.progressions,
-  ...level_circle_of_fifths.progressions,
+  // ...level_1.progressions,
+  // ...level_2.progressions,
+  // ...level_3.progressions,
+  // ...level_circle_of_fifths.progressions,
+  ...level_circle_of_fifths_extended.progressions
 ];
 
 (function JSONContentVerify() {

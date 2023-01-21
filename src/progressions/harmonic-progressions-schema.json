@@ -56,7 +56,7 @@
             "items": {
               "title": "tag",
               "type": "string",
-              "enum": ["Inversion", "DominantSeven", "Plagal", "Diminished", "CircleOfFifths", "SeventhChords"]
+              "enum": ["Inversion", "DominantSeven", "Plagal", "Diminished", "CircleOfFifths", "SeventhChords", "SecondaryDominants"]
             }
           }
         }

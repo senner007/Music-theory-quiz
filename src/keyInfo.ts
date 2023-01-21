@@ -35,12 +35,8 @@ export function keyInfo(key: MajorKey | MinorKey) {
     } as const;
   }
 
-  function removeSeven(romanNumeral : RomanNumeralType) {
-    if (romanNumeral.charAt(romanNumeral.length-1) !== "7") {
-      console.log(romanNumeral)
-      LogError("Incompatible seventh chord: " + RomanNumeral)
-    }
-    return romanNumeral.substring(0, romanNumeral.length - 1);
+  function replaceSymbolSeven(romanNumeral : RomanNumeralType, from: string, to : string) {
+    return romanNumeral.replace(from, to);
   }
 
   function getSeventhChords(seventhChordsSymbols: readonly string[], romanNumerals: RomanNumeralType[]) {
@@ -49,15 +45,15 @@ export function keyInfo(key: MajorKey | MinorKey) {
     });
 
     const firstInversionChords = InvChords(seventhChords, 1).map((c, index) => {
-      return { ...c, romanNumeral: removeSeven(romanNumerals[index]) + "65" };
+      return { ...c, romanNumeral: replaceSymbolSeven(romanNumerals[index], "7",  "65")};
     });
 
     const secondInversionChords = InvChords(seventhChords, 2).map((c, index) => {
-      return { ...c, romanNumeral: removeSeven(romanNumerals[index]) + "43" };
+      return { ...c, romanNumeral: replaceSymbolSeven(romanNumerals[index], "7", "43") };
     });
 
     const thirdInversionChords = InvChords(seventhChords, 3).map((c, index) => {
-      return { ...c, romanNumeral: removeSeven(romanNumerals[index]) + "42" };
+      return { ...c, romanNumeral: replaceSymbolSeven(romanNumerals[index], "7", "42") };
     });
     
     return {
@@ -105,16 +101,20 @@ export function keyInfo(key: MajorKey | MinorKey) {
 
   const majorNumerals: RomanNumeralType[] = ["I", "ii", "iii", "IV", "V", "vi", "viio"];
   const majorSevenths: RomanNumeralType[] = ["I7", "ii7", "iii7", "IV7", "V7", "vi7", "viio7"];
+  const secondaryDominants: RomanNumeralType[] = ["V/ii", "V7/iii", "V7/IV", "V7/V", "V7/vi"];
 
   const obj = {
     ...key,
     ...getPrimaryChords(["M", "m", "m", "M", "M", "m", "dim"], majorNumerals, key.scale),
     ...getSeventhChords(key.chords, majorSevenths),
+    ...getSeventhChords(key.secondaryDominants.filter(c => c !== ""), secondaryDominants),
+    
   } as const;
   return obj;
 }
 
 type KeyInfo = ReturnType<typeof keyInfo>;
+
 
 function getKeyChords(keyInfo: KeyInfo) {
   if (keyInfo.type === "major") {
@@ -133,6 +133,9 @@ function getKeyChords(keyInfo: KeyInfo) {
 export function getNumeralBySymbol(keyInfo: KeyInfo, chordNotes: string[]) {
   const chordSymbols: string [] = Chord.detect(chordNotes, { assumePerfectFifth: true });
   const keyChords = getKeyChords(keyInfo);
+
+  console.log(chordSymbols)
+  console.log(keyChords)
   
   const chordsInKey = chordSymbols.filter((chord) => keyChords.map((c) => c.symbol).includes(chord));
   const chord = chordsInKey.length > 0 ? chordsInKey[0] : chordSymbols[0]

@@ -8,7 +8,7 @@
         "description": "circle5th-1",
         "isMajor": true,
         "isDiatonic": true,
-        "tags": ["CircleOfFifths"]
+        "tags": ["CircleOfFifths", "Diminished"]
       },
       {
         "chords": ["I64", "vi", "vii42no5", "V", "vi42no5", "IV", "V742no5", "I6"],
@@ -24,7 +24,7 @@
         "description": "circle5th-3",
         "isMajor": true,
         "isDiatonic": true,
-        "tags": ["CircleOfFifths"]
+        "tags": ["CircleOfFifths", "Diminished"]
       },
       {
         "chords": ["I6", "IV", "viio6", "iii", "vi6", "ii", "V6", "I"],
@@ -32,7 +32,7 @@
         "description": "circle5th-4",
         "isMajor": true,
         "isDiatonic": true,
-        "tags": ["CircleOfFifths"]
+        "tags": ["CircleOfFifths", "Diminished"]
       },
       {
         "chords": ["i-a", "iv6", "bVII", "bIII6", "bVI", "iio6", "V", "i6"],
@@ -40,7 +40,7 @@
         "description": "circle5th-5",
         "isMajor": false,
         "isDiatonic": true,
-        "tags": ["CircleOfFifths"]
+        "tags": ["CircleOfFifths", "Diminished"]
       },
       {
         "chords": ["i6", "iv", "bVII6", "bIII", "bVI6", "iio", "V6", "i"],
@@ -48,7 +48,7 @@
         "description": "circle5th-6",
         "isMajor": false,
         "isDiatonic": true,
-        "tags": ["CircleOfFifths"]
+        "tags": ["CircleOfFifths", "Diminished"]
       }                                               
     ]
   }

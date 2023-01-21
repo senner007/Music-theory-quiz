@@ -90,7 +90,7 @@
       "description": "c1-12",
       "isMajor": false,
       "isDiatonic": true,
-      "tags": ["Inversion", "DominantSeven"]
+      "tags": ["Inversion"]
     },
     {
       "chords": ["i64", "iv6", "V7no5", "i64"],
