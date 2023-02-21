@@ -3,7 +3,7 @@
     "description": "I IV vii iii vi ii V I",
     "progressions": [
       {
-        "chords": ["I64", "vi", "vii42no5", "V", "vi42no5", "IV", "V742no5", "I6"],
+        "chords": ["I64", "vi", "vii42no5", "V", "vi42no5", "IV", "V42no5", "I6"],
         "bass": ["C3", "F3", "B2", "E3", "A2", "D3", "G2", "C3"],
         "description": "circle5thExtended-1",
         "isMajor": true,
@@ -11,7 +11,7 @@
         "tags": ["CircleOfFifths", "DominantSeven", "SeventhChords"]
       },
       {
-        "chords": ["I-a", "IV6", "viio", "V65/vi", "vi", "ii6", "V7", "I6"],
+        "chords": ["I-a", "IV6", "viio", "V65/vi", "vi", "ii6", "V42no5", "I6"],
         "bass": ["C3", "F3", "B2", "E3", "A2", "D3", "G2", "C3"],
         "description": "circle5thExtended-2",
         "isMajor": true,
@@ -19,7 +19,7 @@
         "tags": ["CircleOfFifths", "Diminished", "SeventhChords", "SecondaryDominants", "DominantSeven"]
       },
       {
-        "chords": ["I-a", "IV6", "viio", "V65/vi", "vi", "V65/V", "V7", "I6"],
+        "chords": ["I-a", "IV6", "viio", "V65/vi", "vi", "V65/V", "V42no5", "I6"],
         "bass": ["C3", "F3", "B2", "E3", "A2", "D3", "G2", "C3"],
         "description": "circle5thExtended-3",
         "isMajor": true,
