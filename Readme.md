@@ -46,7 +46,8 @@
 - hear progressions quiz
 - sing progression over bass line
 - provide links to free theory resources
-- add secondary dominants roman numeral lookup for minor keys key info 
+- add secondary dominants roman numeral lookup for minor keys key info
+- fix incorrect bass line
 
 #### Discern/sing notes played together
 - sing note in range C4 - C5
