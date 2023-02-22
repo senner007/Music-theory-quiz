@@ -134,7 +134,7 @@ export const progressions = [
   ...level_circle_of_fifths_extended.progressions
 ];
 
-(function JSONContentVerify() {
+export function JSONContentVerify() {
   const progressionsTemp: string[] = [];
   progressions.forEach((key, keyIndex) => {
     const chordsString = key.chords.join("") + key.bass.join("");
@@ -157,4 +157,4 @@ Roman numeral not in dictionary`
       }
     });
   });
-})();
+};
