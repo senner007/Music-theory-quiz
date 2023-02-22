@@ -22,7 +22,7 @@ export const SingBassLines: Quiz<Progression[]> = class extends SingingQuizBase<
   override tempo = 1000;
 
   randomBassLineInKey;
-
+  progressionDescription
   progressionIsDiatonic;
   progressionIsMajor;
   constructor(progressions: Readonly<Progression[]>) {
@@ -31,16 +31,18 @@ export const SingBassLines: Quiz<Progression[]> = class extends SingingQuizBase<
     const randomProgression = progressions.randomItem();
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
+    this.progressionDescription = randomProgression.description;
 
     const keyDistance = Interval.distance("C", this.randomNote)
     this.randomBassLineInKey = randomProgression.bass.transposeBy(keyDistance);
   }
 
   get quizHead() {
+    const description = this.progressionDescription;
+    const diatonic =  this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
+    const key = chalk.underline(this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor"))
     return [
-      `${
-        this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
-      } progression bass line in key of ${chalk.underline(this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor"))}`,
+      `Description: ${description}\n${diatonic} progression bass line in key of ${key}`,
     ];
   }
 
