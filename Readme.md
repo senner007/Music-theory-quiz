@@ -48,6 +48,7 @@
 - provide links to free theory resources
 - add secondary dominants roman numeral lookup for minor keys key info
 - reuse trichord to play tetrachord, add options for harmonic playing, random order
+- guess trichord over major/minor
 
 #### Discern/sing notes played together
 - sing note in range C4 - C5
