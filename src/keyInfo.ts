@@ -147,15 +147,12 @@ function getKeyChords(keyInfo: KeyInfo) {
 }
 
 export function getNumeralBySymbol(keyInfo: KeyInfo, chordNotes: string[]) {
-
   const chordSymbols: string [] = Chord.detect(chordNotes, { assumePerfectFifth: true });
   const keyChords = getKeyChords(keyInfo);
   
   const chordsInKey = chordSymbols.filter((chord) => keyChords.map((c) => c.symbol).includes(chord));
-  const chord = chordsInKey.length > 0 ? chordsInKey[0] : chordSymbols[0]
-  try {
-    return keyChords.filter((c) => c.symbol === chord)[0].romanNumeral;
-  } catch (error) {
-    return Progression.toRomanNumerals(keyInfo.tonic, [chord])[0];
-  }
+  const chord = chordsInKey[0];
+
+  return keyChords.filter((c) => c.symbol === chord)[0].romanNumeral;
+
 }
