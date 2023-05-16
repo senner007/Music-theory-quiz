@@ -32,10 +32,17 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
   });
 
   const quizHeadOutput = [
-    `${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("Cb Major")}`,
-    `${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("D Minor")}`,
-    `${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("E# Minor")}`,
+    `Description: c1-1\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("Cb Major")}`,
+    `Description: c1-2\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("D Minor")}`,
+    `Description: c1-3\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("E# Minor")}`,
   ];
+
+  test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
+    (<Mock>MathFloor).mockReturnValue(mathFloorReturnValue);
+    const quiz = new SingBassLines(SingBassLines.meta().getAllOptions);
+    expect(MathFloor).toBeCalledTimes(3);
+    expect(quiz.quizHead).toEqual([quizHeadOutput[mathFloorReturnValue]]);
+  });
 
   const solfegeMelodies = [
     {
@@ -63,13 +70,6 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
       ]
     },
   ];
-
-  test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
-    (<Mock>MathFloor).mockReturnValue(mathFloorReturnValue);
-    const quiz = new SingBassLines(SingBassLines.meta().getAllOptions);
-    expect(MathFloor).toBeCalledTimes(3);
-    expect(quiz.quizHead).toEqual([quizHeadOutput[mathFloorReturnValue]]);
-  });
 
   test.each([0, 1, 2])("should generate solfege degrees to LogTable", async (mathFloorReturnValue: number) => {
     (<Mock>MathFloor).mockReturnValue(mathFloorReturnValue);
