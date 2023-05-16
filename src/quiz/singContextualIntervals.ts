@@ -2,7 +2,6 @@ import chalk from "chalk";
 import { INotePlay } from "../midiplay";
 import { Quiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
-import { transpose_to_ascending } from "../transposition";
 import {
   noteSingleAccidental,
   random_note_single_accidental,
@@ -13,7 +12,7 @@ import {
   getIntervalDistance,
   add_octave_note,
 } from "../utils";
-import { SingingQuizBase } from "./quizBase/SingingQuizBase";
+import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
 type optionsType = [string[], intervalType[]]
 

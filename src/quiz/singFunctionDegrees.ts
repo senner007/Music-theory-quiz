@@ -15,7 +15,7 @@ import {
   ObjectKeys,
   noteAllAccidental
 } from "../utils";
-import { SingingQuizBase } from "./quizBase/SingingQuizBase";
+import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
 export const SingingFunctionalDegrees: Quiz<Syllable[]> = class extends SingingQuizBase<Syllable[]> {
   verifyOptions(syllables: Syllable[]): boolean {

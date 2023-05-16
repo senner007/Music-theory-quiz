@@ -10,7 +10,7 @@ import {
   note_transpose,
   random_note_single_accidental,
 } from "../utils";
-import { SingingQuizBase } from "./quizBase/SingingQuizBase";
+import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
 
 export const SingBassLines: Quiz<Progression[]> = class extends SingingQuizBase<Progression[]> {

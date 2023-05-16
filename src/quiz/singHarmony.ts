@@ -7,7 +7,7 @@ import { Quiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
 import { transposeProgression } from "../transposition";
 import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental } from "../utils";
-import { SingingQuizBase } from "./quizBase/SingingQuizBase";
+import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
 export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Progression[]> {
   verifyOptions(_: Progression[]): boolean {
