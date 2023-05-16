@@ -86,6 +86,7 @@ const romanNumeralsDict = {
   viio64: ["F4", "B4", "D5"],
   viio6: ["D4", "F4", "B4"],
   viio7 : [],
+  vii7 : ["B4", "D5", "F5", "A5"],
   vii42no5: ["A4", "B4", "D5"],
   bVII : ["Bb4", "D5", "F5"],
   bVII6 : ["D4", "F4", "Bb4"],

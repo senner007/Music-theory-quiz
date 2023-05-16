@@ -13,7 +13,7 @@
       {
         "chords": ["I-a", "IV6", "viio", "iii6", "vi", "ii6", "V", "I6"],
         "bass": ["C3", "F3", "B2", "E3", "A2", "D3", "G2", "C3"],
-        "description": "circle5th-3",
+        "description": "circle5th-2",
         "isMajor": true,
         "isDiatonic": true,
         "tags": ["CircleOfFifths", "Diminished"]
@@ -21,7 +21,7 @@
       {
         "chords": ["I6", "IV", "viio6", "iii", "vi6", "ii", "V6", "I"],
         "bass": ["C3", "F3", "B2", "E3", "A2", "D3", "G2", "C3"],
-        "description": "circle5th-4",
+        "description": "circle5th-3",
         "isMajor": true,
         "isDiatonic": true,
         "tags": ["CircleOfFifths", "Diminished"]
@@ -29,7 +29,7 @@
       {
         "chords": ["I6", "IV64", "viio6", "V43no5/vi", "vi6"],
         "bass": ["C3", "F3", "B2", "E3", "A2"],
-        "description": "circle5th-5",
+        "description": "circle5th-4",
         "isMajor": true,
         "isDiatonic": true,
         "tags": ["CircleOfFifths", "Diminished", "Modulation"]
@@ -37,7 +37,7 @@
       {
         "chords": ["ii", "V43no1", "I6", "IV64", "viio6", "V43no5/vi", "vi6"],
         "bass": ["D3", "G2", "C3", "F3", "B2", "E3", "A2"],
-        "description": "circle5th-6",
+        "description": "circle5th-5",
         "isMajor": true,
         "isDiatonic": true,
         "tags": ["CircleOfFifths", "Diminished", "Modulation", "AutumnLeaves"]
@@ -45,7 +45,7 @@
       {
         "chords": ["i-a", "iv6", "bVII", "bIII6", "bVI", "iio6", "V", "i6"],
         "bass": ["C3", "F3", "Bb2", "Eb3", "Ab2", "D3", "G2", "C3"],
-        "description": "circle5th-7",
+        "description": "circle5th-6",
         "isMajor": false,
         "isDiatonic": true,
         "tags": ["CircleOfFifths", "Diminished"]
@@ -53,7 +53,7 @@
       {
         "chords": ["i6", "iv", "bVII6", "bIII", "bVI6", "iio", "V6", "i"],
         "bass": ["C3", "F3", "Bb2", "Eb3", "Ab2", "D3", "G2", "C3"],
-        "description": "circle5th-8",
+        "description": "circle5th-7",
         "isMajor": false,
         "isDiatonic": true,
         "tags": ["CircleOfFifths", "Diminished"]

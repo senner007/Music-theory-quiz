@@ -1,8 +1,7 @@
-import { Chord, Progression, RomanNumeral } from "@tonaljs/tonal";
+import { Chord } from "@tonaljs/tonal";
 import { Chord as IChord } from "@tonaljs/chord";
 import { MajorKey, MinorKey } from "@tonaljs/key";
 import { RomanNumeralType } from "./harmonicProgressions";
-import { LogError } from "./dev-utils";
 
 export function keyInfo(key: MajorKey | MinorKey) {
   function getChords(chordQualities: readonly string[], scale: readonly string[]) {
@@ -11,22 +10,26 @@ export function keyInfo(key: MajorKey | MinorKey) {
     });
   }
 
-  function InvChords(primaryChords: IChord[], inversion: number) {
-    return primaryChords.map((c) => {
+  function InvChords(chords: IChord[], inversion: number) {
+    return chords.map((c) => {
       return Chord.getChord(c.type, c.tonic!, c.notes[inversion]);
     });
   }
 
-  function getPrimaryChords(chordQualities: string[], romanNumerals: RomanNumeralType[], scale: readonly string[]) {
+  function getPrimaryChordsInversions(chordQualities: string[], romanNumerals: RomanNumeralType[], scale: readonly string[]) {
     const primaryChords = getChords(chordQualities, scale).map((c, index) => {
       return { ...c, romanNumeral: romanNumerals[index] };
     });
-    const firstInversionChords = InvChords(primaryChords, 1).map((c, index) => {
-      return { ...c, romanNumeral: romanNumerals[index] + "6" };
-    });
-    const secondInversionChords = InvChords(primaryChords, 2).map((c, index) => {
-      return { ...c, romanNumeral: romanNumerals[index] + "64" };
-    });
+
+    function getInversion(inversion: 1 | 2, identifier: "6" | "64") {
+      return InvChords(primaryChords, inversion).map((c, index) => {
+        return { ...c, romanNumeral: romanNumerals[index] + identifier };
+      });
+    }
+
+    const firstInversionChords = getInversion(1, "6")
+    const secondInversionChords = getInversion(2, "64")
+
     return {
       primaryChords,
       firstInversionChords,
@@ -35,51 +38,34 @@ export function keyInfo(key: MajorKey | MinorKey) {
     } as const;
   }
 
-  function replaceSymbolSeven(romanNumeral : RomanNumeralType, from: string, to : string) {
+  function replaceSymbolSeven(romanNumeral: RomanNumeralType, from: string, to: string) {
     return romanNumeral.replace(from, to);
   }
 
-  function getSeventhChords(seventhChordsSymbols: readonly string[], romanNumerals: RomanNumeralType[]) {
+  function getSeventhChordsInversions<Type extends string>(seventhChordsSymbols: readonly string[], romanNumerals: RomanNumeralType[]) {
     const seventhChords = seventhChordsSymbols.map(c => Chord.get(c)).map((c, index) => {
       return { ...c, romanNumeral: romanNumerals[index] };
     });
 
-    const firstInversionChords = InvChords(seventhChords, 1).map((c, index) => {
-      return { ...c, romanNumeral: replaceSymbolSeven(romanNumerals[index], "7",  "65")};
-    });
+    function getSeventhInversions(inversion: 1 | 2 | 3, identifier: "65" | "43" | "42") {
+      return InvChords(seventhChords, inversion).map((c, index) => {
+        return { ...c, romanNumeral: replaceSymbolSeven(romanNumerals[index], "7", identifier) };
+      });
+    }
 
-    const secondInversionChords = InvChords(seventhChords, 2).map((c, index) => {
-      return { ...c, romanNumeral: replaceSymbolSeven(romanNumerals[index], "7", "43") };
-    });
+    const firstInversionChords = getSeventhInversions(1, "65")
+    const secondInversionChords = getSeventhInversions(2, "43")
+    const thirdInversionChords = getSeventhInversions(3, "42")
 
-    const thirdInversionChords = InvChords(seventhChords, 3).map((c, index) => {
-      return { ...c, romanNumeral: replaceSymbolSeven(romanNumerals[index], "7", "42") };
-    });
-    
     return {
-      seventhChords,
-      firstInversionChords,
-      secondInversionChords,
-      thirdInversionChords,
-      allSeventhChords: () => [...seventhChords, ...firstInversionChords, ...secondInversionChords, ...thirdInversionChords],
+      root: seventhChords,
+      firstInversion: firstInversionChords,
+      secondInversion: secondInversionChords,
+      thirdInversion: thirdInversionChords,
+      allSevenths: () => [...seventhChords, ...firstInversionChords, ...secondInversionChords, ...thirdInversionChords],
     } as const;
   }
 
-  function getSecondaryDominantChords(seventhChordsSymbols: readonly string[], romanNumerals: RomanNumeralType[]) {
-     const seventChords = getSeventhChords(seventhChordsSymbols, romanNumerals)
-    
-    return {
-      SecondaryDominantChords : seventChords.seventhChords,
-      SecondaryDominantFirstInversionChords : seventChords.firstInversionChords,
-      SecondaryDominantSecondInversionChords : seventChords.secondInversionChords,
-      SecondaryDominantThirdInversionChords: seventChords.thirdInversionChords,
-      allSecondaryDominantChords: () => [
-        ...seventChords.seventhChords, 
-        ...seventChords.firstInversionChords, 
-        ... seventChords.secondInversionChords, 
-        ...seventChords.thirdInversionChords],
-    } as const;
-  }
 
   if (key.type === "minor") {
     const naturalNumerals: RomanNumeralType[] = ["i", "iio", "bIII", "iv", "v", "bVI", "bVII"];
@@ -97,19 +83,19 @@ export function keyInfo(key: MajorKey | MinorKey) {
       ...key,
       natural: {
         ...key.natural,
-        ...getPrimaryChords(["m", "dim", "M", "m", "m", "M", "M"], naturalNumerals, key.natural.scale),
-        ...getSeventhChords(key.natural.chords, naturalSevenths),
+        ...getPrimaryChordsInversions(["m", "dim", "M", "m", "m", "M", "M"], naturalNumerals, key.natural.scale),
+        ...getSeventhChordsInversions(key.natural.chords, naturalSevenths),
       },
       harmonic: {
         ...key.harmonic,
-        ...getPrimaryChords(["m", "dim", "aug", "m", "M", "M", "dim"], harmonicNumerals, key.harmonic.scale),
-        ...getSeventhChords(key.harmonic.chords, harmonicSevenths),
+        ...getPrimaryChordsInversions(["m", "dim", "aug", "m", "M", "M", "dim"], harmonicNumerals, key.harmonic.scale),
+        ...getSeventhChordsInversions(key.harmonic.chords, harmonicSevenths),
       },
       melodic: {
         ...key.melodic,
-        chords :  melodicChords,
-        ...getPrimaryChords(["m", "m", "aug", "M", "M", "dim", "dim"], melodicNumerals, key.melodic.scale),
-        ...getSeventhChords(melodicChords, melodicSevenths),
+        chords: melodicChords,
+        ...getPrimaryChordsInversions(["m", "m", "aug", "M", "M", "dim", "dim"], melodicNumerals, key.melodic.scale),
+        ...getSeventhChordsInversions(melodicChords, melodicSevenths),
       },
     } as const;
     return obj;
@@ -121,10 +107,10 @@ export function keyInfo(key: MajorKey | MinorKey) {
 
   const obj = {
     ...key,
-    ...getPrimaryChords(["M", "m", "m", "M", "M", "m", "dim"], majorNumerals, key.scale),
-    ...getSeventhChords(key.chords, majorSevenths),
-    ...getSecondaryDominantChords(key.secondaryDominants.filter(c => c !== ""), secondaryDominants),
-    
+    ...getPrimaryChordsInversions(["M", "m", "m", "M", "M", "m", "dim"], majorNumerals, key.scale),
+    sevenths: getSeventhChordsInversions(key.chords, majorSevenths),
+    dominantSevenths: getSeventhChordsInversions(key.secondaryDominants.filter(c => c !== ""), secondaryDominants),
+    additional: getSeventhChordsInversions([Chord.getChord("m7", key.scale.at(-1)).symbol], ["vii7"])
   } as const;
   return obj;
 }
@@ -134,25 +120,24 @@ type KeyInfo = ReturnType<typeof keyInfo>;
 
 function getKeyChords(keyInfo: KeyInfo) {
   if (keyInfo.type === "major") {
-    return [...keyInfo.allPrimaryChords(), ...keyInfo.allSeventhChords(), ...keyInfo.allSecondaryDominantChords()];
+    return [...keyInfo.allPrimaryChords(), ...keyInfo.sevenths.allSevenths(), ...keyInfo.dominantSevenths.allSevenths(), ...keyInfo.additional.allSevenths()];
   }
+
   return [
     ...keyInfo.natural.allPrimaryChords(),
-    ...keyInfo.natural.allSeventhChords(),
+    ...keyInfo.natural.allSevenths(),
     ...keyInfo.harmonic.allPrimaryChords(),
-    ...keyInfo.harmonic.allSeventhChords(),
+    ...keyInfo.harmonic.allSevenths(),
     ...keyInfo.melodic.allPrimaryChords(),
-    ...keyInfo.melodic.allSeventhChords(),
+    ...keyInfo.melodic.allSevenths(),
   ];
 }
 
 export function getNumeralBySymbol(keyInfo: KeyInfo, chordNotes: string[]) {
-  const chordSymbols: string [] = Chord.detect(chordNotes, { assumePerfectFifth: true });
+  const chordSymbols: string[] = Chord.detect(chordNotes, { assumePerfectFifth: true });
   const keyChords = getKeyChords(keyInfo);
-  
   const chordsInKey = chordSymbols.filter((chord) => keyChords.map((c) => c.symbol).includes(chord));
-  const chord = chordsInKey[0];
-
+  const chord = chordsInKey[0]
+  
   return keyChords.filter((c) => c.symbol === chord)[0].romanNumeral;
-
 }

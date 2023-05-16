@@ -35,6 +35,7 @@ describe("Test Roman numerals for given chords in - Major - key", () => {
     expect(getNumeralBySymbol(key, ["B", "D", "G", "F"])).toEqual("V65");
     expect(getNumeralBySymbol(key, ["D", "F", "G", "B"])).toEqual("V43");
     expect(getNumeralBySymbol(key, ["E", "A", "C", "G"])).toEqual("vi43");
+    expect(getNumeralBySymbol(key, ["B", "A", "B", "D"])).toEqual("vii7");
     expect(getNumeralBySymbol(key, ["A", "B", "D", "F"])).toEqual("viio42");
     expect(getNumeralBySymbol(key, ["C", "E", "G", "Bb"])).toEqual("V7/IV");
     expect(getNumeralBySymbol(key, ["A", "C#", "E", "G"])).toEqual("V7/ii");
