@@ -71,6 +71,10 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
       return { noteNames: n, duration: 2 };
     });
 
+    const bassOnly = this.randomProgressionInKey.chords.map((n, index): INotePlay => {
+      return { noteNames: [this.randomProgressionInKey.bass[index]], duration: 2 };
+    });
+
     const audioWithBass = this.randomProgressionInKey.chords.map((n, index): INotePlay => {
       return { noteNames: [this.randomProgressionInKey.bass[index], ...n], duration: 2 };
     });
@@ -102,6 +106,7 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
 
     return [
       { audio: audio, keyboardKey: "space", onInit: false, channel: 1, message: "play progression", display: true },
+      { audio: bassOnly, keyboardKey: "o", onInit: false, channel: 1, message: "play bass only", display: true },
       { audio: audioWithBass, keyboardKey: "b", onInit: false, channel: 1, message: "play progression with bass line" },
       { audio: sequentialAudio, keyboardKey: "a", onInit: false, channel: 1, message: "arpeggiate progression" },
       {
@@ -128,6 +133,11 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
       },
       name: "Sing harmonic progressions",
       description: "Sing the harmonic progression as solfege degrees",
+      instructions: [
+        "Sing various lines using the notes that make the harmony.", 
+        "Sing with or without accompaniment.",
+        "Slso try to include non chord tones, passing tones, suspensions, escape tones, neighbouring tones, appogiatura and anticipation"
+      ]
     };
   }
 };
