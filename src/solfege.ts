@@ -5,7 +5,7 @@ import { noteAllAccidentalOctave, noteSingleAccidental, noteAllAccidental, octav
 
 export class SolfegeMelody {
   private verify_duration_length() {
-    if (this.duration > 30) LogError("Melody duration exceeded");
+    if (this.duration > 40) LogError("Melody duration exceeded");
   }
 
   private sortedMelody;
