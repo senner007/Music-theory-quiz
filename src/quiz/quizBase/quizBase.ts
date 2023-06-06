@@ -4,7 +4,7 @@ import { Quiz } from "../../quiz-types";
 export interface IListener {
   listener: (_: any, key: any) => void;
   acObj?: { ac: AbortController };
-  channel? : number;
+  isBackgroundChannel?: boolean;
 }
 
 export abstract class QuizBase<T> {

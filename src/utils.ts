@@ -171,6 +171,10 @@ export function getIntervalDistance(first: string, second: string) {
   return Interval.distance(first, second) as intervalType
 }
 
+export function getIntervalInteger(first: string, second: string) {
+  return Interval.num(getIntervalDistance(first, second)) as number
+}
+
 export function intervalToAbsolute(interval: intervalType) {
   return interval.replace(/[-]/g, "") as intervalType;
 }

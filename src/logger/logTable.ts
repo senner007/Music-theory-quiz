@@ -57,7 +57,7 @@ export class LogTable {
       table.setAlign(i, AsciiTable.CENTER)
     }
 
-    // table = table.setJustify()
+    table = table.setJustify()
 
     console.log(table.toString());
   }

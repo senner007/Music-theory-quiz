@@ -69,8 +69,8 @@ export const SingBassLines: Quiz<Progression[]> = class extends SingingQuizBase<
     ];
 
     return [
-      { audio: bassLine, keyboardKey: "space", onInit: false, channel: 1, message: "play bass line", display: true },
-      { audio: keyAudio, keyboardKey: "l", onInit: true, channel: 2, message: "establish key" },
+      { audio: [bassLine], keyboardKey: "space", message: "play bass line", display: true },
+      { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
     ];
   }
 

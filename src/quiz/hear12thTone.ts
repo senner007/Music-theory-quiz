@@ -60,7 +60,7 @@ export const Hear12thTone: Quiz<undefined[]> = class extends ListeningQuizBase<u
         .toOctaveAscending(this.octave)
         .map(note => { return { noteNames: [note], duration: 1 } as INotePlay });
 
-        return [ { audio : audio, keyboardKey : "space", onInit : true, channel : 1, message : "play row"} ]
+        return [ { audio : [audio], keyboardKey : "space", onInit : true, message : "play row"} ]
   }
 
   static meta() {

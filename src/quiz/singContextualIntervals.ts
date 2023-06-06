@@ -79,11 +79,11 @@ optionsType
     });
 
     return [
-      { audio: interval, keyboardKey: "space", onInit: false, channel: 1, message: "play interval", display: true },
-      { audio: firstNote, keyboardKey: "a", onInit: true, channel: 1, message: "play the fist note" },
-      { audio: secondNote, keyboardKey: "s", onInit: false, channel: 1, message: "play the second note" },
-      { audio: root, keyboardKey: "d", onInit: false, channel: 1, message: "play the root of the scale" },
-      { audio: scale, keyboardKey: "f", onInit: false, channel: 1, message: "play the scale" },
+      { audio: [interval], keyboardKey: "space",  message: "play interval", display: true },
+      { audio: [firstNote], keyboardKey: "a", onInit: true, message: "play the fist note" },
+      { audio: [secondNote], keyboardKey: "s", message: "play the second note" },
+      { audio: [root], keyboardKey: "d", message: "play the root of the scale" },
+      { audio: [scale], keyboardKey: "f", message: "play the scale" },
 
     ];
   }

@@ -64,7 +64,7 @@ export const HearScales: Quiz<string[]> = class extends ListeningQuizBase<string
 
   getAudio() {
     return [ 
-      { audio : this.audio, keyboardKey : "space", onInit : true, channel : 1, message : "play scale"}
+      { audio : [this.audio], keyboardKey : "space", onInit : true, message : "play scale"}
     ]
   }
 

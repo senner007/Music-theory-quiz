@@ -18,7 +18,7 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
   }
 
   async callQuiz(): Promise<string | never> {
-    const solfege = new SolfegeMelody(this.getAudio().filter(a => a.display)[0].audio, this.randomNote);
+    const solfege = new SolfegeMelody(this.getAudio().filter(a => a.display)[0].audio[0], this.randomNote);
     LogTable.write(solfege, this.tableHeader);
 
     try {

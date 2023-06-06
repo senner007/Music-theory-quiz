@@ -8,7 +8,7 @@ import { ITableHeader } from "../solfege";
 import { transposeProgression } from "../transposition";
 import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
-import { melodyGenerator, melodySingulate } from "../melodyGenerator";
+import { melodyGenerator, melodyPattern } from "../melodyGenerator";
 
 export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Progression[]> {
   verifyOptions(_: Progression[]): boolean {
@@ -45,8 +45,8 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
       return getNumeralBySymbol(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
     });
 
-    this.melody = melodyGenerator(this.randomProgressionInKey, melodySingulate);
-    console.log(this.melody)
+    this.melody = melodyGenerator(this.randomProgressionInKey, melodyPattern);
+
   }
 
   get quizHead() {
@@ -73,28 +73,12 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
 
   getAudio() {
     const audio = this.melody.melodyNotes.map((n): INotePlay => {
-      return { noteNames: [n.note], duration: n.duration };
+      return { noteNames: n.note, duration: n.duration };
     });
 
-    // const bassOnly = this.randomProgressionInKey.chords.map((n, index): INotePlay => {
-    //   return { noteNames: [this.randomProgressionInKey.bass[index]], duration: 2 };
-    // });
-
-    const audioWithBass = this.melody.melodyNotes.map((n, index): INotePlay => {
-      return { noteNames: [this.melody.bass[index], n.note], duration: this.melody.timeSignature };
+    const audioBass = this.melody.bass.map((n, index): INotePlay => {
+      return { noteNames: [n], duration: this.melody.timeSignature };
     });
-
-    // const sequentialAudio = this.randomProgressionInKey.chords
-    //   .flatMap((n) => n)
-    //   .map((n): INotePlay => {
-    //     return { noteNames: [n], duration: 1 };
-    //   });
-
-    // const sequentialAlternatingDirectionAudio = this.randomProgressionInKey.chords
-    //   .flatMap((n, i) => (i % 2 !== 0 ? n.slice(0).reverse() : n))
-    //   .map((n): INotePlay => {
-    //     return { noteNames: [n], duration: 1 };
-    //   });
 
     const keyAudio = [
       {
@@ -110,18 +94,10 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
     ];
 
     return [
-      { audio: audio, keyboardKey: "space", onInit: false, channel: 1, message: "play progression", display: true },
-      // { audio: bassOnly, keyboardKey: "o", onInit: false, channel: 1, message: "play bass only", display: true },
-      { audio: audioWithBass, keyboardKey: "b", onInit: false, channel: 1, message: "play progression with bass line" },
-      // { audio: sequentialAudio, keyboardKey: "a", onInit: false, channel: 1, message: "arpeggiate progression" },
-      // {
-      //   audio: sequentialAlternatingDirectionAudio,
-      //   keyboardKey: "s",
-      //   onInit: false,
-      //   channel: 1,
-      //   message: "arpeggiate alternating up and down",
-      // },
-      { audio: keyAudio, keyboardKey: "l", onInit: true, channel: 2, message: "establish key" },
+      { audio: [audio], keyboardKey: "space", message: "play progression", display: true },
+      { audio: [audioBass], keyboardKey: "b", message: "play bass line" },
+      { audio: [audio, audioBass], keyboardKey: "m", message: "play progression with bass line" },
+      { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
     ];
   }
 

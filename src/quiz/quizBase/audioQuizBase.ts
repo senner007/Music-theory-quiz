@@ -2,11 +2,11 @@ import { playMidi, INotePlay } from "../../midiplay";
 import { IListener, QuizBase } from "./quizBase";
 
 interface IAudioPlay {
-  audio: INotePlay[];
+  audio: INotePlay[][];
   keyboardKey: string;
-  onInit: boolean;
-  channel: number;
   message: string;
+  onInit?: boolean;
+  backgroundChannel?: boolean;
   display?: boolean;
 }
 
@@ -21,16 +21,18 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
       const listener = (_: any, key: any) => {
         if (key.name === audioPart.keyboardKey) {
           this.listenersArray
-            .filter(l => l.channel === audioPart.channel)
+            .filter(l => !audioPart.backgroundChannel)
             .forEach(l => l.acObj?.ac.abort())
             acObj.ac = new AbortController();
-          playMidi(audioPart.audio, acObj.ac, audioPart.channel, timerObj, this.tempo);
+           for (let index = 0; index < audioPart.audio.length; index++) {
+            playMidi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, timerObj, this.tempo);
+           }  
         }
       };
       return {
         listener: listener,
         acObj: acObj,
-        channel : audioPart.channel
+        isBackgroundChannel : audioPart.backgroundChannel
       };
     });
   }
