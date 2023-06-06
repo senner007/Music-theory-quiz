@@ -1,5 +1,6 @@
 import { LogAsync } from "../../logger/logAsync";
 import { LogTable } from "../../logger/logTable";
+import { INotePlay } from "../../midiplay";
 import { ITableHeader, SolfegeMelody } from "../../solfege";
 import { noteSingleAccidental } from "../../utils";
 import { AudioQuizBase } from "./audioQuizBase";
@@ -18,7 +19,7 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
   }
 
   async callQuiz(): Promise<string | never> {
-    const solfege = new SolfegeMelody(this.getAudio().filter(a => a.display)[0].audio[0], this.randomNote);
+    const solfege = new SolfegeMelody(this.getAudio().filter(a => a.display)[0].audio as INotePlay[], this.randomNote);
     LogTable.write(solfege, this.tableHeader);
 
     try {

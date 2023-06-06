@@ -1,14 +1,24 @@
 import { playMidi, INotePlay } from "../../midiplay";
 import { IListener, QuizBase } from "./quizBase";
 
-interface IAudioPlay {
-  audio: INotePlay[][];
+interface IAudioPlayBase {
   keyboardKey: string;
   message: string;
   onInit?: boolean;
   backgroundChannel?: boolean;
-  display?: boolean;
 }
+
+interface IAudioPlayMix extends IAudioPlayBase {
+  audio: INotePlay[][];
+  display?: false
+}
+
+interface IAudioPlaySolo extends IAudioPlayBase {
+  audio: INotePlay[]
+  display: true;
+}
+
+type IAudioPlay = IAudioPlaySolo | IAudioPlayMix;
 
 export abstract class AudioQuizBase<T> extends QuizBase<T> {
   protected tempo: number = 500;
@@ -23,16 +33,21 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
           this.listenersArray
             .filter(l => !audioPart.backgroundChannel)
             .forEach(l => l.acObj?.ac.abort())
-            acObj.ac = new AbortController();
-           for (let index = 0; index < audioPart.audio.length; index++) {
-            playMidi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, timerObj, this.tempo);
-           }  
+          acObj.ac = new AbortController();
+          if (audioPart.display) {
+            playMidi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, timerObj, this.tempo);
+          } else {
+            for (let index = 0; index < audioPart.audio.length; index++) {
+              playMidi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, timerObj, this.tempo);
+            }
+          }
+
         }
       };
       return {
         listener: listener,
         acObj: acObj,
-        isBackgroundChannel : audioPart.backgroundChannel
+        isBackgroundChannel: audioPart.backgroundChannel
       };
     });
   }

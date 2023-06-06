@@ -79,7 +79,7 @@ optionsType
     });
 
     return [
-      { audio: [interval], keyboardKey: "space",  message: "play interval", display: true },
+      { audio: interval, keyboardKey: "space",  message: "play interval", display: true } as const,
       { audio: [firstNote], keyboardKey: "a", onInit: true, message: "play the fist note" },
       { audio: [secondNote], keyboardKey: "s", message: "play the second note" },
       { audio: [root], keyboardKey: "d", message: "play the root of the scale" },

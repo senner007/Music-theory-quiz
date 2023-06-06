@@ -94,11 +94,11 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
     ];
 
     return [
-      { audio: [audio], keyboardKey: "space", message: "play progression", display: true },
+      { audio: audio, keyboardKey: "space", message: "play progression", display: true } as const,
       { audio: [audioBass], keyboardKey: "b", message: "play bass line" },
       { audio: [audio, audioBass], keyboardKey: "m", message: "play progression with bass line" },
       { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
-    ];
+    ]
   }
 
   get tableHeader() {

@@ -83,7 +83,7 @@ export const SingingFunctionalDegrees: Quiz<Syllable[]> = class extends SingingQ
     ];
 
     return [
-      { audio: [audio], keyboardKey: "space", message: "play melody", display: true },
+      { audio: audio, keyboardKey: "space", message: "play melody", display: true } as const,
       { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel : true, message: "establish key" },
     ];
   }
