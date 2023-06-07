@@ -3,16 +3,18 @@ import { Quiz } from "../quiz-types";
 import chalk from "chalk";
 import { TextQuizBase } from "./quizBase/textBase";
 
-export const WhichTriad: Quiz<string[]> = class extends TextQuizBase<string[]> {
-  verifyOptions(chordTypes: string[]): boolean {
-    return chordTypes.every((chordType) => allChordTypes.includes(chordType));
+type optionType = [{ name : string, options : readonly string[] }]
+
+export const WhichTriad: Quiz<optionType> = class extends TextQuizBase<optionType> {
+  verifyOptions(options: optionType): boolean {
+    return options[0].options.every((chordType) => allChordTypes.includes(chordType));
   }
 
   randomChord;
   chordTypesAndNotes;
-  constructor(chordTypes: Readonly<string[]>) {
-    super(chordTypes);
-    const chordOptions = chordTypes.map((chordType) => create_chord(random_note_single_accidental(), chordType));
+  constructor(options: Readonly<optionType>) {
+    super(options);
+    const chordOptions = options[0].options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
     this.chordTypesAndNotes = chordOptions
       .map((chord) => {
         return { chord: chord, notes: chord.notes.shuffleArray().commaSequence() };
@@ -38,7 +40,7 @@ export const WhichTriad: Quiz<string[]> = class extends TextQuizBase<string[]> {
   static meta() {
     return {
       get getAllOptions() {
-        return ["major", "minor", "augmented", "diminished"];
+        return [{ name : "Chord types", options : ["major", "minor", "augmented", "diminished"] }] as const;
       },
       name: "Which triad",
       description: "Choose the notes that make up the triad",

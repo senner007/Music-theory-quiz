@@ -14,10 +14,13 @@ import {
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
-type optionsType = [string[], intervalType[]]
+type optionsType = [
+  { name: string, options: string[] },
+  { name: string, options: intervalType[] }
+]
 
 export const SingContextualIntervals: Quiz<optionsType> = class extends SingingQuizBase<
-optionsType
+  optionsType
 > {
   verifyOptions(_: optionsType): boolean {
     return true;
@@ -33,7 +36,7 @@ optionsType
     super(options);
     const [scaletypes, intervals] = options;
     this.randomNote = random_note_single_accidental();
-    this.randomScaleType = scaletypes.randomItem();
+    this.randomScaleType = scaletypes.options.randomItem();
     const randomScale = create_scale(this.randomNote, this.randomScaleType);
 
     this.scaleThirdOctave = scale_notes(randomScale).toOctaveAscending("3")
@@ -48,7 +51,7 @@ optionsType
       .filter((n) => !(n === firstNote))
       .filter((n) => {
         const intervalDistance = getIntervalDistance(n, firstNote)
-        return intervals.includes(intervalToAbsolute(intervalDistance));
+        return intervals.options.includes(intervalToAbsolute(intervalDistance));
       });
 
     const secondNote = secondTonePossibilities.randomItem();
@@ -71,15 +74,15 @@ optionsType
     const firstNote = [interval[0]];
     const secondNote = [interval[1]];
 
-    const root : INotePlay[] = [{ noteNames: [this.scaleThirdOctave[0]], duration: 1 }];
+    const root: INotePlay[] = [{ noteNames: [this.scaleThirdOctave[0]], duration: 1 }];
 
     const scale = add_octave_note(this.scaleThirdOctave)
-    .map((n): INotePlay => {
-      return { noteNames: [n], duration: 1 };
-    });
+      .map((n): INotePlay => {
+        return { noteNames: [n], duration: 1 };
+      });
 
     return [
-      { audio: interval, keyboardKey: "space",  message: "play interval", display: true } as const,
+      { audio: interval, keyboardKey: "space", message: "play interval", display: true } as const,
       { audio: [firstNote], keyboardKey: "a", onInit: true, message: "play the fist note" },
       { audio: [secondNote], keyboardKey: "s", message: "play the second note" },
       { audio: [root], keyboardKey: "d", message: "play the root of the scale" },
@@ -111,7 +114,10 @@ optionsType
           "melodic minor",
         ];
         const intervals: intervalType[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
-        return [scales, intervals];
+        return [
+          { name : "scales", options : scales }, 
+          { name : "intervals", options: intervals }
+        ];
       },
       name: "Sing contextual intervals",
       description: "Sing the contextual interval",

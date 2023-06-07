@@ -9,19 +9,21 @@ import {
 import { IQuiz, Quiz } from "../quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
 
-export const MissingScaleNote: Quiz<string[]> = class extends TextQuizBase<string[]> {
-  verifyOptions(scaleTypes: string[]): boolean {
-    return scaleTypes.every((scaleType) => allScaleTypes.includes(scaleType));
+type optionType = [{ name : string, options : readonly string[] }]
+
+export const MissingScaleNote: Quiz<optionType> = class extends TextQuizBase<optionType> {
+  verifyOptions(options: optionType): boolean {
+    return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   scale;
   scaleStringMissingNote;
   randomNote;
   randomNoteVariants;
-  constructor(scaleTypes: Readonly<string[]>) {
-    super(scaleTypes);
+  constructor(options: Readonly<optionType>) {
+    super(options);
 
-    this.scale = create_scale(random_note_single_accidental(), scaleTypes.randomItem());
+    this.scale = create_scale(random_note_single_accidental(), options[0].options.randomItem());
     this.randomNote = scale_notes(this.scale).randomItem();
 
     this.scaleStringMissingNote = this.scale.notes
@@ -47,10 +49,9 @@ export const MissingScaleNote: Quiz<string[]> = class extends TextQuizBase<strin
   static meta() {
     return {
       get getAllOptions() {
-        return [
+        return [{ name : "Scale types", options: [
           "major",
           "aeolian",
-          "major pentatonic",
           "dorian",
           "phrygian",
           "lydian",
@@ -58,7 +59,8 @@ export const MissingScaleNote: Quiz<string[]> = class extends TextQuizBase<strin
           "locrian",
           "harmonic minor",
           "melodic minor",
-        ];
+        ]
+      }] as const;
       },
       name: "Name the missing scale note",
       description: "Choose the correct name for the missing scale note",

@@ -10,8 +10,10 @@ import { noteSingleAccidental, toOctave, note_transpose, random_note_single_acci
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 import { melodyGenerator, melodyPattern, melodySingulate } from "../melodyGenerator";
 
-export const SingHarmony: Quiz<Progression["description"][]> = class extends SingingQuizBase<Progression["description"][]> {
-  verifyOptions(_: Progression["description"][]): boolean {
+type optionType = [{ name : string, options : Progression["description"][]}]
+
+export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optionType> {
+  verifyOptions(_: optionType): boolean {
     return true;
   }
 
@@ -25,10 +27,10 @@ export const SingHarmony: Quiz<Progression["description"][]> = class extends Sin
   progressionIsDiatonic;
   progressionIsMajor;
   keyInfo;
-  constructor(progressionDescriptions: Readonly<Progression["description"][]>) {
-    super(progressionDescriptions);
+  constructor(options: Readonly<optionType>) {
+    super(options);
     this.randomNote = random_note_single_accidental();
-    const selectProgressions = progressions.filter(p => progressionDescriptions.some(description => description === p.description));
+    const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().randomItem();
     this.progressionTags = randomProgression.tags;
     this.progressionDescription = randomProgression.description;
@@ -111,7 +113,7 @@ export const SingHarmony: Quiz<Progression["description"][]> = class extends Sin
   static meta() {
     return {
       get getAllOptions() {
-        return progressions.map(p => p.description)
+        return [{ name : "Progressions", options : progressions.map(p => p.description) as Progression["description"][] }] as const
       },
       name: "Sing harmonic progressions",
       description: "Sing the harmonic progression as solfege degrees",

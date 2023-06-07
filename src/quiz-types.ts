@@ -5,7 +5,12 @@ export interface IQuiz {
   cleanup() : Promise<void>
 }
 
-export interface Quiz<T> {
+export interface IQuizOptions {
+  name: string;
+  options : any
+}
+
+export interface Quiz<T extends IQuizOptions[]> {
   new (options: Readonly<T>): IQuiz;
   meta(): {
     getAllOptions: Readonly<T>;

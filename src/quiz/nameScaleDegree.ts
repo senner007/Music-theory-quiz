@@ -12,18 +12,20 @@ import {
 } from "../utils";
 import { TextQuizBase } from "./quizBase/textBase";
 
-export const NameScaleDegree: Quiz<string[]> = class extends TextQuizBase<string[]> {
-  verifyOptions(scaleTypes: string[]): boolean {
-    return scaleTypes.every((scaleType) => allScaleTypes.includes(scaleType));
+type optionType = [{ name : string, options : readonly string[] }]
+
+export const NameScaleDegree: Quiz<optionType> = class extends TextQuizBase<optionType> {
+  verifyOptions(options: optionType): boolean {
+    return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   scale;
   randomDegree;
   randomNote;
   randomNoteVariants;
-  constructor(scaleTypes: Readonly<string[]>) {
-    super(scaleTypes);
-    this.scale = create_scale(random_note_single_accidental(), scaleTypes.randomItem());
+  constructor(options: Readonly<optionType>) {
+    super(options);
+    this.scale = create_scale(random_note_single_accidental(), options[0].options.randomItem());
     const randomIndex = random_index(this.scale.notes);
     this.randomNote = scale_note_at_index(this.scale, randomIndex);
     this.randomDegree = number_to_degree(randomIndex);
@@ -46,7 +48,7 @@ export const NameScaleDegree: Quiz<string[]> = class extends TextQuizBase<string
   static meta() {
     return {
       get getAllOptions() {
-        return [
+        return [{ name : "Scale types", options: [
           "major",
           "aeolian",
           "dorian",
@@ -56,7 +58,8 @@ export const NameScaleDegree: Quiz<string[]> = class extends TextQuizBase<string
           "locrian",
           "harmonic minor",
           "melodic minor",
-        ];
+        ]
+      }] as const;
       },
       name: "Name the scale degree note",
       description: "Choose the correct note name for the scale degree",

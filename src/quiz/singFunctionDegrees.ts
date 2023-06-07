@@ -17,9 +17,11 @@ import {
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
-export const SingingFunctionalDegrees: Quiz<Syllable[]> = class extends SingingQuizBase<Syllable[]> {
-  verifyOptions(syllables: Syllable[]): boolean {
-    return syllables.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
+type optionType = [{ name : string, options : Syllable[]}]
+
+export const SingingFunctionalDegrees: Quiz<optionType> = class extends SingingQuizBase<optionType> {
+  verifyOptions(options: optionType): boolean {
+    return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
   randomNote: noteSingleAccidental;
@@ -27,13 +29,13 @@ export const SingingFunctionalDegrees: Quiz<Syllable[]> = class extends SingingQ
   audio;
   stepnumber: number = 12; // in options
   override tempo = 1000;
-  constructor(syllables: Readonly<Syllable[]>) {
-    super(syllables);
+  constructor(options: Readonly<optionType>) {
+    super(options);
     this.randomNote = random_note_single_accidental();
 
     const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
-      return syllables.includes(syllables_in_key_of_c[key] as Syllable);
+      return options[0].options.includes(syllables_in_key_of_c[key] as Syllable);
     });
 
     const distanceToKey = Interval.distance("C", this.randomNote);
@@ -97,8 +99,8 @@ export const SingingFunctionalDegrees: Quiz<Syllable[]> = class extends SingingQ
 
   static meta() {
     return {
-      get getAllOptions(): Syllable[] {
-        return ["Do", "Re", "Me", "Mi", "Fa", "Fi", "So", "La", "Ti"];
+      get getAllOptions(): optionType {
+        return [{ name : "Syllables", options : ["Do", "Re", "Me", "Mi", "Fa", "Fi", "So", "La", "Ti"]}];
       },
       name: "Sing functional solfege degrees",
       description: "Sing the solfege degrees shown in the table below",

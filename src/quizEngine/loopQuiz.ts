@@ -1,28 +1,30 @@
-import { Quiz } from "../quiz-types";
+import { IQuizOptions, Quiz } from "../quiz-types";
 // @ts-ignore
 // import InterruptedPrompt from "inquirer-interrupted-prompt";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 
 
-export async function loopQuiz(QuizClass: Quiz<any>) {
+export async function loopQuiz(QuizClass: Quiz<IQuizOptions[]>) {
 
-  var options : string[] = [];
-  const allOptions = QuizClass.meta().getAllOptions as string[];
+  var options : IQuizOptions[] = [];
+  const allOptions = QuizClass.meta().getAllOptions;
   if (!allOptions.isEmpty()) {
-    try {
-      options = await LogAsync.checkboxes(
-        allOptions,
-        "Choose quiz options or quit(q)",
-        "q"
-      );
-    } catch (err) {
-      return;
+    for (const optionType of allOptions) {
+      try {
+        const selectOptions = await LogAsync.checkboxes(
+          optionType.options,
+          "Choose quiz options or quit(q)",
+          "q"
+        );
+        options.push({ name : optionType.name, options: selectOptions})
+      } catch (err) {
+        return;
+      }
     }
   }
  
   while (true) {
-
     const quiz = new QuizClass(options);
 
     Log.clear();

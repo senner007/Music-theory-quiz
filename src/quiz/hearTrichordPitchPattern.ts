@@ -12,9 +12,11 @@ import { INotePlay } from "../midiplay";
 
 const pitchPatternKeyNames = ObjectKeys(pitchPatterns);
 
-export const HearTrichordPitchPatterns: Quiz<pitchPatternName[]> = class extends ListeningQuizBase<pitchPatternName[]> {
-  verifyOptions(optionsPitchPatterns: pitchPatternName[]): boolean {
-    return optionsPitchPatterns.every((pattern) => pitchPatternKeyNames.includes(pattern));
+type optionsType = [{ name : string, options : readonly pitchPatternName[]}]
+
+export const HearTrichordPitchPatterns: Quiz<optionsType> = class extends ListeningQuizBase<optionsType> {
+  verifyOptions(options: optionsType): boolean {
+    return options[0].options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
 
   randomNote;
@@ -22,10 +24,10 @@ export const HearTrichordPitchPatterns: Quiz<pitchPatternName[]> = class extends
   randomPatternName;
   audioChord;
   audioArpeggio;
-  constructor(pitchPatterns: Readonly<pitchPatternName[]>) {
-    super(pitchPatterns);
+  constructor(options: Readonly<optionsType>) {
+    super(options);
     this.randomNote = random_note_single_accidental();
-    this.randomPatternName = pitchPatterns.randomItem();
+    this.randomPatternName = options[0].options.randomItem();
     this.randomPitchPattern = getPattern(this.randomPatternName);
     const [chord, arppeggio] = this.prepareAudio();
     this.audioChord = chord;
@@ -73,7 +75,7 @@ export const HearTrichordPitchPatterns: Quiz<pitchPatternName[]> = class extends
   static meta() {
     return {
       get getAllOptions() {
-        return pitchPatternKeyNames;
+        return [{ name : "Pitch patterns", options : pitchPatternKeyNames }] as const;
       },
       name: "Hear trichord pitch patterns",
       description: "Identify the trichord pitch pattern that is being played",

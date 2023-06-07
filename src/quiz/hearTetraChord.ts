@@ -5,10 +5,11 @@ import { Quiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
+type optionType = [{ name : string, options : readonly string[] }]
 
-export const HearTetraChord: Quiz<string[]> = class extends ListeningQuizBase<string[]> {
-  verifyOptions(scaleTypes: string[]): boolean {
-    return scaleTypes.every((scaleType) => allScaleTypes.includes(scaleType));
+export const HearTetraChord: Quiz<optionType> = class extends ListeningQuizBase<optionType> {
+  verifyOptions(options: optionType): boolean {
+    return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   randomNote;
@@ -26,11 +27,11 @@ export const HearTetraChord: Quiz<string[]> = class extends ListeningQuizBase<st
     .map(note => { return { noteNames: [note], duration: 1, channel : 1 } })
   }
 
-  constructor(scaleTypes: Readonly<string[]>) {
-    super(scaleTypes);
+  constructor(options: Readonly<optionType>) {
+    super(options);
     this.randomNote = random_note_single_accidental();
 
-    const scales: Scale[] = scaleTypes.map(scaleType => 
+    const scales: Scale[] = options[0].options.map(scaleType => 
       create_scale(this.randomNote, scaleType)
     );
 
@@ -64,13 +65,13 @@ export const HearTetraChord: Quiz<string[]> = class extends ListeningQuizBase<st
   static meta() {
     return {
       get getAllOptions() {
-        return [
+        return [{ name : "Scale types", options : [
           "major",
           "aeolian",
           "phrygian",
           "lydian",
           "altered",
-        ];
+      ]}] as const
       },
       name: "Hear tetrachord",
       description: "Choose the correct spelling after listening to the tetrachord",

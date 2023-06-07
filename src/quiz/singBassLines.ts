@@ -12,9 +12,10 @@ import {
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
+type optionType = [{ name : string, options : Progression["description"][]}]
 
-export const SingBassLines: Quiz<Progression["description"][]> = class extends SingingQuizBase<Progression["description"][]> {
-  verifyOptions(_: Progression["description"][]): boolean {
+export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<optionType> {
+  verifyOptions(_: optionType): boolean {
     return true;
   }
 
@@ -25,10 +26,10 @@ export const SingBassLines: Quiz<Progression["description"][]> = class extends S
   progressionDescription
   progressionIsDiatonic;
   progressionIsMajor;
-  constructor(progressionDescriptions: Readonly<Progression["description"][]>) {
-    super(progressionDescriptions);
+  constructor(options: Readonly<optionType>) {
+    super(options);
     this.randomNote = random_note_single_accidental();
-    const selectProgressions = progressions.filter(p => progressionDescriptions.some(description => description === p.description));
+    const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().randomItem();
 
     this.progressionIsDiatonic = randomProgression.isDiatonic;
@@ -86,7 +87,7 @@ export const SingBassLines: Quiz<Progression["description"][]> = class extends S
   static meta() {
     return {
       get getAllOptions() {
-        return progressions.map(p => p.description)
+        return [{ name : "BAss lines", options : progressions.map(p => p.description) as Progression["description"][] }] as const
       },
       name: "Sing bass lines",
       description: "Sing the harmonic progression bass line as solfege degrees",

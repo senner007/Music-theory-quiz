@@ -3,9 +3,11 @@ import { Quiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
-export const HearScales: Quiz<string[]> = class extends ListeningQuizBase<string[]> {
-  verifyOptions(scaleTypes: string[]): boolean {
-    return scaleTypes.every((scaleType) => allScaleTypes.includes(scaleType));
+type optionType = [{ name : string, options : readonly string[] }]
+
+export const HearScales: Quiz<optionType> = class extends ListeningQuizBase<optionType> {
+  verifyOptions(options: optionType): boolean {
+    return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   randomNote;
@@ -13,11 +15,11 @@ export const HearScales: Quiz<string[]> = class extends ListeningQuizBase<string
   similarScales;
   audio;
   octave: octave = "4";
-  constructor(scaleTypes: Readonly<string[]>) {
-    super(scaleTypes);
+  constructor(options: Readonly<optionType>) {
+    super(options);
     const nChoices = 7; // should be option parameter
     this.randomNote = random_note_single_accidental();
-    const allScales = scaleTypes.shuffleArray().map(scaleName => {
+    const allScales = options[0].options.shuffleArray().map(scaleName => {
       const scale = create_scale(this.randomNote, scaleName);
       return { scale: scale, description: scale.type + " - " + scale.intervals };
     });
@@ -71,7 +73,7 @@ export const HearScales: Quiz<string[]> = class extends ListeningQuizBase<string
   static meta() {
     return {
       get getAllOptions() {
-        return [
+        return [{ name : "Scale options", options : [
             "aeolian",
             "altered",
             "augmented",
@@ -164,7 +166,7 @@ export const HearScales: Quiz<string[]> = class extends ListeningQuizBase<string
             "vietnamese 1",
             "whole tone",
             "whole tone pentatonic",
-        ];
+        ]}] as const;
       },
       name: "Hear scales",
       description: "Identify the name of the scale that is being played",
