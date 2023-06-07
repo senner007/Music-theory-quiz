@@ -10,7 +10,8 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/src/main.ts",
             "preLaunchTask": "npm: build",
-            "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+            "console": "externalTerminal"
         },
         {
             "type": "node",
