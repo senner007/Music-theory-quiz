@@ -1,14 +1,27 @@
 import { Quiz } from "../quiz-types";
 // @ts-ignore
-import InterruptedPrompt from "inquirer-interrupted-prompt";
+// import InterruptedPrompt from "inquirer-interrupted-prompt";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 
+
 export async function loopQuiz(QuizClass: Quiz<any>) {
+
+  var options;
+  try {
+    options = await LogAsync.checkboxes(
+      QuizClass.meta().getAllOptions as string[],
+      "Choose quiz options or quit(q)",
+      "q"
+    );
+  } catch (err) {
+    return;
+  }
+ 
 
   while (true) {
 
-    const quiz = new QuizClass(QuizClass.meta().getAllOptions);
+    const quiz = new QuizClass(options);
 
     Log.clear();
     Log.write(QuizClass.meta().description);

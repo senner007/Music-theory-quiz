@@ -9,11 +9,10 @@ export const WhichTriad: Quiz<string[]> = class extends TextQuizBase<string[]> {
   }
 
   randomChord;
-  chordPossibilities = ["major", "minor", "diminished", "augmented"];
   chordTypesAndNotes;
   constructor(chordTypes: Readonly<string[]>) {
     super(chordTypes);
-    const chordOptions = this.chordPossibilities.map((chordType) => create_chord(random_note_single_accidental(), chordType));
+    const chordOptions = chordTypes.map((chordType) => create_chord(random_note_single_accidental(), chordType));
     this.chordTypesAndNotes = chordOptions
       .map((chord) => {
         return { chord: chord, notes: chord.notes.shuffleArray().commaSequence() };

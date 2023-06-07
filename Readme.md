@@ -36,7 +36,7 @@
 - npm run prod
 
 ## Todos:
-- choose between quiz options on start with audio tempo settings slider
+- add multiple options screens
 - play mp3 harmonic dictations with node ffplay
 - add purpose and philosophy
 - release .exe files
