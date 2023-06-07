@@ -8,8 +8,8 @@ describe("Test progression transposition methods", () => {
     const bounds: transpositionBounds = { high: "B5", low: "C4" }
 
     const firstProgression: IProgression = {
-        chords: progressions[0].chords.map((c) => romanNumeralChord(c)),
-        bass: progressions[0].bass,
+        chords: progressions[0].progressions[0].chords.map((c) => romanNumeralChord(c)),
+        bass: progressions[0].progressions[0].bass,
     };
     const highestNoteInChords = Note.sortedNames(
         firstProgression.chords.flatMap((n) => n),
