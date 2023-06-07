@@ -7,18 +7,20 @@ import { LogAsync } from "../logger/logAsync";
 
 export async function loopQuiz(QuizClass: Quiz<any>) {
 
-  var options;
-  try {
-    options = await LogAsync.checkboxes(
-      QuizClass.meta().getAllOptions as string[],
-      "Choose quiz options or quit(q)",
-      "q"
-    );
-  } catch (err) {
-    return;
+  var options : string[] = [];
+  const allOptions = QuizClass.meta().getAllOptions as string[];
+  if (!allOptions.isEmpty()) {
+    try {
+      options = await LogAsync.checkboxes(
+        allOptions,
+        "Choose quiz options or quit(q)",
+        "q"
+      );
+    } catch (err) {
+      return;
+    }
   }
  
-
   while (true) {
 
     const quiz = new QuizClass(options);

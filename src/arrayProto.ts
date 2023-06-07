@@ -10,6 +10,7 @@ declare global {
       commaSequence(): string;
       shuffleArray(): Readonly<Array<T>>;
       randomItem(): T;
+      isEmpty(): boolean
     }
     interface ReadonlyArray<T> {
       shuffleArray(): Readonly<Array<T>>;
@@ -17,8 +18,15 @@ declare global {
       commaSequence(): string;
       toOctaveAscending(this: Readonly<noteAllAccidental[]>, octave: octave): Readonly<Array<noteAllAccidentalOctave>>;
       transposeBy<U extends Readonly<noteAllAccidental[]> | Readonly<noteAllAccidentalOctave[]>>(this: U, interval: string): Readonly<U>;
+      isEmpty(): boolean;
     }
   }
+
+  Array.prototype.isEmpty = function<U extends any[]> (
+    this: U
+  ) : boolean {
+    return this.length === 0
+  };
 
   Array.prototype.transposeBy = function<U extends noteAllAccidental[] | noteAllAccidentalOctave[]> (
     this: U,
