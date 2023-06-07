@@ -30,18 +30,18 @@ export function melodyGenerator(progression: IProgression, melodyGenerator: Melo
 }
 
 
-// export function melodySingulate(
-//     currentChord: readonly noteAllAccidentalOctave[], 
-//     previousChord: readonly noteAllAccidentalOctave[], 
-//     nextChord: readonly noteAllAccidentalOctave[]
-//     ): IMelodyFragment[] {
+export function melodySingulate(
+    currentChord: readonly noteAllAccidentalOctave[], 
+    previousChord: readonly noteAllAccidentalOctave[], 
+    nextChord: readonly noteAllAccidentalOctave[]
+    ): IMelodyFragment[] {
 
-//     const topNote = currentChord.at(-1);
-//     if (topNote === undefined) {
-//         throw new Error();
-//     }
-//     return { note: [topNote], duration: 4 }
-// }
+    const topNote = currentChord.at(-1);
+    if (topNote === undefined) {
+        throw new Error();
+    }
+    return [{ note: [topNote], duration: 4 }]
+}
 
 export function melodyPattern(
     currentChord: readonly noteAllAccidentalOctave[], 

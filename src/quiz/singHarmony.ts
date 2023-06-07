@@ -8,7 +8,7 @@ import { ITableHeader } from "../solfege";
 import { transposeProgression } from "../transposition";
 import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
-import { melodyGenerator, melodyPattern } from "../melodyGenerator";
+import { melodyGenerator, melodyPattern, melodySingulate } from "../melodyGenerator";
 
 export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Progression[]> {
   verifyOptions(_: Progression[]): boolean {
@@ -45,7 +45,7 @@ export const SingHarmony: Quiz<Progression[]> = class extends SingingQuizBase<Pr
       return getNumeralBySymbol(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
     });
 
-    this.melody = melodyGenerator(this.randomProgressionInKey, melodyPattern);
+    this.melody = melodyGenerator(this.randomProgressionInKey, melodySingulate);
 
   }
 
