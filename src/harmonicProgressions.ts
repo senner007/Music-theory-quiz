@@ -129,15 +129,22 @@ const level_circle_of_fifths = JSON.parse(fs.readFileSync("src/progressions/harm
 const level_circle_of_fifths_extended = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths-extended.json") as any) as ProgressionsJSON;
 
 export const progressions = [
-  ...level_1.progressions,
-  ...level_2.progressions,
-  ...level_3.progressions,
-  ...level_circle_of_fifths.progressions,
-  ...level_circle_of_fifths_extended.progressions
+  level_1,
+  level_2,
+  level_3,
+  level_circle_of_fifths,
+  level_circle_of_fifths_extended
 ];
 
 export function JSONContentVerify() {
   const progressionsTemp: string[] = [];
+  const progressions = [
+    ...level_1.progressions,
+    ...level_2.progressions,
+    ...level_3.progressions,
+    ...level_circle_of_fifths.progressions,
+    ...level_circle_of_fifths_extended.progressions
+  ];
   progressions.forEach((key, keyIndex) => {
     const chordsString = key.chords.join("") + key.bass.join("");
     if (progressionsTemp.includes(chordsString)) {

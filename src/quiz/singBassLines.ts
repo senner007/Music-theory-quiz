@@ -13,8 +13,8 @@ import {
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
 
-export const SingBassLines: Quiz<Progression[]> = class extends SingingQuizBase<Progression[]> {
-  verifyOptions(_: Progression[]): boolean {
+export const SingBassLines: Quiz<Progression["description"][]> = class extends SingingQuizBase<Progression["description"][]> {
+  verifyOptions(_: Progression["description"][]): boolean {
     return true;
   }
 
@@ -25,10 +25,12 @@ export const SingBassLines: Quiz<Progression[]> = class extends SingingQuizBase<
   progressionDescription
   progressionIsDiatonic;
   progressionIsMajor;
-  constructor(progressions: Readonly<Progression[]>) {
-    super(progressions);
+  constructor(progressionDescriptions: Readonly<Progression["description"][]>) {
+    super(progressionDescriptions);
     this.randomNote = random_note_single_accidental();
-    const randomProgression = progressions.randomItem();
+    const selectProgressions = progressions.filter(p => progressionDescriptions.some(description => description === p.description));
+    const randomProgression = selectProgressions.map(p => p.progressions).flat().randomItem();
+
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
     this.progressionDescription = randomProgression.description;
@@ -84,7 +86,7 @@ export const SingBassLines: Quiz<Progression[]> = class extends SingingQuizBase<
   static meta() {
     return {
       get getAllOptions() {
-        return progressions;
+        return progressions.map(p => p.description)
       },
       name: "Sing bass lines",
       description: "Sing the harmonic progression bass line as solfege degrees",
