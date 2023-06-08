@@ -7,9 +7,16 @@ import { ITableHeader } from "../solfege";
 import { transposeProgression } from "../transposition";
 import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental, getKey } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
-import { melodyGenerator, melodyPattern, melodySingulate } from "../melodyGenerator";
+import { MelodyPattern_001, MelodySingulate, melodyPattern} from "../melodyGenerator";
 
-type optionType = [{ name : string, options : Progression["description"][]}]
+type optionType = [
+  { name : string, options : Progression["description"][]},
+  { name : string, options : string[]}
+]
+
+const melodicPatterns = [
+  MelodySingulate, MelodyPattern_001
+]
 
 export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optionType> {
   verifyOptions(_: optionType): boolean {
@@ -29,7 +36,7 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
   constructor(options: Readonly<optionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
-    const selectProgressions = progressions.filter(p => options.firstAndOnly().options.some(description => description === p.description));
+    const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().randomItem();
     this.progressionTags = randomProgression.tags;
     this.progressionDescription = randomProgression.description;
@@ -48,7 +55,8 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
       return getNumeralBySymbol(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
     });
 
-    this.melody = melodyGenerator(this.randomProgressionInKey, melodySingulate);
+    const randomMelodyPatternDescription =  options[1].options.randomItem();
+    this.melody = melodyPattern(this.randomProgressionInKey, melodicPatterns.filter(pattern => pattern.description === randomMelodyPatternDescription).firstAndOnly());
 
   }
 
@@ -113,7 +121,11 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
   static meta() {
     return {
       get getAllOptions() {
-        return [{ name : "Progressions", options : progressions.map(p => p.description) as Progression["description"][] }] as const
+        return [
+          { name : "Progressions", options : progressions.map(p => p.description) as Progression["description"][] },
+          { name : "Melodic Patterns", options : melodicPatterns.map(m =>  m.description) as string[] },
+        
+        ] as const
       },
       name: "Sing harmonic progressions",
       description: "Sing the harmonic progression as solfege degrees",
