@@ -1,4 +1,3 @@
-import { Interval } from "@tonaljs/tonal";
 import { IntervalDistance } from "../harmonicProgressions";
 import { INotePlay } from "../midiplay";
 import { IQuiz, Quiz } from "../quiz-types";
@@ -13,7 +12,7 @@ import {
   toOctave,
   note_transpose,
   ObjectKeys,
-  noteAllAccidental
+  getIntervalDistance
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
@@ -38,7 +37,7 @@ export const SingingFunctionalDegrees: Quiz<optionType> = class extends SingingQ
       return options[0].options.includes(syllables_in_key_of_c[key] as Syllable);
     });
 
-    const distanceToKey = Interval.distance("C", this.randomNote);
+    const distanceToKey = getIntervalDistance("C", this.randomNote)
     const syllableNotesTransposed = optionSyllableNotesInC.transposeBy(distanceToKey);
 
     this.audio = [...Array(this.stepnumber).keys()].map((_) => {

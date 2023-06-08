@@ -1,4 +1,4 @@
-import { Note, ScaleType, ChordType, Interval } from "@tonaljs/tonal";
+import { Note, ScaleType, ChordType, Interval, Key } from "@tonaljs/tonal";
 import { Scale } from "@tonaljs/scale";
 // @ts-ignore
 import InterruptedPrompt from "inquirer-interrupted-prompt";
@@ -177,4 +177,8 @@ export function getIntervalInteger(first: string, second: string) {
 
 export function intervalToAbsolute(interval: intervalType) {
   return interval.replace(/[-]/g, "") as intervalType;
+}
+
+export function getKey(note: noteSingleAccidental, keyType : "minor" | "major") {
+  return keyType === "major" ? Key.majorKey(note) : Key.minorKey(note)
 }

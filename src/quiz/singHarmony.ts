@@ -1,4 +1,3 @@
-import { Chord, Key } from "@tonaljs/tonal";
 import chalk from "chalk";
 import { romanNumeralChord, progressions, Progression } from "../harmonicProgressions";
 import { keyInfo, getNumeralBySymbol } from "../keyInfo";
@@ -6,7 +5,7 @@ import { INotePlay } from "../midiplay";
 import { Quiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
 import { transposeProgression } from "../transposition";
-import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental } from "../utils";
+import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental, getKey } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 import { melodyGenerator, melodyPattern, melodySingulate } from "../melodyGenerator";
 
@@ -36,7 +35,8 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
     this.progressionDescription = randomProgression.description;
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
-    this.keyInfo = keyInfo(this.progressionIsMajor ? Key.majorKey(this.randomNote) : Key.minorKey(this.randomNote));
+    const keyType = getKey(this.randomNote, this.progressionIsMajor ? "major" : "minor")
+    this.keyInfo = keyInfo(keyType);
     const randomProgressionInC = {
       chords: randomProgression.chords.map((c) => romanNumeralChord(c)),
       bass: randomProgression.bass,

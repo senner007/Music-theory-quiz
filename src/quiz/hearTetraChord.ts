@@ -1,5 +1,4 @@
 
-import { Scale } from "@tonaljs/scale";
 import { random_note_single_accidental, allScaleTypes, create_scale, scale_notes, octave } from "../utils";
 import { Quiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
@@ -31,7 +30,7 @@ export const HearTetraChord: Quiz<optionType> = class extends ListeningQuizBase<
     super(options);
     this.randomNote = random_note_single_accidental();
 
-    const scales: Scale[] = options[0].options.map(scaleType => 
+    const scales = options[0].options.map(scaleType => 
       create_scale(this.randomNote, scaleType)
     );
 
@@ -54,7 +53,7 @@ export const HearTetraChord: Quiz<optionType> = class extends ListeningQuizBase<
     return "Which is the correct spelling?";
   }
 
-  answer(): string {
+  answer() {
     return this.randomTetraChord.commaSequence();
   }
 

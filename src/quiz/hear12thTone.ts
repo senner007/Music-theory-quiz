@@ -1,6 +1,5 @@
-import { base_notes, chromatic_scale_notes,create_scale, octave } from "../utils";
+import { base_notes, chromatic_scale_notes,create_scale, getIntervalDistance, octave } from "../utils";
 import { IQuiz, Quiz } from "../quiz-types";
-import { Interval} from "@tonaljs/tonal";
 import chalk from "chalk";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
@@ -45,7 +44,7 @@ export const Hear12thTone: Quiz<never []> = class extends ListeningQuizBase<neve
     const notesWithIntervalsRows = chromaticScaleShuffledInOctave
         .map((note, index) => {
             if (index === 0) return `${note}\n`;
-            const interval = Interval.distance(chromaticScaleShuffledInOctave[index - 1], note);
+            const interval = getIntervalDistance(chromaticScaleShuffledInOctave[index - 1], note);
             return `${note}, ${interval}\n`;
         }).join("")
     const answer = `Note: ${chalk.green(this.missingNote)}\nThe intervals are:\n${notesWithIntervalsRows}`

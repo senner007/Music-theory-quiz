@@ -1,4 +1,3 @@
-import { Interval } from "@tonaljs/tonal";
 import chalk from "chalk";
 import { progressions, Progression } from "../harmonicProgressions";
 import { INotePlay } from "../midiplay";
@@ -9,6 +8,7 @@ import {
   toOctave,
   note_transpose,
   random_note_single_accidental,
+  getIntervalDistance,
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
@@ -36,7 +36,7 @@ export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<opt
     this.progressionIsMajor = randomProgression.isMajor;
     this.progressionDescription = randomProgression.description;
 
-    const keyDistance = Interval.distance("C", this.randomNote)
+    const keyDistance = getIntervalDistance("C", this.randomNote)
     this.randomBassLineInKey = randomProgression.bass.transposeBy(keyDistance);
   }
 
@@ -87,7 +87,7 @@ export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<opt
   static meta() {
     return {
       get getAllOptions() {
-        return [{ name : "BAss lines", options : progressions.map(p => p.description) as Progression["description"][] }] as const
+        return [{ name : "Bass lines", options : progressions.map(p => p.description) as Progression["description"][] }] as const
       },
       name: "Sing bass lines",
       description: "Sing the harmonic progression bass line as solfege degrees",
