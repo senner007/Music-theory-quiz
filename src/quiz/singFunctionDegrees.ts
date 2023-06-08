@@ -34,7 +34,7 @@ export const SingingFunctionalDegrees: Quiz<optionType> = class extends SingingQ
 
     const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
-      return options[0].options.includes(syllables_in_key_of_c[key] as Syllable);
+      return options.firstAndOnly().options.includes(syllables_in_key_of_c[key] as Syllable);
     });
 
     const distanceToKey = getIntervalDistance("C", this.randomNote)

@@ -29,7 +29,7 @@ export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<opt
   constructor(options: Readonly<optionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
-    const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
+    const selectProgressions = progressions.filter(p => options.firstAndOnly().options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().randomItem();
 
     this.progressionIsDiatonic = randomProgression.isDiatonic;

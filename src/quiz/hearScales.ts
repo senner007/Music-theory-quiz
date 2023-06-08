@@ -19,7 +19,7 @@ export const HearScales: Quiz<optionType> = class extends ListeningQuizBase<opti
     super(options);
     const nChoices = 7; // should be option parameter
     this.randomNote = random_note_single_accidental();
-    const allScales = options[0].options.shuffleArray().map(scaleName => {
+    const allScales = options.firstAndOnly().options.shuffleArray().map(scaleName => {
       const scale = create_scale(this.randomNote, scaleName);
       return { scale: scale, description: scale.type + " - " + scale.intervals };
     });

@@ -16,7 +16,7 @@ type optionType = [{ name : string, options : readonly string[] }]
 
 export const NameScaleDegree: Quiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
-    return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   scale;

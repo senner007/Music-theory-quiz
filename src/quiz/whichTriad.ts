@@ -7,14 +7,14 @@ type optionType = [{ name : string, options : readonly string[] }]
 
 export const WhichTriad: Quiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
-    return options[0].options.every((chordType) => allChordTypes.includes(chordType));
+    return options.firstAndOnly().options.every((chordType) => allChordTypes.includes(chordType));
   }
 
   randomChord;
   chordTypesAndNotes;
   constructor(options: Readonly<optionType>) {
     super(options);
-    const chordOptions = options[0].options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
+    const chordOptions = options.firstAndOnly().options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
     this.chordTypesAndNotes = chordOptions
       .map((chord) => {
         return { chord: chord, notes: chord.notes.shuffleArray().commaSequence() };

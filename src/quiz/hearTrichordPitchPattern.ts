@@ -16,7 +16,7 @@ type optionsType = [{ name : string, options : readonly pitchPatternName[]}]
 
 export const HearTrichordPitchPatterns: Quiz<optionsType> = class extends ListeningQuizBase<optionsType> {
   verifyOptions(options: optionsType): boolean {
-    return options[0].options.every((pattern) => pitchPatternKeyNames.includes(pattern));
+    return options.firstAndOnly().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
 
   randomNote;

@@ -8,7 +8,7 @@ type optionType = [{ name : string, options : readonly string[] }]
 
 export const HearTetraChord: Quiz<optionType> = class extends ListeningQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
-    return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   randomNote;
@@ -30,7 +30,7 @@ export const HearTetraChord: Quiz<optionType> = class extends ListeningQuizBase<
     super(options);
     this.randomNote = random_note_single_accidental();
 
-    const scales = options[0].options.map(scaleType => 
+    const scales = options.firstAndOnly().options.map(scaleType => 
       create_scale(this.randomNote, scaleType)
     );
 

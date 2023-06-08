@@ -1,3 +1,4 @@
+import { LogError } from "./dev-utils";
 import { MathFloor } from "./random-funcs";
 import { transpose_to_ascending } from "./transposition";
 import { noteAllAccidental, noteAllAccidentalOctave, note_transpose, toOctave, random_index, octave } from "./utils";
@@ -11,6 +12,7 @@ declare global {
       shuffleArray(): Readonly<Array<T>>;
       randomItem(): T;
       isEmpty(): boolean
+      firstAndOnly(): T
     }
     interface ReadonlyArray<T> {
       shuffleArray(): Readonly<Array<T>>;
@@ -19,6 +21,7 @@ declare global {
       toOctaveAscending(this: Readonly<noteAllAccidental[]>, octave: octave): Readonly<Array<noteAllAccidentalOctave>>;
       transposeBy<U extends Readonly<noteAllAccidental[]> | Readonly<noteAllAccidentalOctave[]>>(this: U, interval: string): Readonly<U>;
       isEmpty(): boolean;
+      firstAndOnly(): T
     }
   }
 
@@ -27,6 +30,16 @@ declare global {
   ) : boolean {
     return this.length === 0
   };
+
+  Array.prototype.firstAndOnly = function<U extends any[]> (
+    this: U
+  ) : boolean {
+    if (this.length !== 1) {
+      LogError("'firstAndOnly' called on array of length not 1")
+    }
+    return this[0];
+  };
+
 
   Array.prototype.transposeBy = function<U extends noteAllAccidental[] | noteAllAccidentalOctave[]> (
     this: U,
