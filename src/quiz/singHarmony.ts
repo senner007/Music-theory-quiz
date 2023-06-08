@@ -7,7 +7,8 @@ import { ITableHeader } from "../solfege";
 import { transposeProgression } from "../transposition";
 import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental, getKey } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
-import { MelodyPattern_001, MelodySingulate, melodyPattern} from "../melodyGenerator";
+import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
+import { MelodyPattern_001, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 
 type optionType = [
   { name : string, options : Progression["description"][]},
@@ -56,7 +57,7 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
     });
 
     const randomMelodyPatternDescription =  options[1].options.randomItem();
-    this.melody = melodyPattern(this.randomProgressionInKey, melodicPatterns.filter(pattern => pattern.description === randomMelodyPatternDescription).firstAndOnly());
+    this.melody = melodyGenerator(this.randomProgressionInKey, melodicPatterns.filter(pattern => pattern.description === randomMelodyPatternDescription).firstAndOnly());
 
   }
 
