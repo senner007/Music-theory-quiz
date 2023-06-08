@@ -51,6 +51,7 @@
 - guess trichord over major/minor
 - refactor transposition logic
 - refactor table creation logic
+- split long melodies into multiple tables
 
 #### Discern/sing notes played together
 - sing note in range C4 - C5
