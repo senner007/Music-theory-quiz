@@ -13,6 +13,7 @@ declare global {
       randomItem(): T;
       isEmpty(): boolean
       firstAndOnly(): T
+      removeDuplicateObjects(): Readonly<Array<T>>
     }
     interface ReadonlyArray<T> {
       shuffleArray(): Readonly<Array<T>>;
@@ -22,7 +23,15 @@ declare global {
       transposeBy<U extends Readonly<noteAllAccidental[]> | Readonly<noteAllAccidentalOctave[]>>(this: U, interval: string): Readonly<U>;
       isEmpty(): boolean;
       firstAndOnly(): T
+      removeDuplicateObjects(): Readonly<Array<T>>
     }
+  }
+
+  Array.prototype.removeDuplicateObjects = function <U extends any[]>(this : U) {
+    return this.filter(
+      (chord, index, self) =>
+        index === self.findIndex((c) => JSON.stringify(c) === JSON.stringify(chord))
+    );
   }
 
   Array.prototype.isEmpty = function<U extends any[]> (

@@ -29,7 +29,9 @@ const romanNumeralsDict = {
   I6: ["E4", "G4", "C5"],
   I64: ["G4", "C5", "E5"],
   I7: [],
-  "V7/IV" : ["C4", "Eb4", "G4", "Bb4"],
+  "V/iv" : ["C4", "E4", "G4"],
+  "V7/iv" : ["C4", "E4", "G4", "Bb4"],
+  "V7/IV" : ["C4", "E4", "G4", "Bb4"],
   V: ["G4", "B4", "D5"],
   V64: ["D4", "G4", "B4"],
   V7: ["G4", "B4", "D5", "F5"],
@@ -47,7 +49,10 @@ const romanNumeralsDict = {
   iio64: ["Ab4", "D5", "F5"],
   ii6: ["F4", "A4", "D5"],
   ii64: ["A4", "D5", "F5"],
+  iino5double1: ["D4", "A4", "D5"],
+  "V/V": ["D4", "F#4", "A4"],
   "V7/V": ["D4", "F#4", "A4", "C5"],
+  "V7/Vno5": ["D4", "F#4", "C5"],
   "V65/V": ["F#4", "A4", "C5", "D5"],
   iii: ["E4", "G4", "B4"],
   iii6: ["G4", "B4", "E5"],
@@ -58,6 +63,8 @@ const romanNumeralsDict = {
   bIII7 : [],
   "bIII+" : [],
   "bIII+M7" : [],
+  "V7/bVI" : ["Eb4", "G4", "Bb4", "Db5"],
+  "V/vi" : ["E4", "G#4", "B4"],
   "V7/vi" : ["E4", "G#4", "B4", "D5"],
   "V65/vi" : ["G#4", "B4", "D5", "E5"],
   "V43no5/vi" : ["D4", "E4", "G#4"],
@@ -81,7 +88,9 @@ const romanNumeralsDict = {
   bVI64: ["Eb4", "Ab4", "C5"],
   bVIM7: [],
   bVI7: [],
+  "V/ii" : ["A4", "C#5", "E5"],
   "V7/ii" : ["A4", "C#5", "E5", "G5"],
+  "V7/bii" : ["Ab4", "C5", "Eb5", "Gb5"],
   viio: ["B4", "D5", "F5"],
   viio64: ["F4", "B4", "D5"],
   viio6: ["D4", "F4", "B4"],
@@ -91,6 +100,9 @@ const romanNumeralsDict = {
   bVII : ["Bb4", "D5", "F5"],
   bVII6 : ["D4", "F4", "Bb4"],
   bVII7 : [],
+  "V/bVII" : ["F4", "A4", "C5"],
+  "V7/bVII" :  ["F4", "A4", "C5", "Eb5"],
+  "V/iii" : ["B4", "D#5", "F#5"],
   "V7/iii" : ["B4", "D#5", "F#5", "A5"]
 } satisfies dict;
 
@@ -124,6 +136,7 @@ type ProgressionsJSON = {
 const level_1 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions.json") as any) as ProgressionsJSON;
 const level_2 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level2.json") as any) as ProgressionsJSON;
 const level_3 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level3.json") as any) as ProgressionsJSON;
+const level_5 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level5.json") as any) as ProgressionsJSON;
 
 const level_circle_of_fifths = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths.json") as any) as ProgressionsJSON;
 const level_circle_of_fifths_extended = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths-extended.json") as any) as ProgressionsJSON;
@@ -132,20 +145,15 @@ export const progressions = [
   level_1,
   level_2,
   level_3,
+  level_5,
   level_circle_of_fifths,
   level_circle_of_fifths_extended
 ];
 
 export function JSONContentVerify() {
   const progressionsTemp: string[] = [];
-  const progressions = [
-    ...level_1.progressions,
-    ...level_2.progressions,
-    ...level_3.progressions,
-    ...level_circle_of_fifths.progressions,
-    ...level_circle_of_fifths_extended.progressions
-  ];
-  progressions.forEach((key, keyIndex) => {
+  const progressionsArray: Progression[] = progressions.map(p => p.progressions).flat();
+  progressionsArray.forEach((key, keyIndex) => {
     const chordsString = key.chords.join("") + key.bass.join("");
     if (progressionsTemp.includes(chordsString)) {
       LogError(

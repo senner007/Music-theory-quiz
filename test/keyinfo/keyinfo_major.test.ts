@@ -37,6 +37,23 @@ describe("Test Roman numerals for given chords in - Major - key", () => {
     expect(getNumeralBySymbol(key, ["E", "A", "C", "G"])).toEqual("vi43");
     expect(getNumeralBySymbol(key, ["B", "A", "B", "D"])).toEqual("vii7");
     expect(getNumeralBySymbol(key, ["A", "B", "D", "F"])).toEqual("viio42");
+    expect(getNumeralBySymbol(key, ["D", "F#", "A"])).toEqual("V/V");
+    expect(getNumeralBySymbol(key, ["C", "E", "G", "Bb"])).toEqual("V7/IV");
+    expect(getNumeralBySymbol(key, ["A", "C#", "E", "G"])).toEqual("V7/ii");
+    expect(getNumeralBySymbol(key, ["D#", "F#", "A", "B"])).toEqual("V65/iii");
+    expect(getNumeralBySymbol(key, ["G", "Bb", "C", "E"])).toEqual("V43/IV");
+    expect(getNumeralBySymbol(key, ["C", "D", "F#", "A"])).toEqual("V42/V");
+    expect(getNumeralBySymbol(key, ["E", "D", "E", "G#"])).toEqual("V7/vi");
+  });
+
+  it("should return correct roman numeral for the secondary dominants", () => {
+    expect(getNumeralBySymbol(key, ["D", "F#", "A"])).toEqual("V/V");
+    expect(getNumeralBySymbol(key, ["F#", "D", "A"])).toEqual("V6/V");
+    expect(getNumeralBySymbol(key, ["A", "D", "F#"])).toEqual("V64/V");
+    expect(getNumeralBySymbol(key, ["D", "F#", "A", "C"])).toEqual("V7/V");
+    expect(getNumeralBySymbol(key, ["F#", "A", "C", "D"])).toEqual("V65/V");
+    expect(getNumeralBySymbol(key, ["A", "F#", "C", "D"])).toEqual("V43/V");
+    expect(getNumeralBySymbol(key, ["C", "F#", "A", "D"])).toEqual("V42/V");
     expect(getNumeralBySymbol(key, ["C", "E", "G", "Bb"])).toEqual("V7/IV");
     expect(getNumeralBySymbol(key, ["A", "C#", "E", "G"])).toEqual("V7/ii");
     expect(getNumeralBySymbol(key, ["D#", "F#", "A", "B"])).toEqual("V65/iii");
