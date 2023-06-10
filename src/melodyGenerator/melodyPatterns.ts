@@ -61,6 +61,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                 { note: [this.topNote], duration: 1 as const },
                 { note: [range.at(1) as TNoteAllAccidentalOctave], duration: 1 as const }, 
                 // create instead a function that gets the closest note below the top note from all minor scales
+                // this should handle modulating progressions also, like Autumn Leaves ending in minor 
                 { note: [this.topNote], duration: 2 as const },
             ]
         }

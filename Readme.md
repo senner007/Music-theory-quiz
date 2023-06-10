@@ -52,6 +52,7 @@
 - refactor transposition logic
 - refactor table creation logic
 - split long melodies into multiple tables
+- indicate when and how the melody is modulating and display in solfege tables.
 
 #### Discern/sing notes played together
 - sing note in range C4 - C5
