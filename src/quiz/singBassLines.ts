@@ -12,10 +12,10 @@ import {
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
-type optionType = [{ name : string, options : TProgression["description"][]}]
+type TOptionType = [{ name : string, options : TProgression["description"][]}]
 
-export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
-  verify_options(_: optionType): boolean {
+export const SingBassLines: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
+  verify_options(_: TOptionType): boolean {
     return true;
   }
 
@@ -26,7 +26,7 @@ export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<op
   progressionDescription
   progressionIsDiatonic;
   progressionIsMajor;
-  constructor(options: Readonly<optionType>) {
+  constructor(options: Readonly<TOptionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options.first_and_only().options.some(description => description === p.description));

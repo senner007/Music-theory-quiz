@@ -3,16 +3,16 @@ import { IQuiz } from "../quiz-types";
 import chalk from "chalk";
 import { TextQuizBase } from "./quizBase/textBase";
 
-type optionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[] }]
 
-export const WhichTriad: IQuiz<optionType> = class extends TextQuizBase<optionType> {
-  verify_options(options: optionType): boolean {
+export const WhichTriad: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+  verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((chordType) => allChordTypes.includes(chordType));
   }
 
   randomChord;
   chordTypesAndNotes;
-  constructor(options: Readonly<optionType>) {
+  constructor(options: Readonly<TOptionType>) {
     super(options);
     const chordOptions = options.first_and_only().options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
     this.chordTypesAndNotes = chordOptions

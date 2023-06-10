@@ -14,15 +14,15 @@ import {
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
-type optionsType = [
+type TOptionsType = [
   { name: string, options: string[] },
   { name: string, options: TIntervalType[] }
 ]
 
-export const SingContextualIntervals: IQuiz<optionsType> = class extends SingingQuizBase<
-  optionsType
+export const SingContextualIntervals: IQuiz<TOptionsType> = class extends SingingQuizBase<
+  TOptionsType
 > {
-  verify_options(_: optionsType): boolean {
+  verify_options(_: TOptionsType): boolean {
     return true;
   }
 
@@ -32,7 +32,7 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
   scaleThirdOctave;
   override tempo = 400;
 
-  constructor(options: Readonly<optionsType>) {
+  constructor(options: Readonly<TOptionsType>) {
     super(options);
     const [scaletypes, intervals] = options;
     this.randomNote = random_note_single_accidental();
@@ -100,7 +100,7 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
 
   static meta() {
     return {
-      get all_options(): optionsType {
+      get all_options(): TOptionsType {
         const scales = [
           "major",
           "aeolian",

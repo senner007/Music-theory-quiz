@@ -12,10 +12,10 @@ import { INotePlay } from "../midiplay";
 
 const pitchPatternKeyNames = ObjectKeys(pitchPatterns);
 
-type optionsType = [{ name : string, options : readonly TPitchPatternName[]}]
+type TOptionsType = [{ name : string, options : readonly TPitchPatternName[]}]
 
-export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends ListeningQuizBase<optionsType> {
-  verify_options(options: optionsType): boolean {
+export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsType> {
+  verify_options(options: TOptionsType): boolean {
     return options.first_and_only().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
 
@@ -24,7 +24,7 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
   randomPatternName;
   audioChord;
   audioArpeggio;
-  constructor(options: Readonly<optionsType>) {
+  constructor(options: Readonly<TOptionsType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
     this.randomPatternName = options[0].options.random_item();

@@ -3,10 +3,10 @@ import { IQuiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
-type optionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[] }]
 
-export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<optionType> {
-  verify_options(options: optionType): boolean {
+export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+  verify_options(options: TOptionType): boolean {
     return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
@@ -15,7 +15,7 @@ export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<opt
   similarScales;
   initAudio;
   octave: TOctave = "4";
-  constructor(options: Readonly<optionType>) {
+  constructor(options: Readonly<TOptionType>) {
     super(options);
     const nChoices = 7; // should be option parameter
     this.randomNote = random_note_single_accidental();

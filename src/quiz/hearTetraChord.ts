@@ -4,10 +4,10 @@ import { IQuiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
-type optionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[] }]
 
-export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase<optionType> {
-  verify_options(options: optionType): boolean {
+export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+  verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
@@ -26,7 +26,7 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
     .map(note => { return { noteNames: [note], duration: 1, channel : 1 } })
   }
 
-  constructor(options: Readonly<optionType>) {
+  constructor(options: Readonly<TOptionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
 

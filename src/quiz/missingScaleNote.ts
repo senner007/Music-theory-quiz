@@ -9,10 +9,10 @@ import {
 import { IQuizInstance, IQuiz } from "../quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
 
-type optionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[] }]
 
-export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<optionType> {
-  verify_options(options: optionType): boolean {
+export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+  verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
@@ -20,7 +20,7 @@ export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<op
   scaleStringMissingNote;
   randomNote;
   randomNoteVariants;
-  constructor(options: Readonly<optionType>) {
+  constructor(options: Readonly<TOptionType>) {
     super(options);
 
     this.scale = create_scale(random_note_single_accidental(), options[0].options.random_item());

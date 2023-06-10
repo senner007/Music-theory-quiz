@@ -11,7 +11,7 @@ import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import { MelodyPattern_001, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
 
-type optionType = [
+type TOptionType = [
   { name : string, options : TProgression["description"][]},
   { name : string, options : string[]}
 ]
@@ -20,8 +20,8 @@ const melodicPatterns = [
   MelodySingulate, MelodyPattern_001
 ]
 
-export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
-  verify_options(_: optionType): boolean {
+export const SingHarmony: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
+  verify_options(_: TOptionType): boolean {
     return true;
   }
 
@@ -35,7 +35,7 @@ export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<opti
   progressionIsDiatonic;
   progressionIsMajor;
   keyInfo;
-  constructor(options: Readonly<optionType>) {
+  constructor(options: Readonly<TOptionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
