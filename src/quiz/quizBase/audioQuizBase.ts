@@ -1,4 +1,4 @@
-import { playMidi, INotePlay } from "../../midiplay";
+import {  INotePlay, play_midi } from "../../midiplay";
 import { IListener, QuizBase } from "./quizBase";
 
 interface IAudioPlayBase {
@@ -35,10 +35,10 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
             .forEach(l => l.acObj?.ac.abort())
           acObj.ac = new AbortController();
           if (audioPart.display) {
-            playMidi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, timerObj, this.tempo);
+            play_midi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, timerObj, this.tempo);
           } else {
             for (let index = 0; index < audioPart.audio.length; index++) {
-              playMidi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, timerObj, this.tempo);
+              play_midi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, timerObj, this.tempo);
             }
           }
 

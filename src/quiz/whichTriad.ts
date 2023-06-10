@@ -1,11 +1,11 @@
 import { random_note_single_accidental, allChordTypes, create_chord } from "../utils";
-import { Quiz } from "../quiz-types";
+import { IQuiz } from "../quiz-types";
 import chalk from "chalk";
 import { TextQuizBase } from "./quizBase/textBase";
 
 type optionType = [{ name : string, options : readonly string[] }]
 
-export const WhichTriad: Quiz<optionType> = class extends TextQuizBase<optionType> {
+export const WhichTriad: IQuiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
     return options.firstAndOnly().options.every((chordType) => allChordTypes.includes(chordType));
   }

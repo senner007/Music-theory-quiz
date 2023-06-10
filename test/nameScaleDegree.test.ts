@@ -1,7 +1,7 @@
 import { it, expect, vi, describe, test, afterEach, Mock } from "vitest";
 import { NameScaleDegree } from "../src/quiz/nameScaleDegree";
 import chalk from "chalk";
-import { MathFloor } from "../src/random-funcs";
+import { math_floor } from "../src/random_func";
 
 describe("Test NameScaleDegree quiz", () => {
 
@@ -16,9 +16,10 @@ describe("Test NameScaleDegree quiz", () => {
   ];
 
   test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
-    (<Mock>MathFloor).mockReturnValue(mathFloorReturnValue);
+
+    (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
     const quiz = new NameScaleDegree(NameScaleDegree.meta().getAllOptions);
-    expect(MathFloor).toBeCalledTimes(4);
+    expect(math_floor).toBeCalledTimes(4);
     expect(quiz.quizHead).toEqual([quizHeadOutput[mathFloorReturnValue]]);
   });
 });

@@ -1,17 +1,18 @@
 import chalk from "chalk";
-import { romanNumeralChord, progressions, Progression } from "../harmonicProgressions";
-import { keyInfo, getNumeralBySymbol } from "../keyInfo";
+import { progressions, TProgression } from "../harmony/harmonicProgressions";
+import { key_info, numeral_by_symbol } from "../keyInfo";
 import { INotePlay } from "../midiplay";
-import { Quiz } from "../quiz-types";
+import { IQuiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
-import { transposeProgression } from "../transposition";
-import { noteSingleAccidental, toOctave, note_transpose, random_note_single_accidental, getKey } from "../utils";
+import { transpose_progression } from "../transposition";
+import { TNoteSingleAccidental, to_octave, note_transpose, random_note_single_accidental, get_key } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import { MelodyPattern_001, MelodySingulate } from "../melodyGenerator/melodyPatterns";
+import { romanNumeralChord } from "../harmony/romanNumerals";
 
 type optionType = [
-  { name : string, options : Progression["description"][]},
+  { name : string, options : TProgression["description"][]},
   { name : string, options : string[]}
 ]
 
@@ -19,12 +20,12 @@ const melodicPatterns = [
   MelodySingulate, MelodyPattern_001
 ]
 
-export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optionType> {
+export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
   verifyOptions(_: optionType): boolean {
     return true;
   }
 
-  randomNote: noteSingleAccidental;
+  randomNote: TNoteSingleAccidental;
   override tempo = 200;
   chords;
   randomProgressionInKey;
@@ -43,17 +44,17 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
     this.progressionDescription = randomProgression.description;
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
-    const keyType = getKey(this.randomNote, this.progressionIsMajor ? "major" : "minor")
-    this.keyInfo = keyInfo(keyType);
+    const keyType = get_key(this.randomNote, this.progressionIsMajor ? "major" : "minor")
+    this.keyInfo = key_info(keyType);
     const randomProgressionInC = {
       chords: randomProgression.chords.map((c) => romanNumeralChord(c)),
       bass: randomProgression.bass,
     };
 
-    this.randomProgressionInKey = transposeProgression(randomProgressionInC, this.randomNote);
+    this.randomProgressionInKey = transpose_progression(randomProgressionInC, this.randomNote);
 
     this.chords = this.randomProgressionInKey.chords.map((n, index: number) => {
-      return getNumeralBySymbol(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
+      return numeral_by_symbol(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
     });
 
     const randomMelodyPatternDescription =  options[1].options.randomItem();
@@ -96,10 +97,10 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
       {
         noteNames: [
           // abstract me out! // major or minor version
-          toOctave(this.randomNote, "2"),
-          toOctave(this.randomNote, "3"),
-          toOctave(note_transpose(this.randomNote, this.progressionIsMajor ? "3M" : "3m"), "3"),
-          toOctave(note_transpose(this.randomNote, "P5"), "3"),
+          to_octave(this.randomNote, "2"),
+          to_octave(this.randomNote, "3"),
+          to_octave(note_transpose(this.randomNote, this.progressionIsMajor ? "3M" : "3m"), "3"),
+          to_octave(note_transpose(this.randomNote, "P5"), "3"),
         ],
         duration: 2,
       } as INotePlay,
@@ -123,7 +124,7 @@ export const SingHarmony: Quiz<optionType> = class extends SingingQuizBase<optio
     return {
       get getAllOptions() {
         return [
-          { name : "Progressions", options : progressions.map(p => p.description) as Progression["description"][] },
+          { name : "Progressions", options : progressions.map(p => p.description) as TProgression["description"][] },
           { name : "Melodic Patterns", options : melodicPatterns.map(m =>  m.description) as string[] },
         
         ] as const

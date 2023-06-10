@@ -1,12 +1,12 @@
 
-import { random_note_single_accidental, allScaleTypes, create_scale, scale_notes, octave } from "../utils";
-import { Quiz } from "../quiz-types";
+import { random_note_single_accidental, allScaleTypes, create_scale, scale_notes, TOctave } from "../utils";
+import { IQuiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
 type optionType = [{ name : string, options : readonly string[] }]
 
-export const HearTetraChord: Quiz<optionType> = class extends ListeningQuizBase<optionType> {
+export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
     return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
@@ -15,7 +15,7 @@ export const HearTetraChord: Quiz<optionType> = class extends ListeningQuizBase<
   randomScale;
   randomTetraChord;
   scaleTetraChords;
-  octaveAudio = "4" as octave;
+  octaveAudio = "4" as TOctave;
   audio; 
 
   private prepareAudio() : INotePlay[] {

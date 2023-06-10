@@ -1,25 +1,25 @@
 import chalk from "chalk";
-import { progressions, Progression } from "../harmonicProgressions";
+import { progressions, TProgression } from "../harmony/harmonicProgressions";
 import { INotePlay } from "../midiplay";
-import { IQuiz, Quiz } from "../quiz-types";
+import { IQuizInstance, IQuiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
 import {
-  noteSingleAccidental,
-  toOctave,
+  TNoteSingleAccidental,
+  to_octave,
   note_transpose,
   random_note_single_accidental,
-  getIntervalDistance,
+  get_interval_distance,
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
-type optionType = [{ name : string, options : Progression["description"][]}]
+type optionType = [{ name : string, options : TProgression["description"][]}]
 
-export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<optionType> {
+export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
   verifyOptions(_: optionType): boolean {
     return true;
   }
 
-  randomNote: noteSingleAccidental;
+  randomNote: TNoteSingleAccidental;
   override tempo = 1000;
 
   randomBassLineInKey;
@@ -36,7 +36,7 @@ export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<opt
     this.progressionIsMajor = randomProgression.isMajor;
     this.progressionDescription = randomProgression.description;
 
-    const keyDistance = getIntervalDistance("C", this.randomNote)
+    const keyDistance = get_interval_distance("C", this.randomNote)
     this.randomBassLineInKey = randomProgression.bass.transposeBy(keyDistance);
   }
 
@@ -62,10 +62,10 @@ export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<opt
       {
         noteNames: [
           // abstract me out! // major or minor version
-          toOctave(this.randomNote, "2"),
-          toOctave(this.randomNote, "3"),
-          toOctave(note_transpose(this.randomNote, this.progressionIsMajor ? "3M" : "3m"), "3"),
-          toOctave(note_transpose(this.randomNote, "P5"), "3"),
+          to_octave(this.randomNote, "2"),
+          to_octave(this.randomNote, "3"),
+          to_octave(note_transpose(this.randomNote, this.progressionIsMajor ? "3M" : "3m"), "3"),
+          to_octave(note_transpose(this.randomNote, "P5"), "3"),
         ],
         duration: 2,
       } as INotePlay,
@@ -87,7 +87,7 @@ export const SingBassLines: Quiz<optionType> = class extends SingingQuizBase<opt
   static meta() {
     return {
       get getAllOptions() {
-        return [{ name : "Bass lines", options : progressions.map(p => p.description) as Progression["description"][] }] as const
+        return [{ name : "Bass lines", options : progressions.map(p => p.description) as TProgression["description"][] }] as const
       },
       name: "Sing bass lines",
       description: "Sing the harmonic progression bass line as solfege degrees",

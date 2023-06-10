@@ -1,30 +1,30 @@
-import { IntervalDistance } from "../harmonicProgressions";
 import { INotePlay } from "../midiplay";
-import { IQuiz, Quiz } from "../quiz-types";
+import { IQuizInstance, IQuiz } from "../quiz-types";
 import { ITableHeader, Syllable, syllables_in_key_of_c } from "../solfege";
 import {
-  isTooHigh,
-  isTooLow, 
-  noteAllAccidentalOctave,
-  noteSingleAccidental,
-  octave,
+  is_too_high,
+  is_too_low, 
+  TNoteAllAccidentalOctave,
+  TNoteSingleAccidental,
+  TOctave,
   random_note_single_accidental,
-  toOctave,
+  to_octave,
   note_transpose,
   ObjectKeys,
-  getIntervalDistance
+  get_interval_distance,
+  EIntervalDistance
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
 type optionType = [{ name : string, options : Syllable[]}]
 
-export const SingingFunctionalDegrees: Quiz<optionType> = class extends SingingQuizBase<optionType> {
+export const SingingFunctionalDegrees: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
     return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
-  randomNote: noteSingleAccidental;
-  octaves: octave[] = ["3", "4"]; // in options
+  randomNote: TNoteSingleAccidental;
+  octaves: TOctave[] = ["3", "4"]; // in options
   audio;
   stepnumber: number = 12; // in options
   override tempo = 1000;
@@ -37,22 +37,22 @@ export const SingingFunctionalDegrees: Quiz<optionType> = class extends SingingQ
       return options.firstAndOnly().options.includes(syllables_in_key_of_c[key] as Syllable);
     });
 
-    const distanceToKey = getIntervalDistance("C", this.randomNote)
+    const distanceToKey = get_interval_distance("C", this.randomNote)
     const syllableNotesTransposed = optionSyllableNotesInC.transposeBy(distanceToKey);
 
     this.audio = [...Array(this.stepnumber).keys()].map((_) => {
       const note = syllableNotesTransposed.randomItem();
       const randomOctave = this.octaves.randomItem();
 
-      const octaveNote = toOctave(note, randomOctave);
-      if (isTooHigh(octaveNote)) {
-        return note_transpose(octaveNote, IntervalDistance.OctaveDown);
+      const octaveNote = to_octave(note, randomOctave);
+      if (is_too_high(octaveNote)) {
+        return note_transpose(octaveNote, EIntervalDistance.OctaveDown);
       }
 
-      if (isTooLow(octaveNote)) {
-        return note_transpose(octaveNote, IntervalDistance.OctaveUp);
+      if (is_too_low(octaveNote)) {
+        return note_transpose(octaveNote, EIntervalDistance.OctaveUp);
       }
-      return octaveNote as noteAllAccidentalOctave;
+      return octaveNote as TNoteAllAccidentalOctave;
     });
 
   }
@@ -74,10 +74,10 @@ export const SingingFunctionalDegrees: Quiz<optionType> = class extends SingingQ
       {
         noteNames: [
           // abstract me out!
-          toOctave(this.randomNote, "2"),
-          toOctave(this.randomNote, "3"),
-          toOctave(note_transpose(this.randomNote, "3M"), "3"),
-          toOctave(note_transpose(this.randomNote, "P5"), "3"),
+          to_octave(this.randomNote, "2"),
+          to_octave(this.randomNote, "3"),
+          to_octave(note_transpose(this.randomNote, "3M"), "3"),
+          to_octave(note_transpose(this.randomNote, "P5"), "3"),
         ],
         duration: 2,
       } as INotePlay,

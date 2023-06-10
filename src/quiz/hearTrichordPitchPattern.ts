@@ -1,10 +1,10 @@
 import { ObjectKeys, random_note_single_accidental } from "../utils";
-import { IQuiz, Quiz } from "../quiz-types";
+import { IQuizInstance, IQuiz } from "../quiz-types";
 import {
-  getPattern,
-  getPatternIntervals,
-  getPitchPatternInversions,
-  pitchPatternName,
+  get_pattern,
+  pattern_intervals,
+  pitch_pattern_inversions,
+  TPitchPatternName,
   pitchPatterns,
 } from "../pitchPatterns";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
@@ -12,9 +12,9 @@ import { INotePlay } from "../midiplay";
 
 const pitchPatternKeyNames = ObjectKeys(pitchPatterns);
 
-type optionsType = [{ name : string, options : readonly pitchPatternName[]}]
+type optionsType = [{ name : string, options : readonly TPitchPatternName[]}]
 
-export const HearTrichordPitchPatterns: Quiz<optionsType> = class extends ListeningQuizBase<optionsType> {
+export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends ListeningQuizBase<optionsType> {
   verifyOptions(options: optionsType): boolean {
     return options.firstAndOnly().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
@@ -28,15 +28,15 @@ export const HearTrichordPitchPatterns: Quiz<optionsType> = class extends Listen
     super(options);
     this.randomNote = random_note_single_accidental();
     this.randomPatternName = options[0].options.randomItem();
-    this.randomPitchPattern = getPattern(this.randomPatternName);
+    this.randomPitchPattern = get_pattern(this.randomPatternName);
     const [chord, arppeggio] = this.prepareAudio();
     this.audioChord = chord;
     this.audioArpeggio = arppeggio;
   }
 
   private prepareAudio() : INotePlay[][] {
-    const pitchIntervals = getPatternIntervals(this.randomPitchPattern);
-    const patternInversions = getPitchPatternInversions(this.randomNote, pitchIntervals);
+    const pitchIntervals = pattern_intervals(this.randomPitchPattern);
+    const patternInversions = pitch_pattern_inversions(this.randomNote, pitchIntervals);
     const patternInversAudio = patternInversions.randomItem().toOctaveAscending("4")
 
     return [
@@ -48,7 +48,7 @@ export const HearTrichordPitchPatterns: Quiz<optionsType> = class extends Listen
     ];
   }
 
-  private getPatternDescription(p: pitchPatternName) {
+  private getPatternDescription(p: TPitchPatternName) {
     return p + " - " + pitchPatterns[p].toString();
   }
 

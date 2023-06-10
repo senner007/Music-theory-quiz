@@ -1,10 +1,10 @@
-import { base_notes, chromatic_scale_notes,create_scale, getIntervalDistance, octave } from "../utils";
-import { IQuiz, Quiz } from "../quiz-types";
+import { base_notes, chromatic_scale_notes,create_scale, get_interval_distance, TOctave } from "../utils";
+import { IQuizInstance, IQuiz } from "../quiz-types";
 import chalk from "chalk";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
-export const Hear12thTone: Quiz<never []> = class extends ListeningQuizBase<never []> {
+export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<never []> {
   verifyOptions(): boolean {
     return true;
   }
@@ -13,7 +13,7 @@ export const Hear12thTone: Quiz<never []> = class extends ListeningQuizBase<neve
   startingNote;
   chromaticScaleShuffled;
   missingNote;
-  octave : octave = "4";
+  octave : TOctave = "4";
   constructor(options: Readonly<never[]>) {
     super(options);
     this.randomNote = base_notes().randomItem();
@@ -44,7 +44,7 @@ export const Hear12thTone: Quiz<never []> = class extends ListeningQuizBase<neve
     const notesWithIntervalsRows = chromaticScaleShuffledInOctave
         .map((note, index) => {
             if (index === 0) return `${note}\n`;
-            const interval = getIntervalDistance(chromaticScaleShuffledInOctave[index - 1], note);
+            const interval = get_interval_distance(chromaticScaleShuffledInOctave[index - 1], note);
             return `${note}, ${interval}\n`;
         }).join("")
     const answer = `Note: ${chalk.green(this.missingNote)}\nThe intervals are:\n${notesWithIntervalsRows}`

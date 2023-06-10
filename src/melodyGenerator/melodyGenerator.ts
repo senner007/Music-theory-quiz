@@ -1,14 +1,14 @@
 import { IProgression } from "../transposition";
-import { getIntervalInteger, noteAllAccidentalOctave } from "../utils";
+import { get_interval_integer, TNoteAllAccidentalOctave } from "../utils";
 
 export interface IMelodicPattern {
     readonly timeSignature: 2 | 3 | 4
     readonly melodyNotes: IMelodyFragment[]
-    readonly bass: readonly noteAllAccidentalOctave[];
+    readonly bass: readonly TNoteAllAccidentalOctave[];
 }
 
 interface IMelodyFragment {
-    note: noteAllAccidentalOctave[],
+    note: TNoteAllAccidentalOctave[],
     duration: 1 | 2 | 3 | 4
 }
 
@@ -19,9 +19,9 @@ interface IMelodyGenerator {
 export interface IMelodyGeneratorBase {
     id: string;
     description: string
-    new(currentChord: readonly noteAllAccidentalOctave[],
-        previousChord: readonly noteAllAccidentalOctave[],
-        nextChord: readonly noteAllAccidentalOctave[]): IMelodyGenerator
+    new(currentChord: readonly TNoteAllAccidentalOctave[],
+        previousChord: readonly TNoteAllAccidentalOctave[],
+        nextChord: readonly TNoteAllAccidentalOctave[]): IMelodyGenerator
 }
 
 export abstract class MelodyGeneratorBase   {
@@ -29,13 +29,13 @@ export abstract class MelodyGeneratorBase   {
     protected topNote;
     protected secondNote;
     constructor (
-       protected currentChord: readonly noteAllAccidentalOctave[],
-       protected previousChord: readonly noteAllAccidentalOctave[],
-       protected nextChord: readonly noteAllAccidentalOctave[]
+       protected currentChord: readonly TNoteAllAccidentalOctave[],
+       protected previousChord: readonly TNoteAllAccidentalOctave[],
+       protected nextChord: readonly TNoteAllAccidentalOctave[]
     )  {
         const topNote = this.currentChord.at(-1);
-        this.topNote = topNote as noteAllAccidentalOctave;
-        this.secondNote = currentChord.at(-2) as noteAllAccidentalOctave;
+        this.topNote = topNote as TNoteAllAccidentalOctave;
+        this.secondNote = currentChord.at(-2) as TNoteAllAccidentalOctave;
     };
     abstract  melody():  IMelodyFragment[];
   }

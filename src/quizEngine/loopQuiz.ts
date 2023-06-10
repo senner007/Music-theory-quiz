@@ -1,11 +1,11 @@
-import { IQuizOptions, Quiz } from "../quiz-types";
+import { IQuizOptions, IQuiz } from "../quiz-types";
 // @ts-ignore
 // import InterruptedPrompt from "inquirer-interrupted-prompt";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 
 
-export async function loopQuiz(QuizClass: Quiz<IQuizOptions[]>) {
+export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
 
   var options : IQuizOptions[] = [];
   const allOptions = QuizClass.meta().getAllOptions;
@@ -43,7 +43,7 @@ export async function loopQuiz(QuizClass: Quiz<IQuizOptions[]>) {
     }
 
     try {
-      await LogAsync.questionInList(
+      await LogAsync.questions_in_list(
         ["Continue"],
         "Continue or Quit",
         "q"

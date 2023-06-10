@@ -2,7 +2,7 @@ import { LogAsync } from "../../logger/logAsync";
 import { LogTable } from "../../logger/logTable";
 import { INotePlay } from "../../midiplay";
 import { ITableHeader, SolfegeMelody } from "../../solfege";
-import { noteSingleAccidental } from "../../utils";
+import { TNoteSingleAccidental } from "../../utils";
 import { AudioQuizBase } from "./audioQuizBase";
 
 export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
@@ -10,7 +10,7 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
     return ["Right", "Wrong"];
   }
 
-  abstract randomNote: noteSingleAccidental;
+  abstract randomNote: TNoteSingleAccidental;
 
   abstract tableHeader: ITableHeader[]
 
@@ -23,7 +23,7 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
     LogTable.write(solfege, this.tableHeader);
 
     try {
-      const choice = await LogAsync.questionInListIndexedGlobalKeyHook(
+      const choice = await LogAsync.questions_in_list_indexed_global_key_hook(
         this.questionOptions,
         "Self-evaluation",
         "q",

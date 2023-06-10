@@ -1,32 +1,32 @@
 import chalk from "chalk";
 import { INotePlay } from "../midiplay";
-import { Quiz } from "../quiz-types";
+import { IQuiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
 import {
-  noteSingleAccidental,
+  TNoteSingleAccidental,
   random_note_single_accidental,
   create_scale,
   scale_notes,
-  intervalToAbsolute,
-  intervalType,
-  getIntervalDistance,
+  interval_to_absolute,
+  TIntervalType,
+  get_interval_distance,
   add_octave_note,
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
 type optionsType = [
   { name: string, options: string[] },
-  { name: string, options: intervalType[] }
+  { name: string, options: TIntervalType[] }
 ]
 
-export const SingContextualIntervals: Quiz<optionsType> = class extends SingingQuizBase<
+export const SingContextualIntervals: IQuiz<optionsType> = class extends SingingQuizBase<
   optionsType
 > {
   verifyOptions(_: optionsType): boolean {
     return true;
   }
 
-  randomNote: noteSingleAccidental;
+  randomNote: TNoteSingleAccidental;
   randomScaleType;
   interval;
   scaleThirdOctave;
@@ -50,8 +50,8 @@ export const SingContextualIntervals: Quiz<optionsType> = class extends SingingQ
     const secondTonePossibilities = randomScaleNotes
       .filter((n) => !(n === firstNote))
       .filter((n) => {
-        const intervalDistance = getIntervalDistance(n, firstNote)
-        return intervals.options.includes(intervalToAbsolute(intervalDistance));
+        const intervalDistance = get_interval_distance(n, firstNote)
+        return intervals.options.includes(interval_to_absolute(intervalDistance));
       });
 
     const secondNote = secondTonePossibilities.randomItem();
@@ -113,7 +113,7 @@ export const SingContextualIntervals: Quiz<optionsType> = class extends SingingQ
           "harmonic minor",
           "melodic minor",
         ];
-        const intervals: intervalType[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
+        const intervals: TIntervalType[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
         return [
           { name : "scales", options : scales }, 
           { name : "intervals", options: intervals }

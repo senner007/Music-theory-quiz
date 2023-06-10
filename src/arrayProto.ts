@@ -1,13 +1,13 @@
 import { LogError } from "./dev-utils";
-import { MathFloor } from "./random-funcs";
+import { math_floor } from "./random_func";
 import { transpose_to_ascending } from "./transposition";
-import { noteAllAccidental, noteAllAccidentalOctave, note_transpose, toOctave, random_index, octave } from "./utils";
+import { TNoteAllAccidental, TNoteAllAccidentalOctave, note_transpose, to_octave, random_index, TOctave } from "./utils";
 
 declare global {
 
     interface Array<T> {
-      toOctaveAscending(this: noteAllAccidental[], octave: octave): Readonly<Array<noteAllAccidentalOctave>>;
-      transposeBy<U extends noteAllAccidental[] | noteAllAccidentalOctave[]>(this: U, interval: string): Readonly<U>;
+      toOctaveAscending(this: TNoteAllAccidental[], octave: TOctave): Readonly<Array<TNoteAllAccidentalOctave>>;
+      transposeBy<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]>(this: U, interval: string): Readonly<U>;
       commaSequence(): string;
       shuffleArray(): Readonly<Array<T>>;
       randomItem(): T;
@@ -19,8 +19,8 @@ declare global {
       shuffleArray(): Readonly<Array<T>>;
       randomItem(): T;
       commaSequence(): string;
-      toOctaveAscending(this: Readonly<noteAllAccidental[]>, octave: octave): Readonly<Array<noteAllAccidentalOctave>>;
-      transposeBy<U extends Readonly<noteAllAccidental[]> | Readonly<noteAllAccidentalOctave[]>>(this: U, interval: string): Readonly<U>;
+      toOctaveAscending(this: Readonly<TNoteAllAccidental[]>, octave: TOctave): Readonly<Array<TNoteAllAccidentalOctave>>;
+      transposeBy<U extends Readonly<TNoteAllAccidental[]> | Readonly<TNoteAllAccidentalOctave[]>>(this: U, interval: string): Readonly<U>;
       isEmpty(): boolean;
       firstAndOnly(): T
       removeDuplicateObjects(): Readonly<Array<T>>
@@ -50,7 +50,7 @@ declare global {
   };
 
 
-  Array.prototype.transposeBy = function<U extends noteAllAccidental[] | noteAllAccidentalOctave[]> (
+  Array.prototype.transposeBy = function<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]> (
     this: U,
     interval: string
   ) : Readonly<U> {
@@ -59,9 +59,9 @@ declare global {
   
   
   Array.prototype.toOctaveAscending = function (
-    octave: octave
-  ): Readonly<noteAllAccidentalOctave[]> {
-    return this.map((n) => toOctave(n, octave)).map(transpose_to_ascending);
+    octave: TOctave
+  ): Readonly<TNoteAllAccidentalOctave[]> {
+    return this.map((n) => to_octave(n, octave)).map(transpose_to_ascending);
   };
   
   Array.prototype.commaSequence = function (): string {
@@ -72,7 +72,7 @@ declare global {
   Array.prototype.shuffleArray = function () {
     const arrayClone = [...this];
     for (let i = arrayClone.length - 1; i > 0; i--) {
-      const j = MathFloor(Math.random() * (i + 1));
+      const j = math_floor(Math.random() * (i + 1));
       const temp = arrayClone[i];
       arrayClone[i] = arrayClone[j];
       arrayClone[j] = temp;

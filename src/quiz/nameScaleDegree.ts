@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { IQuiz, Quiz } from "../quiz-types";
+import { IQuizInstance, IQuiz } from "../quiz-types";
 import {
   allScaleTypes,
   random_note_single_accidental,
@@ -14,7 +14,7 @@ import { TextQuizBase } from "./quizBase/textBase";
 
 type optionType = [{ name : string, options : readonly string[] }]
 
-export const NameScaleDegree: Quiz<optionType> = class extends TextQuizBase<optionType> {
+export const NameScaleDegree: IQuiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
     return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }

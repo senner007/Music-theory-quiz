@@ -16,7 +16,7 @@ export abstract class ListeningQuizBase<T> extends AudioQuizBase<T> {
 
   async callQuiz(): Promise<string | never> {
     try {
-      const choice = await LogAsync.questionInListIndexedGlobalKeyHook(
+      const choice = await LogAsync.questions_in_list_indexed_global_key_hook(
         this.questionOptions,
         this.question,
         "q",

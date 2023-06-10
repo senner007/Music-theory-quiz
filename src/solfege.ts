@@ -1,7 +1,7 @@
 import { Interval, Note } from "@tonaljs/tonal";
 import { LogError } from "./dev-utils";
 import { INotePlay } from "./midiplay";
-import { noteAllAccidentalOctave, noteSingleAccidental, noteAllAccidental, octave, noteSingleAccidentalOctave } from "./utils";
+import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, TOctave, TNoteSingleAccidentalOctave } from "./utils";
 
 export class SolfegeMelody {
   private verify_duration_length() {
@@ -9,31 +9,31 @@ export class SolfegeMelody {
   }
 
   private sortedMelody;
-  constructor(private melody: INotePlay[], private key: noteSingleAccidental) {
+  constructor(private melody: INotePlay[], private key: TNoteSingleAccidental) {
     this.sortedMelody = this.sort_melody();
     this.verify_duration_length();
   }
 
-  private transpose_to_melody_key(note: noteAllAccidentalOctave): noteAllAccidentalOctave {
+  private transpose_to_melody_key(note: TNoteAllAccidentalOctave): TNoteAllAccidentalOctave {
     const interval = Interval.distance(this.key, "C");
-    return Note.transpose(note, interval) as noteAllAccidentalOctave;
+    return Note.transpose(note, interval) as TNoteAllAccidentalOctave;
   }
 
-  private sort_melody(): noteAllAccidentalOctave[] {
+  private sort_melody(): TNoteAllAccidentalOctave[] {
     const flatMelody = this.melody.map((n) => n.noteNames).flat();
-    return Note.sortedNames(flatMelody) as noteAllAccidentalOctave[];
+    return Note.sortedNames(flatMelody) as TNoteAllAccidentalOctave[];
   }
 
   public get getMelody() {
     return Object.freeze(this.melody);
   }
 
-  private get lowest(): noteAllAccidentalOctave {
+  private get lowest(): TNoteAllAccidentalOctave {
     return this.sortedMelody[0];
   }
 
-  private get highest(): noteAllAccidentalOctave {
-    return this.sortedMelody.at(-1) as noteAllAccidentalOctave;
+  private get highest(): TNoteAllAccidentalOctave {
+    return this.sortedMelody.at(-1) as TNoteAllAccidentalOctave;
   }
 
   get length() {
@@ -44,12 +44,12 @@ export class SolfegeMelody {
     return this.melody.map((n) => n.duration).reduce((a, b) => a + b, 0);
   }
 
-  syllable(note: noteAllAccidentalOctave): Syllable {
+  syllable(note: TNoteAllAccidentalOctave): Syllable {
     const transposedNote = this.transpose_to_melody_key(note);
     return syllables_in_key_of_c[remove_octave(transposedNote)] as Syllable;
   }
 
-  distance_from_lowest(note: noteAllAccidentalOctave): number {
+  distance_from_lowest(note: TNoteAllAccidentalOctave): number {
     const intervalDistance = Interval.distance(this.lowest, note);
     return Interval.semitones(intervalDistance) as number;
   }
@@ -104,8 +104,8 @@ export type solfegeDict = keyof typeof syllables_in_key_of_c;
 
 export type Syllable = typeof syllables_in_key_of_c[solfegeDict];
 
-function remove_octave(note: noteAllAccidentalOctave) {
-  return note.replace(/[0-9]/g, "") as noteAllAccidental;
+function remove_octave(note: TNoteAllAccidentalOctave) {
+  return note.replace(/[0-9]/g, "") as TNoteAllAccidental;
 }
 
 export interface ITableHeader {

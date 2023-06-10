@@ -28,25 +28,25 @@ interface IChoices {
 }
 
 class LogAsyncUtil {
-  protected static getOptions(questionOptions: Readonly<string[]>): IOptions[] {
+  protected static get_options(questionOptions: Readonly<string[]>): IOptions[] {
     return questionOptions.map((q) => {
       return { value: q };
     });
   }
 
-  protected static getCheckboxOptions(questionOptions: Readonly<string[]>): ICheckboxChoices[] {
+  protected static get_checkbox_options(questionOptions: Readonly<string[]>): ICheckboxChoices[] {
     return questionOptions.map((o) => {
       return { value: o, name: o, checked : true };
     });
   }
 
-  protected static getOptionsIndexed(questionOptions: Readonly<string[]>): IOptionsIndexed[] {
-    return this.getOptions(questionOptions).map((o: IOptions, index: number) => {
+  protected static get_options_indexed(questionOptions: Readonly<string[]>): IOptionsIndexed[] {
+    return this.get_options(questionOptions).map((o: IOptions, index: number) => {
       return { value: o.value, name: "(" + (index + 1) + ") " + o.value };
     });
   }
 
-  protected static addSeparators(questionOptions: (IOptions | IOptionsIndexed)[], interruptKey: string): IChoices {
+  protected static add_separators(questionOptions: (IOptions | IOptionsIndexed)[], interruptKey: string): IChoices {
     const quitValue = `(${interruptKey}) Quit`;
     const choices: IChoices = {
       options: questionOptions,
@@ -56,7 +56,7 @@ class LogAsyncUtil {
     return choices;
   }
 
-  protected static async getQuestions(
+  protected static async get_questions(
     choices: IChoices,
     question: string,
     interruptKey: string,
@@ -84,7 +84,7 @@ class LogAsyncUtil {
     }
   }
 
-  protected static async getCheckboxes(
+  protected static async get_checkboxes(
     choices: IChoices,
     question: string,
     interruptKey: string,
@@ -115,35 +115,35 @@ class LogAsyncUtil {
 
 
 export class LogAsync extends LogAsyncUtil {
-  static async questionInList(
+  static async questions_in_list(
     questionOptions: Readonly<string[]>,
     question: string,
     interruptKey: string
   ): Promise<string | never> {
-    const options = this.getOptions(questionOptions);
-    return this.getQuestions(this.addSeparators(options, interruptKey), question, interruptKey);
+    const options = this.get_options(questionOptions);
+    return this.get_questions(this.add_separators(options, interruptKey), question, interruptKey);
   }
 
-  static async questionInListIndexed(
+  static async questions_in_list_indexed(
     questionOptions: Readonly<string[]>,
     question: string,
     interruptKey: string
   ): Promise<string | never> {
-    const options = this.getOptionsIndexed(questionOptions);
-    return this.getQuestions(this.addSeparators(options, interruptKey), question, interruptKey);
+    const options = this.get_options_indexed(questionOptions);
+    return this.get_questions(this.add_separators(options, interruptKey), question, interruptKey);
   }
 
-  static async questionInListIndexedGlobalKeyHook(
+  static async questions_in_list_indexed_global_key_hook(
     questionOptions: Readonly<string[]>,
     question: string,
     interruptKey: string,
     globalHook: IGlobalHook[]
   ): Promise<string | never> {
-    const options = this.getOptionsIndexed(questionOptions);
+    const options = this.get_options_indexed(questionOptions);
     const questionWithHook =
       question +
       chalk.bgWhite.gray(globalHook.map((hook) => "\n  Press " + hook.key + " to " + hook.value + " ").join("")); // beautify me!
-    return this.getQuestions(this.addSeparators(options, interruptKey), questionWithHook, interruptKey);
+    return this.get_questions(this.add_separators(options, interruptKey), questionWithHook, interruptKey);
   }
 
   static async checkboxes(
@@ -151,7 +151,7 @@ export class LogAsync extends LogAsyncUtil {
     question: string,
     interruptKey: string
   ): Promise<string[] | never> {
-    const options = this.getCheckboxOptions(questionOptions);
-    return this.getCheckboxes({options, interrupt : { value: interruptKey } }, question, interruptKey);
+    const options = this.get_checkbox_options(questionOptions);
+    return this.get_checkboxes({options, interrupt : { value: interruptKey } }, question, interruptKey);
   }
 }

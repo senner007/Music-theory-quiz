@@ -6,12 +6,12 @@ import {
   variant_to_base,
   scale_notes,
 } from "../utils";
-import { IQuiz, Quiz } from "../quiz-types";
+import { IQuizInstance, IQuiz } from "../quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
 
 type optionType = [{ name : string, options : readonly string[] }]
 
-export const MissingScaleNote: Quiz<optionType> = class extends TextQuizBase<optionType> {
+export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
     return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }

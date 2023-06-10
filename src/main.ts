@@ -1,6 +1,6 @@
 import "./arrayProto"
 import { customExit, isInterrupt } from "./utils";
-import { Quiz } from "./quiz-types";
+import { IQuiz } from "./quiz-types";
 import { MissingScaleNote } from "./quiz/missingScaleNote";
 import { WhichTriad } from "./quiz/whichTriad";
 import { NameScaleDegree } from "./quiz/nameScaleDegree";
@@ -16,7 +16,7 @@ import { SingingFunctionalDegrees as SingFunctionalDegrees } from "./quiz/singFu
 import { SingHarmony } from "./quiz/singHarmony";
 import { SingBassLines } from "./quiz/singBassLines";
 import { SingContextualIntervals } from "./quiz/singContextualIntervals";
-import { JSONContentVerify } from "./harmonicProgressions";
+import { JSON_progressions_verify } from "./harmony/harmonicProgressions";
 
 process.stdin.setMaxListeners(20);
 Log.clear();
@@ -26,9 +26,9 @@ for (const mididevice of easymidi.getOutputs()) {
   Log.success(mididevice);
 }
 
-JSONContentVerify()
+JSON_progressions_verify()
 
-const quizzes: Quiz<any>[] = [
+const quizzes: IQuiz<any>[] = [
   MissingScaleNote,
   NameScaleDegree,
   WhichTriad,
@@ -45,7 +45,7 @@ const quizzes: Quiz<any>[] = [
 (async () => {
   while (true) {
     try {
-      const choice = await LogAsync.questionInList(
+      const choice = await LogAsync.questions_in_list(
         quizzes.map((quiz) => quiz.meta().name),
         "Choose a quiz",
         "q"

@@ -1,4 +1,4 @@
-export interface IQuiz {
+export interface IQuizInstance {
   execute() : Promise<string | never>
   feedback(choice: string): string;
   quizHead: Readonly<string[]>;
@@ -10,8 +10,8 @@ export interface IQuizOptions {
   options : any
 }
 
-export interface Quiz<T extends IQuizOptions[]> {
-  new (options: Readonly<T>): IQuiz;
+export interface IQuiz<T extends IQuizOptions[]> {
+  new (options: Readonly<T>): IQuizInstance;
   meta(): {
     getAllOptions: Readonly<T>;
     name: string;

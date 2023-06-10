@@ -1,4 +1,4 @@
-import { noteAllAccidental } from "./utils";
+import { TNoteAllAccidental } from "./utils";
 import { Interval, Note } from "@tonaljs/tonal";
 
 export const pitchPatterns = {
@@ -15,25 +15,25 @@ export const pitchPatterns = {
     "048": [0, 4, 8],
 } as const;
 
-export type pitchPatternName = keyof typeof pitchPatterns;
+export type TPitchPatternName = keyof typeof pitchPatterns;
 
-type pattern = typeof pitchPatterns[pitchPatternName];
+type TPattern = typeof pitchPatterns[TPitchPatternName];
 
 
-export function getPattern(patternName : pitchPatternName) {
+export function get_pattern(patternName : TPitchPatternName) {
     return pitchPatterns[patternName];
 }
 
 
-export function getPatternIntervals(pattern: pattern): [string, string] {
+export function pattern_intervals(pattern: TPattern): [string, string] {
     return [Interval.fromSemitones(pattern[1]), Interval.fromSemitones(pattern[2] - pattern[1])]
 }
 
-export function getPitchPatternInversions(note: noteAllAccidental, intervals : [string, string]) {
-    const note2 = Note.transpose(note, intervals[0]) as noteAllAccidental;
-    const note3 = Note.transpose(note2, intervals[1]) as noteAllAccidental;
+export function pitch_pattern_inversions(note: TNoteAllAccidental, intervals : [string, string]) {
+    const note2 = Note.transpose(note, intervals[0]) as TNoteAllAccidental;
+    const note3 = Note.transpose(note2, intervals[1]) as TNoteAllAccidental;
 
-    const note2Inversion = Note.transpose(note, intervals[1]) as noteAllAccidental;
+    const note2Inversion = Note.transpose(note, intervals[1]) as TNoteAllAccidental;
 
     return [
         [note, note2, note3],

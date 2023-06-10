@@ -1,5 +1,5 @@
 import { LogError } from "../../dev-utils";
-import { Quiz } from "../../quiz-types";
+import { IQuiz } from "../../quiz-types";
 
 export interface IListener {
   listener: (_: any, key: any) => void;
@@ -37,7 +37,7 @@ export abstract class QuizBase<T> {
 
   private errorCheckOptions(options: Readonly<T>): void | never {
     const optionsAreValid = this.verifyOptions(options);
-    const quizConstructor: Quiz<any> = this.constructor as Quiz<any>;
+    const quizConstructor: IQuiz<any> = this.constructor as IQuiz<any>;
     if (!optionsAreValid) LogError("options invalid in class: " + "'" + quizConstructor.meta.name + "'");
   }
 

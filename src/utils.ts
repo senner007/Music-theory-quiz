@@ -6,8 +6,7 @@ import { Scale as ScaleClass } from "@tonaljs/tonal";
 import { Chord as ChordClass } from "@tonaljs/tonal";
 import { Log } from "./logger/logSync";
 import { LogError } from "./dev-utils";
-import { MathFloor } from "./random-funcs";
-import { IntervalDistance } from "./harmonicProgressions";
+import { math_floor } from "./random_func";
 
 export function customExit() {
   Log.clear();
@@ -29,52 +28,56 @@ export const allScaleTypes = ScaleType.all()
   .sort();
 
 const baseNotes = ["C", "D", "E", "F", "G", "A", "B"] as const;
-export type baseNote = typeof baseNotes[number];
-export type octave = "2" | "3" | "4" | "5";
-export type noteSingleAccidental = Readonly<`${baseNote}b` | baseNote | `${baseNote}#`>;
-export type noteSingleAccidentalOctave = Readonly<`${noteSingleAccidental}${octave}`>;
-export type noteAllAccidental = Readonly<`${baseNote}bb` | `${baseNote}##` | "F###" | noteSingleAccidental>;
-export type noteAllAccidentalOctave = Readonly<`${noteAllAccidental}${octave}`>;
-export type intervalType = "2m" | "2M" | "3m" | "3M" | "4P" | "4A" | "5d" | "5P" | "6m" | "6M";
+export type TBaseNote = typeof baseNotes[number];
+export type TOctave = "2" | "3" | "4" | "5";
+export type TNoteSingleAccidental = Readonly<`${TBaseNote}b` | TBaseNote | `${TBaseNote}#`>;
+export type TNoteSingleAccidentalOctave = Readonly<`${TNoteSingleAccidental}${TOctave}`>;
+export type TNoteAllAccidental = Readonly<`${TBaseNote}bb` | `${TBaseNote}##` | "F###" | TNoteSingleAccidental>;
+export type TNoteAllAccidentalOctave = Readonly<`${TNoteAllAccidental}${TOctave}`>;
+export type TIntervalType = "2m" | "2M" | "3m" | "3M" | "4P" | "4A" | "5d" | "5P" | "6m" | "6M";
+export enum EIntervalDistance {
+  OctaveUp = "8P",
+  OctaveDown = "-8P",
+}
 
 export function ObjectKeys<Obj extends {}>(obj: Obj): Readonly<(keyof Obj)[]> {
   return Object.keys(obj) as (keyof Obj)[];
 }
 
-export function isTooLow(n: noteAllAccidentalOctave) {
+export function is_too_low(n: TNoteAllAccidentalOctave) {
   return Note.sortedNames([n, "F3"])[0] === n;
 }
 
-export function isTooHigh(n: noteAllAccidentalOctave) {
+export function is_too_high(n: TNoteAllAccidentalOctave) {
   return Note.sortedNames([n, "G5"])[1] === n;
 }
 
-export function toOctave<T extends Readonly<noteAllAccidental>>(n: T, octave: octave) {
-  return (n + octave) as noteAllAccidentalOctave;
+export function to_octave<T extends Readonly<TNoteAllAccidental>>(n: T, octave: TOctave) {
+  return (n + octave) as TNoteAllAccidentalOctave;
 }
 
-export function add_octave_note(notes: readonly noteAllAccidentalOctave[]): readonly noteAllAccidentalOctave[] {
-  return [...notes, Note.transpose(notes[0], IntervalDistance.OctaveUp) as noteAllAccidentalOctave];
+export function add_octave_note(notes: readonly TNoteAllAccidentalOctave[]): readonly TNoteAllAccidentalOctave[] {
+  return [...notes, Note.transpose(notes[0], EIntervalDistance.OctaveUp) as TNoteAllAccidentalOctave];
 }
 
-export function create_scale(scaleTonic: noteSingleAccidental, scaleType: string): Scale {
+export function create_scale(scaleTonic: TNoteSingleAccidental, scaleType: string): Scale {
   return ScaleClass.get(scaleTonic + " " + scaleType);
 }
 
-export function create_chord(chordTonic: noteSingleAccidental, chordType: string) {
+export function create_chord(chordTonic: TNoteSingleAccidental, chordType: string) {
   return ChordClass.get(chordTonic + " " + chordType);
 }
 
 export function random_note_single_accidental() {
-  function note_single_accidentals(note: baseNote) {
+  function note_single_accidentals(note: TBaseNote) {
     const noteVariants = note_variants(note);
     const [_, second, third, fourth] = noteVariants;
-    return [second, third, fourth] as Readonly<[`${baseNote}b`, baseNote, `${baseNote}#`]>;
+    return [second, third, fourth] as Readonly<[`${TBaseNote}b`, TBaseNote, `${TBaseNote}#`]>;
   }
 
   const baseNote = baseNotes.randomItem();
   const notesSingleAccidental = note_single_accidentals(baseNote);
-  return notesSingleAccidental.randomItem() as Readonly<noteSingleAccidental>;
+  return notesSingleAccidental.randomItem() as Readonly<TNoteSingleAccidental>;
 }
 
 export function base_notes() {
@@ -82,56 +85,56 @@ export function base_notes() {
 }
 
 export function random_index<T>(arr: T[]) {
-  return MathFloor(Math.random() * arr.length);
+  return math_floor(Math.random() * arr.length);
 }
 
 export function chromatic_scale_notes(scale: Scale) {
-  if (scale.type !== "chromatic" || !scale.tonic || !baseNotes.includes(scale.tonic as baseNote)) {
+  if (scale.type !== "chromatic" || !scale.tonic || !baseNotes.includes(scale.tonic as TBaseNote)) {
     LogError("only a chromatic scale with a basenote tonic can be passed as argument");
   }
-  return scale.notes as Readonly<noteSingleAccidental[]>;
+  return scale.notes as Readonly<TNoteSingleAccidental[]>;
 }
 
 export function scale_notes(scale: Scale) {
-  return scale.notes as Readonly<noteAllAccidental[]>;
+  return scale.notes as Readonly<TNoteAllAccidental[]>;
 }
 
-export function variant_to_base(note: noteAllAccidental) {
-  return note.substring(0, 1) as Readonly<baseNote>;
+export function variant_to_base(note: TNoteAllAccidental) {
+  return note.substring(0, 1) as Readonly<TBaseNote>;
 }
 
 export function scale_note_at_index(scale: Scale, index: number) {
-  return scale.notes[index] as Readonly<noteAllAccidental>;
+  return scale.notes[index] as Readonly<TNoteAllAccidental>;
 }
 
 export function event_by_probability(chance: number) {
-  return MathFloor(Math.random() * 100) < chance;
+  return math_floor(Math.random() * 100) < chance;
 }
 
 
-type NoteVariants = [`${baseNote}bb`, `${baseNote}b`, baseNote, `${baseNote}#`, `${baseNote}##`]
+type NoteVariants = [`${TBaseNote}bb`, `${TBaseNote}b`, TBaseNote, `${TBaseNote}#`, `${TBaseNote}##`]
 
 export function note_variants(
-  baseNote: baseNote
-): Readonly<NoteVariants> | Readonly<[...NoteVariants, `${baseNote}###`]> {
+  baseNote: TBaseNote
+): Readonly<NoteVariants> | Readonly<[...NoteVariants, `${TBaseNote}###`]> {
   const returnArray: NoteVariants = [
-    Note.transpose(baseNote, "1dd") as `${baseNote}bb`,
-    Note.transpose(baseNote, "1d") as `${baseNote}b`,
-    baseNote as baseNote,
-    Note.transpose(baseNote, "1A") as `${baseNote}#`,
-    Note.transpose(baseNote, "1AA") as `${baseNote}##`,
+    Note.transpose(baseNote, "1dd") as `${TBaseNote}bb`,
+    Note.transpose(baseNote, "1d") as `${TBaseNote}b`,
+    baseNote as TBaseNote,
+    Note.transpose(baseNote, "1A") as `${TBaseNote}#`,
+    Note.transpose(baseNote, "1AA") as `${TBaseNote}##`,
   ];
   if (baseNote === "F") {
-    return [...returnArray, Note.transpose(baseNote, "1AAA") as `${baseNote}###`] as [...NoteVariants, `${baseNote}###`];
+    return [...returnArray, Note.transpose(baseNote, "1AAA") as `${TBaseNote}###`] as [...NoteVariants, `${TBaseNote}###`];
   }
   return returnArray
 }
 
-export function note_transpose<T extends noteAllAccidental | noteAllAccidentalOctave>(note: T, interval: string): T {
+export function note_transpose<T extends TNoteAllAccidental | TNoteAllAccidentalOctave>(note: T, interval: string): T {
   return Note.transpose(note, interval) as T;
 }
 
-export function note_transpose_by<T extends noteAllAccidental | noteAllAccidentalOctave>(
+export function note_transpose_by<T extends TNoteAllAccidental | TNoteAllAccidentalOctave>(
   interval: string
 ): (note: T) => T {
   return Note.transposeBy(interval) as unknown as (note: T) => T;
@@ -167,18 +170,22 @@ export function number_to_degree(n: number) {
   return degree;
 }
 
-export function getIntervalDistance(first: string, second: string) {
-  return Interval.distance(first, second) as intervalType
+export function get_interval_distance(first: string, second: string) {
+  return Interval.distance(first, second) as TIntervalType
 }
 
-export function getIntervalInteger(first: string, second: string) {
-  return Interval.num(getIntervalDistance(first, second)) as number
+export function get_interval_integer(first: string, second: string) {
+  return Interval.num(get_interval_distance(first, second)) as number
 }
 
-export function intervalToAbsolute(interval: intervalType) {
-  return interval.replace(/[-]/g, "") as intervalType;
+export function interval_to_absolute(interval: TIntervalType) {
+  return interval.replace(/[-]/g, "") as TIntervalType;
 }
 
-export function getKey(note: noteSingleAccidental, keyType : "minor" | "major") {
+export function get_key(note: TNoteSingleAccidental, keyType : "minor" | "major") {
   return keyType === "major" ? Key.majorKey(note) : Key.minorKey(note)
+}
+
+export function to_actave_above(notes: Readonly<TNoteAllAccidentalOctave[]>): TNoteAllAccidentalOctave[] {
+  return notes.map((n) => Note.transpose(n, EIntervalDistance.OctaveUp)) as TNoteAllAccidentalOctave[];
 }

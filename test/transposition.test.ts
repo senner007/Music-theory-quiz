@@ -1,7 +1,8 @@
 import { Note } from "@tonaljs/tonal";
 import { expect, describe, test, it } from "vitest";
-import { progressions, romanNumeralChord } from "../src/harmonicProgressions";
-import { IProgression, transposeProgression, transpositionBounds } from "../src/transposition";
+import { progressions} from "../src/harmony/harmonicProgressions";
+import { IProgression, transpose_progression, transpositionBounds } from "../src/transposition";
+import { romanNumeralChord } from "../src/harmony/romanNumerals";
 
 describe("Test progression transposition methods", () => {
 
@@ -19,7 +20,7 @@ describe("Test progression transposition methods", () => {
     it("should transpose progression down an octave within default bounds when transposing up a fourth",
         () => {
 
-            const progressionTransposed = transposeProgression(firstProgression, "F");
+            const progressionTransposed = transpose_progression(firstProgression, "F");
 
             const highestNoteInTransposedChords = Note.sortedNames(
                 progressionTransposed.chords.flatMap((n) => n),
@@ -35,7 +36,7 @@ describe("Test progression transposition methods", () => {
         "should not transpose progression down an octave within custum bounds when transposing up a fourth",
         (bounds: transpositionBounds) => {
 
-            const progressionTransposed = transposeProgression(firstProgression, "F", bounds);
+            const progressionTransposed = transpose_progression(firstProgression, "F", bounds);
 
             const highestNoteInTransposedChords = Note.sortedNames(
                 progressionTransposed.chords.flatMap((n) => n),

@@ -1,11 +1,11 @@
-import { random_note_single_accidental, allScaleTypes, create_scale, scale_notes, event_by_probability, add_octave_note, octave } from "../utils";
-import { Quiz } from "../quiz-types";
+import { random_note_single_accidental, allScaleTypes, create_scale, scale_notes, event_by_probability, add_octave_note, TOctave } from "../utils";
+import { IQuiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
 type optionType = [{ name : string, options : readonly string[] }]
 
-export const HearScales: Quiz<optionType> = class extends ListeningQuizBase<optionType> {
+export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
     return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
@@ -14,7 +14,7 @@ export const HearScales: Quiz<optionType> = class extends ListeningQuizBase<opti
   scalePick;
   similarScales;
   audio;
-  octave: octave = "4";
+  octave: TOctave = "4";
   constructor(options: Readonly<optionType>) {
     super(options);
     const nChoices = 7; // should be option parameter

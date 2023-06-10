@@ -3,14 +3,14 @@
     "description": "V/IV V/V",
     "progressions": [
       {
-        "chords": ["I6", "V7/Vno5", "V64", "I6"],
+        "chords": ["I6", "V7no5/V", "V64", "I6"],
         "bass": ["C3", "D3", "G2", "C3"],
         "description": "c5-1",
         "isMajor": true,
         "isDiatonic": false
       },
       {
-        "chords": ["I6", "iino5double1", "V64", "I6"],
+        "chords": ["I6", "iino3double1", "V64", "I6"],
         "bass": ["C3", "F#2", "G2", "C3"],
         "description": "c5-2",
         "isMajor": true,

@@ -1,9 +1,9 @@
 import easymidi, { Note as INote } from 'easymidi';
 import { Note } from "@tonaljs/tonal";
-import { noteAllAccidentalOctave } from './utils';
+import { TNoteAllAccidentalOctave } from './utils';
 
 export interface INotePlay {
-    noteNames: Readonly<noteAllAccidentalOctave[]>,
+    noteNames: Readonly<TNoteAllAccidentalOctave[]>,
     duration: 1 | 2 | 3 | 4;
 }
 
@@ -15,13 +15,13 @@ const channelObj: INote = {
     channel: 3
 }
 
-function notePlay(note: number, activator: "noteon" | "noteoff", channel: number) {
+function note_play(note: number, activator: "noteon" | "noteoff", channel: number) {
     // @ts-ignore
     output.send(activator, { ...channelObj, note, channel : channel });
 }
 
 
-export async function playMidi(notes: INotePlay[], { signal }: any, channel : number, timerObj: any, tempo : number): Promise<void> {
+export async function play_midi(notes: INotePlay[], { signal }: any, channel : number, timerObj: any, tempo : number): Promise<void> {
 
     let abort: boolean = false;
 
@@ -37,7 +37,7 @@ export async function playMidi(notes: INotePlay[], { signal }: any, channel : nu
     function abortNotes() {
         for (const note of notesNames) {
             for (const noteNumber of note.noteNumbers) {
-                notePlay(noteNumber, "noteoff", channel)
+                note_play(noteNumber, "noteoff", channel)
             }
         }
     }
@@ -46,7 +46,7 @@ export async function playMidi(notes: INotePlay[], { signal }: any, channel : nu
         if (abort) break;
 
         for (let index = 0; index < note.noteNumbers.length; index++) {
-            notePlay(note.noteNumbers[index], "noteon", channel)
+            note_play(note.noteNumbers[index], "noteon", channel)
         }
 
         await new Promise((res) => {
@@ -54,7 +54,7 @@ export async function playMidi(notes: INotePlay[], { signal }: any, channel : nu
         });
 
         for (let index = 0; index < note.noteNumbers.length; index++) {
-            notePlay(note.noteNumbers[index], "noteoff", channel)
+            note_play(note.noteNumbers[index], "noteoff", channel)
         }
     }
 }
