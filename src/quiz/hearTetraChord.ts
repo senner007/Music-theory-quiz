@@ -16,7 +16,7 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
   randomTetraChord;
   scaleTetraChords;
   octaveAudio = "4" as TOctave;
-  audio; 
+  initAudio; 
 
   private prepareAudio() : INotePlay[] {
    
@@ -38,7 +38,7 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
     this.randomTetraChord = scale_notes(this.randomScale).slice(0,4);
     this.scaleTetraChords = scales.map(scale => scale_notes(scale).slice(0,4)).shuffleArray();  
 
-    this.audio = this.prepareAudio();
+    this.initAudio = this.prepareAudio();
   }
 
   get quizHead() {
@@ -57,8 +57,8 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
     return this.randomTetraChord.commaSequence();
   }
 
-  getAudio() {
-    return [ { audio : [this.audio], keyboardKey : "space", onInit : true, message: "play tetrachord"} ]
+  audio() {
+    return [ { audio : [this.initAudio], keyboardKey : "space", onInit : true, message: "play tetrachord"} ]
   }
 
   static meta() {

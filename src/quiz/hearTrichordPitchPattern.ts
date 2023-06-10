@@ -65,7 +65,7 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
     return this.getPatternDescription(this.randomPatternName)
   }
 
-  getAudio() {
+  audio() {
     return [
       { audio: [this.audioChord], keyboardKey: "space", onInit: true, channel: 1, message: "play trichord harmonically" },
       { audio: [this.audioArpeggio], keyboardKey: "l", channel: 1, message: "play trichord sequentially" },

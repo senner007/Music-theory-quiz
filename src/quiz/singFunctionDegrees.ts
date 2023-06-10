@@ -16,19 +16,19 @@ import {
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
-type optionType = [{ name : string, options : Syllable[]}]
+type TOptionType = [{ name : string, options : Syllable[]}]
 
-export const SingingFunctionalDegrees: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
-  verifyOptions(options: optionType): boolean {
+export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
+  verifyOptions(options: TOptionType): boolean {
     return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
   randomNote: TNoteSingleAccidental;
   octaves: TOctave[] = ["3", "4"]; // in options
-  audio;
+  initAudio;
   stepnumber: number = 12; // in options
   override tempo = 1000;
-  constructor(options: Readonly<optionType>) {
+  constructor(options: Readonly<TOptionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
 
@@ -40,7 +40,7 @@ export const SingingFunctionalDegrees: IQuiz<optionType> = class extends Singing
     const distanceToKey = get_interval_distance("C", this.randomNote)
     const syllableNotesTransposed = optionSyllableNotesInC.transposeBy(distanceToKey);
 
-    this.audio = [...Array(this.stepnumber).keys()].map((_) => {
+    this.initAudio = [...Array(this.stepnumber).keys()].map((_) => {
       const note = syllableNotesTransposed.randomItem();
       const randomOctave = this.octaves.randomItem();
 
@@ -65,8 +65,8 @@ export const SingingFunctionalDegrees: IQuiz<optionType> = class extends Singing
     return "";
   }
 
-  getAudio() {
-    const audio = this.audio.map((n): INotePlay => {
+  audio() {
+    const audio = this.initAudio.map((n): INotePlay => {
       return { noteNames: [n], duration: 1 };
     });
 
@@ -90,7 +90,7 @@ export const SingingFunctionalDegrees: IQuiz<optionType> = class extends Singing
   }
 
   get tableHeader() {
-    return this.audio.map((_, index): ITableHeader => {
+    return this.initAudio.map((_, index): ITableHeader => {
       index++;
       return { name: index.toString().padStart(2, '0'), duration: 1 };
     });
@@ -98,7 +98,7 @@ export const SingingFunctionalDegrees: IQuiz<optionType> = class extends Singing
 
   static meta() {
     return {
-      get getAllOptions(): optionType {
+      get getAllOptions(): TOptionType {
         return [{ name : "Syllables", options : ["Do", "Re", "Me", "Mi", "Fa", "Fi", "So", "La", "Ti"]}];
       },
       name: "Sing functional solfege degrees",

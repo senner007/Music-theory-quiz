@@ -19,7 +19,7 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
   }
 
   async callQuiz(): Promise<string | never> {
-    const solfege = new SolfegeMelody(this.getAudio().filter(a => a.display)[0].audio as INotePlay[], this.randomNote);
+    const solfege = new SolfegeMelody(this.audio().filter(a => a.display)[0].audio as INotePlay[], this.randomNote);
     LogTable.write(solfege, this.tableHeader);
 
     try {
@@ -27,7 +27,7 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
         this.questionOptions,
         "Self-evaluation",
         "q",
-        this.getAudio().map((la) => {
+        this.audio().map((la) => {
           return { value: la.message, key: la.keyboardKey };
         })
       );

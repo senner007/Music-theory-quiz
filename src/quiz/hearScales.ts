@@ -13,7 +13,7 @@ export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<opt
   randomNote;
   scalePick;
   similarScales;
-  audio;
+  initAudio;
   octave: TOctave = "4";
   constructor(options: Readonly<optionType>) {
     super(options);
@@ -31,11 +31,11 @@ export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<opt
       .slice(0, nChoices);
 
     this.scalePick = this.similarScales.randomItem();
-    this.audio = this.prepareAudio();
+    this.initAudio = this.prepare_audio();
 
   }
 
-  private prepareAudio (): INotePlay[] {
+  private prepare_audio (): INotePlay[] {
     const scaleNotes = scale_notes(this.scalePick.scale).toOctaveAscending(this.octave);
       const scaleNotesWithOctave = add_octave_note(scaleNotes);
       const scaleNotesAudio = scaleNotesWithOctave
@@ -64,9 +64,9 @@ export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<opt
     return this.scalePick.description;
   }
 
-  getAudio() {
+  audio() {
     return [ 
-      { audio : [this.audio], keyboardKey : "space", onInit : true, message : "play scale"}
+      { audio : [this.initAudio], keyboardKey : "space", onInit : true, message : "play scale"}
     ]
   }
 

@@ -66,7 +66,7 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
     return "";
   }
 
-  getAudio() {
+  audio() {
     const interval = this.interval.map((n): INotePlay => {
       return { noteNames: [n], duration: 2 };
     });

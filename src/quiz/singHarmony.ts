@@ -84,7 +84,7 @@ export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<opti
     return "";
   }
 
-  getAudio() {
+  audio() {
     const audio = this.melody.melodyNotes.map((n): INotePlay => {
       return { noteNames: n.note, duration: n.duration };
     });

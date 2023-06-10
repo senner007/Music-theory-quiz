@@ -52,14 +52,14 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
     });
   }
 
-  abstract getAudio(): IAudioPlay[];
+  abstract audio(): IAudioPlay[];
 
   abstract callQuiz(): Promise<string | never>;
 
   async execute(): Promise<string | never> {
-    this.listenersArray.push(...this.createListeners(this.getAudio()));
+    this.listenersArray.push(...this.createListeners(this.audio()));
     this.attachListeners(this.listenersArray);
-    this.getAudio().forEach((audioPart) => {
+    this.audio().forEach((audioPart) => {
       if (audioPart.onInit) {
         process.stdin.emit("keypress", null, { name: audioPart.keyboardKey });
       }

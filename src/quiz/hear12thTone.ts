@@ -52,7 +52,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
     return super.feedbackWrong() + answer;
   }
 
-  getAudio() {
+  audio() {
 
     const audio = this.chromaticScaleShuffled
         .filter(note => note !== this.missingNote)

@@ -53,7 +53,7 @@ export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<op
     return "";
   }
 
-  getAudio() {
+  audio() {
     const bassLine = this.randomBassLineInKey.map((n): INotePlay => {
       return { noteNames: [n], duration: 1 };
     });
