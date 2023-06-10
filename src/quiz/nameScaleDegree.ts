@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { IQuizInstance, IQuiz } from "../quiz-types";
+import { IQuiz } from "../quiz-types";
 import {
   allScaleTypes,
   random_note_single_accidental,

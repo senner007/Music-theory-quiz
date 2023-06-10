@@ -4,7 +4,7 @@ import { TNoteAllAccidentalOctave } from './utils';
 
 export interface INotePlay {
     noteNames: Readonly<TNoteAllAccidentalOctave[]>,
-    duration: 1 | 2 | 3 | 4;
+    duration: 0.5 | 1 | 2 | 3 | 4;
 }
 
 var output = new easymidi.Output('Microsoft GS Wavetable Synth');
@@ -21,13 +21,11 @@ function note_play(note: number, activator: "noteon" | "noteoff", channel: numbe
 }
 
 
-export async function play_midi(notes: INotePlay[], { signal }: any, channel : number, timerObj: any, tempo : number): Promise<void> {
+export async function play_midi(notes: INotePlay[], { signal }: any, channel : number, tempo : number): Promise<void> {
 
-    let abort: boolean = false;
-
+    const timers: any[] = [];
     const on_abort = () => {
-        clearTimeout(timerObj)
-        abort = true;
+        timers.forEach(timer =>  clearTimeout(timer))
         abort_notes_play();
     };
     signal.addEventListener('abort', on_abort, { once: true });
@@ -42,19 +40,16 @@ export async function play_midi(notes: INotePlay[], { signal }: any, channel : n
         }
     }
 
-    for (const note of notesNames) {
-        if (abort) break;
+    let totalTime = 0;
+    let currentNotes: number[]  = [];
 
-        for (let index = 0; index < note.noteNumbers.length; index++) {
-            note_play(note.noteNumbers[index], "noteon", channel)
-        }
-
-        await new Promise((res) => {
-            timerObj = setTimeout(() => { res(0) } , tempo * note.duration)
-        });
-
-        for (let index = 0; index < note.noteNumbers.length; index++) {
-            note_play(note.noteNumbers[index], "noteoff", channel)
-        }
+    for (const note of [...notesNames, {noteNumbers: [], duration : 0}]) {
+        let timer = setTimeout(() => {
+            currentNotes.forEach(n => note_play(n, "noteoff", channel))
+            currentNotes = note.noteNumbers;
+            note.noteNumbers.forEach(n => note_play(n, "noteon", channel))
+        }, totalTime)
+        totalTime += tempo * note.duration
+        timers.push(timer)
     }
 }

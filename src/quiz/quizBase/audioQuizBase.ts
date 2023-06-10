@@ -26,7 +26,6 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   private create_listeners(audioParts: IAudioPlay[]): IListener[] {
     return audioParts.map((audioPart) => {
       let acObj = { ac: new AbortController() };
-      let timerObj: any;
 
       const listener = (_: any, key: any) => {
         if (key.name === audioPart.keyboardKey) {
@@ -34,11 +33,12 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
             .filter(l => !audioPart.backgroundChannel)
             .forEach(l => l.acObj?.ac.abort())
           acObj.ac = new AbortController();
+
           if (audioPart.display) {
-            play_midi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, timerObj, this.tempo);
+            play_midi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, this.tempo);
           } else {
             for (let index = 0; index < audioPart.audio.length; index++) {
-              play_midi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, timerObj, this.tempo);
+              play_midi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, this.tempo);
             }
           }
 
