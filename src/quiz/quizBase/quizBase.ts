@@ -11,11 +11,11 @@ export abstract class QuizBase<T> {
   listenersArray: IListener[] = [];
 
   constructor(options: Readonly<T>) {
-    this.errorCheckOptions(options);
-    this.listenersArray.push(this.scrollListener());
+    this.error_check_options(options);
+    this.listenersArray.push(this.scroll_listener());
   }
 
-  private scrollListener(): IListener {
+  private scroll_listener(): IListener {
     const twice = (func: Function) => {
       for (let i = 0; i < 2; i++) {
         func();
@@ -35,7 +35,7 @@ export abstract class QuizBase<T> {
     };
   }
 
-  private errorCheckOptions(options: Readonly<T>): void | never {
+  private error_check_options(options: Readonly<T>): void | never {
     const optionsAreValid = this.verify_options(options);
     const quizConstructor: IQuiz<any> = this.constructor as IQuiz<any>;
     if (!optionsAreValid) LogError("options invalid in class: " + "'" + quizConstructor.meta.name + "'");
@@ -45,13 +45,13 @@ export abstract class QuizBase<T> {
   abstract question_options: Readonly<string[]>;
   abstract question: string;
 
-  protected attachListeners(listeners: IListener[]) {
+  protected attach_listeners(listeners: IListener[]) {
     for (const listener of listeners) {
       process.stdin.on("keypress", listener.listener);
     }
   }
 
-  private detachListeners(listeners: IListener[]) {
+  private detach_listeners(listeners: IListener[]) {
     for (const listener of listeners) {
       listener.acObj?.ac.abort();
       process.stdin.off("keypress", listener.listener);
@@ -59,6 +59,6 @@ export abstract class QuizBase<T> {
   }
 
   cleanup = async (): Promise<void> => {
-    this.detachListeners(this.listenersArray);
+    this.detach_listeners(this.listenersArray);
   };
 }

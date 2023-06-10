@@ -29,12 +29,12 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
     this.randomNote = random_note_single_accidental();
     this.randomPatternName = options[0].options.random_item();
     this.randomPitchPattern = get_pattern(this.randomPatternName);
-    const [chord, arppeggio] = this.prepareAudio();
+    const [chord, arppeggio] = this.prepare_audio();
     this.audioChord = chord;
     this.audioArpeggio = arppeggio;
   }
 
-  private prepareAudio() : INotePlay[][] {
+  private prepare_audio() : INotePlay[][] {
     const pitchIntervals = pattern_intervals(this.randomPitchPattern);
     const patternInversions = pitch_pattern_inversions(this.randomNote, pitchIntervals);
     const patternInversAudio = patternInversions.random_item().to_octave_ascending("4")
@@ -48,7 +48,7 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
     ];
   }
 
-  private getPatternDescription(p: TPitchPatternName) {
+  private get_pattern_description(p: TPitchPatternName) {
     return p + " - " + pitchPatterns[p].toString();
   }
 
@@ -56,13 +56,13 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
     return [];
   }
   get question_options() {
-    return pitchPatternKeyNames.map(this.getPatternDescription);
+    return pitchPatternKeyNames.map(this.get_pattern_description);
   }
   get question() {
     return "Which pitch pattern do you hear?";
   }
   answer(): string {
-    return this.getPatternDescription(this.randomPatternName)
+    return this.get_pattern_description(this.randomPatternName)
   }
 
   audio() {

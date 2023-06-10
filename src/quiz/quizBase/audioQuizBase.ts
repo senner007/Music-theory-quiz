@@ -23,7 +23,7 @@ type IAudioPlay = IAudioPlaySolo | IAudioPlayMix;
 export abstract class AudioQuizBase<T> extends QuizBase<T> {
   protected tempo: number = 500;
 
-  private createListeners(audioParts: IAudioPlay[]): IListener[] {
+  private create_listeners(audioParts: IAudioPlay[]): IListener[] {
     return audioParts.map((audioPart) => {
       let acObj = { ac: new AbortController() };
       let timerObj: any;
@@ -57,8 +57,8 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   abstract call_quiz(): Promise<string | never>;
 
   async execute(): Promise<string | never> {
-    this.listenersArray.push(...this.createListeners(this.audio()));
-    this.attachListeners(this.listenersArray);
+    this.listenersArray.push(...this.create_listeners(this.audio()));
+    this.attach_listeners(this.listenersArray);
     this.audio().forEach((audioPart) => {
       if (audioPart.onInit) {
         process.stdin.emit("keypress", null, { name: audioPart.keyboardKey });

@@ -27,8 +27,8 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
         this.question_options,
         "Self-evaluation",
         "q",
-        this.audio().map((la) => {
-          return { value: la.message, key: la.keyboardKey };
+        this.audio().map((a) => {
+          return { value: a.message, key: a.keyboardKey };
         })
       );
 

@@ -112,12 +112,12 @@ export function event_by_probability(chance: number) {
 }
 
 
-type NoteVariants = [`${TBaseNote}bb`, `${TBaseNote}b`, TBaseNote, `${TBaseNote}#`, `${TBaseNote}##`]
+type TNoteVariants = [`${TBaseNote}bb`, `${TBaseNote}b`, TBaseNote, `${TBaseNote}#`, `${TBaseNote}##`]
 
 export function note_variants(
   baseNote: TBaseNote
-): Readonly<NoteVariants> | Readonly<[...NoteVariants, `${TBaseNote}###`]> {
-  const returnArray: NoteVariants = [
+): Readonly<TNoteVariants> | Readonly<[...TNoteVariants, `${TBaseNote}###`]> {
+  const returnArray: TNoteVariants = [
     Note.transpose(baseNote, "1dd") as `${TBaseNote}bb`,
     Note.transpose(baseNote, "1d") as `${TBaseNote}b`,
     baseNote as TBaseNote,
@@ -125,7 +125,7 @@ export function note_variants(
     Note.transpose(baseNote, "1AA") as `${TBaseNote}##`,
   ];
   if (baseNote === "F") {
-    return [...returnArray, Note.transpose(baseNote, "1AAA") as `${TBaseNote}###`] as [...NoteVariants, `${TBaseNote}###`];
+    return [...returnArray, Note.transpose(baseNote, "1AAA") as `${TBaseNote}###`] as [...TNoteVariants, `${TBaseNote}###`];
   }
   return returnArray
 }
