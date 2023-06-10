@@ -11,7 +11,7 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
   }
 
   abstract randomNote: TNoteSingleAccidental;
-
+  abstract timeSignature: 1 | 2 | 3 | 4;
   abstract table_header: ITableHeader[]
 
   feedback(choice: string) {
@@ -19,8 +19,8 @@ export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
   }
 
   async call_quiz(): Promise<string | never> {
-    const solfege = new SolfegeMelody(this.audio().filter(a => a.display)[0].audio as INotePlay[], this.randomNote);
-    LogTable.write(solfege, this.table_header);
+    const solfege = new SolfegeMelody(this.audio().filter(a => a.display)[0].audio as INotePlay[], this.randomNote, this.timeSignature);
+    LogTable.write(solfege, this.table_header, this.timeSignature);
 
     try {
       const choice = await LogAsync.questions_in_list_indexed_global_key_hook(

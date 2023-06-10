@@ -31,7 +31,7 @@ export const SingContextualIntervals: IQuiz<TOptionsType> = class extends Singin
   interval;
   scaleThirdOctave;
   override tempo = 400;
-
+  timeSignature = 1 as const;
   constructor(options: Readonly<TOptionsType>) {
     super(options);
     const [scaletypes, intervals] = options;

@@ -35,6 +35,7 @@ export const SingHarmony: IQuiz<TOptionType> = class extends SingingQuizBase<TOp
   progressionIsDiatonic;
   progressionIsMajor;
   keyInfo;
+  timeSignature = 4 as const; // from options - input to melody pattern
   constructor(options: Readonly<TOptionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();

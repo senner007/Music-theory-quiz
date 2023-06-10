@@ -5,7 +5,7 @@ import { INotePlay } from "../midiplay";
 
 export const MelodySingulate: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
     static id = "singular";
-    static description = "Top notes only";
+    static description = "1st (.)";
     public melody() {
         return [
             { note: [this.topNote], duration: 4 as const }

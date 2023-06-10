@@ -27,6 +27,7 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Singin
   octaves: TOctave[] = ["3", "4"]; // in options
   initAudio;
   stepnumber: number = 12; // in options
+  timeSignature = 1 as const;
   override tempo = 1000;
   constructor(options: Readonly<TOptionType>) {
     super(options);

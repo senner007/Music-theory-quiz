@@ -26,6 +26,7 @@ export const SingBassLines: IQuiz<TOptionType> = class extends SingingQuizBase<T
   progressionDescription
   progressionIsDiatonic;
   progressionIsMajor;
+  timeSignature = 4 as const;
   constructor(options: Readonly<TOptionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
