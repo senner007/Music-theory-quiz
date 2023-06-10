@@ -16,7 +16,7 @@ type optionsType = [{ name : string, options : readonly TPitchPatternName[]}]
 
 export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends ListeningQuizBase<optionsType> {
   verifyOptions(options: optionsType): boolean {
-    return options.firstAndOnly().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
+    return options.first_and_only().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
 
   randomNote;
@@ -27,7 +27,7 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
   constructor(options: Readonly<optionsType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
-    this.randomPatternName = options[0].options.randomItem();
+    this.randomPatternName = options[0].options.random_item();
     this.randomPitchPattern = get_pattern(this.randomPatternName);
     const [chord, arppeggio] = this.prepareAudio();
     this.audioChord = chord;
@@ -37,7 +37,7 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
   private prepareAudio() : INotePlay[][] {
     const pitchIntervals = pattern_intervals(this.randomPitchPattern);
     const patternInversions = pitch_pattern_inversions(this.randomNote, pitchIntervals);
-    const patternInversAudio = patternInversions.randomItem().toOctaveAscending("4")
+    const patternInversAudio = patternInversions.random_item().to_octave_ascending("4")
 
     return [
       [{ noteNames: patternInversAudio, duration: 4 }],

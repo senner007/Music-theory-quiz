@@ -36,8 +36,8 @@ function adjust_transposition_within_bounds(
 
 export function transpose_progression_by_interval(progression: IProgression, interval: string) {
   return {
-    chords: progression.chords.map((c) => c.transposeBy(interval)),
-    bass: progression.bass.transposeBy(interval),
+    chords: progression.chords.map((c) => c.transpose_by(interval)),
+    bass: progression.bass.transpose_by(interval),
   } as const;
 }
 

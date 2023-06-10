@@ -36,16 +36,16 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
     super(options);
     const [scaletypes, intervals] = options;
     this.randomNote = random_note_single_accidental();
-    this.randomScaleType = scaletypes.options.randomItem();
+    this.randomScaleType = scaletypes.options.random_item();
     const randomScale = create_scale(this.randomNote, this.randomScaleType);
 
-    this.scaleThirdOctave = scale_notes(randomScale).toOctaveAscending("3")
+    this.scaleThirdOctave = scale_notes(randomScale).to_octave_ascending("3")
     const randomScaleNotes = [
       ...this.scaleThirdOctave,
-      ...scale_notes(randomScale).toOctaveAscending("4")
+      ...scale_notes(randomScale).to_octave_ascending("4")
     ];
 
-    const firstNote = randomScaleNotes.randomItem();
+    const firstNote = randomScaleNotes.random_item();
 
     const secondTonePossibilities = randomScaleNotes
       .filter((n) => !(n === firstNote))
@@ -54,7 +54,7 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
         return intervals.options.includes(interval_to_absolute(intervalDistance));
       });
 
-    const secondNote = secondTonePossibilities.randomItem();
+    const secondNote = secondTonePossibilities.random_item();
     this.interval = [firstNote, secondNote];
   }
 

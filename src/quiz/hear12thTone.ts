@@ -16,10 +16,10 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
   octave : TOctave = "4";
   constructor(options: Readonly<never[]>) {
     super(options);
-    this.randomNote = base_notes().randomItem();
+    this.randomNote = base_notes().random_item();
     const chromaticScale = create_scale(this.randomNote, "chromatic");
-    this.chromaticScaleShuffled = chromatic_scale_notes(chromaticScale).shuffleArray();
-    this.missingNote = this.chromaticScaleShuffled.slice(1, this.chromaticScaleShuffled.length).randomItem();
+    this.chromaticScaleShuffled = chromatic_scale_notes(chromaticScale).shuffle_array();
+    this.missingNote = this.chromaticScaleShuffled.slice(1, this.chromaticScaleShuffled.length).random_item();
     this.startingNote = this.chromaticScaleShuffled[0];
   }
 
@@ -39,7 +39,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
   override feedbackWrong(): string {
     const chromaticScaleShuffledInOctave = this.chromaticScaleShuffled
     .filter(note => note !== this.missingNote)
-    .toOctaveAscending(this.octave);
+    .to_octave_ascending(this.octave);
     
     const notesWithIntervalsRows = chromaticScaleShuffledInOctave
         .map((note, index) => {
@@ -56,7 +56,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
 
     const audio = this.chromaticScaleShuffled
         .filter(note => note !== this.missingNote)
-        .toOctaveAscending(this.octave)
+        .to_octave_ascending(this.octave)
         .map(note => { return { noteNames: [note], duration: 1 } as INotePlay });
 
         return [ { audio : [audio], keyboardKey : "space", onInit : true, message : "play row"} ]

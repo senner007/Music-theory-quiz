@@ -39,7 +39,7 @@ export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<opti
     super(options);
     this.randomNote = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
-    const randomProgression = selectProgressions.map(p => p.progressions).flat().randomItem();
+    const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
     this.progressionTags = randomProgression.tags;
     this.progressionDescription = randomProgression.description;
     this.progressionIsDiatonic = randomProgression.isDiatonic;
@@ -57,8 +57,8 @@ export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<opti
       return numeral_by_symbol(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
     });
 
-    const randomMelodyPatternDescription =  options[1].options.randomItem();
-    this.melody = melodyGenerator(this.randomProgressionInKey, melodicPatterns.filter(pattern => pattern.description === randomMelodyPatternDescription).firstAndOnly());
+    const randomMelodyPatternDescription =  options[1].options.random_item();
+    this.melody = melodyGenerator(this.randomProgressionInKey, melodicPatterns.filter(pattern => pattern.description === randomMelodyPatternDescription).first_and_only());
 
   }
 

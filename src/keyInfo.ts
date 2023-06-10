@@ -157,6 +157,6 @@ function key_chords(keyInfo: KeyInfo) {
 export function numeral_by_symbol(keyInfo: KeyInfo, chordNotes: string[]) {
   const chordSymbols: string[] = Chord.detect(chordNotes, { assumePerfectFifth: true });
   const keyChords = key_chords(keyInfo);
-  const chordsFound = keyChords.filter(c => chordSymbols.includes(c.symbol)).removeDuplicateObjects().map(c => c.romanNumeral)
-  return chordsFound.length > 1 ? chordsFound.join("|") : chordsFound.firstAndOnly();
+  const chordsFound = keyChords.filter(c => chordSymbols.includes(c.symbol)).remove_duplicate_objects().map(c => c.romanNumeral)
+  return chordsFound.length > 1 ? chordsFound.join("|") : chordsFound.first_and_only();
 }

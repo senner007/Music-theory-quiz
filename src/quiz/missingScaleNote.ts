@@ -13,7 +13,7 @@ type optionType = [{ name : string, options : readonly string[] }]
 
 export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
-    return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   scale;
@@ -23,8 +23,8 @@ export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<op
   constructor(options: Readonly<optionType>) {
     super(options);
 
-    this.scale = create_scale(random_note_single_accidental(), options[0].options.randomItem());
-    this.randomNote = scale_notes(this.scale).randomItem();
+    this.scale = create_scale(random_note_single_accidental(), options[0].options.random_item());
+    this.randomNote = scale_notes(this.scale).random_item();
 
     this.scaleStringMissingNote = this.scale.notes
       .map((n) => (n === this.randomNote ? "- MISSING -" : n))

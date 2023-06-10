@@ -8,7 +8,7 @@ type optionType = [{ name : string, options : readonly string[] }]
 
 export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
-    return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   randomNote;
@@ -21,8 +21,8 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
   private prepareAudio() : INotePlay[] {
    
     return this.randomTetraChord
-    .toOctaveAscending(this.octaveAudio)
-    .shuffleArray()
+    .to_octave_ascending(this.octaveAudio)
+    .shuffle_array()
     .map(note => { return { noteNames: [note], duration: 1, channel : 1 } })
   }
 
@@ -30,13 +30,13 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
     super(options);
     this.randomNote = random_note_single_accidental();
 
-    const scales = options.firstAndOnly().options.map(scaleType => 
+    const scales = options.first_and_only().options.map(scaleType => 
       create_scale(this.randomNote, scaleType)
     );
 
-    this.randomScale = scales.randomItem();
+    this.randomScale = scales.random_item();
     this.randomTetraChord = scale_notes(this.randomScale).slice(0,4);
-    this.scaleTetraChords = scales.map(scale => scale_notes(scale).slice(0,4)).shuffleArray();  
+    this.scaleTetraChords = scales.map(scale => scale_notes(scale).slice(0,4)).shuffle_array();  
 
     this.initAudio = this.prepareAudio();
   }
@@ -46,7 +46,7 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
   }
 
   get questionOptions() {
-    return this.scaleTetraChords.map(st => st.commaSequence());
+    return this.scaleTetraChords.map(st => st.comma_sequence());
   }
 
   get question() {
@@ -54,7 +54,7 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
   }
 
   answer() {
-    return this.randomTetraChord.commaSequence();
+    return this.randomTetraChord.comma_sequence();
   }
 
   audio() {

@@ -34,15 +34,15 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Singin
 
     const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
-      return options.firstAndOnly().options.includes(syllables_in_key_of_c[key] as Syllable);
+      return options.first_and_only().options.includes(syllables_in_key_of_c[key] as Syllable);
     });
 
     const distanceToKey = get_interval_distance("C", this.randomNote)
-    const syllableNotesTransposed = optionSyllableNotesInC.transposeBy(distanceToKey);
+    const syllableNotesTransposed = optionSyllableNotesInC.transpose_by(distanceToKey);
 
     this.initAudio = [...Array(this.stepnumber).keys()].map((_) => {
-      const note = syllableNotesTransposed.randomItem();
-      const randomOctave = this.octaves.randomItem();
+      const note = syllableNotesTransposed.random_item();
+      const randomOctave = this.octaves.random_item();
 
       const octaveNote = to_octave(note, randomOctave);
       if (is_too_high(octaveNote)) {

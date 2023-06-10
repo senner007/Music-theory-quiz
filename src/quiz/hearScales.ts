@@ -19,24 +19,24 @@ export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<opt
     super(options);
     const nChoices = 7; // should be option parameter
     this.randomNote = random_note_single_accidental();
-    const allScales = options.firstAndOnly().options.shuffleArray().map(scaleName => {
+    const allScales = options.first_and_only().options.shuffle_array().map(scaleName => {
       const scale = create_scale(this.randomNote, scaleName);
       return { scale: scale, description: scale.type + " - " + scale.intervals };
     });
 
-    const randomScale = allScales.randomItem();
+    const randomScale = allScales.random_item();
 
     this.similarScales = allScales
       .filter(s => s.scale.notes.length === randomScale.scale.notes.length)
       .slice(0, nChoices);
 
-    this.scalePick = this.similarScales.randomItem();
+    this.scalePick = this.similarScales.random_item();
     this.initAudio = this.prepare_audio();
 
   }
 
   private prepare_audio (): INotePlay[] {
-    const scaleNotes = scale_notes(this.scalePick.scale).toOctaveAscending(this.octave);
+    const scaleNotes = scale_notes(this.scalePick.scale).to_octave_ascending(this.octave);
       const scaleNotesWithOctave = add_octave_note(scaleNotes);
       const scaleNotesAudio = scaleNotesWithOctave
         .map(note => { return { noteNames: [note], duration: 1 } as INotePlay })

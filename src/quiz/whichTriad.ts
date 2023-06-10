@@ -7,21 +7,21 @@ type optionType = [{ name : string, options : readonly string[] }]
 
 export const WhichTriad: IQuiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
-    return options.firstAndOnly().options.every((chordType) => allChordTypes.includes(chordType));
+    return options.first_and_only().options.every((chordType) => allChordTypes.includes(chordType));
   }
 
   randomChord;
   chordTypesAndNotes;
   constructor(options: Readonly<optionType>) {
     super(options);
-    const chordOptions = options.firstAndOnly().options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
+    const chordOptions = options.first_and_only().options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
     this.chordTypesAndNotes = chordOptions
       .map((chord) => {
-        return { chord: chord, notes: chord.notes.shuffleArray().commaSequence() };
+        return { chord: chord, notes: chord.notes.shuffle_array().comma_sequence() };
       })
-      .shuffleArray();
+      .shuffle_array();
 
-    this.randomChord = this.chordTypesAndNotes.randomItem();
+    this.randomChord = this.chordTypesAndNotes.random_item();
   }
 
   get quizHead() {

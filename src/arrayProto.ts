@@ -6,41 +6,32 @@ import { TNoteAllAccidental, TNoteAllAccidentalOctave, note_transpose, to_octave
 declare global {
 
     interface Array<T> {
-      toOctaveAscending(this: TNoteAllAccidental[], octave: TOctave): Readonly<Array<TNoteAllAccidentalOctave>>;
-      transposeBy<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]>(this: U, interval: string): Readonly<U>;
-      commaSequence(): string;
-      shuffleArray(): Readonly<Array<T>>;
-      randomItem(): T;
-      isEmpty(): boolean
-      firstAndOnly(): T
-      removeDuplicateObjects(): Readonly<Array<T>>
+      to_octave_ascending(this: TNoteAllAccidental[], octave: TOctave): Readonly<Array<TNoteAllAccidentalOctave>>;
+      transpose_by<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]>(this: U, interval: string): Readonly<U>;
+      comma_sequence(): string;
+      shuffle_array(): Readonly<Array<T>>;
+      random_item(): T;
+      is_empty(): boolean
+      first_and_only(): T
+      remove_duplicate_objects(): Readonly<Array<T>>
     }
-    interface ReadonlyArray<T> {
-      shuffleArray(): Readonly<Array<T>>;
-      randomItem(): T;
-      commaSequence(): string;
-      toOctaveAscending(this: Readonly<TNoteAllAccidental[]>, octave: TOctave): Readonly<Array<TNoteAllAccidentalOctave>>;
-      transposeBy<U extends Readonly<TNoteAllAccidental[]> | Readonly<TNoteAllAccidentalOctave[]>>(this: U, interval: string): Readonly<U>;
-      isEmpty(): boolean;
-      firstAndOnly(): T
-      removeDuplicateObjects(): Readonly<Array<T>>
-    }
+    interface ReadonlyArray<T> extends Array<T> {}
   }
 
-  Array.prototype.removeDuplicateObjects = function <U extends any[]>(this : U) {
+  Array.prototype.remove_duplicate_objects = function <U extends any[]>(this : U) {
     return this.filter(
       (chord, index, self) =>
         index === self.findIndex((c) => JSON.stringify(c) === JSON.stringify(chord))
     );
   }
 
-  Array.prototype.isEmpty = function<U extends any[]> (
+  Array.prototype.is_empty = function<U extends any[]> (
     this: U
   ) : boolean {
     return this.length === 0
   };
 
-  Array.prototype.firstAndOnly = function<U extends any[]> (
+  Array.prototype.first_and_only = function<U extends any[]> (
     this: U
   ) : boolean {
     if (this.length !== 1) {
@@ -50,7 +41,7 @@ declare global {
   };
 
 
-  Array.prototype.transposeBy = function<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]> (
+  Array.prototype.transpose_by = function<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]> (
     this: U,
     interval: string
   ) : Readonly<U> {
@@ -58,18 +49,18 @@ declare global {
   };
   
   
-  Array.prototype.toOctaveAscending = function (
+  Array.prototype.to_octave_ascending = function (
     octave: TOctave
   ): Readonly<TNoteAllAccidentalOctave[]> {
     return this.map((n) => to_octave(n, octave)).map(transpose_to_ascending);
   };
   
-  Array.prototype.commaSequence = function (): string {
+  Array.prototype.comma_sequence = function (): string {
     return this.join(", ");
   };
   
   
-  Array.prototype.shuffleArray = function () {
+  Array.prototype.shuffle_array = function () {
     const arrayClone = [...this];
     for (let i = arrayClone.length - 1; i > 0; i--) {
       const j = math_floor(Math.random() * (i + 1));
@@ -80,7 +71,7 @@ declare global {
     return arrayClone;
   };
   
-  Array.prototype.randomItem = function () {
+  Array.prototype.random_item = function () {
     const randomIndex = random_index(this);
     return this[randomIndex];
   };

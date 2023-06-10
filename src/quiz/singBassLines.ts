@@ -29,15 +29,15 @@ export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<op
   constructor(options: Readonly<optionType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
-    const selectProgressions = progressions.filter(p => options.firstAndOnly().options.some(description => description === p.description));
-    const randomProgression = selectProgressions.map(p => p.progressions).flat().randomItem();
+    const selectProgressions = progressions.filter(p => options.first_and_only().options.some(description => description === p.description));
+    const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
 
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
     this.progressionDescription = randomProgression.description;
 
     const keyDistance = get_interval_distance("C", this.randomNote)
-    this.randomBassLineInKey = randomProgression.bass.transposeBy(keyDistance);
+    this.randomBassLineInKey = randomProgression.bass.transpose_by(keyDistance);
   }
 
   get quizHead() {

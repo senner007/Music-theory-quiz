@@ -16,7 +16,7 @@ type optionType = [{ name : string, options : readonly string[] }]
 
 export const NameScaleDegree: IQuiz<optionType> = class extends TextQuizBase<optionType> {
   verifyOptions(options: optionType): boolean {
-    return options.firstAndOnly().options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
   scale;
@@ -25,7 +25,7 @@ export const NameScaleDegree: IQuiz<optionType> = class extends TextQuizBase<opt
   randomNoteVariants;
   constructor(options: Readonly<optionType>) {
     super(options);
-    this.scale = create_scale(random_note_single_accidental(), options[0].options.randomItem());
+    this.scale = create_scale(random_note_single_accidental(), options[0].options.random_item());
     const randomIndex = random_index(this.scale.notes);
     this.randomNote = scale_note_at_index(this.scale, randomIndex);
     this.randomDegree = number_to_degree(randomIndex);

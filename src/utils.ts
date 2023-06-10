@@ -75,9 +75,9 @@ export function random_note_single_accidental() {
     return [second, third, fourth] as Readonly<[`${TBaseNote}b`, TBaseNote, `${TBaseNote}#`]>;
   }
 
-  const baseNote = baseNotes.randomItem();
+  const baseNote = baseNotes.random_item();
   const notesSingleAccidental = note_single_accidentals(baseNote);
-  return notesSingleAccidental.randomItem() as Readonly<TNoteSingleAccidental>;
+  return notesSingleAccidental.random_item() as Readonly<TNoteSingleAccidental>;
 }
 
 export function base_notes() {
