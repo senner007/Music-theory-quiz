@@ -22,7 +22,7 @@ type optionsType = [
 export const SingContextualIntervals: IQuiz<optionsType> = class extends SingingQuizBase<
   optionsType
 > {
-  verifyOptions(_: optionsType): boolean {
+  verify_options(_: optionsType): boolean {
     return true;
   }
 
@@ -58,7 +58,7 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
     this.interval = [firstNote, secondNote];
   }
 
-  get quizHead() {
+  get quiz_head() {
     return [`Identify and sing the interval from the ${chalk.underline(this.randomScaleType)} scale`];
   }
 
@@ -91,7 +91,7 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
     ];
   }
 
-  get tableHeader() {
+  get table_header() {
     return this.interval.map((_, index): ITableHeader => {
       index++;
       return { name: index.toString().padStart(2, "0"), duration: 2 };
@@ -100,7 +100,7 @@ export const SingContextualIntervals: IQuiz<optionsType> = class extends Singing
 
   static meta() {
     return {
-      get getAllOptions(): optionsType {
+      get all_options(): optionsType {
         const scales = [
           "major",
           "aeolian",

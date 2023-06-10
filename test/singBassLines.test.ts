@@ -39,9 +39,9 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
 
   test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
     (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
-    const quiz = new SingBassLines(SingBassLines.meta().getAllOptions);
+    const quiz = new SingBassLines(SingBassLines.meta().all_options);
     expect(math_floor).toBeCalledTimes(3);
-    expect(quiz.quizHead).toEqual([quizHeadOutput[mathFloorReturnValue]]);
+    expect(quiz.quiz_head).toEqual([quizHeadOutput[mathFloorReturnValue]]);
   });
 
   const solfegeMelodies = [
@@ -76,7 +76,7 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
     (<Mock>LogTable.write).mockImplementation((solfege: SolfegeMelody) => {
       expect(solfege.getMelody).toEqual(solfegeMelodies[mathFloorReturnValue].melody);
     });
-    const quiz = new SingBassLines(SingBassLines.meta().getAllOptions);
+    const quiz = new SingBassLines(SingBassLines.meta().all_options);
     await quiz.execute();
     expect(LogTable.write).toBeCalledTimes(1);
   });

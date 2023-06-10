@@ -18,8 +18,8 @@ describe("Test NameScaleDegree quiz", () => {
   test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
 
     (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
-    const quiz = new NameScaleDegree(NameScaleDegree.meta().getAllOptions);
+    const quiz = new NameScaleDegree(NameScaleDegree.meta().all_options);
     expect(math_floor).toBeCalledTimes(4);
-    expect(quiz.quizHead).toEqual([quizHeadOutput[mathFloorReturnValue]]);
+    expect(quiz.quiz_head).toEqual([quizHeadOutput[mathFloorReturnValue]]);
   });
 });

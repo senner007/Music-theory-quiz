@@ -21,7 +21,7 @@ const melodicPatterns = [
 ]
 
 export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
-  verifyOptions(_: optionType): boolean {
+  verify_options(_: optionType): boolean {
     return true;
   }
 
@@ -62,7 +62,7 @@ export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<opti
 
   }
 
-  get quizHead() {
+  get quiz_head() {
     const description = this.progressionDescription
       ? `Description: ${chalk.underline(this.progressionDescription)}`
       : "";
@@ -114,7 +114,7 @@ export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<opti
     ]
   }
 
-  get tableHeader() {
+  get table_header() {
     return this.chords.map((c): ITableHeader => {
       return { name: c, duration: this.melody.timeSignature };
     });
@@ -122,7 +122,7 @@ export const SingHarmony: IQuiz<optionType> = class extends SingingQuizBase<opti
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [
           { name : "Progressions", options : progressions.map(p => p.description) as TProgression["description"][] },
           { name : "Melodic Patterns", options : melodicPatterns.map(m =>  m.description) as string[] },

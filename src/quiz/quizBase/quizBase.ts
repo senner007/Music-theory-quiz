@@ -36,13 +36,13 @@ export abstract class QuizBase<T> {
   }
 
   private errorCheckOptions(options: Readonly<T>): void | never {
-    const optionsAreValid = this.verifyOptions(options);
+    const optionsAreValid = this.verify_options(options);
     const quizConstructor: IQuiz<any> = this.constructor as IQuiz<any>;
     if (!optionsAreValid) LogError("options invalid in class: " + "'" + quizConstructor.meta.name + "'");
   }
 
-  protected abstract verifyOptions(options: Readonly<T>): boolean;
-  abstract questionOptions: Readonly<string[]>;
+  protected abstract verify_options(options: Readonly<T>): boolean;
+  abstract question_options: Readonly<string[]>;
   abstract question: string;
 
   protected attachListeners(listeners: IListener[]) {

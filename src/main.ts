@@ -1,5 +1,5 @@
 import "./arrayProto"
-import { customExit, isInterrupt } from "./utils";
+import { customExit, is_interrupt } from "./utils";
 import { IQuiz } from "./quiz-types";
 import { MissingScaleNote } from "./quiz/missingScaleNote";
 import { WhichTriad } from "./quiz/whichTriad";
@@ -55,7 +55,7 @@ const quizzes: IQuiz<any>[] = [
       await loopQuiz(choiceSelection);
       Log.clear();
     } catch (err) {
-      if (isInterrupt(err)) {
+      if (is_interrupt(err)) {
         customExit();
       }
     }

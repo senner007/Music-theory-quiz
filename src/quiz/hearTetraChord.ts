@@ -7,7 +7,7 @@ import { INotePlay } from "../midiplay";
 type optionType = [{ name : string, options : readonly string[] }]
 
 export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase<optionType> {
-  verifyOptions(options: optionType): boolean {
+  verify_options(options: optionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
@@ -41,11 +41,11 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
     this.initAudio = this.prepareAudio();
   }
 
-  get quizHead() {
+  get quiz_head() {
     return [];
   }
 
-  get questionOptions() {
+  get question_options() {
     return this.scaleTetraChords.map(st => st.comma_sequence());
   }
 
@@ -63,7 +63,7 @@ export const HearTetraChord: IQuiz<optionType> = class extends ListeningQuizBase
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [{ name : "Scale types", options : [
           "major",
           "aeolian",

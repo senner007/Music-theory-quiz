@@ -15,7 +15,7 @@ const pitchPatternKeyNames = ObjectKeys(pitchPatterns);
 type optionsType = [{ name : string, options : readonly TPitchPatternName[]}]
 
 export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends ListeningQuizBase<optionsType> {
-  verifyOptions(options: optionsType): boolean {
+  verify_options(options: optionsType): boolean {
     return options.first_and_only().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
 
@@ -52,10 +52,10 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
     return p + " - " + pitchPatterns[p].toString();
   }
 
-  get quizHead() {
+  get quiz_head() {
     return [];
   }
-  get questionOptions() {
+  get question_options() {
     return pitchPatternKeyNames.map(this.getPatternDescription);
   }
   get question() {
@@ -74,7 +74,7 @@ export const HearTrichordPitchPatterns: IQuiz<optionsType> = class extends Liste
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [{ name : "Pitch patterns", options : pitchPatternKeyNames }] as const;
       },
       name: "Hear trichord pitch patterns",

@@ -87,7 +87,7 @@ export function key_info(key: MajorKey | MinorKey) {
     // this chord is overriden since the library has this set to m6 chord and not mMaj7
     const melodicChords = [...key.melodic.chords] as string[];
     melodicChords[0] = key.melodic.tonic + "mMaj7";
-    const obj = {
+    return {
       ...key,
       natural: {
         ...key.natural,
@@ -109,7 +109,6 @@ export function key_info(key: MajorKey | MinorKey) {
       },
       
     } as const;
-    return obj;
   }
 
   const majorNumerals: TRomanNumeral[] = ["I", "ii", "iii", "IV", "V", "vi", "viio"];
@@ -118,7 +117,7 @@ export function key_info(key: MajorKey | MinorKey) {
   const secondaryDominantSevenths: TRomanNumeral[] = ["V7/ii", "V7/iii", "V7/IV", "V7/V", "V7/vi"];
  
 
-  const obj = {
+  return {
     ...key,
     ...primary_chords_inversions(["M", "m", "m", "M", "M", "m", "dim"], majorNumerals, key.scale),
     sevenths: seventh_chords_inversions(key.chords, majorSevenths),
@@ -126,13 +125,12 @@ export function key_info(key: MajorKey | MinorKey) {
     dominantSevenths: seventh_chords_inversions(key.secondaryDominants.filter(c => c !== ""), secondaryDominantSevenths),
     additional: seventh_chords_inversions([Chord.getChord("m7", key.scale.at(-1)).symbol], ["vii7"])
   } as const;
-  return obj;
 }
 
-export type KeyInfo = ReturnType<typeof key_info>;
+export type TKeyInfo = ReturnType<typeof key_info>;
 
 
-function key_chords(keyInfo: KeyInfo) {
+function key_chords(keyInfo: TKeyInfo) {
   if (keyInfo.type === "major") {
     return [
       ...keyInfo.allPrimaryChords(), 
@@ -154,7 +152,7 @@ function key_chords(keyInfo: KeyInfo) {
   ];
 }
 
-export function numeral_by_symbol(keyInfo: KeyInfo, chordNotes: string[]) {
+export function numeral_by_symbol(keyInfo: TKeyInfo, chordNotes: string[]) {
   const chordSymbols: string[] = Chord.detect(chordNotes, { assumePerfectFifth: true });
   const keyChords = key_chords(keyInfo);
   const chordsFound = keyChords.filter(c => chordSymbols.includes(c.symbol)).remove_duplicate_objects().map(c => c.romanNumeral)

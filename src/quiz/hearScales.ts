@@ -6,7 +6,7 @@ import { INotePlay } from "../midiplay";
 type optionType = [{ name : string, options : readonly string[] }]
 
 export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<optionType> {
-  verifyOptions(options: optionType): boolean {
+  verify_options(options: optionType): boolean {
     return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
@@ -49,10 +49,10 @@ export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<opt
       
   }
 
-  get quizHead() {
+  get quiz_head() {
     return [];
   }
-  get questionOptions() {
+  get question_options() {
     return this.similarScales.map(
       scales => scales.description
     );
@@ -72,7 +72,7 @@ export const HearScales: IQuiz<optionType> = class extends ListeningQuizBase<opt
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [{ name : "Scale options", options : [
             "aeolian",
             "altered",

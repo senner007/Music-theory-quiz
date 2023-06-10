@@ -25,16 +25,16 @@ export async function play_midi(notes: INotePlay[], { signal }: any, channel : n
 
     let abort: boolean = false;
 
-    const onAbort = () => {
+    const on_abort = () => {
         clearTimeout(timerObj)
         abort = true;
-        abortNotes();
+        abort_notes_play();
     };
-    signal.addEventListener('abort', onAbort, { once: true });
+    signal.addEventListener('abort', on_abort, { once: true });
 
     const notesNames = notes.map(note => { return { ...note, noteNumbers: note.noteNames.map(noteName => Note.midi(noteName) as number) } })
 
-    function abortNotes() {
+    function abort_notes_play() {
         for (const note of notesNames) {
             for (const noteNumber of note.noteNumbers) {
                 note_play(noteNumber, "noteoff", channel)

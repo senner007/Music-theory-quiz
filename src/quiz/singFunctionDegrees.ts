@@ -1,6 +1,6 @@
 import { INotePlay } from "../midiplay";
 import { IQuizInstance, IQuiz } from "../quiz-types";
-import { ITableHeader, Syllable, syllables_in_key_of_c } from "../solfege";
+import { ITableHeader, TSyllable, syllables_in_key_of_c } from "../solfege";
 import {
   is_too_high,
   is_too_low, 
@@ -16,10 +16,10 @@ import {
 } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 
-type TOptionType = [{ name : string, options : Syllable[]}]
+type TOptionType = [{ name : string, options : TSyllable[]}]
 
 export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
-  verifyOptions(options: TOptionType): boolean {
+  verify_options(options: TOptionType): boolean {
     return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
@@ -34,7 +34,7 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Singin
 
     const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
-      return options.first_and_only().options.includes(syllables_in_key_of_c[key] as Syllable);
+      return options.first_and_only().options.includes(syllables_in_key_of_c[key] as TSyllable);
     });
 
     const distanceToKey = get_interval_distance("C", this.randomNote)
@@ -57,7 +57,7 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Singin
 
   }
 
-  get quizHead() {
+  get quiz_head() {
     return [];
   }
 
@@ -89,7 +89,7 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Singin
     ];
   }
 
-  get tableHeader() {
+  get table_header() {
     return this.initAudio.map((_, index): ITableHeader => {
       index++;
       return { name: index.toString().padStart(2, '0'), duration: 1 };
@@ -98,7 +98,7 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Singin
 
   static meta() {
     return {
-      get getAllOptions(): TOptionType {
+      get all_options(): TOptionType {
         return [{ name : "Syllables", options : ["Do", "Re", "Me", "Mi", "Fa", "Fi", "So", "La", "Ti"]}];
       },
       name: "Sing functional solfege degrees",

@@ -5,7 +5,7 @@ import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 
 export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<never []> {
-  verifyOptions(): boolean {
+  verify_options(): boolean {
     return true;
   }
 
@@ -23,10 +23,10 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
     this.startingNote = this.chromaticScaleShuffled[0];
   }
 
-  get quizHead() {
+  get quiz_head() {
     return ["Starting note is: " + this.startingNote];
   }
-  get questionOptions() {
+  get question_options() {
     return this.chromaticScaleShuffled.slice(1, this.chromaticScaleShuffled.length);
   }
   get question() {
@@ -36,7 +36,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
     return this.missingNote;
   }
 
-  override feedbackWrong(): string {
+  override feedback_wrong(): string {
     const chromaticScaleShuffledInOctave = this.chromaticScaleShuffled
     .filter(note => note !== this.missingNote)
     .to_octave_ascending(this.octave);
@@ -49,7 +49,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
         }).join("")
     const answer = `Note: ${chalk.green(this.missingNote)}\nThe intervals are:\n${notesWithIntervalsRows}`
 
-    return super.feedbackWrong() + answer;
+    return super.feedback_wrong() + answer;
   }
 
   audio() {
@@ -64,7 +64,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [];
       },
       name: "Hear the missing 12th tone",

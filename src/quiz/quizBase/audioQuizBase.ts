@@ -54,7 +54,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
 
   abstract audio(): IAudioPlay[];
 
-  abstract callQuiz(): Promise<string | never>;
+  abstract call_quiz(): Promise<string | never>;
 
   async execute(): Promise<string | never> {
     this.listenersArray.push(...this.createListeners(this.audio()));
@@ -64,6 +64,6 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
         process.stdin.emit("keypress", null, { name: audioPart.keyboardKey });
       }
     });
-    return await this.callQuiz();
+    return await this.call_quiz();
   }
 }

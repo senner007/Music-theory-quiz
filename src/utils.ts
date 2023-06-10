@@ -14,7 +14,7 @@ export function customExit() {
   process.exit();
 }
 
-export function isInterrupt(err: unknown) {
+export function is_interrupt(err: unknown) {
   return err === InterruptedPrompt.EVENT_INTERRUPTED;
 }
 

@@ -44,9 +44,9 @@ export class SolfegeMelody {
     return this.melody.map((n) => n.duration).reduce((a, b) => a + b, 0);
   }
 
-  syllable(note: TNoteAllAccidentalOctave): Syllable {
+  syllable(note: TNoteAllAccidentalOctave): TSyllable {
     const transposedNote = this.transpose_to_melody_key(note);
-    return syllables_in_key_of_c[remove_octave(transposedNote)] as Syllable;
+    return syllables_in_key_of_c[remove_octave(transposedNote)] as TSyllable;
   }
 
   distance_from_lowest(note: TNoteAllAccidentalOctave): number {
@@ -100,9 +100,9 @@ export const syllables_in_key_of_c = {
   "B##" : "---"
 } as const;
 
-export type solfegeDict = keyof typeof syllables_in_key_of_c;
+export type TSolfegeDict = keyof typeof syllables_in_key_of_c;
 
-export type Syllable = typeof syllables_in_key_of_c[solfegeDict];
+export type TSyllable = typeof syllables_in_key_of_c[TSolfegeDict];
 
 function remove_octave(note: TNoteAllAccidentalOctave) {
   return note.replace(/[0-9]/g, "") as TNoteAllAccidental;

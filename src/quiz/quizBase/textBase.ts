@@ -6,7 +6,7 @@ export abstract class TextQuizBase<T> extends QuizBase<T> {
 
   async execute(): Promise<string | never> {
     this.attachListeners(this.listenersArray);
-    const choice = await LogAsync.questions_in_list_indexed(this.questionOptions, this.question, "q");
+    const choice = await LogAsync.questions_in_list_indexed(this.question_options, this.question, "q");
     return choice;
   }
 

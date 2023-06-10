@@ -12,7 +12,7 @@ import { TextQuizBase } from "./quizBase/textBase";
 type optionType = [{ name : string, options : readonly string[] }]
 
 export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<optionType> {
-  verifyOptions(options: optionType): boolean {
+  verify_options(options: optionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
   }
 
@@ -33,10 +33,10 @@ export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<op
     this.randomNoteVariants = note_variants(variant_to_base(this.randomNote));
   }
 
-  get quizHead() {
+  get quiz_head() {
     return [this.scale.name, this.scaleStringMissingNote];
   }
-  get questionOptions() {
+  get question_options() {
     return this.randomNoteVariants;
   }
   get question() {
@@ -48,7 +48,7 @@ export const MissingScaleNote: IQuiz<optionType> = class extends TextQuizBase<op
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [{ name : "Scale types", options: [
           "major",
           "aeolian",

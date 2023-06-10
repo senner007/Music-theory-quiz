@@ -1,12 +1,12 @@
 // @ts-ignore
 import AsciiTable from "ascii-table";
-import { ITableHeader, SolfegeMelody, Syllable } from "../solfege";
+import { ITableHeader, SolfegeMelody, TSyllable } from "../solfege";
 
 interface ITableObject {
-  [key: string]: Syllable[];
+  [key: string]: TSyllable[];
 }
 
-function createTableObject(solfege: SolfegeMelody) {
+function create_table_object(solfege: SolfegeMelody) {
   const ambitus = solfege.ambitus();
 
   const obj: ITableObject = {};
@@ -16,7 +16,7 @@ function createTableObject(solfege: SolfegeMelody) {
   return obj;
 }
 
-function fillRows(solfege: SolfegeMelody, tableObject: ITableObject) {
+function fill_rows(solfege: SolfegeMelody, tableObject: ITableObject) {
   let totalDuration: number = 0;
 
   solfege.getMelody.forEach((melodyNote) => {
@@ -32,7 +32,7 @@ function fillRows(solfege: SolfegeMelody, tableObject: ITableObject) {
   return Object.values(tableObject).reverse();
 }
 
-function headingInMeasures(tableHeader: ITableHeader[]) {
+function heading_in_measures(tableHeader: ITableHeader[]) {
   const tempArr: string[] = []
   tableHeader.forEach(h => {
     tempArr.push(h.name);
@@ -45,11 +45,11 @@ function headingInMeasures(tableHeader: ITableHeader[]) {
 
 export class LogTable {
   static write(solfege: SolfegeMelody, tableHeader: ITableHeader[]) {
-    const tableObject = createTableObject(solfege);
-    const rows = fillRows(solfege, tableObject);
+    const tableObject = create_table_object(solfege);
+    const rows = fill_rows(solfege, tableObject);
 
     var table = AsciiTable.factory({
-      heading: headingInMeasures(tableHeader),
+      heading: heading_in_measures(tableHeader),
       rows: rows,
     });
 

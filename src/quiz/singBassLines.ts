@@ -15,7 +15,7 @@ import { SingingQuizBase } from "./quizBase/singingQuizBase";
 type optionType = [{ name : string, options : TProgression["description"][]}]
 
 export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<optionType> {
-  verifyOptions(_: optionType): boolean {
+  verify_options(_: optionType): boolean {
     return true;
   }
 
@@ -40,7 +40,7 @@ export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<op
     this.randomBassLineInKey = randomProgression.bass.transpose_by(keyDistance);
   }
 
-  get quizHead() {
+  get quiz_head() {
     const description = this.progressionDescription;
     const diatonic =  this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
     const key = chalk.underline(this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor"))
@@ -77,7 +77,7 @@ export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<op
     ];
   }
 
-  get tableHeader() {
+  get table_header() {
     return this.randomBassLineInKey.map((_, index): ITableHeader => {
       index++;
       return { name: index.toString().padStart(2, '0'), duration: 1 };
@@ -86,7 +86,7 @@ export const SingBassLines: IQuiz<optionType> = class extends SingingQuizBase<op
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [{ name : "Bass lines", options : progressions.map(p => p.description) as TProgression["description"][] }] as const
       },
       name: "Sing bass lines",

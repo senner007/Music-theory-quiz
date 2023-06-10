@@ -1,7 +1,7 @@
 export interface IQuizInstance {
   execute() : Promise<string | never>
   feedback(choice: string): string;
-  quizHead: Readonly<string[]>;
+  quiz_head: Readonly<string[]>;
   cleanup() : Promise<void>
 }
 
@@ -13,7 +13,7 @@ export interface IQuizOptions {
 export interface IQuiz<T extends IQuizOptions[]> {
   new (options: Readonly<T>): IQuizInstance;
   meta(): {
-    getAllOptions: Readonly<T>;
+    all_options: Readonly<T>;
     name: string;
     description: string;
     instructions? : string[]

@@ -6,7 +6,7 @@ import { TextQuizBase } from "./quizBase/textBase";
 type optionType = [{ name : string, options : readonly string[] }]
 
 export const WhichTriad: IQuiz<optionType> = class extends TextQuizBase<optionType> {
-  verifyOptions(options: optionType): boolean {
+  verify_options(options: optionType): boolean {
     return options.first_and_only().options.every((chordType) => allChordTypes.includes(chordType));
   }
 
@@ -24,10 +24,10 @@ export const WhichTriad: IQuiz<optionType> = class extends TextQuizBase<optionTy
     this.randomChord = this.chordTypesAndNotes.random_item();
   }
 
-  get quizHead() {
+  get quiz_head() {
     return [`Select the ${chalk.underline(this.randomChord.chord.type.toUpperCase())} chord in ${chalk.underline('any inversion')}`];
   }
-  get questionOptions() {
+  get question_options() {
     return this.chordTypesAndNotes.map((chordTypesAndNotes) => chordTypesAndNotes.notes);
   }
   get question() {
@@ -39,7 +39,7 @@ export const WhichTriad: IQuiz<optionType> = class extends TextQuizBase<optionTy
 
   static meta() {
     return {
-      get getAllOptions() {
+      get all_options() {
         return [{ name : "Chord types", options : ["major", "minor", "augmented", "diminished"] }] as const;
       },
       name: "Which triad",

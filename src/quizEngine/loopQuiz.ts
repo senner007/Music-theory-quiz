@@ -8,7 +8,7 @@ import { LogAsync } from "../logger/logAsync";
 export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
 
   var options : IQuizOptions[] = [];
-  const allOptions = QuizClass.meta().getAllOptions;
+  const allOptions = QuizClass.meta().all_options;
   if (!allOptions.is_empty()) {
     for (const optionType of allOptions) {
       try {
@@ -30,7 +30,7 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
     Log.clear();
     Log.write(QuizClass.meta().description);
 
-    for (const head of quiz.quizHead) {
+    for (const head of quiz.quiz_head) {
       Log.write(head);
     }
 
