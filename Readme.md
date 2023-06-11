@@ -35,8 +35,7 @@
 ### Compile and run
 - npm run prod
 
-## Todos:
-- add multiple options screens
+## Todos: 
 - play mp3 harmonic dictations with node ffplay
 - add purpose and philosophy
 - release .exe files
@@ -44,14 +43,12 @@
 - add count in for singing
 - tempo param to each audio part
 - hear progressions quiz
-- sing progression over bass line
 - provide links to free theory resources
 - add secondary dominants roman numeral lookup for minor keys key info
 - reuse trichord to play tetrachord, add options for harmonic playing, random order
 - guess trichord over major/minor
 - refactor transposition logic
 - refactor table creation logic
-- split long melodies into multiple tables
 - indicate when and how the melody is modulating and display in solfege tables.
 
 #### Discern/sing notes played together

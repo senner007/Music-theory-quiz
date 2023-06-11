@@ -8,7 +8,7 @@ import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, note_transpose, random_note_single_accidental, get_key } from "../utils";
 import { SingingQuizBase } from "./quizBase/singingQuizBase";
 import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
-import { MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodySingulate } from "../melodyGenerator/melodyPatterns";
+import { MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
 
 type TOptionType = [
@@ -17,7 +17,7 @@ type TOptionType = [
 ]
 
 const melodicPatterns = [
-  MelodySingulate, MelodyPattern_001, MelodyPattern_002, MelodyPattern_003
+  MelodySingulate, MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004
 ]
 
 export const SingHarmony: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
