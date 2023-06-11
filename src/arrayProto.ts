@@ -13,10 +13,14 @@ declare global {
       random_item(): T;
       is_empty(): boolean
       first_and_only(): T
-      remove_duplicate_objects(): Readonly<Array<T>>
+      remove_duplicate_objects(): Readonly<Array<T>>;
+      contains(this: T[], otherArray: T[]) : boolean
     }
     interface ReadonlyArray<T> extends Array<T> {}
   }
+
+
+
 
   Array.prototype.remove_duplicate_objects = function <U extends any[]>(this : U) {
     return this.filter(
@@ -24,6 +28,13 @@ declare global {
         index === self.findIndex((c) => JSON.stringify(c) === JSON.stringify(chord))
     );
   }
+
+  Array.prototype.contains = function<U extends any[]> (
+    this: U,
+    otherArray: U
+  ) : boolean {
+    return otherArray.every(element => this.includes(element));
+  };
 
   Array.prototype.is_empty = function<U extends any[]> (
     this: U

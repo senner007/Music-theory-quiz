@@ -170,11 +170,11 @@ export function number_to_degree(n: number) {
   return degree;
 }
 
-export function get_interval_distance(first: string, second: string) {
+export function get_interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave , second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
   return Interval.distance(first, second) as TIntervalType
 }
 
-export function get_interval_integer(first: string, second: string) {
+export function get_interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave , second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
   return Interval.num(get_interval_distance(first, second)) as number
 }
 
