@@ -1,5 +1,8 @@
 ## Advanced music theory and ear training
-- This is currently under development. Stay tuned :)
+This is currently under development. Stay tuned :)
+
+### Introduction:
+Train your ears to recognize melodic and harmonic patterns with ear training and theory exercises. Develop your ability to distinguish different musical elements, enhancing your improvisational skills and enabling you to play by ear with greater accuracy and fluency.
 
 ### Contents so far:
 - Hear the missing 12th tone
@@ -12,7 +15,7 @@
 - Sing contextual intervals
 - Sing functional solfege degrees
 - Sing harmonic progressions
-- Which triad
+- Guess the triad type
 
 ### Supported platforms:
 - Windows
