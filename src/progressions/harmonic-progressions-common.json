@@ -1,0 +1,45 @@
+{
+    "level": 30,
+    "description": "I V7/V V, I V6/V V I, I IV64 V65 I vi IV I64 V I",
+    "progressions": [
+      {
+        "chords": ["I-a", "I-a", "IV6no3", "vi", "ii65no3", "V7", "I64"],
+        "bass": ["C4", "B3", "A3", "G3", "F#3", "G3", "C4"],
+        "description": "c30-1",
+        "isMajor": true,
+        "isDiatonic": false,
+        "tags": ["AltidFrejdig"]
+      },
+      {
+        "chords": ["I-a", "vi64", "V7/V", "V64", "iisus4", "V/V", "V6"],
+        "bass": ["C4", "B3", "A3", "G3", "D4", "D3", "G3"],
+        "description": "c30-2",
+        "isMajor": true,
+        "isDiatonic": false,
+        "tags": ["AltidFrejdig"]
+      },
+      {
+        "chords": ["I64", "IV6", "V7no5", "I64", "vi", "IV6", "I64", "V", "I64"],
+        "bass": ["C4", "C4", "B3", "C4", "A3", "F3", "G3", "G3", "C4"],
+        "description": "c30-3",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6-a", "V64-a", "vi6-a", "iii64", "IV6", "I64", "ii6", "V64", "I6"],
+        "bass": ["C4", "G3", "A3", "E3", "F3", "C3", "D3", "G2", "C3"],
+        "description": "c30-4",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Pachelbel"]
+      },
+      {
+        "chords": ["I6-a", "V64-a", "vi6-a", "iii64", "IV6", "I-a", "IV64-a", "V6-a", "I64"],
+        "bass": ["C4", "G3", "A3", "E3", "F3", "C3", "F3", "G3", "C3"],
+        "description": "c30-5",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Pachelbel"]
+      }                                           
+    ]
+  }

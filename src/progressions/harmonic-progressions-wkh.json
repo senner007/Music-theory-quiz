@@ -1,0 +1,35 @@
+{
+    "level": 40,
+    "description": "i,I,V",
+    "progressions": [
+      {
+        "chords": ["I64", "V", "I64", "I-a", "V6-a", "V64-a", "I6-a"],
+        "bass": ["C4", "G3", "C4", "C4", "G4", "G4", "C4"],
+        "description": "c40-1-p5",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "I", "V6", "I", "V6", "V", "I6"],
+        "bass": ["C3", "C3", "G3", "C3", "G3", "G3", "C3"],
+        "description": "c40-2-p5",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["I6", "V64", "I6", "I64", "V", "V", "I6"],
+        "bass": ["C3", "G2", "C3", "C3", "G3", "G2", "C3"],
+        "description": "c40-3-p5",
+        "isMajor": true,
+        "isDiatonic": true
+      },
+      {
+        "chords": ["i6", "V64", "i6", "i", "V6", "V64", "i6"],
+        "bass": ["C3", "G2", "C3", "C3", "G3", "G3", "C3"],
+        "description": "c40-4-p16",
+        "isMajor": false,
+        "isDiatonic": true
+      }
+                                    
+    ]
+  }

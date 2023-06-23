@@ -6,7 +6,11 @@
             "/src/progressions/harmonic-progressions.json",
             "/src/progressions/harmonic-progressions-level2.json",
             "src/progressions/harmonic-progressions-level3.json",
-            "/src/progressions/harmonic-progressions-circle-of-fifths.json"
+            "/src/progressions/harmonic-progressions-level5.json",
+            "/src/progressions/harmonic-progressions-circle-of-fifths.json",
+            "/src/progressions/harmonic-progressions-circle-of-fifths-extended.json",
+            "/src/progressions/harmonic-progressions-common.json",
+            "/src/progressions/harmonic-progressions-wkh.json",
           ],
           "url": "./src/progressions/harmonic-progressions-schema.json"
         }
