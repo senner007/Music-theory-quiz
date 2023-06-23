@@ -3,7 +3,7 @@ import AsciiTable from "ascii-table";
 import { ITableHeader, SolfegeMelody, TSyllable } from "../solfege";
 import { TNoteAllAccidentalOctave } from "../utils";
 
-const MAXDURATION = 20; // max duration for a melody fragment. Fragment length should be less than the avarage screen width.
+const MAXDURATION = 28; // max duration for a melody fragment. Fragment length should be less than the avarage screen width.
 
 interface ITableObject {
   [key: string]: TSyllable[];
@@ -65,8 +65,6 @@ export class LogTable {
       }
 
       table = table.setJustify()
-
-      
 
       let tableStr = table.toString();
 
