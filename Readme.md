@@ -14,7 +14,7 @@ Train your ears to recognize melodic and harmonic patterns with ear training and
 - Sing bass lines
 - Sing contextual intervals
 - Sing functional solfege degrees
-- Sing harmonic progressions
+- Sing harmonic progressions (with generic melody patterns)
 - Guess the triad type
 
 ### Supported platforms:
@@ -39,7 +39,6 @@ Train your ears to recognize melodic and harmonic patterns with ear training and
 - npm run prod
 
 ## Todos:
-- add multiple options screens
 - play mp3 harmonic dictations with node ffplay
 - add purpose and philosophy
 - release .exe files
@@ -47,19 +46,11 @@ Train your ears to recognize melodic and harmonic patterns with ear training and
 - add count in for singing
 - tempo param to each audio part
 - hear progressions quiz
-- sing progression over bass line
 - provide links to free theory resources
 - add secondary dominants roman numeral lookup for minor keys key info
 - reuse trichord to play tetrachord, add options for harmonic playing, random order
 - guess trichord over major/minor
 - refactor transposition logic
 - refactor table creation logic
-- split long melodies into multiple tables
 - indicate when and how the melody is modulating and display in solfege tables.
-
-#### Discern/sing notes played together
-- sing note in range C4 - C5
 - sing bottom, top, middle of two notes, three notes
-
-#### Hear any chord
-- choose between number of chords
