@@ -1,4 +1,4 @@
-## Advanced music theory and ear training
+## Music theory and ear training
 This is currently under development. Stay tuned :)
 
 ### Introduction:
