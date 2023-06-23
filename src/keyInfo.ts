@@ -1,4 +1,4 @@
-import { Chord } from "@tonaljs/tonal";
+import { Chord, RomanNumeral } from "@tonaljs/tonal";
 import { Chord as IChord } from "@tonaljs/chord";
 import { MajorKey, MinorKey } from "@tonaljs/key";
 import { TRomanNumeral } from "./harmony/romanNumerals";
@@ -40,6 +40,16 @@ export function key_info(key: MajorKey | MinorKey) {
       firstInversionChords,
       secondInversionChords,
       allPrimaryChords: () => [...primaryChords, ...firstInversionChords, ...secondInversionChords],
+    } as const;
+  }
+
+  function get_suspended_primary_chords(chordQualities: string[], romanNumerals: TRomanNumeral[], scale: readonly string[]) {
+    const primarySuspended = getChords(chordQualities, scale).map((c, index) => {
+      return { ...c, romanNumeral: romanNumerals[index] };
+    });
+  
+    return {
+      primarySuspended,
     } as const;
   }
 
@@ -112,18 +122,25 @@ export function key_info(key: MajorKey | MinorKey) {
   }
 
   const majorNumerals: TRomanNumeral[] = ["I", "ii", "iii", "IV", "V", "vi", "viio"];
+  const majorSuspendedNumerals: TRomanNumeral[] = ["Isus4", "iisus4", "iiisus4", "IVsus4", "Vsus4", "visus4", "viisus4"];
   const majorSevenths: TRomanNumeral[] = ["I7", "ii7", "iii7", "IV7", "V7", "vi7", "viio7"];
   const secondaryDominants: TRomanNumeral[] = ["I", "V/V", "V/vi", "IV", "V", "V/ii", "V/iii"];
   const secondaryDominantSevenths: TRomanNumeral[] = ["V7/ii", "V7/iii", "V7/IV", "V7/V", "V7/vi"];
- 
+
+  const other = [
+    { symbol : Chord.detect([key.scale[6], key.scale[5], key.scale[0], key.scale[2]]).first_and_only(), romanNumeral : "via942" } 
+    // add to test - refactor
+  ]
 
   return {
     ...key,
     ...primary_chords_inversions(["M", "m", "m", "M", "M", "m", "dim"], majorNumerals, key.scale),
+    suspended : get_suspended_primary_chords(["sus4", "sus4", "sus4", "sus4", "sus4", "sus4", "sus4"], majorSuspendedNumerals, key.scale),
     sevenths: seventh_chords_inversions(key.chords, majorSevenths),
     dominants: primary_chords_inversions(["M", "M", "M", "M", "M", "M", "M"], secondaryDominants, key.scale),
     dominantSevenths: seventh_chords_inversions(key.secondaryDominants.filter(c => c !== ""), secondaryDominantSevenths),
-    additional: seventh_chords_inversions([Chord.getChord("m7", key.scale.at(-1)).symbol], ["vii7"])
+    additional: seventh_chords_inversions([Chord.getChord("m7", key.scale.at(-1)).symbol], ["vii7"]),
+    other
   } as const;
 }
 
@@ -133,11 +150,14 @@ export type TKeyInfo = ReturnType<typeof key_info>;
 function key_chords(keyInfo: TKeyInfo) {
   if (keyInfo.type === "major") {
     return [
+      ...keyInfo.suspended.primarySuspended,
       ...keyInfo.allPrimaryChords(), 
       ...keyInfo.sevenths.allSevenths(), 
       ...keyInfo.dominants.allPrimaryChords(),
       ...keyInfo.dominantSevenths.allSevenths(), 
-      ...keyInfo.additional.allSevenths()];
+      ...keyInfo.additional.allSevenths(),
+      ...keyInfo.other
+    ];
   }
 
   return [
