@@ -140,6 +140,11 @@ export function note_transpose_by<T extends TNoteAllAccidental | TNoteAllAcciden
   return Note.transposeBy(interval) as unknown as (note: T) => T;
 }
 
+export function transpose_to_key(note: TNoteAllAccidentalOctave, key: TNoteAllAccidental | TNoteAllAccidentalOctave): TNoteAllAccidentalOctave {
+  const interval = get_interval_distance(key, "C")
+  return note_transpose(note, interval)
+}
+
 export function number_to_degree(n: number) {
   let degree = "";
   switch (n) {
@@ -170,11 +175,11 @@ export function number_to_degree(n: number) {
   return degree;
 }
 
-export function get_interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave , second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
+export function get_interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
   return Interval.distance(first, second) as TIntervalType
 }
 
-export function get_interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave , second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
+export function get_interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
   return Interval.num(get_interval_distance(first, second)) as number
 }
 
@@ -182,7 +187,7 @@ export function interval_to_absolute(interval: TIntervalType) {
   return interval.replace(/[-]/g, "") as TIntervalType;
 }
 
-export function get_key(note: TNoteSingleAccidental, keyType : "minor" | "major") {
+export function get_key(note: TNoteSingleAccidental, keyType: "minor" | "major") {
   return keyType === "major" ? Key.majorKey(note) : Key.minorKey(note)
 }
 

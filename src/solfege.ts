@@ -1,8 +1,7 @@
 import { Interval, Note } from "@tonaljs/tonal";
 import { LogError } from "./dev-utils";
 import { INotePlay } from "./midiplay";
-import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, TOctave, TNoteSingleAccidentalOctave } from "./utils";
-
+import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, TOctave, TNoteSingleAccidentalOctave, get_interval_distance, note_transpose, transpose_to_key } from "./utils";
 
 
 export class SolfegeMelody {
@@ -10,16 +9,10 @@ export class SolfegeMelody {
     if (this.duration() > 40) LogError("Melody duration exceeded");
   }
 
-
   private sortedMelody;
   constructor(private melody: INotePlay[], private key: TNoteSingleAccidental, private timeSignature: 1 | 2 | 3 | 4) {
     this.sortedMelody = this.sort_melody();
     this.verify_duration_length();
-  }
-
-  private transpose_to_melody_key(note: TNoteAllAccidentalOctave): TNoteAllAccidentalOctave {
-    const interval = Interval.distance(this.key, "C");
-    return Note.transpose(note, interval) as TNoteAllAccidentalOctave;
   }
 
   private sort_melody(): TNoteAllAccidentalOctave[] {
@@ -57,26 +50,26 @@ export class SolfegeMelody {
       const half = this.durationAccumaltion().filter(d => d.total === maxDuration - (maxDuration % this.timeSignature)).first_and_only().index;
       const firstHalf = this.getMelody.slice(0, half + 1)
       const secondHalf = this.getMelody.slice(half + 1)
-      return  [
-          new SolfegeMelody(firstHalf, this.key, this.timeSignature),
-          new SolfegeMelody(secondHalf, this.key, this.timeSignature)
-        ]
-      
+      return [
+        new SolfegeMelody(firstHalf, this.key, this.timeSignature),
+        new SolfegeMelody(secondHalf, this.key, this.timeSignature)
+      ]
+
     }
     return [this];
   }
 
   syllable(note: TNoteAllAccidentalOctave): TSyllable {
-    const transposedNote = this.transpose_to_melody_key(note);
+    const transposedNote = transpose_to_key(note, this.key);
     return syllables_in_key_of_c[remove_octave(transposedNote)] as TSyllable;
   }
 
-  distance_from_lowest(note: TNoteAllAccidentalOctave, lowest :TNoteAllAccidentalOctave ): number {
+  distance_from_lowest(note: TNoteAllAccidentalOctave, lowest: TNoteAllAccidentalOctave): number {
     const intervalDistance = Interval.distance(lowest, note);
     return Interval.semitones(intervalDistance) as number;
   }
 
-  ambitus(lowest :TNoteAllAccidentalOctave): number {
+  ambitus(lowest: TNoteAllAccidentalOctave): number {
     const semitones = this.distance_from_lowest(this.highest, lowest);
     if (!semitones) LogError("Semitone calculation error");
     return semitones;
@@ -127,7 +120,7 @@ export type TSolfegeDict = keyof typeof syllables_in_key_of_c;
 
 export type TSyllable = typeof syllables_in_key_of_c[TSolfegeDict];
 
-function remove_octave(note: TNoteAllAccidentalOctave) {
+export function remove_octave(note: TNoteAllAccidentalOctave) {
   return note.replace(/[0-9]/g, "") as TNoteAllAccidental;
 }
 
