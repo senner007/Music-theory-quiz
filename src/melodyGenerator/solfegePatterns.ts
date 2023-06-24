@@ -126,7 +126,7 @@ const solfegePattern_008 = {
 } as const
 
 const solfegePattern_009 = {
-    description: "Top-(PT-below)",
+    description: "Top-(PT-below)-Major",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
         { index: EChordNote.Top, step: EStep.Below }],
@@ -138,13 +138,75 @@ const solfegePattern_009 = {
         ["Fa", "Mi"],
         ["Mi", "Re"],
         ["Re", "Do"],
+    ]
+} as const
 
+const solfegePattern_010 = {
+    description: "Top-(PT-above)-Major",
+    indexes: [
+        { index: EChordNote.Top, step: EStep.None },
+        { index: EChordNote.Top, step: EStep.Above }],
+    patterns: reverseSyllables(solfegePattern_009.patterns)
+} as const
+
+const solfegePattern_011 = {
+    description: "Second-(PT-below)-Major",
+    indexes: [
+        { index: EChordNote.Second, step: EStep.None },
+        { index: EChordNote.Second, step: EStep.Below }],
+    patterns: solfegePattern_009.patterns
+} as const
+
+const solfegePattern_012 = {
+    description: "Second-(PT-above)-Major",
+    indexes: [
+        { index: EChordNote.Second, step: EStep.None },
+        { index: EChordNote.Second, step: EStep.Above }],
+    patterns: reverseSyllables(solfegePattern_009.patterns)
+} as const
+
+const solfegePattern_013 = {
+    description: "Top-(PT-below)-Minor",
+    indexes: [
+        { index: EChordNote.Top, step: EStep.None },
+        { index: EChordNote.Top, step: EStep.Below }],
+    patterns: [
         ["Do", "Te"],
         ["Te", "Le"],
         ["Le", "So"],
+        ["So", "Fa"],
         ["Fa", "Me"],
-        ["Me", "Re"],        
+        ["Me", "Re"],
+        ["Re", "Do"],
     ]
+} as const
+
+const solfegePattern_014 = {
+    description: "Top-(PT-above)-Minor",
+    indexes: [
+        { index: EChordNote.Top, step: EStep.None },
+        { index: EChordNote.Top, step: EStep.Above }],
+    patterns: reverseSyllables(solfegePattern_013.patterns).filter(s => {
+        return s.toString() !== 'So,Le'
+    })
+} as const
+
+const solfegePattern_015 = {
+    description: "Second-(PT-below)-Minor",
+    indexes: [
+        { index: EChordNote.Second, step: EStep.None },
+        { index: EChordNote.Second, step: EStep.Below }],
+    patterns: solfegePattern_013.patterns
+} as const
+
+const solfegePattern_016 = {
+    description: "Second-(PT-above)-Minor",
+    indexes: [
+        { index: EChordNote.Second, step: EStep.None },
+        { index: EChordNote.Second, step: EStep.Above }],
+    patterns: reverseSyllables(solfegePattern_013.patterns).filter(s => {
+        return s.toString() !== 'So,Le'
+    })
 } as const
 
 const solfegePatterns_Untyped = [
@@ -156,7 +218,14 @@ const solfegePatterns_Untyped = [
     solfegePattern_006,
     solfegePattern_007,
     solfegePattern_008,
-    solfegePattern_009
+    solfegePattern_009,
+    solfegePattern_010,
+    solfegePattern_011,
+    solfegePattern_012,
+    solfegePattern_013,
+    solfegePattern_014,
+    solfegePattern_015,
+    solfegePattern_016,
 ] as const
 
 // This is compile checking each in "solfegePatterns_Untyped" extends ISolfegePattern and indexes array length equal to pattern array length

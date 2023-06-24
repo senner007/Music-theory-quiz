@@ -226,21 +226,57 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
 }
 
 export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
-    static id = "pattern_004";
-    static description = "Top-(PT-below)";
+    static id = "pattern_005";
+    static description = "Top-(PT-below), Top-(PT-above)";
     public melody() {
 
         const topNote = this.currentChordNotes.top;
         const nextTopNote = this.nextChord?.at(-1)
 
-
         return this.pattern_executor(
             [
                 {
-                    description: "Top-(PT-below)",
+                    description: "Top-(PT-below)-Major",
                     conditions: [
+                        () => this.keyInfo.type === "major",
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
                         () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === -1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Top-(PT-above)-Major",
+                    conditions: [
+                        () => this.keyInfo.type === "major",
+                        () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
+                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === 1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Top-(PT-below)-Minor",
+                    conditions: [
+                        () => this.keyInfo.type === "minor",
+                        () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
+                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === -1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Top-(PT-above)-Minor",
+                    conditions: [
+                        () => this.keyInfo.type === "minor",
+                        () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
+                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === 1
                     ],
                     returnValue: [
                         { duration: 2 },
@@ -259,6 +295,82 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
             () => {
                 return [
                     { note: [topNote], duration: 4 as const },
+                ]
+            });
+
+    }
+}
+
+export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
+    static id = "pattern_006";
+    static description = "Second-(PT-below), Second-(PT-above)";
+    public melody() {
+
+        const secondNote = this.currentChordNotes.second;
+        const nextSecondNote = this.nextChord?.at(-2)
+
+        return this.pattern_executor(
+            [
+                {
+                    description: "Second-(PT-below)-Major",
+                    conditions: [
+                        () => this.keyInfo.type === "major",
+                        () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
+                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === -1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Second-(PT-above)-Major",
+                    conditions: [
+                        () => this.keyInfo.type === "major",
+                        () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
+                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === 1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Second-(PT-below)-Minor",
+                    conditions: [
+                        () => this.keyInfo.type === "minor",
+                        () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
+                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === -1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Second-(PT-above)-Minor",
+                    conditions: [
+                        () => this.keyInfo.type === "minor",
+                        () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
+                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === 1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "cadence",
+                    returnValue: () => [
+                        { note: [secondNote], duration: 4 },
+                    ]
+                },
+
+
+            ] as const,
+            () => {
+                return [
+                    { note: [secondNote], duration: 4 as const },
                 ]
             });
 
