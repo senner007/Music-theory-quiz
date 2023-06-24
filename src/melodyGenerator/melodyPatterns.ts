@@ -32,7 +32,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => Math.random() <= 0.5
                     ],
                     returnValue: [
-                        { duration: 2 }, // type to ensure length is equal to pattern index array length
+                        { duration: 2 }, // add type to ensure length is equal to pattern index array length
                         { duration: 2 },
                     ],
                 },
