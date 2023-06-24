@@ -210,17 +210,24 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "cadence",
                     returnValue: () => [
-                        { note: [topNote], duration: 4 },
+                        { note: [secondNote], duration: 4 },
                     ]
                 },
 
 
             ] as const,
             () => {
-                return [
-                    { note: [topNote], duration: 2 as const },
-                    { note: [secondNote], duration: 2 as const },
-                ]
+                if (thirdNote) {
+                    return [
+                        { note: [secondNote], duration: 2 as const },
+                        { note: [thirdNote], duration: 2 as const },
+                    ]
+                } else {
+                    return [
+                        { note: [secondNote], duration: 4 as const },
+                    ]
+                }
+               
             });
     }
 }
