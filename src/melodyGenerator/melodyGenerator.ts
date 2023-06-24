@@ -2,7 +2,7 @@
 import { Note, Scale } from "@tonaljs/tonal";
 import { TKeyInfo } from "../keyInfo";
 import { IProgression } from "../transposition";
-import { EIntervalDistance, get_interval_integer, note_transpose, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key, ObjectKeys } from "../utils";
+import { EIntervalDistance, note_transpose, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
 import { LogError } from "../dev-utils";
 import { TSolfegeDict, TSyllable, remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
@@ -62,9 +62,6 @@ class ChordNotes {
         if (chord.length > 4) {
             LogError("More than 4 chord notes - refactor")
         }
-    }
-    get intervalTopSecond() {
-        return Math.abs(get_interval_integer(this.top, this.second));
     }
 
 }

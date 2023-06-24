@@ -34,7 +34,7 @@ export type TNoteSingleAccidental = Readonly<`${TBaseNote}b` | TBaseNote | `${TB
 export type TNoteSingleAccidentalOctave = Readonly<`${TNoteSingleAccidental}${TOctave}`>;
 export type TNoteAllAccidental = Readonly<`${TBaseNote}bb` | `${TBaseNote}##` | "F###" | TNoteSingleAccidental>;
 export type TNoteAllAccidentalOctave = Readonly<`${TNoteAllAccidental}${TOctave}`>;
-export type TIntervalType = "2m" | "2M" | "3m" | "3M" | "4P" | "4A" | "5d" | "5P" | "6m" | "6M";
+export type TIntervalType = "2m" | "2M" | "3m" | "3M" | "4P" | "4A" | "5d" | "5P" | "6m" | "6M" ;
 export enum EIntervalDistance {
   OctaveUp = "8P",
   OctaveDown = "-8P",
@@ -176,15 +176,23 @@ export function number_to_degree(n: number) {
 }
 
 export function get_interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
-  return Interval.distance(first, second) as TIntervalType
+  return Interval.distance(first, second) as TIntervalType // fix since intervals can be negative also (eg. -2M)
 }
 
-export function get_interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
+export function interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
   return Interval.num(get_interval_distance(first, second)) as number
+}
+
+export function interval_integer_absolute(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
+  return Math.abs(interval_integer(first, second)) as number
 }
 
 export function interval_to_absolute(interval: TIntervalType) {
   return interval.replace(/[-]/g, "") as TIntervalType;
+}
+
+export function interval_direction(interval: TIntervalType)  {
+  return Interval.get(interval).dir as 1 | -1
 }
 
 export function get_key(note: TNoteSingleAccidental, keyType: "minor" | "major") {

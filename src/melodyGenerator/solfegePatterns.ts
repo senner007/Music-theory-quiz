@@ -125,6 +125,28 @@ const solfegePattern_008 = {
     patterns: solfegePattern_003.patterns
 } as const
 
+const solfegePattern_009 = {
+    description: "Top-(PT-below)",
+    indexes: [
+        { index: EChordNote.Top, step: EStep.None },
+        { index: EChordNote.Top, step: EStep.Below }],
+    patterns: [
+        ["Do", "Ti"],
+        ["Ti", "La"],
+        ["La", "So"],
+        ["So", "Fa"],
+        ["Fa", "Mi"],
+        ["Mi", "Re"],
+        ["Re", "Do"],
+
+        ["Do", "Te"],
+        ["Te", "Le"],
+        ["Le", "So"],
+        ["Fa", "Me"],
+        ["Me", "Re"],        
+    ]
+} as const
+
 const solfegePatterns_Untyped = [
     solfegePattern_001,
     solfegePattern_002,
@@ -133,7 +155,8 @@ const solfegePatterns_Untyped = [
     solfegePattern_005,
     solfegePattern_006,
     solfegePattern_007,
-    solfegePattern_008
+    solfegePattern_008,
+    solfegePattern_009
 ] as const
 
 // This is compile checking each in "solfegePatterns_Untyped" extends ISolfegePattern and indexes array length equal to pattern array length

@@ -1,5 +1,6 @@
 
-import { get_interval_integer } from "../utils";
+import { Interval } from "@tonaljs/tonal";
+import { get_interval_distance, interval_direction, interval_integer_absolute } from "../utils";
 import { IMelodyGeneratorBase, MelodyGeneratorBase } from "./melodyGenerator";
 
 export const MelodySingulate: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
@@ -186,7 +187,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                     description: "Second-(NT-below)-Second",
                     conditions: [
                         () => !(previousTopNote === secondNote),
-                        () => !thirdNote || get_interval_integer(secondNote, thirdNote) !== 3,
+                        () => !thirdNote || interval_integer_absolute(secondNote, thirdNote) !== 3,
                         () => Math.random() <= 0.5
                     ],
                     returnValue: [
@@ -219,6 +220,45 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 return [
                     { note: [topNote], duration: 2 as const },
                     { note: [secondNote], duration: 2 as const },
+                ]
+            });
+    }
+}
+
+export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
+    static id = "pattern_004";
+    static description = "Top-(PT-below)";
+    public melody() {
+
+        const topNote = this.currentChordNotes.top;
+        const nextTopNote = this.nextChord?.at(-1)
+
+
+        return this.pattern_executor(
+            [
+                {
+                    description: "Top-(PT-below)",
+                    conditions: [
+                        () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
+                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === -1
+                    ],
+                    returnValue: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "cadence",
+                    returnValue: () => [
+                        { note: [topNote], duration: 4 },
+                    ]
+                },
+
+
+            ] as const,
+            () => {
+                return [
+                    { note: [topNote], duration: 4 as const },
                 ]
             });
 
