@@ -1,10 +1,10 @@
 
-import { Note, Scale } from "@tonaljs/tonal";
+import { Scale } from "@tonaljs/tonal";
 import { TKeyInfo } from "../keyInfo";
 import { IProgression } from "../transposition";
 import { EIntervalDistance, note_transpose, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
 import { LogError } from "../dev-utils";
-import { TSolfegeDict, TSyllable, remove_octave, syllables_in_key_of_c } from "../solfege";
+import { TSyllable, remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
 
 export interface IMelodicPattern {
@@ -36,8 +36,8 @@ export interface IMelodyGeneratorBase {
 
 export interface IPattern {
     description: typeof solfegePatterns[number]["description"],
-    conditions: (((pattern: TSyllable[]) => boolean) |  (() => boolean)) [],
-    returnValue: {duration : 1 | 2 | 3 | 4}[]
+    conditions: (((solfegePatterns: ISolfegePattern["patterns"]) => boolean) | (() => boolean))[],
+    returnValue: { duration: 1 | 2 | 3 | 4 }[]
 }
 
 export interface IPatternCadence {
@@ -51,25 +51,22 @@ class ChordNotes {
     public second;
     public third;
     public fourth;
-    // public total : (TNoteAllAccidentalOctave | undefined)[]
     constructor(private chord: readonly TNoteAllAccidentalOctave[]) {
 
         this.top = chord.at(-1) as TNoteAllAccidentalOctave;
         this.second = chord.at(-2) as TNoteAllAccidentalOctave;
         this.third = chord.at(-3) as TNoteAllAccidentalOctave | undefined;
         this.fourth = chord.at(-4) as TNoteAllAccidentalOctave | undefined;
-        // this.total = chord
         if (chord.length > 4) {
             LogError("More than 4 chord notes - refactor")
         }
     }
-
 }
 
 export abstract class MelodyGeneratorBase {
 
     protected currentChordNotes: ChordNotes;
-    protected previousTopNote : TNoteAllAccidentalOctave | undefined
+    protected previousTopNote: TNoteAllAccidentalOctave | undefined
 
     constructor(
         private currentChord: readonly TNoteAllAccidentalOctave[],
@@ -95,12 +92,12 @@ export abstract class MelodyGeneratorBase {
 
     }
 
-    private get_range(minorVariant: TMinorVariant) {
-        let range = Scale.rangeOf(this.get_scale(minorVariant))(note_transpose(this.currentChordNotes.top, EIntervalDistance.OctaveUp), note_transpose(this.currentChordNotes.top, EIntervalDistance.OctaveDown)) as TNoteAllAccidentalOctave[];
+    private range_octave_above_and_below(minorVariant: TMinorVariant, note: TNoteAllAccidentalOctave) {
+        let range = Scale.rangeOf(this.key_scale(minorVariant))(note_transpose(note, EIntervalDistance.OctaveUp), note_transpose(note, EIntervalDistance.OctaveDown)) as TNoteAllAccidentalOctave[];
         return range;
     }
 
-    private get_scale(minorVariant: TMinorVariant): readonly TNoteAllAccidental[] {
+    private key_scale(minorVariant: TMinorVariant): readonly TNoteAllAccidental[] {
         let scale;
         if (this.keyInfo.type === "minor") {
             scale = this.get_minor_scales(minorVariant)
@@ -110,16 +107,16 @@ export abstract class MelodyGeneratorBase {
         return scale as TNoteAllAccidental[];
     }
 
-    scale_note_from(note: TNoteAllAccidentalOctave, index: number, minorVariant: "natural" | "harmonic" | "melodic") {
-        const range = this.get_range(minorVariant)
-        const noteIndex = range.findIndex((n, index) => n === note)
+    private scale_note_from_range(note: TNoteAllAccidentalOctave, index: number, minorVariant: "natural" | "harmonic" | "melodic") {
+        const range = this.range_octave_above_and_below(minorVariant, note)
+        const noteIndex = range.findIndex(n => n === note)
         if (noteIndex === -1) {
             throw new Error("scale note not found")
         }
         return range.at(noteIndex + index) as TNoteAllAccidentalOctave
     }
 
-    solfege_syllable(note: TNoteAllAccidentalOctave) {
+    private solfege_syllable(note: TNoteAllAccidentalOctave) {
         const transposedNote = transpose_to_key(note, this.keyInfo.tonic as TNoteAllAccidental);
         return syllables_in_key_of_c[remove_octave(transposedNote)] as TSyllable;
     }
@@ -127,47 +124,46 @@ export abstract class MelodyGeneratorBase {
 
     pattern_executor(
         patternObjs: readonly [...IPattern[], IPatternCadence],
-        fallback : () => IMelodyFragment[],
-    ) {  
+        fallback: () => IMelodyFragment[],
+    ) {
         if (!this.nextChord) {
             const cadence = patternObjs.filter(p => p.description === "cadence").first_and_only() as IPatternCadence
             return cadence.returnValue();
         }
 
         let melody;
-        for(const patternObj of patternObjs.filter(p => p.description !== "cadence") as IPattern[]) {
-            const patterns = solfegePatterns.filter(p => p.description === patternObj.description).first_and_only();
-           
+        for (const patternObj of patternObjs.filter(p => p.description !== "cadence") as IPattern[]) {
             if (melody) {
                 break;
             }
 
-            const notesVariuants = (["natural", "harmonic", "melodic"] as TMinorVariant[]).map(v => {
-                return patterns.indexes.map(i => {
+            const solfegePattern = solfegePatterns.filter(p => p.description === patternObj.description).first_and_only();
+            const allConditionsMet = patternObj.conditions.every(condition => condition(solfegePattern.patterns));
+
+            if (!allConditionsMet) {
+                continue;
+            }
+
+            const notesMinorVariants = (["natural", "harmonic", "melodic"] as TMinorVariant[]).map(v => {
+                return solfegePattern.indexes.map(i => {
                     try {
-                        return this.scale_note_from(this.currentChord.at(i.index)!, i.step, v)!
+                        return this.scale_note_from_range(this.currentChord.at(i.index)!, i.step, v)!
                     } catch (error) {
-                        return "";
+                        return "*";
                     }
                 })
-            })
+            }).filter(v => !v.includes("*")) as TNoteAllAccidentalOctave[][]
 
-            for (const pattern of patterns.patterns) {
-                const allConditionsMet = patternObj.conditions.every(condition => condition(pattern))
-                let notesPatternMatch;
-                let notes: TNoteAllAccidentalOctave[];
-                for (const minorVariant of notesVariuants) {
-                    notesPatternMatch = minorVariant.map(n => n !== "" ? this.solfege_syllable(n) : "").toString() === pattern.toString()
-                    
-                    if (notesPatternMatch){
-                        notes = minorVariant as TNoteAllAccidentalOctave[];
-                        break;
-                    } 
-                }
+            for (const pattern of solfegePattern.patterns) {
 
-                if (allConditionsMet && notesPatternMatch) {
+                const notes = notesMinorVariants.find(v => {
+                    const variantSolfege = v.map(n => this.solfege_syllable(n))
+                    return variantSolfege.toString() === pattern.toString();
+                })
+
+                if (notes) {
                     melody = patternObj.returnValue.map((r, index) => {
-                        return { note: [notes[index]], duration : r.duration}
+                        return { note: [notes[index]], duration: r.duration }
                     })
                     break;
                 }
@@ -178,10 +174,8 @@ export abstract class MelodyGeneratorBase {
             return melody
         }
 
-        return fallback();;
+        return fallback();
     }
-
-
 
     abstract melody(): IMelodyFragment[];
 }
@@ -207,10 +201,8 @@ export function melodyGenerator(
             melodies.push(melody)
         })
     return {
-        timeSignature: 4,
+        timeSignature: 4, // refactor and include different time signatures
         melodyNotes: melodies.flat(),
         bass: progression.bass
     }
 }
-
-
