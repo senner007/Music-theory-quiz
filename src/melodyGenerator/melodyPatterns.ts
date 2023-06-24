@@ -66,7 +66,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
 
 export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
     static id = "pattern_002";
-    static description = "1st-2nd (M3/m3), 2nd-1st (M3/m3)";
+    static description = "Top-Second (M3/m3), Second-Top (M3/m3)";
     public melody() {
 
         const topNote = this.currentChordNotes.top
