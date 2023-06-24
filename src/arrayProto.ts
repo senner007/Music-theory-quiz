@@ -15,12 +15,14 @@ declare global {
       first_and_only(): T
       remove_duplicate_objects(): Readonly<Array<T>>;
       contains(this: T[], otherArray: T[]) : boolean
+      to_reverse(): Readonly<Array<T>>;
     }
     interface ReadonlyArray<T> extends Array<T> {}
   }
 
-
-
+  Array.prototype.to_reverse = function <U extends any[]>(this : U) {
+    return this.slice(0).reverse();
+  }
 
   Array.prototype.remove_duplicate_objects = function <U extends any[]>(this : U) {
     return this.filter(

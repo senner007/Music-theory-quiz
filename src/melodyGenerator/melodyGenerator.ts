@@ -42,7 +42,6 @@ export interface IPattern {
 
 export interface IPatternCadence {
     description: "cadence",
-    isFinal : () => boolean,
     returnValue: () => IMelodyFragment[]
 }
 
@@ -72,7 +71,8 @@ class ChordNotes {
 
 export abstract class MelodyGeneratorBase {
 
-    protected currentChordNotes: ChordNotes
+    protected currentChordNotes: ChordNotes;
+    protected previousTopNote : TNoteAllAccidentalOctave | undefined
 
     constructor(
         private currentChord: readonly TNoteAllAccidentalOctave[],
@@ -81,6 +81,7 @@ export abstract class MelodyGeneratorBase {
         protected keyInfo: TKeyInfo
     ) {
         this.currentChordNotes = new ChordNotes(this.currentChord);
+        this.previousTopNote = this.previousChord?.at(-1)?.note.at(-1)
 
     };
 
@@ -130,9 +131,9 @@ export abstract class MelodyGeneratorBase {
     pattern_executor(
         patternObjs: readonly [...IPattern[], IPatternCadence],
         fallback : () => IMelodyFragment[],
-    ) {
-        const cadence = patternObjs.filter(p => p.description === "cadence").first_and_only() as IPatternCadence
-        if (cadence.isFinal()) {
+    ) {  
+        if (!this.nextChord) {
+            const cadence = patternObjs.filter(p => p.description === "cadence").first_and_only() as IPatternCadence
             return cadence.returnValue();
         }
 

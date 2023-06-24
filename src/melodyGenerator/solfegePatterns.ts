@@ -2,8 +2,8 @@ import { TSyllable } from "../solfege";
 
 export interface ISolfegePattern {
     description: string;
-    indexes: { index: EChordNote, step: EStep }[]
-    patterns: TSyllable[][];
+    indexes: readonly { index: EChordNote, step: EStep }[]
+    patterns: readonly (readonly TSyllable[])[]
 }
 
 export enum EStep {
@@ -19,8 +19,12 @@ export enum EChordNote {
     Fourth = -4
 }
 
+function reverseSyllables<T extends ISolfegePattern["patterns"]>(patterns : T) : T {
+    return patterns.map(p => p.to_reverse()) as T
+}
+
 const solfegePattern_001 = {
-    description: "2nd-PT-1st (M3/m3)" as const,
+    description: "Second-PT-Top (M3/m3)",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
         { index: EChordNote.Second, step: EStep.Above },
@@ -39,26 +43,26 @@ const solfegePattern_001 = {
         ["Le", "Te", "Do"],
 
     ]
-} as const satisfies ISolfegePattern;
+} as const
 
 const solfegePattern_002 = {
-    description: "1st-PT-2nd (M3/m3)" as const,
+    description: "Top-PT-Second (M3/m3)",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
         { index: EChordNote.Top, step: EStep.Below },
         { index: EChordNote.Second, step: EStep.None }],
-    patterns: solfegePattern_001.patterns.map(p => p.slice(0).reverse())
-} as const satisfies ISolfegePattern;
+    patterns: reverseSyllables(solfegePattern_001.patterns)
+} as const
 
 
 const solfegePattern_003 = {
-    description: "2nd-1st (M3/m3)" as const,
+    description: "Second-Top (M3/m3)",
     indexes: [
-        { index: EChordNote.Second, step: EStep.None }, // type to ensure indexes length is equal to pattern length
+        { index: EChordNote.Second, step: EStep.None },
         { index: EChordNote.Top, step: EStep.None }],
     patterns: [
         ["Do", "Mi"],
-        ["Mi", "So"],
+        ["Mi" ,"So"],
         ["Fa", "La"],
         ["So", "Ti"],
         ["La", "Do"],
@@ -70,11 +74,11 @@ const solfegePattern_003 = {
         ["Le", "Do"],
 
     ]
-} as const satisfies ISolfegePattern;
+} as const
 
 
 const solfegePattern_004 = {
-    description: "2nd-(NT-below)-2nd" as const,
+    description: "Second-(NT-below)-Second",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
         { index: EChordNote.Second, step: EStep.Below },
@@ -88,42 +92,42 @@ const solfegePattern_004 = {
         ["Me", "Re", "Me"],
         ["Le", "So", "Le"],
     ]
-} as const satisfies ISolfegePattern;
+} as const
 
 const solfegePattern_005 = {
-    description: "1st-2nd (M3/m3)" as const,
+    description: "Top-Second (M3/m3)",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
         { index: EChordNote.Second, step: EStep.None }],
-    patterns: solfegePattern_001.patterns.map(p => p.slice(0).reverse())
-} as const satisfies ISolfegePattern;
+    patterns: reverseSyllables(solfegePattern_003.patterns)
+} as const 
 
 const solfegePattern_006 = {
-    description: "3rd-PT-2nd (M3/m3)" as const,
+    description: "Third-PT-Second (M3/m3)",
     indexes: [
         { index: EChordNote.Third, step: EStep.None },
         { index: EChordNote.Third, step: EStep.Above },
         { index: EChordNote.Second, step: EStep.None }],
     patterns: solfegePattern_001.patterns
-} as const satisfies ISolfegePattern;
+} as const
 
 const solfegePattern_007 = {
-    description: "2nd-3rd (M3/m3)" as const,
+    description: "Second-Third (M3/m3)",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
         { index: EChordNote.Third, step: EStep.None }],
-    patterns: solfegePattern_005.patterns
-} as const satisfies ISolfegePattern;
+    patterns: reverseSyllables(solfegePattern_003.patterns)
+} as const
 
 const solfegePattern_008 = {
-    description: "3rd-2nd (M3/m3)" as const,
+    description: "Third-Second (M3/m3)",
     indexes: [
         { index: EChordNote.Third, step: EStep.None },
         { index: EChordNote.Second, step: EStep.None }],
     patterns: solfegePattern_003.patterns
-} as const satisfies ISolfegePattern;
+} as const
 
-export const solfegePatterns = [
+const solfegePatterns_Untyped = [
     solfegePattern_001,
     solfegePattern_002,
     solfegePattern_003,
@@ -133,3 +137,17 @@ export const solfegePatterns = [
     solfegePattern_007,
     solfegePattern_008
 ] as const
+
+
+type TPatternLengthIndexesLength<T extends typeof solfegePatterns_Untyped[number]> = 
+    T extends any 
+        ? T["patterns"][number]['length'] extends T["indexes"]['length'] 
+            ? T["indexes"]['length'] extends T["patterns"][number]['length'] 
+                ? true 
+                : `Length of ${T["indexes"]['length']} not equal to length of ${T["patterns"][number]['length']} at ${T["description"]}`
+            : `Length of pattern : ${T["patterns"][number]['length']} not equal to length of indexes : ${T["indexes"]['length']} at ${T["description"]}`
+        : false
+
+type TTrueOrError = TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]> 
+    
+export const solfegePatterns : TTrueOrError extends true ? typeof solfegePatterns_Untyped : TTrueOrError = solfegePatterns_Untyped;
