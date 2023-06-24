@@ -145,6 +145,6 @@ type TPatternLengthIndexesLength<T extends typeof solfegePatterns_Untyped[number
         : `Length of pattern : ${T["patterns"][number]['length']} not equal to length of indexes : ${T["indexes"]['length']} at ${T["description"]}`
     : `Not assignable to ISolfegePattern as ${T["description"]}`
 
-type TTrueOrError = TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]> extends true ? typeof solfegePatterns_Untyped : TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]>
+type TTypeOrError = TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]> extends true ? typeof solfegePatterns_Untyped : TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]>
 
-export const solfegePatterns: TTrueOrError = solfegePatterns_Untyped;
+export const solfegePatterns: TTypeOrError = solfegePatterns_Untyped;
