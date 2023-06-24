@@ -19,7 +19,7 @@ export enum EChordNote {
     Fourth = -4
 }
 
-function reverseSyllables<T extends ISolfegePattern["patterns"]>(patterns : T) : T {
+function reverseSyllables<T extends ISolfegePattern["patterns"]>(patterns: T): T {
     return patterns.map(p => p.to_reverse()) as T
 }
 
@@ -54,7 +54,6 @@ const solfegePattern_002 = {
     patterns: reverseSyllables(solfegePattern_001.patterns)
 } as const
 
-
 const solfegePattern_003 = {
     description: "Second-Top (M3/m3)",
     indexes: [
@@ -62,7 +61,7 @@ const solfegePattern_003 = {
         { index: EChordNote.Top, step: EStep.None }],
     patterns: [
         ["Do", "Mi"],
-        ["Mi" ,"So"],
+        ["Mi", "So"],
         ["Fa", "La"],
         ["So", "Ti"],
         ["La", "Do"],
@@ -75,7 +74,6 @@ const solfegePattern_003 = {
 
     ]
 } as const
-
 
 const solfegePattern_004 = {
     description: "Second-(NT-below)-Second",
@@ -100,7 +98,7 @@ const solfegePattern_005 = {
         { index: EChordNote.Top, step: EStep.None },
         { index: EChordNote.Second, step: EStep.None }],
     patterns: reverseSyllables(solfegePattern_003.patterns)
-} as const 
+} as const
 
 const solfegePattern_006 = {
     description: "Third-PT-Second (M3/m3)",
@@ -138,16 +136,15 @@ const solfegePatterns_Untyped = [
     solfegePattern_008
 ] as const
 
-
-type TPatternLengthIndexesLength<T extends typeof solfegePatterns_Untyped[number]> = 
-    T extends any 
-        ? T["patterns"][number]['length'] extends T["indexes"]['length'] 
-            ? T["indexes"]['length'] extends T["patterns"][number]['length'] 
-                ? true 
-                : `Length of ${T["indexes"]['length']} not equal to length of ${T["patterns"][number]['length']} at ${T["description"]}`
-            : `Length of pattern : ${T["patterns"][number]['length']} not equal to length of indexes : ${T["indexes"]['length']} at ${T["description"]}`
-        : false
+type TPatternLengthIndexesLength<T extends typeof solfegePatterns_Untyped[number]> =
+    T extends ISolfegePattern
+        ? T["patterns"][number]['length'] extends T["indexes"]['length']
+            ? T["indexes"]['length'] extends T["patterns"][number]['length']
+                ? true
+            : `Length of ${T["indexes"]['length']} not equal to length of ${T["patterns"][number]['length']} at ${T["description"]}`
+        : `Length of pattern : ${T["patterns"][number]['length']} not equal to length of indexes : ${T["indexes"]['length']} at ${T["description"]}`
+    : `Not assignable to ISolfegePattern as ${T["description"]}`
 
 type TTrueOrError = TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]> extends true ? typeof solfegePatterns_Untyped : TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]>
-    
-export const solfegePatterns : TTrueOrError = solfegePatterns_Untyped;
+
+export const solfegePatterns: TTrueOrError = solfegePatterns_Untyped;
