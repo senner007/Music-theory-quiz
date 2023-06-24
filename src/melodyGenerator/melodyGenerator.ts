@@ -37,7 +37,7 @@ export interface IMelodyGeneratorBase {
 export interface IPattern {
     description: typeof solfegePatterns[number]["description"],
     conditions: (((solfegePatterns: ISolfegePattern["patterns"]) => boolean) | (() => boolean))[],
-    returnValue: { duration: 1 | 2 | 3 | 4 }[]
+    rhythm: { duration: 1 | 2 | 3 | 4 }[]
 }
 
 export interface IPatternCadence {
@@ -162,7 +162,7 @@ export abstract class MelodyGeneratorBase {
                 })
 
                 if (notes) {
-                    melody = patternObj.returnValue.map((r, index) => {
+                    melody = patternObj.rhythm.map((r, index) => {
                         return { note: [notes[index]], duration: r.duration }
                     })
                     break;

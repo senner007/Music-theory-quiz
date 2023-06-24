@@ -32,7 +32,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => !(previousTopNote === secondNote),
                         () => Math.random() <= 0.5
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 }, // add type to ensure length is equal to pattern index array length
                         { duration: 2 },
                     ],
@@ -43,7 +43,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => !(previousTopNote === thirdNote),
                         () => Math.random() <= 0.5,
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -82,7 +82,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => !(previousTopNote === topNote),
                         () => Math.random() <= 0.5
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 }, // type to ensure length is equal to pattern index array length
                         { duration: 2 },
                     ],
@@ -93,7 +93,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => Math.random() <= 0.5,
                         () => !(previousTopNote === secondNote)
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -134,7 +134,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => !(previousTopNote === secondNote),
                         () => Math.random() <= 0.5
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 1 },
                         { duration: 1 },
                         { duration: 2 },
@@ -145,7 +145,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => !(previousTopNote === topNote)
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 1 },
                         { duration: 1 },
                         { duration: 2 },
@@ -190,7 +190,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                         () => !thirdNote || interval_integer_absolute(secondNote, thirdNote) !== 3,
                         () => Math.random() <= 0.5
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 1 },
                         { duration: 1 },
                         { duration: 2 },
@@ -201,7 +201,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => !(previousTopNote === thirdNote)
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 1 },
                         { duration: 1 },
                         { duration: 2 },
@@ -242,7 +242,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
                         () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === -1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -254,7 +254,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
                         () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === 1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -266,7 +266,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
                         () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === -1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -278,7 +278,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
                         () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === 1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -318,7 +318,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
                         () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === -1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -330,7 +330,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
                         () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === 1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -342,7 +342,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
                         () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === -1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
@@ -354,7 +354,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
                         () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === 1
                     ],
-                    returnValue: [
+                    rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
