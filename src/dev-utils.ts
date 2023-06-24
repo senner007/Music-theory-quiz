@@ -6,6 +6,9 @@ export function LogError(error: string): never {
   Log.error(error);
   Log.error("#########################################");
   Log.write("Stack Trace : ");
+  Log.error("#########################################");
+  Log.stack(new Error(error).stack as string)
+  Log.error("#########################################");
   throw new Error(error);
 }
 

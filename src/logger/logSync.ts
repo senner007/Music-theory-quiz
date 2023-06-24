@@ -19,6 +19,10 @@ export class Log {
     static error(content: string) {
       this.write(chalk.red(content));
     }
+
+    static stack(content: string) {
+      this.write(chalk.yellow(content));
+    }
   
     static keyInSelect(questionOptions: string[], question: string) {
       return rs.keyInSelect(
