@@ -120,9 +120,9 @@ export const SingHarmony: IQuiz<TOptionType> = class extends SingingQuizBase<TOp
     ];
 
     return [
-      { audio: audio, keyboardKey: "space", message: "play progression", display: true } as const,
+      { audio: audio, keyboardKey: "m", message: "play melody", display: true } as const,
       { audio: [audioBass], keyboardKey: "b", message: "play bass line" },
-      { audio: [audio, audioBass], keyboardKey: "m", message: "play progression with bass line" },
+      { audio: [audio, audioBass], keyboardKey: "space", message: "play melody with bass line" },
       { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
     ]
   }
