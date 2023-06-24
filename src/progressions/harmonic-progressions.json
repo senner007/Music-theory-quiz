@@ -86,11 +86,11 @@
     },
     {
       "chords": ["i6", "ii", "V64", "i6"],
-      "bass": ["C2", "F2", "G2", "C2"],
+      "bass": ["C2", "D2", "G2", "C2"],
       "description": "c1-12",
       "isMajor": false,
       "isDiatonic": true,
-      "tags": ["Inversion"]
+      "tags": []
     },
     {
       "chords": ["i64", "iv6", "V7no5", "i64"],
