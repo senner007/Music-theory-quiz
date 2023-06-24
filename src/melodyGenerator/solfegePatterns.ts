@@ -136,6 +136,7 @@ const solfegePatterns_Untyped = [
     solfegePattern_008
 ] as const
 
+// This is compile checking each in "solfegePatterns_Untyped" extends ISolfegePattern and indexes array length equal to pattern array length
 type TPatternLengthIndexesLength<T extends typeof solfegePatterns_Untyped[number]> =
     T extends ISolfegePattern
         ? T["patterns"][number]['length'] extends T["indexes"]['length']
@@ -145,6 +146,7 @@ type TPatternLengthIndexesLength<T extends typeof solfegePatterns_Untyped[number
         : `Length of pattern : ${T["patterns"][number]['length']} not equal to length of indexes : ${T["indexes"]['length']} at ${T["description"]}`
     : `Not assignable to ISolfegePattern as ${T["description"]}`
 
+// Return the "solfegePatterns_Untyped" type or error message
 type TTypeOrError = TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]> extends true ? typeof solfegePatterns_Untyped : TPatternLengthIndexesLength<typeof solfegePatterns_Untyped[number]>
 
 export const solfegePatterns: TTypeOrError = solfegePatterns_Untyped;
