@@ -1,8 +1,9 @@
-## Music theory and ear training
-This is currently under development. Stay tuned :)
+## Music theory mastery
+This is currently under development.
 
-### Introduction:
-Train your ears to recognize melodic and harmonic patterns with ear training and theory exercises. Develop your ability to distinguish different musical elements, enhancing your improvisational skills and enabling you to play by ear with greater accuracy and fluency.
+## Briefly:
+Unlock your improvisation prowess through the harmonious interplay of hearing and singing musical elements. 
+Practice!
 
 ### Contents so far:
 - Hear the missing 12th tone
@@ -14,8 +15,8 @@ Train your ears to recognize melodic and harmonic patterns with ear training and
 - Sing bass lines
 - Sing contextual intervals
 - Sing functional solfege degrees
-- Sing harmonic progressions (with generic melody patterns)
-- Guess the triad type
+- Sing harmonic progressions (with generic patterns)
+- Name the triad type
 
 ### Supported platforms:
 - Windows
@@ -49,7 +50,7 @@ Train your ears to recognize melodic and harmonic patterns with ear training and
 - provide links to free theory resources
 - add secondary dominants roman numeral lookup for minor keys key info
 - reuse trichord to play tetrachord, add options for harmonic playing, random order
-- guess trichord over major/minor
+- determine trichord over major/minor
 - refactor transposition logic
 - refactor table creation logic
 - indicate when and how the melody is modulating and display in solfege tables.
