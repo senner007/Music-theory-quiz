@@ -41,20 +41,3 @@ Hear the diatonic relationships and learn to reproduce it in your mind.
 
 ### Compile and run
 - npm run prod
-
-## Todos:
-- play mp3 harmonic dictations with node ffplay
-- add purpose and philosophy
-- release .exe files
-- improve similarity of scale selection in "Hear Scales" quiz
-- add count in for audiate
-- tempo param to each audio part
-- hear progressions quiz
-- provide links to free theory resources
-- add secondary dominants roman numeral lookup for minor keys key info
-- reuse trichord to play tetrachord, add options for harmonic playing, random order
-- determine trichord over major/minor
-- refactor transposition logic
-- refactor table creation logic
-- indicate when and how the melody is modulating and display in solfege tables.
-- audiate bottom, top, middle of two notes, three notes
