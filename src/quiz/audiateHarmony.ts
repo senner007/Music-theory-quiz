@@ -6,7 +6,7 @@ import { IQuiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
 import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, note_transpose, random_note_single_accidental, get_key } from "../utils";
-import { SingingQuizBase } from "./quizBase/singingQuizBase";
+import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import {  MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
@@ -27,7 +27,7 @@ const melodicPatterns = [
 
 ]
 
-export const SingHarmony: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
+export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
     return true;
   }
@@ -142,12 +142,12 @@ export const SingHarmony: IQuiz<TOptionType> = class extends SingingQuizBase<TOp
         
         ] as const
       },
-      name: "Sing harmonic progressions",
-      description: "Sing the harmonic progression as solfege degrees",
+      name: "Audiate harmonic progressions",
+      description: "Audiate the harmonic progression as solfege degrees",
       instructions: [
-        "Sing various lines using the notes that make the harmony.", 
-        "Sing with or without accompaniment.",
-        "Slso try to include non chord tones, passing tones, suspensions, escape tones, neighbouring tones, appogiatura and anticipation"
+        "Audiate various lines using the notes that make the harmony.", 
+        "Audiate with or without accompaniment.",
+        "Also try to include non chord tones, passing tones, suspensions, escape tones, neighbouring tones, appogiatura and anticipation"
       ]
     };
   }

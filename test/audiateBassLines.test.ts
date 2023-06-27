@@ -1,6 +1,6 @@
 import { expect, vi, describe, test, afterEach, Mock } from "vitest";
 import chalk from "chalk";
-import { SingBassLines } from "../src/quiz/singBassLines";
+import { AudiateBassLines } from "../src/quiz/audiateBassLines";
 import { LogTable } from "../src/logger/logTable";
 import { SolfegeMelody } from "../src/solfege";
 import { math_floor } from "../src/random_func";
@@ -39,7 +39,7 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
 
   test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
     (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
-    const quiz = new SingBassLines(SingBassLines.meta().all_options);
+    const quiz = new AudiateBassLines(AudiateBassLines.meta().all_options);
     expect(math_floor).toBeCalledTimes(3);
     expect(quiz.quiz_head).toEqual([quizHeadOutput[mathFloorReturnValue]]);
   });
@@ -76,7 +76,7 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
     (<Mock>LogTable.write).mockImplementation((solfege: SolfegeMelody) => {
       expect(solfege.getMelody).toEqual(solfegeMelodies[mathFloorReturnValue].melody);
     });
-    const quiz = new SingBassLines(SingBassLines.meta().all_options);
+    const quiz = new AudiateBassLines(AudiateBassLines.meta().all_options);
     await quiz.execute();
     expect(LogTable.write).toBeCalledTimes(1);
   });

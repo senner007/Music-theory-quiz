@@ -1,9 +1,12 @@
 ## Music theory mastery
 This is currently under development.
 
-## Briefly:
-Unlock your improvisation prowess through the harmonious interplay of hearing and singing musical elements. 
-Practice!
+### Introduction:
+Train your ears to recognize melodic and harmonic patterns with ear training and theory exercises. Develop your ability to distinguish different musical elements, enhancing your improvisational skills and enabling you to play by ear with greater accuracy and fluency.
+
+### Philosophy
+Learn to audiate musical elements, structures, pitches and harmony without using an instrument. 
+Hear the diatonic relationships and learn to reproduce it in your mind.
 
 ### Contents so far:
 - Hear the missing 12th tone
@@ -12,10 +15,10 @@ Practice!
 - Hear trichord pitch patterns
 - Name the missing scale note
 - Name the scale degree note
-- Sing bass lines
-- Sing contextual intervals
-- Sing functional solfege degrees
-- Sing harmonic progressions (with generic patterns)
+- Audiate bass lines
+- Audiate contextual intervals
+- Audiate functional solfege degrees
+- Audiate harmonic progressions (with generic patterns)
 - Name the triad type
 
 ### Supported platforms:
@@ -44,7 +47,7 @@ Practice!
 - add purpose and philosophy
 - release .exe files
 - improve similarity of scale selection in "Hear Scales" quiz
-- add count in for singing
+- add count in for audiate
 - tempo param to each audio part
 - hear progressions quiz
 - provide links to free theory resources
@@ -54,4 +57,4 @@ Practice!
 - refactor transposition logic
 - refactor table creation logic
 - indicate when and how the melody is modulating and display in solfege tables.
-- sing bottom, top, middle of two notes, three notes
+- audiate bottom, top, middle of two notes, three notes

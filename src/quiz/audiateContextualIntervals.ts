@@ -12,14 +12,14 @@ import {
   get_interval_distance,
   add_octave_note,
 } from "../utils";
-import { SingingQuizBase } from "./quizBase/singingQuizBase";
+import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 
 type TOptionsType = [
   { name: string, options: string[] },
   { name: string, options: TIntervalType[] }
 ]
 
-export const SingContextualIntervals: IQuiz<TOptionsType> = class extends SingingQuizBase<
+export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends AudiateQuizBase<
   TOptionsType
 > {
   verify_options(_: TOptionsType): boolean {
@@ -119,8 +119,8 @@ export const SingContextualIntervals: IQuiz<TOptionsType> = class extends Singin
           { name : "intervals", options: intervals }
         ];
       },
-      name: "Sing contextual intervals",
-      description: "Sing the contextual interval",
+      name: "Audiate contextual intervals",
+      description: "Audiate the contextual interval",
     };
   }
 };

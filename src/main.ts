@@ -12,10 +12,10 @@ import { Log } from "./logger/logSync";
 import { HearScales } from "./quiz/hearScales";
 import { Hear12thTone } from "./quiz/hear12thTone";
 import { HearTrichordPitchPatterns } from "./quiz/hearTrichordPitchPattern";
-import { SingingFunctionalDegrees as SingFunctionalDegrees } from "./quiz/singFunctionDegrees";
-import { SingHarmony } from "./quiz/singHarmony";
-import { SingBassLines } from "./quiz/singBassLines";
-import { SingContextualIntervals } from "./quiz/singContextualIntervals";
+import { SingingFunctionalDegrees as AudiateFunctionalDegrees } from "./quiz/audiateFunctionDegrees";
+import { SingHarmony as AudiateHarmony } from "./quiz/audiateHarmony";
+import { AudiateBassLines } from "./quiz/audiateBassLines";
+import { AudiateContextualIntervals } from "./quiz/audiateContextualIntervals";
 import { JSON_progressions_verify } from "./harmony/harmonicProgressions";
 
 process.stdin.setMaxListeners(20);
@@ -36,10 +36,10 @@ const quizzes: IQuiz<any>[] = [
   HearScales,
   Hear12thTone,
   HearTrichordPitchPatterns,
-  SingFunctionalDegrees,
-  SingHarmony,
-  SingBassLines,
-  SingContextualIntervals
+  AudiateFunctionalDegrees,
+  AudiateHarmony,
+  AudiateBassLines,
+  AudiateContextualIntervals
 ];
 
 (async () => {

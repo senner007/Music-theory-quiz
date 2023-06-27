@@ -14,11 +14,11 @@ import {
   get_interval_distance,
   EIntervalDistance
 } from "../utils";
-import { SingingQuizBase } from "./quizBase/singingQuizBase";
+import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 
 type TOptionType = [{ name : string, options : TSyllable[]}]
 
-export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
+export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
     return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
@@ -102,14 +102,14 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Singin
       get all_options(): TOptionType {
         return [{ name : "Syllables", options : ["Do", "Re", "Me", "Mi", "Fa", "Fi", "So", "La", "Ti"]}];
       },
-      name: "Sing functional solfege degrees",
-      description: "Sing the solfege degrees shown in the table below",
+      name: "Audiate functional solfege degrees",
+      description: "Audiate the solfege degrees shown in the table below",
       instructions: [
         "It is tempting to start out with a limited ambitus of a single octave.",
         "This is not recommended. Instead one should begin with repeating scale degrees in multiple octaves.",
         "For instance: 'Do', 'Re', 'Mi' in 3 octaves. Then gradually add more degrees",
-        "Begin by establishing the sound of the key. Then sing 'Do' in the different octaves.",
-        "At first it is helpful to insert 'Do's and sing each degree back to 'Do' to better hear relationships of the degrees"
+        "Begin by establishing the sound of the key. Then audiate 'Do' in the different octaves.",
+        "At first it is helpful to insert 'Do's and audiate each degree back to 'Do' to better hear relationships of the degrees"
       ]
     };
   }

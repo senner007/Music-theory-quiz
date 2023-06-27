@@ -10,11 +10,11 @@ import {
   random_note_single_accidental,
   get_interval_distance,
 } from "../utils";
-import { SingingQuizBase } from "./quizBase/singingQuizBase";
+import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 
 type TOptionType = [{ name : string, options : TProgression["description"][]}]
 
-export const SingBassLines: IQuiz<TOptionType> = class extends SingingQuizBase<TOptionType> {
+export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
     return true;
   }
@@ -90,8 +90,8 @@ export const SingBassLines: IQuiz<TOptionType> = class extends SingingQuizBase<T
       get all_options() {
         return [{ name : "Bass lines", options : progressions.map(p => p.description) as TProgression["description"][] }] as const
       },
-      name: "Sing bass lines",
-      description: "Sing the harmonic progression bass line as solfege degrees",
+      name: "Audiate bass lines",
+      description: "Audiate the harmonic progression bass line as solfege degrees",
     };
   }
 };

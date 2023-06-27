@@ -5,7 +5,7 @@ import { ITableHeader, SolfegeMelody } from "../../solfege";
 import { TNoteSingleAccidental } from "../../utils";
 import { AudioQuizBase } from "./audioQuizBase";
 
-export abstract class SingingQuizBase<T> extends AudioQuizBase<T> {
+export abstract class AudiateQuizBase<T> extends AudioQuizBase<T> {
   get question_options() {
     return ["Right", "Wrong"];
   }
