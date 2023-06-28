@@ -2,7 +2,7 @@ import { ChordType, Interval, Key, Note, ScaleType } from "@tonaljs/tonal";
 import { Scale } from "@tonaljs/scale";
 import { Scale as ScaleClass } from "@tonaljs/tonal";
 import { Chord as ChordClass } from "@tonaljs/tonal";
-import { EIntervalDistance, TBaseNote, TIntervalType, TNoteAllAccidental, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave, TNoteVariants, baseNotes } from "./utils";
+import { EIntervalDistance, TBaseNote, TIntervalAbsolute, TIntervalIntegers, TNoteAllAccidental, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave, TNoteVariants, baseNotes } from "./utils";
 import { LogError } from "./dev-utils";
 
 export function is_too_low(n: TNoteAllAccidentalOctave, lowest: TNoteAllAccidentalOctave = "F3") {
@@ -49,18 +49,18 @@ export function note_transpose_by<T extends TNoteAllAccidental | TNoteAllAcciden
 }
 
 export function get_interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
-    return Interval.distance(first, second) as TIntervalType // fix since intervals can be negative also (eg. -2M)
+    return Interval.distance(first, second) as TIntervalIntegers // fix since intervals can be negative also (eg. -2M)
 }
 
 export function interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
     return Interval.num(get_interval_distance(first, second)) as number
 }
 
-export function interval_to_absolute(interval: TIntervalType) {
-    return interval.replace(/[-]/g, "") as TIntervalType;
+export function interval_to_absolute(interval: TIntervalIntegers) {
+    return interval.replace(/[-]/g, "") as TIntervalAbsolute;
 }
 
-export function interval_direction(interval: TIntervalType) {
+export function interval_direction(interval: TIntervalIntegers) {
     return Interval.get(interval).dir as 1 | -1
 }
 

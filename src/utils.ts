@@ -14,7 +14,21 @@ export type TNoteSingleAccidental = Readonly<`${TBaseNote}b` | TBaseNote | `${TB
 export type TNoteSingleAccidentalOctave = Readonly<`${TNoteSingleAccidental}${TOctave}`>;
 export type TNoteAllAccidental = Readonly<`${TBaseNote}bb` | `${TBaseNote}##` | "F###" | TNoteSingleAccidental>;
 export type TNoteAllAccidentalOctave = Readonly<`${TNoteAllAccidental}${TOctave}`>;
-export type TIntervalType = "2m" | "2M" | "3m" | "3M" | "4P" | "4A" | "5d" | "5P" | "6m" | "6M";
+export type IntervalModifier<TIntervalBase extends string> = `${TIntervalBase}A` | `${TIntervalBase}AA` | `${TIntervalBase}d` | `${TIntervalBase}dd`;
+export type TIntervalAbsolute = 
+  "1P" | IntervalModifier<"1"> | 
+  "2m" | "2M" | IntervalModifier<"2"> |
+  "3m" | "3M" | IntervalModifier<"3"> |
+  "4P" | IntervalModifier<"4"> |
+  "5P" | IntervalModifier<"5"> | 
+  "6m" | "6M" | IntervalModifier<"6"> | 
+  "7m" | "7M" | IntervalModifier<"7"> |
+  "P8" | IntervalModifier<"8"> 
+
+// Intervals that can be both positive and negative : "-2M", "2M"
+export type TIntervalIntegers = TIntervalAbsolute | `-${TIntervalAbsolute}`
+
+
 export enum EIntervalDistance {
   OctaveUp = "8P",
   OctaveDown = "-8P",
@@ -33,16 +47,13 @@ export function is_interrupt(err: unknown) {
   return err === InterruptedPrompt.EVENT_INTERRUPTED;
 }
 
-
 export function ObjectKeys<Obj extends {}>(obj: Obj): Readonly<(keyof Obj)[]> {
   return Object.keys(obj) as (keyof Obj)[];
 }
 
-
 export function to_octave<T extends Readonly<TNoteAllAccidental>>(n: T, octave: TOctave) {
   return (n + octave) as TNoteAllAccidentalOctave;
 }
-
 
 export function random_note_single_accidental() {
   function note_single_accidentals(note: TBaseNote) {
@@ -64,21 +75,13 @@ export function random_index<T>(arr: T[]) {
   return math_floor(Math.random() * arr.length);
 }
 
-
-
 export function variant_to_base(note: TNoteAllAccidental) {
   return note.substring(0, 1) as Readonly<TBaseNote>;
 }
 
-
 export function event_by_probability(chance: number) {
   return math_floor(Math.random() * 100) < chance;
 }
-
-
-
-
-
 
 export function transpose_to_key(note: TNoteAllAccidentalOctave, key: TNoteAllAccidental | TNoteAllAccidentalOctave): TNoteAllAccidentalOctave {
   const interval = get_interval_distance(key, "C")

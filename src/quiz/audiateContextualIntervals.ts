@@ -5,14 +5,14 @@ import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,
   random_note_single_accidental,
-  TIntervalType,
+  TIntervalAbsolute,
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { create_scale, scale_notes, get_interval_distance, interval_to_absolute, add_octave_above } from "../tonal-interface";
 
 type TOptionsType = [
   { name: string, options: string[] },
-  { name: string, options: TIntervalType[] }
+  { name: string, options: TIntervalAbsolute[] }
 ]
 
 export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends AudiateQuizBase<
@@ -109,7 +109,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
           "harmonic minor",
           "melodic minor",
         ];
-        const intervals: TIntervalType[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
+        const intervals: TIntervalAbsolute[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
         return [
           { name : "scales", options : scales }, 
           { name : "intervals", options: intervals }
