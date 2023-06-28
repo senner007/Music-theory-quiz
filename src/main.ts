@@ -28,6 +28,8 @@ for (const mididevice of easymidi.getOutputs()) {
 
 JSON_progressions_verify()
 
+
+
 const quizzes: IQuiz<any>[] = [
   MissingScaleNote,
   NameScaleDegree,
@@ -41,6 +43,20 @@ const quizzes: IQuiz<any>[] = [
   AudiateBassLines,
   AudiateContextualIntervals
 ];
+
+const { ProgressBar } = require('ascii-progress');
+
+const bar = new ProgressBar({
+    schema: ':bar',
+    total : 10,
+});
+
+const iv = setInterval(function () {
+  bar.tick();
+  if (bar.completed) {
+    clearInterval(iv);
+  }
+}, 100);
 
 (async () => {
   while (true) {

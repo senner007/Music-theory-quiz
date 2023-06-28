@@ -45,6 +45,8 @@ export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOp
   keyInfo;
   timeSignature = 4 as const; // from options - input to melody pattern
   constructor(options: Readonly<TOptionType>) {
+
+ 
     super(options);
     this.randomNote = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
@@ -77,6 +79,9 @@ export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOp
   }
 
   get quiz_head() {
+
+
+    
     const description = this.progressionDescription
       ? `Description: ${chalk.underline(this.progressionDescription)}`
       : "";

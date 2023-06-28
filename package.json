@@ -7,7 +7,7 @@
     "dev": "SET NODE_ENV=dev&&nodemon src/main.ts --no-stdin",
     "dev-nocheck": "SET NODE_ENV=dev&&nodemon src/main.ts --no-stdin --config nodemon-transpile-only.json",
     "build": "tsc",
-    "prod": "npm run build && node dist/src/main.js",
+    "prod": "npm run build && node dist/main.js",
     "test": "vitest --run --reporter verbose"
   },
   "keywords": [],

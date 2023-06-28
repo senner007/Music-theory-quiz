@@ -9,6 +9,7 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
 
   var options : IQuizOptions[] = [];
   const allOptions = QuizClass.meta().all_options;
+  
   if (!allOptions.is_empty()) {
     for (const optionType of allOptions) {
       try {
