@@ -1,9 +1,9 @@
 import { it, expect, describe } from "vitest";
 import { Key } from "@tonaljs/tonal";
-import { key_info, numeral_by_symbol } from "../../src/keyinfo/keyInfo";
+import { keyinfo, numeral_by_symbol } from "../../src/keyinfo/keyInfo";
 
 describe("Test Roman numerals for given chords in - Minor harmonic - key", () => {
-  const key = key_info(Key.minorKey("C"));
+  const key = keyinfo(Key.minorKey("C"));
 
   it("should return correct roman numeral", () => {
     expect(numeral_by_symbol(key, ["C", "Eb", "G"])).toEqual("i");

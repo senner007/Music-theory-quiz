@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
-import { key_info, numeral_by_symbol } from "../keyinfo/keyInfo";
+import { keyinfo, numeral_by_symbol } from "../keyinfo/keyInfo";
 import { INotePlay } from "../midiplay";
 import { IQuiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
@@ -54,7 +54,7 @@ export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOp
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
     const keyType = get_key(this.randomNote, this.progressionIsMajor ? "major" : "minor")
-    this.keyInfo = key_info(keyType);
+    this.keyInfo = keyinfo(keyType);
     const randomProgressionInC = {
       chords: randomProgression.chords.map((c) => romanNumeralChord(c)),
       bass: randomProgression.bass,
