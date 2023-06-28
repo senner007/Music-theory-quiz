@@ -98,3 +98,8 @@ export function note_variants(
     }
     return returnArray
   }
+
+export function scale_range(scale: TNoteAllAccidental[], note: TNoteAllAccidentalOctave, rangefrom : EIntervalDistance, rangeto  : EIntervalDistance) {
+    let scaleRange = ScaleClass.rangeOf(scale);
+    return scaleRange(note_transpose(note, rangefrom), note_transpose(note, rangeto)) as TNoteAllAccidentalOctave[];
+}

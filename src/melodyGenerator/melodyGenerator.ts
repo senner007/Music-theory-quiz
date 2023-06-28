@@ -1,12 +1,10 @@
-
-import { Scale } from "@tonaljs/tonal";
 import { TKeyInfo } from "../keyInfo";
 import { IProgression } from "../transposition";
 import { EIntervalDistance, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
 import { LogError } from "../dev-utils";
-import { TSyllable, remove_octave, syllables_in_key_of_c } from "../solfege";
+import { remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
-import { note_transpose } from "../tonal-interface";
+import { scale_range } from "../tonal-interface";
 
 export interface IMelodicPattern {
     readonly timeSignature: 2 | 3 | 4
@@ -80,36 +78,31 @@ export abstract class MelodyGeneratorBase {
 
     };
 
-    private get_minor_scales(minorVariant: "natural" | "harmonic" | "melodic"): string[] {
+    private minor_variant(minorVariant: TMinorVariant): Readonly<TNoteAllAccidental[]> {
         if (this.keyInfo.type !== "minor") {
             LogError("Not minor scale error")
         }
         let obj = {
-            natural: this.keyInfo.natural.scale,
-            harmonic: this.keyInfo.harmonic.scale,
-            melodic: this.keyInfo.melodic.scale
+            natural: this.keyInfo.natural.scale as Readonly<TNoteAllAccidental[]>,
+            harmonic: this.keyInfo.harmonic.scale as Readonly<TNoteAllAccidental[]>,
+            melodic: this.keyInfo.melodic.scale as Readonly<TNoteAllAccidental[]>
         } as const;
         return obj[minorVariant]
-
     }
 
-    private range_octave_above_and_below(minorVariant: TMinorVariant, note: TNoteAllAccidentalOctave) {
-        let range = Scale.rangeOf(this.key_scale(minorVariant))(note_transpose(note, EIntervalDistance.OctaveUp), note_transpose(note, EIntervalDistance.OctaveDown)) as TNoteAllAccidentalOctave[];
-        return range;
-    }
 
     private key_scale(minorVariant: TMinorVariant): readonly TNoteAllAccidental[] {
         let scale;
         if (this.keyInfo.type === "minor") {
-            scale = this.get_minor_scales(minorVariant)
+            scale = this.minor_variant(minorVariant)
         } else {
             scale = this.keyInfo.scale
         }
-        return scale as TNoteAllAccidental[];
+        return scale as Readonly<TNoteAllAccidental[]>;
     }
 
-    private scale_note_from_range(note: TNoteAllAccidentalOctave, index: number, minorVariant: "natural" | "harmonic" | "melodic") {
-        const range = this.range_octave_above_and_below(minorVariant, note)
+    private scale_note_from_range(note: TNoteAllAccidentalOctave, index: number, minorVariant: TMinorVariant) {
+        const range = scale_range(this.key_scale(minorVariant), note, EIntervalDistance.OctaveDown, EIntervalDistance.OctaveUp)
         const noteIndex = range.findIndex(n => n === note)
         if (noteIndex === -1) {
             throw new Error("scale note not found")
@@ -119,7 +112,7 @@ export abstract class MelodyGeneratorBase {
 
     private solfege_syllable(note: TNoteAllAccidentalOctave) {
         const transposedNote = transpose_to_key(note, this.keyInfo.tonic as TNoteAllAccidental);
-        return syllables_in_key_of_c[remove_octave(transposedNote)] as TSyllable;
+        return syllables_in_key_of_c[remove_octave(transposedNote)];
     }
 
 
