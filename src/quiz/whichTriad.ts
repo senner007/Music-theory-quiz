@@ -1,13 +1,14 @@
-import { random_note_single_accidental, allChordTypes, create_chord } from "../utils";
+import { random_note_single_accidental} from "../utils";
 import { IQuiz } from "../quiz-types";
 import chalk from "chalk";
 import { TextQuizBase } from "./quizBase/textBase";
+import { allChordNamesSorted, create_chord } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const WhichTriad: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
-    return options.first_and_only().options.every((chordType) => allChordTypes.includes(chordType));
+    return options.first_and_only().options.every((chordType) => allChordNamesSorted.includes(chordType));
   }
 
   randomChord;

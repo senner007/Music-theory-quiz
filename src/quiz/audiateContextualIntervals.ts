@@ -5,14 +5,10 @@ import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,
   random_note_single_accidental,
-  create_scale,
-  scale_notes,
-  interval_to_absolute,
   TIntervalType,
-  get_interval_distance,
-  add_octave_note,
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
+import { create_scale, scale_notes, get_interval_distance, interval_to_absolute, add_octave_above } from "../tonal-interface";
 
 type TOptionsType = [
   { name: string, options: string[] },
@@ -76,7 +72,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
 
     const root: INotePlay[] = [{ noteNames: [this.scaleThirdOctave[0]], duration: 1 }];
 
-    const scale = add_octave_note(this.scaleThirdOctave)
+    const scale = add_octave_above(this.scaleThirdOctave)
       .map((n): INotePlay => {
         return { noteNames: [n], duration: 1 };
       });

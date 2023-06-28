@@ -1,17 +1,14 @@
 import { INotePlay } from "../midiplay";
-import { IQuizInstance, IQuiz } from "../quiz-types";
+import { IQuiz } from "../quiz-types";
 import { ITableHeader, TSyllable, syllables_in_key_of_c } from "../solfege";
+import { get_interval_distance, is_too_high, note_transpose, is_too_low } from "../tonal-interface";
 import {
-  is_too_high,
-  is_too_low, 
   TNoteAllAccidentalOctave,
   TNoteSingleAccidental,
   TOctave,
   random_note_single_accidental,
   to_octave,
-  note_transpose,
   ObjectKeys,
-  get_interval_distance,
   EIntervalDistance
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";

@@ -1,6 +1,6 @@
 
-import { Interval } from "@tonaljs/tonal";
-import { get_interval_distance, interval_direction, interval_integer_absolute } from "../utils";
+import { interval_direction, get_interval_distance } from "../tonal-interface";
+import { interval_integer_absolute } from "../utils";
 import { IMelodyGeneratorBase, MelodyGeneratorBase } from "./melodyGenerator";
 
 export const MelodySingulate: IMelodyGeneratorBase = class extends MelodyGeneratorBase {

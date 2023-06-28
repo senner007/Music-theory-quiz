@@ -1,22 +1,19 @@
 import chalk from "chalk";
 import { IQuiz } from "../quiz-types";
 import {
-  allScaleTypes,
   random_note_single_accidental,
   number_to_degree,
-  note_variants,
-  create_scale,
   variant_to_base,
-  scale_note_at_index,
   random_index
 } from "../utils";
 import { TextQuizBase } from "./quizBase/textBase";
+import { allScaleNamesSorted, create_scale, scale_note_at_index, note_variants } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const NameScaleDegree: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
-    return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
 
   scale;

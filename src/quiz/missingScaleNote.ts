@@ -1,19 +1,16 @@
 import {
-  note_variants,
   random_note_single_accidental,
-  allScaleTypes,
-  create_scale,
   variant_to_base,
-  scale_notes,
 } from "../utils";
 import { IQuizInstance, IQuiz } from "../quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
+import { allScaleNamesSorted, create_scale, scale_notes, note_variants } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
-    return options.first_and_only().options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
 
   scale;

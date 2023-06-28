@@ -1,8 +1,9 @@
-import { base_notes, chromatic_scale_notes,create_scale, get_interval_distance, TOctave } from "../utils";
-import { IQuizInstance, IQuiz } from "../quiz-types";
+import { base_notes, TOctave } from "../utils";
+import {  IQuiz } from "../quiz-types";
 import chalk from "chalk";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
+import { create_scale, chromatic_scale_notes, get_interval_distance } from "../tonal-interface";
 
 export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<never []> {
   verify_options(): boolean {

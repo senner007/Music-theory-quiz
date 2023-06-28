@@ -1,7 +1,8 @@
 import { LogError } from "./dev-utils";
 import { math_floor } from "./random_func";
+import { note_transpose } from "./tonal-interface";
 import { transpose_to_ascending } from "./transposition";
-import { TNoteAllAccidental, TNoteAllAccidentalOctave, note_transpose, to_octave, random_index, TOctave } from "./utils";
+import { TNoteAllAccidental, TNoteAllAccidentalOctave, to_octave, random_index, TOctave } from "./utils";
 
 declare global {
 

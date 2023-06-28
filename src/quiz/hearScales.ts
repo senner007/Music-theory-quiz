@@ -1,13 +1,14 @@
-import { random_note_single_accidental, allScaleTypes, create_scale, scale_notes, event_by_probability, add_octave_note, TOctave } from "../utils";
+import { random_note_single_accidental, event_by_probability, TOctave } from "../utils";
 import { IQuiz } from "../quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
+import { add_octave_above, allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
-    return options[0].options.every((scaleType) => allScaleTypes.includes(scaleType));
+    return options[0].options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
 
   randomNote;
@@ -37,7 +38,7 @@ export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TO
 
   private prepare_audio (): INotePlay[] {
     const scaleNotes = scale_notes(this.scalePick.scale).to_octave_ascending(this.octave);
-      const scaleNotesWithOctave = add_octave_note(scaleNotes);
+      const scaleNotesWithOctave = add_octave_above(scaleNotes);
       const scaleNotesAudio = scaleNotesWithOctave
         .map(note => { return { noteNames: [note], duration: 1 } as INotePlay })
       

@@ -2,10 +2,11 @@
 import { Scale } from "@tonaljs/tonal";
 import { TKeyInfo } from "../keyInfo";
 import { IProgression } from "../transposition";
-import { EIntervalDistance, note_transpose, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
+import { EIntervalDistance, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
 import { LogError } from "../dev-utils";
 import { TSyllable, remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
+import { note_transpose } from "../tonal-interface";
 
 export interface IMelodicPattern {
     readonly timeSignature: 2 | 3 | 4

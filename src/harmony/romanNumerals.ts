@@ -1,4 +1,5 @@
-import { TNoteAllAccidentalOctave, to_actave_above } from "../utils";
+import { TNoteAllAccidentalOctave} from "../utils";
+import { to_octave_above } from "../tonal-interface";
 
 // TODO : split into base and sevenths types
 export const romanNumeralsDict = {
@@ -106,7 +107,7 @@ type TRomanNumeralDict = Record<string, TNoteAllAccidentalOctave[]>;
 export function romanNumeralChord(romanNumeral: TRomanNumeral | TRomanNumeralAbove) {
   if (romanNumeral.includes("-a")) {
     const basicRomanNumeral: TRomanNumeral = to_roman_numeral(romanNumeral as TRomanNumeralAbove);
-    return to_actave_above(romanNumeralsDict[basicRomanNumeral]);
+    return to_octave_above(romanNumeralsDict[basicRomanNumeral]);
   }
   return romanNumeralsDict[romanNumeral as TRomanNumeral];
 }

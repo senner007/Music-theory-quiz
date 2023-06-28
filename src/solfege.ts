@@ -1,7 +1,7 @@
 import { Interval, Note } from "@tonaljs/tonal";
 import { LogError } from "./dev-utils";
 import { INotePlay } from "./midiplay";
-import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, TOctave, TNoteSingleAccidentalOctave, get_interval_distance, note_transpose, transpose_to_key } from "./utils";
+import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, transpose_to_key } from "./utils";
 
 
 export class SolfegeMelody {

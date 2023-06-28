@@ -6,11 +6,10 @@ import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,
   to_octave,
-  note_transpose,
   random_note_single_accidental,
-  get_interval_distance,
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
+import { get_interval_distance, note_transpose } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : TProgression["description"][]}]
 

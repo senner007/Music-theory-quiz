@@ -5,11 +5,12 @@ import { INotePlay } from "../midiplay";
 import { IQuiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
 import { transpose_progression } from "../transposition";
-import { TNoteSingleAccidental, to_octave, note_transpose, random_note_single_accidental, get_key } from "../utils";
+import { TNoteSingleAccidental, to_octave, random_note_single_accidental } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import {  MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
+import { get_key, note_transpose } from "../tonal-interface";
 
 type TOptionType = [
   { name : string, options : TProgression["description"][]},
