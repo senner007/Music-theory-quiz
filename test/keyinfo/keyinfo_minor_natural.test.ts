@@ -1,6 +1,6 @@
 import { it, expect, describe} from "vitest";
 import { Key } from "@tonaljs/tonal";
-import { key_info, numeral_by_symbol } from "../../src/keyInfo";
+import { key_info, numeral_by_symbol } from "../../src/keyinfo/keyInfo";
 
 describe("Test Roman numerals for given chords in - Minor natural - key", () => {
   const key = key_info(Key.minorKey("C"));

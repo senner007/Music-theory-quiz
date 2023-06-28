@@ -1,4 +1,4 @@
-import { TKeyInfo } from "../keyInfo";
+import { TKeyInfo } from "../keyinfo/keyInfo";
 import { IProgression } from "../transposition";
 import { EIntervalDistance, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
 import { LogError } from "../dev-utils";

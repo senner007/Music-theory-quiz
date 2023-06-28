@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
-import { key_info, numeral_by_symbol } from "../keyInfo";
+import { key_info, numeral_by_symbol } from "../keyinfo/keyInfo";
 import { INotePlay } from "../midiplay";
 import { IQuiz } from "../quiz-types";
 import { ITableHeader } from "../solfege";
