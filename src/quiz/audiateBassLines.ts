@@ -39,14 +39,6 @@ export const AudiateBassLines: IQuiz<TOptionType, {tempo : number}> = class exte
     this.randomBassLineInKey = randomProgression.bass.transpose_by(keyDistance);
   }
 
-  change_tempo(tempo: number) {
-    AudiateBassLines.set_dynamic_options({tempo : tempo})
-  }
-
-  tempo() {
-    return AudiateBassLines.get_dynamic_options().tempo
-  }
-
   get quiz_head() {
     const description = this.progressionDescription;
     const diatonic =  this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")

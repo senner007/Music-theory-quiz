@@ -53,14 +53,6 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType, {tempo : number}> =
     this.interval = [firstNote, secondNote];
   }
 
-  change_tempo(tempo: number) {
-    AudiateContextualIntervals.set_dynamic_options({tempo : tempo})
-  }
-
-  tempo() {
-    return AudiateContextualIntervals.get_dynamic_options().tempo
-  }
-
   get quiz_head() {
     return [
       `Identify and sing the interval from the ${chalk.underline(this.randomScaleType)} scale`,

@@ -46,7 +46,6 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
     return roundedOutput;
   }
   
-  protected abstract tempo(): number
   private TEMPO_MAX = 1000;
   private TEMPO_MIN = 100;
   private TEMPO_DISPLAY_MAX = 10;
@@ -56,6 +55,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   protected tempoText = `Tempo : ${this.oppositeSizeInRange(this.tempo())} - Change with key command: Ctrl-(left/right)`;
 
   private create_listeners(audioParts: IAudioPlay[]): IListener[] {
+   
     return audioParts.map((audioPart) => {
       let acObj = { ac: new AbortController() };
 
@@ -104,9 +104,17 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   }
 
   abstract audio(): IAudioPlay[];
-  abstract change_tempo(tempo : number): void
+  // abstract change_tempo(tempo : number): void
 
   abstract call_quiz(): Promise<string | never>;
+  
+  change_tempo(tempo: number) {
+    (this.constructor as any).set_dynamic_options({tempo : tempo})
+  }
+
+  tempo() {
+    return (this.constructor as any).get_dynamic_options().tempo
+  }
 
   async execute(): Promise<string | never> {
     this.listenersArray.push(...this.create_listeners(this.audio()));

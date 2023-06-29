@@ -34,14 +34,6 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType, { tempo : number }> 
     this.audioArpeggio = arppeggio;
   }
 
-  change_tempo(tempo: number) {
-    HearTrichordPitchPatterns.set_dynamic_options({tempo : tempo});
-  }
-
-  tempo() {
-    return HearTrichordPitchPatterns.get_dynamic_options().tempo
-  }
-
   private prepare_audio() : INotePlay[][] {
     const pitchIntervals = pattern_intervals(this.randomPitchPattern);
     const patternInversions = pitch_pattern_inversions(this.randomNote, pitchIntervals);

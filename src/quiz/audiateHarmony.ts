@@ -96,14 +96,6 @@ export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class exten
     return "";
   }
 
-  change_tempo(tempo: number) {
-    AudiateHarmony.set_dynamic_options({tempo : tempo})
-  }
-
-  tempo() {
-    return AudiateHarmony.get_dynamic_options().tempo
-  }
-
   audio() {
     const audio = this.melody.melodyNotes.map((n): INotePlay => {
       return { noteNames: n.note, duration: n.duration };

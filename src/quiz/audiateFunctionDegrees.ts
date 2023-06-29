@@ -65,14 +65,6 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType, {tempo : number}> = cl
     return "";
   }
 
-  change_tempo(tempo: number) {
-    AudiateFunctionalDegrees.set_dynamic_options({tempo : tempo})
-  }
-
-  tempo() {
-    return AudiateFunctionalDegrees.get_dynamic_options().tempo
-  }
-
   audio() {
     const audio = this.initAudio.map((n): INotePlay => {
       return { noteNames: [n], duration: 1 };

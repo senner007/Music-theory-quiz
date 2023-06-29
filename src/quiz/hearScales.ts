@@ -49,14 +49,6 @@ export const HearScales: IQuiz<TOptionType, { tempo : number }> = class extends 
       return scaleNotesAudio;
       
   }
-  
-  change_tempo(tempo: number) {
-    HearScales.set_dynamic_options({tempo : tempo})
-  }
-
-  tempo() {
-    return HearScales.get_dynamic_options().tempo
-  }
 
   get quiz_head() {
     return [this.tempoText];

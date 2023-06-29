@@ -42,14 +42,6 @@ export const HearTetraChord: IQuiz<TOptionType, { tempo : number }> = class exte
     this.initAudio = this.prepareAudio();
   }
 
-  change_tempo(tempo: number) {
-    HearTetraChord.set_dynamic_options({tempo : tempo});
-  }
-
-  tempo() {
-    return HearTetraChord.get_dynamic_options().tempo
-  }
-
   get quiz_head() {
     return [this.tempoText];
   }

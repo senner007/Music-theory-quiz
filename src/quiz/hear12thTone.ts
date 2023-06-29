@@ -40,14 +40,6 @@ export const Hear12thTone: IQuiz<never [], { tempo : number}> = class extends Li
     return this.missingNote;
   }
 
-  change_tempo(tempo: number) {
-    Hear12thTone.set_dynamic_options({tempo : tempo})
-  }
-
-  tempo() {
-    return Hear12thTone.get_dynamic_options().tempo
-  }
-
   override feedback_wrong(): string {
     const chromaticScaleShuffledInOctave = this.chromaticScaleShuffled
     .filter(note => note !== this.missingNote)
