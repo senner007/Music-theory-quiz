@@ -11,7 +11,7 @@ import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import {  MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
-import { stateManager } from "./quizState/quizStateManagement";
+import { stateManager } from "./state/stateManagement";
 
 type TOptionType = [
   { name : string, options : TProgression["description"][]},
@@ -44,11 +44,7 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   keyInfo;
   timeSignature = 4 as const; // from options - input to melody pattern
   constructor(options: Readonly<TOptionType>) {
-
     super(options);
-
-
-
     this.randomNote = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
@@ -136,16 +132,6 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       return { name: c, duration: this.melody.timeSignature };
     });
   }
-
-  // static get_dynamic_options() {
-  //   return this.dynamic_options
-  // }
-
-  // static set_dynamic_options(options : { tempo : number}) {
-  //   this.dynamic_options = options
-  // }
-
-  // private static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     const options = [
