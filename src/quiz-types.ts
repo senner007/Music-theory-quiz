@@ -20,5 +20,4 @@ export interface IQuiz<T extends IQuizOptions[], U> {
   };
   set_dynamic_options(options : U): void;
   get_dynamic_options(): U
-  dynamic_options : U;
 }

@@ -51,7 +51,7 @@ export const MissingScaleNote: IQuiz<TOptionType, void> = class extends TextQuiz
 
   }
 
-  static dynamic_options: void
+  private static dynamic_options: void
 
   static meta() {
     return {

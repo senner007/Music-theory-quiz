@@ -67,14 +67,14 @@ export const Hear12thTone: IQuiz<never [], { tempo : number}> = class extends Li
   }
 
   static get_dynamic_options() {
-    return Hear12thTone.dynamic_options
+    return this.dynamic_options
   }
 
   static set_dynamic_options(options : { tempo : number}) {
-    Hear12thTone.dynamic_options = options
+    this.dynamic_options = options
   }
 
-  static dynamic_options: { tempo : number} = { tempo : 200 }
+  private static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

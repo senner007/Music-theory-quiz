@@ -63,14 +63,14 @@ export const HearTetraChord: IQuiz<TOptionType, { tempo : number }> = class exte
   }
 
   static get_dynamic_options() {
-    return HearTetraChord.dynamic_options
+    return this.dynamic_options
   }
 
   static set_dynamic_options(options : { tempo : number}) {
-    HearTetraChord.dynamic_options = options
+    this.dynamic_options = options
   }
 
-  static dynamic_options: { tempo : number} = { tempo : 200 }
+  private static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

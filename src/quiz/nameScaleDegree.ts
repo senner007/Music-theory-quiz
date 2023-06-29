@@ -50,7 +50,7 @@ export const NameScaleDegree: IQuiz<TOptionType, void> = class extends TextQuizB
 
   }
 
-  static dynamic_options: void;
+  private static dynamic_options: void;
 
   static meta() {
     return {

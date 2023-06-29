@@ -80,7 +80,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType, { tempo : number }> 
     this.dynamic_options = options
   }
 
-  static dynamic_options: { tempo : number} = { tempo : 200 }
+  private static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

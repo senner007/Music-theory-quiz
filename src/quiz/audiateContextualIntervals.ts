@@ -64,15 +64,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType, {tempo : number}> =
     return "";
   }
 
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
-
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
-
-  static dynamic_options: { tempo : number} = { tempo : 300 }
+ 
 
   audio() {
     const interval = this.interval.map((n): INotePlay => {
@@ -105,6 +97,16 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType, {tempo : number}> =
       return { name: index.toString().padStart(2, "0"), duration: 2 };
     });
   }
+
+  static get_dynamic_options() {
+    return this.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    this.dynamic_options = options
+  }
+
+  private static dynamic_options: { tempo : number} = { tempo : 300 }
 
   static meta() {
     return {

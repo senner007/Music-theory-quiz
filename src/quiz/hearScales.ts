@@ -73,14 +73,14 @@ export const HearScales: IQuiz<TOptionType, { tempo : number }> = class extends 
   
 
   static get_dynamic_options() {
-    return HearScales.dynamic_options
+    return this.dynamic_options
   }
 
   static set_dynamic_options(options : { tempo : number}) {
-    HearScales.dynamic_options = options
+    this.dynamic_options = options
   }
 
-  static dynamic_options: { tempo : number} = { tempo : 200 }
+  private static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

@@ -133,11 +133,11 @@ export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class exten
   }
 
   static get_dynamic_options() {
-    return AudiateHarmony.dynamic_options
+    return this.dynamic_options
   }
 
   static set_dynamic_options(options : { tempo : number}) {
-    AudiateHarmony.dynamic_options = options
+    this.dynamic_options = options
   }
 
   static dynamic_options: { tempo : number} = { tempo : 200 }

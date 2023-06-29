@@ -92,7 +92,7 @@ export const AudiateBassLines: IQuiz<TOptionType, {tempo : number}> = class exte
     this.dynamic_options = options
   }
 
-  static dynamic_options: { tempo : number} = { tempo : 500 }
+  private static dynamic_options: { tempo : number} = { tempo : 500 }
 
   static meta() {
     return {

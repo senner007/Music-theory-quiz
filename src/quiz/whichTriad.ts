@@ -46,7 +46,7 @@ export const WhichTriad: IQuiz<TOptionType, void> = class extends TextQuizBase<T
 
   }
 
-  static dynamic_options: void;
+  private static dynamic_options: void;
 
   static meta() {
     return {
