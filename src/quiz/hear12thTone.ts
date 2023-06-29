@@ -26,8 +26,7 @@ export const Hear12thTone: IQuiz<never [], { tempo : number}> = class extends Li
 
   get quiz_head() {
     return [
-      "Starting note is: " + this.startingNote,
-      this.tempoText
+      "Starting note is: " + this.startingNote
     ];
   }
   get question_options() {

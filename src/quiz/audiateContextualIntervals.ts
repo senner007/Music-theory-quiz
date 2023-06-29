@@ -55,8 +55,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType, {tempo : number}> =
 
   get quiz_head() {
     return [
-      `Identify and sing the interval from the ${chalk.underline(this.randomScaleType)} scale`,
-      this.tempoText
+      `Identify and sing the interval from the ${chalk.underline(this.randomScaleType)} scale`
     ];
   }
 

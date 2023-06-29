@@ -43,7 +43,7 @@ export const HearTetraChord: IQuiz<TOptionType, { tempo : number }> = class exte
   }
 
   get quiz_head() {
-    return [this.tempoText];
+    return [];
   }
 
   get question_options() {

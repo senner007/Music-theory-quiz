@@ -20,9 +20,9 @@ export abstract class ListeningQuizBase<T> extends AudioQuizBase<T> {
         this.question_options,
         this.question,
         "q",
-        this.audio().map((a) => {
+        [...this.audio().map((a) => {
           return { value: a.message, key: a.keyboardKey };
-        })
+        }), { value: "change tempo", key: "ctrl-(left/right)" }]
       );
       return choice;
     } catch (err) {

@@ -144,7 +144,7 @@ export class LogAsync extends LogAsyncUtil {
     const options = this.get_options_indexed(questionOptions);
     const questionWithHook =
       question +
-      chalk.bgWhite.gray(globalHook.map((hook) => "\n  Press " + hook.key + " to " + hook.value + " ").join("") + "\n"); // beautify me!
+      chalk.bgWhite.gray(globalHook.map((hook) => `\nPress ${hook.key} to ${hook.value} `).join(""));
     return this.get_questions(this.add_separators(options, interruptKey), questionWithHook, interruptKey);
   }
 

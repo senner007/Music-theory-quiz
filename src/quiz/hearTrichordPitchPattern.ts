@@ -53,7 +53,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType, { tempo : number }> 
   }
 
   get quiz_head() {
-    return [this.tempoText];
+    return [];
   }
   get question_options() {
     return pitchPatternKeyNames.map(this.get_pattern_description);

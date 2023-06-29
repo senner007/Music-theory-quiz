@@ -87,8 +87,7 @@ export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class exten
         this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
       } progression in key of ${chalk.underline(
         this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor")
-      )} : ${chords}`,
-      this.tempoText
+      )} : ${chords}`
     ];
   }
 
@@ -140,7 +139,7 @@ export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class exten
     this.dynamic_options = options
   }
 
-  static dynamic_options: { tempo : number} = { tempo : 200 }
+  private static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     const options = [

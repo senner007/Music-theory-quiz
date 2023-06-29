@@ -27,9 +27,9 @@ export abstract class AudiateQuizBase<T> extends AudioQuizBase<T> {
         this.question_options,
         "Self-evaluation",
         "q",
-        this.audio().map((a) => {
+        [...this.audio().map((a) => {
           return { value: a.message, key: a.keyboardKey };
-        })
+        }), { value: "change tempo", key: "ctrl-(left/right)" } ]
       );
 
       return choice;

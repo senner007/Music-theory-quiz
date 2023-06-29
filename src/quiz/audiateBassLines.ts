@@ -44,8 +44,7 @@ export const AudiateBassLines: IQuiz<TOptionType, {tempo : number}> = class exte
     const diatonic =  this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
     const key = chalk.underline(this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor"))
     return [
-      `Description: ${description}\n${diatonic} progression bass line in key of ${key}`,
-      this.tempoText
+      `Description: ${description}\n${diatonic} progression bass line in key of ${key}`
     ];
   }
 

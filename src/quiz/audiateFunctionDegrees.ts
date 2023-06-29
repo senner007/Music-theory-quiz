@@ -57,7 +57,6 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType, {tempo : number}> = cl
 
   get quiz_head() {
     return [
-      this.tempoText
     ];
   }
 

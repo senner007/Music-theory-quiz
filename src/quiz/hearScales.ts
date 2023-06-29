@@ -51,7 +51,7 @@ export const HearScales: IQuiz<TOptionType, { tempo : number }> = class extends 
   }
 
   get quiz_head() {
-    return [this.tempoText];
+    return [];
   }
   get question_options() {
     return this.similarScales.map(
@@ -71,7 +71,6 @@ export const HearScales: IQuiz<TOptionType, { tempo : number }> = class extends 
     ]
   }
   
-
   static get_dynamic_options() {
     return this.dynamic_options
   }
