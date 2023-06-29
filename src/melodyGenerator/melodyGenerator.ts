@@ -102,7 +102,7 @@ export abstract class MelodyGeneratorBase {
     }
 
     private scale_note_from_range(note: TNoteAllAccidentalOctave, index: number, minorVariant: TMinorVariant) {
-        const range = scale_range(this.key_scale(minorVariant), note, EIntervalDistance.OctaveDown, EIntervalDistance.OctaveUp)
+        const range = scale_range(this.key_scale(minorVariant), note,  EIntervalDistance.OctaveUp, EIntervalDistance.OctaveDown)
         const noteIndex = range.findIndex(n => n === note)
         if (noteIndex === -1) {
             throw new Error("scale note not found")
