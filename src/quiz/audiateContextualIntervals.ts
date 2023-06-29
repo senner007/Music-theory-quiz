@@ -15,7 +15,7 @@ type TOptionsType = [
   { name: string, options: TIntervalAbsolute[] }
 ]
 
-export const AudiateContextualIntervals: IQuiz<TOptionsType, {tempo : number}> = class extends AudiateQuizBase<
+export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends AudiateQuizBase<
   TOptionsType
 > {
   verify_options(_: TOptionsType): boolean {
@@ -97,15 +97,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType, {tempo : number}> =
     });
   }
 
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
-
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
-
-  private static dynamic_options: { tempo : number} = { tempo : 300 }
+  protected override initTempo : number = 300;
 
   static meta() {
     return {

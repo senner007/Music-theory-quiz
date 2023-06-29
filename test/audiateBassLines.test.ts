@@ -31,12 +31,10 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
     vi.restoreAllMocks();
   });
 
-  const tempoText = "Tempo : 6 - Change with key command: Ctrl-(left/right)"
-
   const quizHeadOutput = [
-    [`Description: c1-1\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("Cb Major")}`, tempoText],
-    [`Description: c1-2\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("D Minor")}`, tempoText],
-    [`Description: c1-3\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("E# Minor")}`, tempoText]
+    [`Description: c1-1\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("Cb Major")}`],
+    [`Description: c1-2\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("D Minor")}`],
+    [`Description: c1-3\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("E# Minor")}`]
   ];
 
   test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {

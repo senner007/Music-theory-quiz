@@ -14,7 +14,7 @@ const pitchPatternKeyNames = ObjectKeys(pitchPatterns);
 
 type TOptionsType = [{ name : string, options : readonly TPitchPatternName[]}]
 
-export const HearTrichordPitchPatterns: IQuiz<TOptionsType, { tempo : number }> = class extends ListeningQuizBase<TOptionsType> {
+export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsType> {
   verify_options(options: TOptionsType): boolean {
     return options.first_and_only().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
@@ -72,15 +72,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType, { tempo : number }> 
     ];
   }
 
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
-
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
-
-  private static dynamic_options: { tempo : number} = { tempo : 200 }
+  protected override initTempo : number = 200;
 
   static meta() {
     return {

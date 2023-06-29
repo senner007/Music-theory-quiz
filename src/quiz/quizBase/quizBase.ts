@@ -15,8 +15,6 @@ export abstract class QuizBase<T> {
     this.listenersArray.push(this.scroll_listener());
   }
 
- 
-
   private scroll_listener(): IListener {
     const twice = (func: Function) => {
       for (let i = 0; i < 2; i++) {
@@ -39,7 +37,7 @@ export abstract class QuizBase<T> {
 
   private error_check_options(options: Readonly<T>): void | never {
     const optionsAreValid = this.verify_options(options);
-    const quizConstructor: IQuiz<any, any> = this.constructor as IQuiz<any, any>;
+    const quizConstructor: IQuiz<any> = this.constructor as IQuiz<any>;
     if (!optionsAreValid) LogError("options invalid in class: " + "'" + quizConstructor.meta.name + "'");
   }
 

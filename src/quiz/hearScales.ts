@@ -6,7 +6,7 @@ import { add_octave_above, allScaleNamesSorted, create_scale, scale_notes } from
 
 type TOptionType = [{ name : string, options : readonly string[] }]
 
-export const HearScales: IQuiz<TOptionType, { tempo : number }> = class extends ListeningQuizBase<TOptionType> {
+export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
     return options[0].options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
@@ -70,16 +70,8 @@ export const HearScales: IQuiz<TOptionType, { tempo : number }> = class extends 
       { audio : [this.initAudio], keyboardKey : "space", onInit : true, message : "play scale"}
     ]
   }
-  
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
 
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
-
-  private static dynamic_options: { tempo : number} = { tempo : 200 }
+  protected override initTempo : number = 200;
 
   static meta() {
     return {

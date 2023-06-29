@@ -11,6 +11,7 @@ import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import {  MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
+import { stateManager } from "./quizState/quizStateManagement";
 
 type TOptionType = [
   { name : string, options : TProgression["description"][]},
@@ -27,7 +28,7 @@ const melodicPatterns = [
   MelodyPattern_006,
 ]
 
-export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class extends AudiateQuizBase<TOptionType> {
+export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
     return true;
   }
@@ -45,6 +46,9 @@ export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class exten
   constructor(options: Readonly<TOptionType>) {
 
     super(options);
+
+
+
     this.randomNote = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
@@ -73,6 +77,8 @@ export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class exten
       this.keyInfo
       );
   }
+
+  protected override initTempo: number = 200;
 
   get quiz_head() {
     const description = this.progressionDescription
@@ -131,15 +137,15 @@ export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class exten
     });
   }
 
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
+  // static get_dynamic_options() {
+  //   return this.dynamic_options
+  // }
 
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
+  // static set_dynamic_options(options : { tempo : number}) {
+  //   this.dynamic_options = options
+  // }
 
-  private static dynamic_options: { tempo : number} = { tempo : 200 }
+  // private static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     const options = [

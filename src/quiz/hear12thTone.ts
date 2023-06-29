@@ -5,7 +5,7 @@ import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 import { create_scale, chromatic_scale_notes, get_interval_distance } from "../tonal-interface";
 
-export const Hear12thTone: IQuiz<never [], { tempo : number}> = class extends ListeningQuizBase<never []> {
+export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<never []> {
   verify_options(): boolean {
     return true;
   }
@@ -65,15 +65,7 @@ export const Hear12thTone: IQuiz<never [], { tempo : number}> = class extends Li
         return [ { audio : [audio], keyboardKey : "space", onInit : true, message : "play row"} ]
   }
 
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
-
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
-
-  private static dynamic_options: { tempo : number} = { tempo : 200 }
+  protected override initTempo : number = 200;
 
   static meta() {
     return {

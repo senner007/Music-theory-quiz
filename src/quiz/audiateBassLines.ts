@@ -13,7 +13,7 @@ import { get_interval_distance, note_transpose } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : TProgression["description"][]}]
 
-export const AudiateBassLines: IQuiz<TOptionType, {tempo : number}> = class extends AudiateQuizBase<TOptionType> {
+export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
     return true;
   }
@@ -83,15 +83,7 @@ export const AudiateBassLines: IQuiz<TOptionType, {tempo : number}> = class exte
     });
   }
 
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
-
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
-
-  private static dynamic_options: { tempo : number} = { tempo : 500 }
+  protected override initTempo : number = 500;
 
   static meta() {
     return {

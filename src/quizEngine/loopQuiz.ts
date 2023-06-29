@@ -5,7 +5,7 @@ import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 
 
-export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[], any>) {
+export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
 
   var options : IQuizOptions[] = [];
   const allOptions = QuizClass.meta().all_options;

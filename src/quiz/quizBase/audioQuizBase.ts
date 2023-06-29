@@ -3,7 +3,7 @@ import inquirer from "inquirer";
 import {  INotePlay, play_midi } from "../../midiplay";
 import { IListener, QuizBase } from "./quizBase";
 import { bottomBar } from "../../logger/logAsync";
-import { IQuizDynamicOptions } from "../../quiz-types";
+import { stateManager } from "../quizState/quizStateManagement";
 
 interface IAudioPlayBase {
   keyboardKey: string;
@@ -53,7 +53,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   private TEMPO_DISPLAY_MIN = 1;
   private TEMPO_STEP = 100;
 
-  protected tempoText = `Tempo : ${this.oppositeSizeInRange(this.tempo())} - Change with key command: Ctrl-(left/right)`;
+  protected tempoText() {  return `Tempo : ${this.oppositeSizeInRange(this.get_tempo())} - Change with key command: Ctrl-(left/right)` };
 
   private create_listeners(audioParts: IAudioPlay[]): IListener[] {
    
@@ -67,10 +67,10 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
             .forEach(l => l.acObj?.ac.abort())
           acObj.ac = new AbortController();
           if (audioPart.display) {
-            play_midi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, this.tempo());
+            play_midi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, this.get_tempo());
           } else {
             for (let index = 0; index < audioPart.audio.length; index++) {
-              play_midi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, this.tempo());
+              play_midi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, this.get_tempo());
             }
           }
 
@@ -87,15 +87,15 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   private tempo_listener(): IListener {
     const listener = (_: any, key: any) => {
       const tempo = (tempo: number) => {
-        this.change_tempo(this.tempo() + tempo)
-        bottomBar.updateBottomBar("Tempo: " + (this.oppositeSizeInRange(this.tempo())).toString());
+        this.set_tempo(this.get_tempo() + tempo)
+        bottomBar.updateBottomBar("Tempo: " + (this.oppositeSizeInRange(this.get_tempo())).toString());
       }
 
       if (key.ctrl && key.name === "left") {
-        tempo(this.tempo() >= this.TEMPO_MAX ? 0 : this.TEMPO_STEP); // here the max tempo should be derived from each sub class
+        tempo(this.get_tempo() >= this.TEMPO_MAX ? 0 : this.TEMPO_STEP); // here the max tempo should be derived from each sub class
       }
       if (key.ctrl && key.name === "right") {
-        tempo(this.tempo() <= this.TEMPO_MIN ? 0 : -this.TEMPO_STEP);
+        tempo(this.get_tempo() <= this.TEMPO_MIN ? 0 : -this.TEMPO_STEP);
       }
      
     };
@@ -108,13 +108,18 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
 
   abstract call_quiz(): Promise<string | never>;
   
-  change_tempo(tempo: number) {
-    (this.constructor as unknown as IQuizDynamicOptions<{tempo : number}>).set_dynamic_options({tempo : tempo})
+  private set_tempo(tempo: number) {
+    stateManager.setTempo(this.constructor.name, tempo); // Set the initial tempo for each instance
   }
 
-  tempo() {
-    return (this.constructor as unknown as IQuizDynamicOptions<{tempo : number}>).get_dynamic_options().tempo
+  private get_tempo() {
+    if (!stateManager.stateIsSet(this.constructor.name)) {
+      stateManager.setTempo(this.constructor.name, this.initTempo)
+    }
+    return stateManager.getTempo(this.constructor.name);
   }
+
+  protected abstract initTempo : number
 
   async execute(): Promise<string | never> {
     this.listenersArray.push(...this.create_listeners(this.audio()));

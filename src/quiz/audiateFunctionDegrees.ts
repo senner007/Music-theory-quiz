@@ -15,7 +15,7 @@ import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 
 type TOptionType = [{ name : string, options : TSyllable[]}]
 
-export const AudiateFunctionalDegrees: IQuiz<TOptionType, {tempo : number}> = class extends AudiateQuizBase<TOptionType> {
+export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
     return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
@@ -95,15 +95,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType, {tempo : number}> = cl
     });
   }
 
-  static get_dynamic_options() {
-    return this.dynamic_options
-  }
-
-  static set_dynamic_options(options : { tempo : number}) {
-    this.dynamic_options = options
-  }
-
-  static dynamic_options: { tempo : number} = { tempo : 500 }
+  protected override initTempo : number = 500;
 
   static meta() {
     return {

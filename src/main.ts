@@ -29,7 +29,7 @@ for (const mididevice of easymidi.getOutputs()) {
 
 JSON_progressions_verify()
 
-const quizzes: IQuiz<any, any>[] = [
+const quizzes: IQuiz<any>[] = [
   MissingScaleNote,
   NameScaleDegree,
   WhichTriad,
