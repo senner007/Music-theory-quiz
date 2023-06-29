@@ -3,6 +3,7 @@ import inquirer from "inquirer";
 import {  INotePlay, play_midi } from "../../midiplay";
 import { IListener, QuizBase } from "./quizBase";
 import { bottomBar } from "../../logger/logAsync";
+import { IQuizDynamicOptions } from "../../quiz-types";
 
 interface IAudioPlayBase {
   keyboardKey: string;
@@ -104,16 +105,15 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   }
 
   abstract audio(): IAudioPlay[];
-  // abstract change_tempo(tempo : number): void
 
   abstract call_quiz(): Promise<string | never>;
   
   change_tempo(tempo: number) {
-    (this.constructor as any).set_dynamic_options({tempo : tempo})
+    (this.constructor as unknown as IQuizDynamicOptions<{tempo : number}>).set_dynamic_options({tempo : tempo})
   }
 
   tempo() {
-    return (this.constructor as any).get_dynamic_options().tempo
+    return (this.constructor as unknown as IQuizDynamicOptions<{tempo : number}>).get_dynamic_options().tempo
   }
 
   async execute(): Promise<string | never> {
