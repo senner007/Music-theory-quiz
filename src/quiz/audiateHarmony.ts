@@ -25,16 +25,14 @@ const melodicPatterns = [
   MelodyPattern_004,
   MelodyPattern_005,
   MelodyPattern_006,
-
 ]
 
-export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
+export const AudiateHarmony: IQuiz<TOptionType, { tempo : number}> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
     return true;
   }
 
   randomNote: TNoteSingleAccidental;
-  override tempo = 200;
   chords;
   randomProgressionInKey;
   melody;
@@ -46,7 +44,6 @@ export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOp
   timeSignature = 4 as const; // from options - input to melody pattern
   constructor(options: Readonly<TOptionType>) {
 
- 
     super(options);
     this.randomNote = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
@@ -75,13 +72,9 @@ export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOp
       melodicPattern,
       this.keyInfo
       );
-
   }
 
   get quiz_head() {
-
-
-    
     const description = this.progressionDescription
       ? `Description: ${chalk.underline(this.progressionDescription)}`
       : "";
@@ -94,13 +87,21 @@ export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOp
         this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
       } progression in key of ${chalk.underline(
         this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor")
-      )}`,
-      chords,
+      )} : ${chords}`,
+      this.tempoText
     ];
   }
 
   get question() {
     return "";
+  }
+
+  change_tempo(tempo: number) {
+    AudiateHarmony.set_dynamic_options({tempo : tempo})
+  }
+
+  tempo() {
+    return AudiateHarmony.get_dynamic_options().tempo
   }
 
   audio() {
@@ -139,14 +140,25 @@ export const SingHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOp
     });
   }
 
+  static get_dynamic_options() {
+    return AudiateHarmony.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    AudiateHarmony.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 200 }
+
   static meta() {
+    const options = [
+      { name : "Progressions", options : progressions.map(p => p.description) as TProgression["description"][] },
+      { name : "Melodic Patterns", options : melodicPatterns.map(m =>  m.description) as string[] },
+    ] as const
+
     return {
       get all_options() {
-        return [
-          { name : "Progressions", options : progressions.map(p => p.description) as TProgression["description"][] },
-          { name : "Melodic Patterns", options : melodicPatterns.map(m =>  m.description) as string[] },
-        
-        ] as const
+        return options
       },
       name: "Audiate harmonic progressions",
       description: "Audiate the harmonic progression as solfege degrees",

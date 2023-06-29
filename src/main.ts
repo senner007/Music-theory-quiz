@@ -12,11 +12,12 @@ import { Log } from "./logger/logSync";
 import { HearScales } from "./quiz/hearScales";
 import { Hear12thTone } from "./quiz/hear12thTone";
 import { HearTrichordPitchPatterns } from "./quiz/hearTrichordPitchPattern";
-import { SingingFunctionalDegrees as AudiateFunctionalDegrees } from "./quiz/audiateFunctionDegrees";
-import { SingHarmony as AudiateHarmony } from "./quiz/audiateHarmony";
+import { AudiateFunctionalDegrees as AudiateFunctionalDegrees } from "./quiz/audiateFunctionDegrees";
+import { AudiateHarmony } from "./quiz/audiateHarmony";
 import { AudiateBassLines } from "./quiz/audiateBassLines";
 import { AudiateContextualIntervals } from "./quiz/audiateContextualIntervals";
 import { JSON_progressions_verify } from "./harmony/harmonicProgressions";
+import inquirer from "inquirer";
 
 process.stdin.setMaxListeners(20);
 Log.clear();
@@ -28,9 +29,7 @@ for (const mididevice of easymidi.getOutputs()) {
 
 JSON_progressions_verify()
 
-
-
-const quizzes: IQuiz<any>[] = [
+const quizzes: IQuiz<any, any>[] = [
   MissingScaleNote,
   NameScaleDegree,
   WhichTriad,
@@ -44,21 +43,8 @@ const quizzes: IQuiz<any>[] = [
   AudiateContextualIntervals
 ];
 
-const { ProgressBar } = require('ascii-progress');
 
-const bar = new ProgressBar({
-    schema: ':bar',
-    total : 10,
-});
-
-const iv = setInterval(function () {
-  bar.tick();
-  if (bar.completed) {
-    clearInterval(iv);
-  }
-}, 100);
-
-(async () => {
+;(async () => {
   while (true) {
     try {
       const choice = await LogAsync.questions_in_list(

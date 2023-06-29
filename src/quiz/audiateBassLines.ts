@@ -13,13 +13,12 @@ import { get_interval_distance, note_transpose } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : TProgression["description"][]}]
 
-export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
+export const AudiateBassLines: IQuiz<TOptionType, {tempo : number}> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
     return true;
   }
 
   randomNote: TNoteSingleAccidental;
-  override tempo = 1000;
 
   randomBassLineInKey;
   progressionDescription
@@ -40,12 +39,21 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
     this.randomBassLineInKey = randomProgression.bass.transpose_by(keyDistance);
   }
 
+  change_tempo(tempo: number) {
+    AudiateBassLines.set_dynamic_options({tempo : tempo})
+  }
+
+  tempo() {
+    return AudiateBassLines.get_dynamic_options().tempo
+  }
+
   get quiz_head() {
     const description = this.progressionDescription;
     const diatonic =  this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
     const key = chalk.underline(this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor"))
     return [
       `Description: ${description}\n${diatonic} progression bass line in key of ${key}`,
+      this.tempoText
     ];
   }
 
@@ -83,6 +91,16 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
       return { name: index.toString().padStart(2, '0'), duration: 1 };
     });
   }
+
+  static get_dynamic_options() {
+    return this.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    this.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 500 }
 
   static meta() {
     return {

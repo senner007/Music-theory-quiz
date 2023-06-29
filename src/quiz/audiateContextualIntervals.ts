@@ -15,7 +15,7 @@ type TOptionsType = [
   { name: string, options: TIntervalAbsolute[] }
 ]
 
-export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends AudiateQuizBase<
+export const AudiateContextualIntervals: IQuiz<TOptionsType, {tempo : number}> = class extends AudiateQuizBase<
   TOptionsType
 > {
   verify_options(_: TOptionsType): boolean {
@@ -26,7 +26,6 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
   randomScaleType;
   interval;
   scaleThirdOctave;
-  override tempo = 400;
   timeSignature = 1 as const;
   constructor(options: Readonly<TOptionsType>) {
     super(options);
@@ -54,13 +53,34 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
     this.interval = [firstNote, secondNote];
   }
 
+  change_tempo(tempo: number) {
+    AudiateContextualIntervals.set_dynamic_options({tempo : tempo})
+  }
+
+  tempo() {
+    return AudiateContextualIntervals.get_dynamic_options().tempo
+  }
+
   get quiz_head() {
-    return [`Identify and sing the interval from the ${chalk.underline(this.randomScaleType)} scale`];
+    return [
+      `Identify and sing the interval from the ${chalk.underline(this.randomScaleType)} scale`,
+      this.tempoText
+    ];
   }
 
   get question() {
     return "";
   }
+
+  static get_dynamic_options() {
+    return this.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    this.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 300 }
 
   audio() {
     const interval = this.interval.map((n): INotePlay => {

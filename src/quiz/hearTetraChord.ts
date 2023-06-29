@@ -7,7 +7,7 @@ import { allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interfa
 
 type TOptionType = [{ name : string, options : readonly string[] }]
 
-export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+export const HearTetraChord: IQuiz<TOptionType, { tempo : number }> = class extends ListeningQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
@@ -42,8 +42,16 @@ export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBas
     this.initAudio = this.prepareAudio();
   }
 
+  change_tempo(tempo: number) {
+    HearTetraChord.set_dynamic_options({tempo : tempo});
+  }
+
+  tempo() {
+    return HearTetraChord.get_dynamic_options().tempo
+  }
+
   get quiz_head() {
-    return [];
+    return [this.tempoText];
   }
 
   get question_options() {
@@ -61,6 +69,16 @@ export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBas
   audio() {
     return [ { audio : [this.initAudio], keyboardKey : "space", onInit : true, message: "play tetrachord"} ]
   }
+
+  static get_dynamic_options() {
+    return HearTetraChord.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    HearTetraChord.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

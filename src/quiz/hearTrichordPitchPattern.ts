@@ -14,7 +14,7 @@ const pitchPatternKeyNames = ObjectKeys(pitchPatterns);
 
 type TOptionsType = [{ name : string, options : readonly TPitchPatternName[]}]
 
-export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsType> {
+export const HearTrichordPitchPatterns: IQuiz<TOptionsType, { tempo : number }> = class extends ListeningQuizBase<TOptionsType> {
   verify_options(options: TOptionsType): boolean {
     return options.first_and_only().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
@@ -32,6 +32,14 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
     const [chord, arppeggio] = this.prepare_audio();
     this.audioChord = chord;
     this.audioArpeggio = arppeggio;
+  }
+
+  change_tempo(tempo: number) {
+    HearTrichordPitchPatterns.set_dynamic_options({tempo : tempo});
+  }
+
+  tempo() {
+    return HearTrichordPitchPatterns.get_dynamic_options().tempo
   }
 
   private prepare_audio() : INotePlay[][] {
@@ -53,7 +61,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
   }
 
   get quiz_head() {
-    return [];
+    return [this.tempoText];
   }
   get question_options() {
     return pitchPatternKeyNames.map(this.get_pattern_description);
@@ -71,6 +79,16 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
       { audio: [this.audioArpeggio], keyboardKey: "l", channel: 1, message: "play trichord sequentially" },
     ];
   }
+
+  static get_dynamic_options() {
+    return this.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    this.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

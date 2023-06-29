@@ -5,7 +5,7 @@ import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 import { create_scale, chromatic_scale_notes, get_interval_distance } from "../tonal-interface";
 
-export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<never []> {
+export const Hear12thTone: IQuiz<never [], { tempo : number}> = class extends ListeningQuizBase<never []> {
   verify_options(): boolean {
     return true;
   }
@@ -25,7 +25,10 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
   }
 
   get quiz_head() {
-    return ["Starting note is: " + this.startingNote];
+    return [
+      "Starting note is: " + this.startingNote,
+      this.tempoText
+    ];
   }
   get question_options() {
     return this.chromaticScaleShuffled.slice(1, this.chromaticScaleShuffled.length);
@@ -35,6 +38,14 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
   }
   answer(): string {
     return this.missingNote;
+  }
+
+  change_tempo(tempo: number) {
+    Hear12thTone.set_dynamic_options({tempo : tempo})
+  }
+
+  tempo() {
+    return Hear12thTone.get_dynamic_options().tempo
   }
 
   override feedback_wrong(): string {
@@ -62,6 +73,16 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
 
         return [ { audio : [audio], keyboardKey : "space", onInit : true, message : "play row"} ]
   }
+
+  static get_dynamic_options() {
+    return Hear12thTone.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    Hear12thTone.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

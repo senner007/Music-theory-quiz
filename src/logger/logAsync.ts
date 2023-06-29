@@ -3,7 +3,6 @@ import inquirer from "inquirer";
 // @ts-ignore
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 InterruptedPrompt.fromAll(inquirer);
-
 export interface IOptions {
   value: string;
 }
@@ -61,6 +60,8 @@ class LogAsyncUtil {
     question: string,
     interruptKey: string,
   ): Promise<string | never> {
+
+
     const choiceArray = [...choices.options, choices.separator, choices.interrupt];
     try {
       const answer: { question: string } = await inquirer.prompt([
@@ -111,7 +112,8 @@ class LogAsyncUtil {
     }
   }
 }
-
+const bottomBar = new inquirer.ui.BottomBar();
+export { bottomBar }
 
 
 export class LogAsync extends LogAsyncUtil {
@@ -142,7 +144,7 @@ export class LogAsync extends LogAsyncUtil {
     const options = this.get_options_indexed(questionOptions);
     const questionWithHook =
       question +
-      chalk.bgWhite.gray(globalHook.map((hook) => "\n  Press " + hook.key + " to " + hook.value + " ").join("")); // beautify me!
+      chalk.bgWhite.gray(globalHook.map((hook) => "\n  Press " + hook.key + " to " + hook.value + " ").join("") + "\n"); // beautify me!
     return this.get_questions(this.add_separators(options, interruptKey), questionWithHook, interruptKey);
   }
 

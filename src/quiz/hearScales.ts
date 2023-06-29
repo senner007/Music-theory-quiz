@@ -6,7 +6,7 @@ import { add_octave_above, allScaleNamesSorted, create_scale, scale_notes } from
 
 type TOptionType = [{ name : string, options : readonly string[] }]
 
-export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+export const HearScales: IQuiz<TOptionType, { tempo : number }> = class extends ListeningQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
     return options[0].options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
@@ -49,9 +49,17 @@ export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TO
       return scaleNotesAudio;
       
   }
+  
+  change_tempo(tempo: number) {
+    HearScales.set_dynamic_options({tempo : tempo})
+  }
+
+  tempo() {
+    return HearScales.get_dynamic_options().tempo
+  }
 
   get quiz_head() {
-    return [];
+    return [this.tempoText];
   }
   get question_options() {
     return this.similarScales.map(
@@ -70,6 +78,17 @@ export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TO
       { audio : [this.initAudio], keyboardKey : "space", onInit : true, message : "play scale"}
     ]
   }
+  
+
+  static get_dynamic_options() {
+    return HearScales.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    HearScales.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 200 }
 
   static meta() {
     return {

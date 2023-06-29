@@ -14,3 +14,4 @@
 - refactor table creation logic
 - indicate when and how the melody is modulating and display in solfege tables.
 - audiate bottom, top, middle of two notes, three notes
+- add react frontend

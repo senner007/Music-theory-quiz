@@ -15,7 +15,7 @@ import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 
 type TOptionType = [{ name : string, options : TSyllable[]}]
 
-export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
+export const AudiateFunctionalDegrees: IQuiz<TOptionType, {tempo : number}> = class extends AudiateQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
     return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
@@ -25,9 +25,9 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
   initAudio;
   stepnumber: number = 12; // in options
   timeSignature = 1 as const;
-  override tempo = 1000;
   constructor(options: Readonly<TOptionType>) {
     super(options);
+
     this.randomNote = random_note_single_accidental();
 
     const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
@@ -56,11 +56,21 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
   }
 
   get quiz_head() {
-    return [];
+    return [
+      this.tempoText
+    ];
   }
 
   get question() {
     return "";
+  }
+
+  change_tempo(tempo: number) {
+    AudiateFunctionalDegrees.set_dynamic_options({tempo : tempo})
+  }
+
+  tempo() {
+    return AudiateFunctionalDegrees.get_dynamic_options().tempo
   }
 
   audio() {
@@ -93,6 +103,16 @@ export const SingingFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
       return { name: index.toString().padStart(2, '0'), duration: 1 };
     });
   }
+
+  static get_dynamic_options() {
+    return this.dynamic_options
+  }
+
+  static set_dynamic_options(options : { tempo : number}) {
+    this.dynamic_options = options
+  }
+
+  static dynamic_options: { tempo : number} = { tempo : 500 }
 
   static meta() {
     return {

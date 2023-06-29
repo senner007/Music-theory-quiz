@@ -10,7 +10,7 @@ export interface IQuizOptions {
   options : any
 }
 
-export interface IQuiz<T extends IQuizOptions[]> {
+export interface IQuiz<T extends IQuizOptions[], U> {
   new (options: Readonly<T>): IQuizInstance;
   meta(): {
     all_options: Readonly<T>;
@@ -18,4 +18,7 @@ export interface IQuiz<T extends IQuizOptions[]> {
     description: string;
     instructions? : string[]
   };
+  set_dynamic_options(options : U): void;
+  get_dynamic_options(): U
+  dynamic_options : U;
 }
