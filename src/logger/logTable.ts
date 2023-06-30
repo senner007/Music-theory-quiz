@@ -44,6 +44,18 @@ function heading_in_measures(tableHeader: ITableHeader[]) {
   return tempArr;
 }
 
+function replaceHeaders(table : string, tableHeaders: ITableHeader[]
+  ) {
+    let tableCopy = table;
+  for (const headíng of tableHeaders) {
+    tableCopy = replaceAt(tableCopy, tableCopy.indexOf("*"), headíng.name)
+  }
+  function replaceAt(str: string, index: number, replacement: string) {
+    return str.substring(0, index) + replacement + str.substring(index + replacement.length);
+  }
+  return tableCopy;
+}
+
 export class LogTable {
   static write(solfege: SolfegeMelody, tableHeader: ITableHeader[], timeSignatue: 1 | 2 | 3 | 4) {
     const solfegePagination = solfege.pagination(MAXDURATION, timeSignatue);
@@ -60,22 +72,16 @@ export class LogTable {
         rows: rows,
       });
 
-      for (let i = 0; i < fragment.duration(); i++) {
+      for (let i = 0; i < fragment.duration(); i++) { // forgot what this does.
         table.setAlign(i, AsciiTable.CENTER)
       }
 
       table = table.setJustify()
 
-      let tableStr = table.toString();
+      const tableStr = table.toString();
+      const tableWithHeaders = replaceHeaders(tableStr, tableHeaders[index]);
 
-      for (const headíng of tableHeaders[index]) {
-        tableStr = replaceAt(tableStr, tableStr.indexOf("*"), headíng.name)
-      }
-      function replaceAt(str: string, index: number, replacement: string) {
-        return str.substring(0, index) + replacement + str.substring(index + replacement.length);
-      }
-
-      console.log(tableStr);
+      console.log(tableWithHeaders);
     }
 
   }
