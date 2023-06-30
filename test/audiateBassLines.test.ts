@@ -5,7 +5,7 @@ import { LogTable } from "../src/logger/logTable";
 import { SolfegeMelody } from "../src/solfege";
 import { math_floor } from "../src/random_func";
 
-describe("Test SingBassLines quiz", () => { // put in mocks folder
+describe("Test AudiateBassLines quiz", () => { // put in mocks folder
 
   vi.mock("../src/logger/logTable", () => {
     const LogTableMock = vi.fn();
@@ -22,7 +22,7 @@ describe("Test SingBassLines quiz", () => { // put in mocks folder
 
   vi.mock("../src/logger/logAsync", () => {
     const LogAsyncMock = vi.fn();
-    (LogAsyncMock as any).questions_in_list_indexed_global_key_hook = vi.fn();
+    (LogAsyncMock as any).questions_in_list_indexed = vi.fn();
 
     return { LogAsync: LogAsyncMock };
   });
