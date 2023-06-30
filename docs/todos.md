@@ -15,3 +15,7 @@
 - indicate when and how the melody is modulating and display in solfege tables.
 - audiate bottom, top, middle of two notes, three notes
 - add react frontend
+- add select list to options
+- store options in state
+- time signature 3 to harmonic melodies
+- set midi device through command line option
