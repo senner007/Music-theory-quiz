@@ -52,33 +52,34 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   private TEMPO_DISPLAY_MAX = 10;
   private TEMPO_DISPLAY_MIN = 1;
   private TEMPO_STEP = 100;
+  private BACKGROUND_CHANNEL = 10;
 
   protected tempoText() {  return `Tempo : ${this.oppositeSizeInRange(this.get_tempo().tempo)} - Change with key command: Ctrl-(left/right)` };
 
   private create_listeners(audioParts: IAudioPlay[]): IListener[] {
    
     return audioParts.map((audioPart) => {
-      let acObj = { ac: new AbortController() };
+      let abortControl = { ac: new AbortController() };
 
       const listener = (_: any, key: any) => {
         if (key.name === audioPart.keyboardKey) {
           this.listenersArray
-            .filter(l => !audioPart.backgroundChannel)
-            .forEach(l => l.acObj?.ac.abort())
-          acObj.ac = new AbortController();
+            .filter(l => l.isBackgroundChannel === audioPart.backgroundChannel) // abort everything where backgroundChannel property is equal to current
+            .forEach(l => l.acObj?.ac.abort());
+          abortControl.ac = new AbortController();
           if (audioPart.display) {
-            play_midi(audioPart.audio, acObj.ac, audioPart.backgroundChannel ? 10 : 1, this.get_tempo().tempo);
+            play_midi(audioPart.audio, abortControl.ac, audioPart.backgroundChannel ? this.BACKGROUND_CHANNEL : 1, this.get_tempo().tempo);
           } else {
-            for (let index = 0; index < audioPart.audio.length; index++) {
-              play_midi(audioPart.audio[index], acObj.ac, audioPart.backgroundChannel ? 10 : index, this.get_tempo().tempo);
-            }
+            audioPart.audio.forEach((audio, index) => {
+              play_midi(audio, abortControl.ac, audioPart.backgroundChannel ? this.BACKGROUND_CHANNEL : index, this.get_tempo().tempo);
+            });
           }
 
         }
       };
       return {
         listener: listener,
-        acObj: acObj,
+        acObj: abortControl,
         isBackgroundChannel: audioPart.backgroundChannel
       };
     });
