@@ -22,7 +22,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
     return true;
   }
 
-  randomNote: TNoteSingleAccidental;
+  key: TNoteSingleAccidental;
   randomScaleType;
   interval;
   scaleThirdOctave;
@@ -30,9 +30,9 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
   constructor(options: Readonly<TOptionsType>) {
     super(options);
     const [scaletypes, intervals] = options;
-    this.randomNote = random_note_single_accidental();
+    this.key = random_note_single_accidental();
     this.randomScaleType = scaletypes.options.random_item();
-    const randomScale = create_scale(this.randomNote, this.randomScaleType);
+    const randomScale = create_scale(this.key, this.randomScaleType);
 
     this.scaleThirdOctave = scale_notes(randomScale).to_octave_ascending("3")
     const randomScaleNotes = [

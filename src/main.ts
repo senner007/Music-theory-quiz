@@ -43,7 +43,6 @@ const quizzes: IQuiz<any>[] = [
   AudiateContextualIntervals
 ];
 
-
 ;(async () => {
   while (true) {
     try {

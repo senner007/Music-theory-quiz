@@ -15,7 +15,7 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
       try {
         const selectOptions = await LogAsync.checkboxes(
           optionType.options,
-          "Choose quiz options or quit(q)",
+          `Please select: ${optionType.name} or quit(q)`,
           "q"
         );
         options.push({ name : optionType.name, options: selectOptions})

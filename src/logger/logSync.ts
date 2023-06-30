@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { isDev } from "../dev-utils";
 import rs from "readline-sync";
+import { IGlobalHook } from "./logAsync";
 
 export class Log {
     static clear() {
@@ -23,7 +24,14 @@ export class Log {
     static stack(content: string) {
       this.write(chalk.yellow(content));
     }
-  
+
+    static keyHooks(
+      globalHook: IGlobalHook[]
+    ): void
+   {
+    const hooks = chalk.bgWhite.gray(globalHook.map((hook) => `Press ${hook.key} to ${hook.value}`).join("\n"));
+    Log.write(hooks)
+   }
     static keyInSelect(questionOptions: string[], question: string) {
       return rs.keyInSelect(
         questionOptions,

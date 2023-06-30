@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { LogAsync } from "../../logger/logAsync";
 import { AudioQuizBase } from "./audioQuizBase";
+import { Log } from "../../logger/logSync";
 
 export abstract class ListeningQuizBase<T> extends AudioQuizBase<T> {
   abstract answer(): Readonly<string>;
@@ -16,13 +17,14 @@ export abstract class ListeningQuizBase<T> extends AudioQuizBase<T> {
 
   async call_quiz(): Promise<string | never> {
     try {
-      const choice = await LogAsync.questions_in_list_indexed_global_key_hook(
+      Log.keyHooks([...this.audio().map((a) => {
+        return { value: a.message, key: a.keyboardKey };
+      }), { value: "change tempo", key: "ctrl-(left/right)" }]);
+
+      const choice = await LogAsync.questions_in_list_indexed(
         this.question_options,
         this.question,
-        "q",
-        [...this.audio().map((a) => {
-          return { value: a.message, key: a.keyboardKey };
-        }), { value: "change tempo", key: "ctrl-(left/right)" }]
+        "q"
       );
       return choice;
     } catch (err) {

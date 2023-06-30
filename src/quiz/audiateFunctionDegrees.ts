@@ -13,34 +13,39 @@ import {
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 
-type TOptionType = [{ name : string, options : TSyllable[]}]
+type TOptionType = [
+  { name : string, options : TSyllable[]},
+  { name : string, options : TOctave[]},
+  { name : string, options : number[]}
+]
 
 export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
     return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
-  randomNote: TNoteSingleAccidental;
-  octaves: TOctave[] = ["3", "4"]; // in options
+  key: TNoteSingleAccidental;
   initAudio;
   stepnumber: number = 12; // in options
   timeSignature = 1 as const;
   constructor(options: Readonly<TOptionType>) {
     super(options);
 
-    this.randomNote = random_note_single_accidental();
+    this.key = random_note_single_accidental();
 
     const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
-      return options.first_and_only().options.includes(syllables_in_key_of_c[key] as TSyllable);
+      return options[0].options.includes(syllables_in_key_of_c[key]);
     });
 
-    const distanceToKey = get_interval_distance("C", this.randomNote)
+    const distanceToKey = get_interval_distance("C", this.key)
     const syllableNotesTransposed = optionSyllableNotesInC.transpose_by(distanceToKey);
 
-    this.initAudio = [...Array(this.stepnumber).keys()].map((_) => {
+    const notes = options[2].options.random_item();
+
+    this.initAudio = [...Array(notes).keys()].map((_) => {
       const note = syllableNotesTransposed.random_item();
-      const randomOctave = this.octaves.random_item();
+      const randomOctave = options[1].options.random_item();
 
       const octaveNote = to_octave(note, randomOctave);
       if (is_too_high(octaveNote)) {
@@ -73,10 +78,10 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
       {
         noteNames: [
           // abstract me out!
-          to_octave(this.randomNote, "2"),
-          to_octave(this.randomNote, "3"),
-          to_octave(note_transpose(this.randomNote, "3M"), "3"),
-          to_octave(note_transpose(this.randomNote, "P5"), "3"),
+          to_octave(this.key, "2"),
+          to_octave(this.key, "3"),
+          to_octave(note_transpose(this.key, "3M"), "3"),
+          to_octave(note_transpose(this.key, "P5"), "3"),
         ],
         duration: 2,
       } as INotePlay,
@@ -100,7 +105,12 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
   static meta() {
     return {
       get all_options(): TOptionType {
-        return [{ name : "Syllables", options : ["Do", "Re", "Me", "Mi", "Fa", "Fi", "So", "La", "Ti"]}];
+        return [
+          { name : "Syllables", options : ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"]},
+          { name : "Octaves", options : ["2","3", "4"]},
+          { name : "Notes", options : [6, 12, 18]},
+
+        ];
       },
       name: "Audiate functional solfege degrees",
       description: "Audiate the solfege degrees shown in the table below",

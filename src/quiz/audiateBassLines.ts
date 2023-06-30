@@ -18,7 +18,7 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
     return true;
   }
 
-  randomNote: TNoteSingleAccidental;
+  key: TNoteSingleAccidental;
 
   randomBassLineInKey;
   progressionDescription
@@ -27,7 +27,7 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
   timeSignature = 4 as const;
   constructor(options: Readonly<TOptionType>) {
     super(options);
-    this.randomNote = random_note_single_accidental();
+    this.key = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options.first_and_only().options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
 
@@ -35,14 +35,14 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
     this.progressionIsMajor = randomProgression.isMajor;
     this.progressionDescription = randomProgression.description;
 
-    const keyDistance = get_interval_distance("C", this.randomNote)
+    const keyDistance = get_interval_distance("C", this.key)
     this.randomBassLineInKey = randomProgression.bass.transpose_by(keyDistance);
   }
 
   get quiz_head() {
     const description = this.progressionDescription;
     const diatonic =  this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
-    const key = chalk.underline(this.randomNote + " " + (this.progressionIsMajor ? "Major" : "Minor"))
+    const key = chalk.underline(this.key + " " + (this.progressionIsMajor ? "Major" : "Minor"))
     return [
       `Description: ${description}\n${diatonic} progression bass line in key of ${key}`
     ];
@@ -61,10 +61,10 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
       {
         noteNames: [
           // abstract me out! // major or minor version
-          to_octave(this.randomNote, "2"),
-          to_octave(this.randomNote, "3"),
-          to_octave(note_transpose(this.randomNote, this.progressionIsMajor ? "3M" : "3m"), "3"),
-          to_octave(note_transpose(this.randomNote, "P5"), "3"),
+          to_octave(this.key, "2"),
+          to_octave(this.key, "3"),
+          to_octave(note_transpose(this.key, this.progressionIsMajor ? "3M" : "3m"), "3"),
+          to_octave(note_transpose(this.key, "P5"), "3"),
         ],
         duration: 2,
       } as INotePlay,
