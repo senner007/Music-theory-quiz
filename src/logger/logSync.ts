@@ -1,7 +1,11 @@
 import chalk from "chalk";
 import { isDev } from "../dev-utils";
 import rs from "readline-sync";
-import { IGlobalHook } from "./logAsync";
+
+export interface IGlobalHook {
+  value: string;
+  key: string;
+}
 
 export class Log {
     static clear() {

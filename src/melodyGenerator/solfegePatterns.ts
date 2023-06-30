@@ -19,6 +19,20 @@ export enum EChordNote {
     Fourth = -4
 }
 
+// This is compile checking each in "solfegePatterns_pretypecheck" extends ISolfegePattern and indexes array length equal to pattern array length
+type TPatternLengthIndexesLength<T extends typeof solfegePatterns_pretypecheck[number]> =
+    T extends ISolfegePattern
+        ? T["patterns"][number]['length'] extends T["indexes"]['length']
+            ? T["indexes"]['length'] extends T["patterns"][number]['length']
+                ? true
+            : `Length of ${T["indexes"]['length']} not equal to length of ${T["patterns"][number]['length']} at ${T["description"]}`
+        : `Length of pattern : ${T["patterns"][number]['length']} not equal to length of indexes : ${T["indexes"]['length']} at ${T["description"]}`
+    : `Not assignable to ISolfegePattern as ${T["description"]}`
+
+// Return the "solfegePatterns_pretypecheck" type or error message
+type TTypeOrError = TPatternLengthIndexesLength<typeof solfegePatterns_pretypecheck[number]> extends true ? typeof solfegePatterns_pretypecheck : TPatternLengthIndexesLength<typeof solfegePatterns_pretypecheck[number]>
+
+
 function reverseSyllables<T extends ISolfegePattern["patterns"]>(patterns: T): T {
     return patterns.map(p => p.to_reverse()) as T
 }
@@ -228,17 +242,5 @@ const solfegePatterns_pretypecheck = [
     solfegePattern_016,
 ] as const
 
-// This is compile checking each in "solfegePatterns_pretypecheck" extends ISolfegePattern and indexes array length equal to pattern array length
-type TPatternLengthIndexesLength<T extends typeof solfegePatterns_pretypecheck[number]> =
-    T extends ISolfegePattern
-        ? T["patterns"][number]['length'] extends T["indexes"]['length']
-            ? T["indexes"]['length'] extends T["patterns"][number]['length']
-                ? true
-            : `Length of ${T["indexes"]['length']} not equal to length of ${T["patterns"][number]['length']} at ${T["description"]}`
-        : `Length of pattern : ${T["patterns"][number]['length']} not equal to length of indexes : ${T["indexes"]['length']} at ${T["description"]}`
-    : `Not assignable to ISolfegePattern as ${T["description"]}`
-
-// Return the "solfegePatterns_pretypecheck" type or error message
-type TTypeOrError = TPatternLengthIndexesLength<typeof solfegePatterns_pretypecheck[number]> extends true ? typeof solfegePatterns_pretypecheck : TPatternLengthIndexesLength<typeof solfegePatterns_pretypecheck[number]>
 
 export const solfegePatterns: TTypeOrError = solfegePatterns_pretypecheck;

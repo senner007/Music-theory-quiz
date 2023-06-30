@@ -1,6 +1,6 @@
 
 import inquirer from "inquirer";
-import {  INotePlay, play_midi } from "../../midiplay";
+import { INotePlay, play_midi } from "../../midiplay";
 import { IListener, QuizBase } from "./quizBase";
 import { bottomBar } from "../../logger/logAsync";
 import { stateManager } from "../state/stateManagement";
@@ -24,29 +24,27 @@ interface IAudioPlaySolo extends IAudioPlayBase {
 
 type IAudioPlay = IAudioPlaySolo | IAudioPlayMix;
 
-
-
 export abstract class AudioQuizBase<T> extends QuizBase<T> {
 
   protected oppositeSizeInRange(
-      number: number, 
-      minInput: number = this.TEMPO_MIN, 
-      maxInput: number = this.TEMPO_MAX, 
-      minOutput: number = this.TEMPO_DISPLAY_MIN, 
-      maxOutput: number = this.TEMPO_DISPLAY_MAX
-    ) {
+    number: number,
+    minInput: number = this.TEMPO_MIN,
+    maxInput: number = this.TEMPO_MAX,
+    minOutput: number = this.TEMPO_DISPLAY_MIN,
+    maxOutput: number = this.TEMPO_DISPLAY_MAX
+  ) {
     // Scale the input number to a value between 0 and 1
     const scaledInput = (number - minInput) / (maxInput - minInput);
-  
+
     // Scale the output range based on the desired minOutput and maxOutput
     const scaledOutput = (maxOutput - minOutput) * (1 - scaledInput) + minOutput;
-  
+
     // Round the scaled output to the nearest whole number
     const roundedOutput = Math.round(scaledOutput);
-  
+
     return roundedOutput;
   }
-  
+
   private TEMPO_MAX = 1000;
   private TEMPO_MIN = 100;
   private TEMPO_DISPLAY_MAX = 10;
@@ -54,10 +52,10 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   private TEMPO_STEP = 100;
   private BACKGROUND_CHANNEL = 10;
 
-  protected tempoText() {  return `Tempo : ${this.oppositeSizeInRange(this.get_tempo().tempo)} - Change with key command: Ctrl-(left/right)` };
+  protected tempoText() { return `Tempo : ${this.oppositeSizeInRange(this.get_tempo().tempo)} - Change with key command: Ctrl-(left/right)` };
 
   private create_listeners(audioParts: IAudioPlay[]): IListener[] {
-   
+
     return audioParts.map((audioPart) => {
       let abortControl = { ac: new AbortController() };
 
@@ -98,7 +96,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
       if (key.ctrl && key.name === "right") {
         tempo(this.get_tempo().tempo <= this.TEMPO_MIN ? 0 : -this.TEMPO_STEP);
       }
-     
+
     };
     return {
       listener
@@ -108,19 +106,19 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   abstract audio(): IAudioPlay[];
 
   abstract call_quiz(): Promise<string | never>;
-  
+
   private set_tempo(tempo: number) {
-    stateManager.setState(this.constructor.name, { tempo : tempo }); // Set the initial tempo for each instance
+    stateManager.setState(this.constructor.name, { tempo: tempo }); // Set the initial tempo for each instance
   }
 
   private get_tempo() {
     if (!stateManager.stateIsSet(this.constructor.name)) {
-      stateManager.setState(this.constructor.name, { tempo : this.initTempo })
+      stateManager.setState(this.constructor.name, { tempo: this.initTempo })
     }
     return stateManager.getState(this.constructor.name);
   }
 
-  protected abstract initTempo : number
+  protected abstract initTempo: number
 
   async execute(): Promise<string | never> {
     this.listenersArray.push(...this.create_listeners(this.audio()));

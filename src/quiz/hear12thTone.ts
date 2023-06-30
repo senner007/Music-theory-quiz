@@ -1,5 +1,5 @@
 import { base_notes, TOctave } from "../utils";
-import {  IQuiz } from "../quiz-types";
+import {  IQuiz } from "./quiz-types";
 import chalk from "chalk";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";

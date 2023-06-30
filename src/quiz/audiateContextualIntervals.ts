@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { INotePlay } from "../midiplay";
-import { IQuiz } from "../quiz-types";
+import { IQuiz } from "./quiz-types";
 import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,

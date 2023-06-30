@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
 import { keyinfo, numeral_by_symbol } from "../keyinfo/keyInfo";
 import { INotePlay } from "../midiplay";
-import { IQuiz } from "../quiz-types";
+import { IQuiz } from "./quiz-types";
 import { ITableHeader } from "../solfege";
 import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, random_note_single_accidental } from "../utils";

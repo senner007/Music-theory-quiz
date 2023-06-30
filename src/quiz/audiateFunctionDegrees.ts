@@ -1,5 +1,5 @@
 import { INotePlay } from "../midiplay";
-import { IQuiz } from "../quiz-types";
+import { IQuiz } from "./quiz-types";
 import { ITableHeader, TSyllable, syllables_in_key_of_c } from "../solfege";
 import { get_interval_distance, is_too_high, note_transpose, is_too_low } from "../tonal-interface";
 import {

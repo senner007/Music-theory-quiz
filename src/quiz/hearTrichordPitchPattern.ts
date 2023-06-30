@@ -1,5 +1,5 @@
 import { ObjectKeys, random_note_single_accidental } from "../utils";
-import { IQuizInstance, IQuiz } from "../quiz-types";
+import { IQuizInstance, IQuiz } from "./quiz-types";
 import {
   get_pattern,
   pattern_intervals,

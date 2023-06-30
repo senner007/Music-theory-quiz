@@ -2,6 +2,7 @@ import inquirer from "inquirer";
 // @ts-ignore
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 InterruptedPrompt.fromAll(inquirer);
+
 export interface IOptions {
   value: string;
 }
@@ -12,11 +13,6 @@ export interface IOptionsIndexed extends IOptions {
 
 interface ICheckboxChoices extends IOptionsIndexed {
   checked: boolean;
-}
-
-export interface IGlobalHook {
-  value: string;
-  key: string;
 }
 
 interface IChoices {

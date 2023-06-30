@@ -1,5 +1,11 @@
-import { TNoteAllAccidentalOctave} from "../utils";
+import { TNoteAllAccidentalOctave } from "../utils";
 import { to_octave_above } from "../tonal-interface";
+
+type TRomanNumeralDict = Record<string, TNoteAllAccidentalOctave[]>;
+
+export type TRomanNumeral = keyof typeof romanNumeralsDict;
+
+export type TRomanNumeralAbove = `${TRomanNumeral}-a`;
 
 // TODO : split into base and sevenths types
 export const romanNumeralsDict = {
@@ -23,7 +29,7 @@ export const romanNumeralsDict = {
   V42no5: ["F4", "G4", "B4"],
   V6: ["B3", "D4", "G4"],
   V43no1: ["D4", "F4", "B4"],
-  Vsus4 : ["G4", "C4", "D5"],
+  Vsus4: ["G4", "C4", "D5"],
   v: [],
   v7: [],
   ii: ["D4", "F4", "A4"],
@@ -45,7 +51,7 @@ export const romanNumeralsDict = {
   iii: ["E4", "G4", "B4"],
   iii6: ["G4", "B4", "E5"],
   iii64: ["B4", "E5", "G5"],
-  iiisus4 : ["E4", "A4", "B4"],
+  iiisus4: ["E4", "A4", "B4"],
   iii7: [],
   bIII: ["Eb4", "G4", "Bb4"],
   bIII6: ["G4", "Bb4", "Eb5"],
@@ -63,16 +69,16 @@ export const romanNumeralsDict = {
   iv7: [],
   IV: ["F4", "A4", "C5"],
   IV6: ["A4", "C5", "F5"],
-  IV6no3 : ["C5", "F5"],
+  IV6no3: ["C5", "F5"],
   IV64: ["C4", "F4", "A4"],
   IVsus4: ["F4", "Bb4", "C5"],
   IV7: [],
   vi: ["A4", "C5", "E5"],
   vi6: ["C4", "E4", "A4"],
   vi64: ["E4", "A4", "C5"],
-  visus4 : ["A4", "D5", "E5"],
+  visus4: ["A4", "D5", "E5"],
   vi42no5: ["G4", "A4", "C5"],
-  "vi/add9" : [],
+  "vi/add9": [],
   vi7: [],
   vio: [],
   vio7: [],
@@ -88,7 +94,7 @@ export const romanNumeralsDict = {
   viio: ["B4", "D5", "F5"],
   viio6: ["D4", "F4", "B4"],
   viio64: ["F4", "B4", "D5"],
-  viisus4 : ["B4", "E5", "F#5"],
+  viisus4: ["B4", "E5", "F#5"],
   viio7: [],
   vii7: ["B4", "D5", "F5", "A5"],
   vii42no5: ["A4", "B4", "D5"],
@@ -102,8 +108,6 @@ export const romanNumeralsDict = {
   "V7/iii": ["B4", "D#5", "F#5", "A5"]
 } satisfies TRomanNumeralDict;
 
-type TRomanNumeralDict = Record<string, TNoteAllAccidentalOctave[]>;
-
 export function romanNumeralChord(romanNumeral: TRomanNumeral | TRomanNumeralAbove) {
   if (romanNumeral.includes("-a")) {
     const basicRomanNumeral: TRomanNumeral = to_roman_numeral(romanNumeral as TRomanNumeralAbove);
@@ -111,10 +115,6 @@ export function romanNumeralChord(romanNumeral: TRomanNumeral | TRomanNumeralAbo
   }
   return romanNumeralsDict[romanNumeral as TRomanNumeral];
 }
-
-export type TRomanNumeral = keyof typeof romanNumeralsDict;
-
-export type TRomanNumeralAbove = `${TRomanNumeral}-a`;
 
 export function to_roman_numeral(romanNumeral: TRomanNumeral | TRomanNumeralAbove): TRomanNumeral {
   return romanNumeral.replace(/-a/g, "") as TRomanNumeral;

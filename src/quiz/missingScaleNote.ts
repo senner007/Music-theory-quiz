@@ -2,7 +2,7 @@ import {
   random_note_single_accidental,
   variant_to_base,
 } from "../utils";
-import { IQuizInstance, IQuiz } from "../quiz-types";
+import { IQuizInstance, IQuiz } from "./quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
 import { allScaleNamesSorted, create_scale, scale_notes, note_variants } from "../tonal-interface";
 

@@ -1,6 +1,6 @@
 import "./arrayProto"
 import { customExit, is_interrupt } from "./utils";
-import { IQuiz } from "./quiz-types";
+import { IQuiz } from "./quiz/quiz-types";
 import { MissingScaleNote } from "./quiz/missingScaleNote";
 import { WhichTriad } from "./quiz/whichTriad";
 import { NameScaleDegree } from "./quiz/nameScaleDegree";
@@ -17,7 +17,6 @@ import { AudiateHarmony } from "./quiz/audiateHarmony";
 import { AudiateBassLines } from "./quiz/audiateBassLines";
 import { AudiateContextualIntervals } from "./quiz/audiateContextualIntervals";
 import { JSON_progressions_verify } from "./harmony/harmonicProgressions";
-import inquirer from "inquirer";
 
 process.stdin.setMaxListeners(20);
 Log.clear();

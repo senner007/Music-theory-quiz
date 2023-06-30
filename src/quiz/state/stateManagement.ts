@@ -23,6 +23,6 @@ class StateManager<TIdentifier extends string, TState extends Record<string, unk
     }
 }
 
-const stateManager = new StateManager<string, { tempo : number }>();
+const tempoStateManager = new StateManager<string, { tempo : number }>();
 
-export { stateManager }
+export { tempoStateManager as stateManager }

@@ -3,6 +3,14 @@ import { LogError } from "./dev-utils";
 import { INotePlay } from "./midiplay";
 import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, transpose_to_key } from "./utils";
 
+export interface ITableHeader {
+  name: Readonly<string>,
+  duration: INotePlay['duration']
+}
+
+export type TSolfegeDict = keyof typeof syllables_in_key_of_c;
+
+export type TSyllable = typeof syllables_in_key_of_c[TSolfegeDict];
 
 export class SolfegeMelody {
   private verify_duration_length() {
@@ -116,16 +124,8 @@ export const syllables_in_key_of_c = {
   "B##": "---"
 } as const;
 
-export type TSolfegeDict = keyof typeof syllables_in_key_of_c;
-
-export type TSyllable = typeof syllables_in_key_of_c[TSolfegeDict];
-
 export function remove_octave(note: TNoteAllAccidentalOctave) {
   return note.replace(/[0-9]/g, "") as TNoteAllAccidental;
 }
 
-export interface ITableHeader {
-  name: Readonly<string>,
-  duration: INotePlay['duration']
-}
 

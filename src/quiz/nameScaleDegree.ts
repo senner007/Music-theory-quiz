@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { IQuiz } from "../quiz-types";
+import { IQuiz } from "./quiz-types";
 import {
   random_note_single_accidental,
   number_to_degree,

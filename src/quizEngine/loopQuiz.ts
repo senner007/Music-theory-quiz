@@ -1,15 +1,12 @@
-import { IQuizOptions, IQuiz } from "../quiz-types";
-// @ts-ignore
-// import InterruptedPrompt from "inquirer-interrupted-prompt";
+import { IQuizOptions, IQuiz } from "../quiz/quiz-types";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 
-
 export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
 
-  var options : IQuizOptions[] = [];
+  var options: IQuizOptions[] = [];
   const allOptions = QuizClass.meta().all_options;
-  
+
   if (!allOptions.is_empty()) {
     for (const optionType of allOptions) {
       try {
@@ -18,13 +15,13 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
           `Please select: ${optionType.name} or quit(q)`,
           "q"
         );
-        options.push({ name : optionType.name, options: selectOptions})
+        options.push({ name: optionType.name, options: selectOptions })
       } catch (err) {
         return;
       }
     }
   }
- 
+
   while (true) {
     const quiz = new QuizClass(options);
 
