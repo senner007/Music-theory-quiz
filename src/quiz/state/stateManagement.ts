@@ -1,4 +1,4 @@
-class StateManager<TIdentifier extends string, TState extends object> {
+class StateManager<TIdentifier extends string, TState extends Record<string, unknown>> {
     private stateMap: Map<TIdentifier, TState> = new Map();
 
     setState(target: TIdentifier, payload : TState): void {
