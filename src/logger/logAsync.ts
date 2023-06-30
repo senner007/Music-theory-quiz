@@ -1,8 +1,6 @@
-import chalk from "chalk";
 import inquirer from "inquirer";
 // @ts-ignore
 import InterruptedPrompt from "inquirer-interrupted-prompt";
-import { Log } from "./logSync";
 InterruptedPrompt.fromAll(inquirer);
 export interface IOptions {
   value: string;
@@ -63,13 +61,15 @@ class LogAsyncUtil {
   ): Promise<string | never> {
     const choiceArray = [...choices.options, choices.separator, choices.interrupt];
     try {
+      // @ts-ignore
+      bottomBar.rl.output.mute() // quick hack to overcome BottomBar issue https://github.com/SBoudrias/Inquirer.js/issues/116
       const answer: { question: string } = await inquirer.prompt([
         {
           type : "list",
           name: "question",
           message: question,
           choices: choiceArray,
-          pageSize: choiceArray.length,
+          pageSize: 20,
           interruptedKeyName: interruptKey,
         },
       ]);
@@ -96,7 +96,7 @@ class LogAsyncUtil {
           name: "question",
           message: question,
           choices: choices.options,
-          pageSize: choices.options.length,
+          pageSize: 20,
           interruptedKeyName: interruptKey,
         },
       ]);
@@ -132,19 +132,6 @@ export class LogAsync extends LogAsyncUtil {
   ): Promise<string | never> {
     const options = this.get_options_indexed(questionOptions);
     return this.get_questions(this.add_separators(options, interruptKey), question, interruptKey);
-  }
-
-  static async questions_in_list_indexed_global_key_hook(
-    questionOptions: Readonly<string[]>,
-    question: string,
-    interruptKey: string,
-    globalHook: IGlobalHook[]
-  ): Promise<string | never> {
-    const options = this.get_options_indexed(questionOptions);
-    const questionWithHook =
-      question +
-      chalk.bgWhite.gray(globalHook.map((hook) => `\nPress ${hook.key} to ${hook.value}`).join("") + "\n");
-    return this.get_questions(this.add_separators(options, interruptKey), questionWithHook, interruptKey);
   }
 
   static async checkboxes(
