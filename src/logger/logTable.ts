@@ -12,26 +12,28 @@ interface ITableObject {
 
 function create_table_object(solfege: SolfegeMelody, ambitus: number) {
   const obj: ITableObject = {};
+  const emptyDurationArray = [...Array(solfege.duration())];
   for (let i = 0; i < ambitus + 1; i++) {
-    obj[i] = [...Array(solfege.duration())]
+    obj[i] = emptyDurationArray
   }
+
   return obj;
 }
 
 function fill_rows(solfege: SolfegeMelody, tableObject: ITableObject, lowestNote: TNoteAllAccidentalOctave) {
+  const tableObjectCopy = JSON.parse(JSON.stringify(tableObject));
   let totalDuration: number = 0;
 
   solfege.getMelody.forEach((melodyNote) => {
     melodyNote.noteNames.forEach((n) => {
       const pitchRow = solfege.distance_from_lowest(n, lowestNote);
       const pitchSyllable = solfege.syllable(n);
-      tableObject[pitchRow][totalDuration] = pitchSyllable;
+      tableObjectCopy[pitchRow][totalDuration] = pitchSyllable;
     });
 
     totalDuration = totalDuration + melodyNote.duration;
   });
-
-  return Object.values(tableObject).reverse();
+  return tableObjectCopy;
 }
 
 function heading_markers(tableHeader: ITableHeader[]) {
@@ -52,7 +54,7 @@ function replaceHeaders(table : string, tableHeaders: ITableHeader[]
     tableCopy = replaceAt(tableCopy, tableCopy.indexOf("*"), headíng.name)
   }
   function replaceAt(str: string, index: number, replacement: string) {
-    return str.substring(0, index) + replacement + str.substring(index + replacement.length);
+    return `${str.substring(0, index)}${replacement}${str.substring(index + replacement.length)}`;
   }
   return tableCopy;
 }
@@ -66,7 +68,8 @@ export class LogTable {
     for (const [index, fragment] of solfegePagination.entries()) {
 
       const tableObject = create_table_object(fragment, solfege.ambitus(solfege.lowest));
-      const rows = fill_rows(fragment, tableObject, solfege.lowest);
+      const tableObjectFilled = fill_rows(fragment, tableObject, solfege.lowest);
+      const rows = Object.values(tableObjectFilled).to_reverse();
 
       var table = AsciiTable.factory({
         heading: heading_markers(tableHeaders[index]),
