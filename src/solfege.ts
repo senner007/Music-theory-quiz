@@ -75,7 +75,7 @@ export class SolfegeMelody {
   distance_from_lowest(note: TNoteAllAccidentalOctave, lowest: TNoteAllAccidentalOctave) {
     const intervalDistance = interval_distance(lowest, note);
     const semitones = interval_semitones(intervalDistance);
-    if (!semitones) {
+    if (semitones === undefined) {
       LogError("Semitone calculation error")
     }
     return semitones
