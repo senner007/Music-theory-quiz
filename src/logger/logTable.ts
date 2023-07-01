@@ -2,6 +2,7 @@
 import AsciiTable from "ascii-table";
 import { ITableHeader, SolfegeMelody, TSyllable } from "../solfege";
 import { TNoteAllAccidentalOctave } from "../utils";
+import { Log } from "./logSync";
 
 const MAXDURATION = 28; // max duration for a melody fragment. Fragment length should be less than the avarage screen width.
 
@@ -33,7 +34,7 @@ function fill_rows(solfege: SolfegeMelody, tableObject: ITableObject, lowestNote
   return Object.values(tableObject).reverse();
 }
 
-function heading_in_measures(tableHeader: ITableHeader[]) {
+function heading_markers(tableHeader: ITableHeader[]) {
   const tempArr: string[] = []
   tableHeader.forEach(h => {
     tempArr.push("*");
@@ -68,7 +69,7 @@ export class LogTable {
       const rows = fill_rows(fragment, tableObject, solfege.lowest);
 
       var table = AsciiTable.factory({
-        heading: heading_in_measures(tableHeaders[index]),
+        heading: heading_markers(tableHeaders[index]),
         rows: rows,
       });
 
@@ -81,7 +82,7 @@ export class LogTable {
       const tableStr = table.toString();
       const tableWithHeaders = replaceHeaders(tableStr, tableHeaders[index]);
 
-      console.log(tableWithHeaders);
+      Log.write(tableWithHeaders);
     }
 
   }
