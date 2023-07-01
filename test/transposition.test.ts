@@ -3,16 +3,20 @@ import { expect, describe, test, it } from "vitest";
 import { progressions} from "../src/harmony/harmonicProgressions";
 import { IProgression, transpose_progression, transpositionBounds } from "../src/transposition";
 import { romanNumeralChord } from "../src/harmony/romanNumerals";
+import { sortNotes } from "../src/tonal-interface";
+import "../src/arrayProto"
 
 describe("Test progression transposition methods", () => {
 
     const bounds: transpositionBounds = { high: "B5", low: "C4" }
 
+    
+
     const firstProgression: IProgression = {
-        chords: progressions[0].progressions[0].chords.map((c) => romanNumeralChord(c)),
-        bass: progressions[0].progressions[0].bass,
+        chords: progressions.first().progressions.first().chords.map((c) => romanNumeralChord(c)),
+        bass: progressions.first().progressions.first().bass,
     };
-    const highestNoteInChords = Note.sortedNames(
+    const highestNoteInChords = sortNotes(
         firstProgression.chords.flatMap((n) => n),
         Note.descending
     )[0];
@@ -22,7 +26,7 @@ describe("Test progression transposition methods", () => {
 
             const progressionTransposed = transpose_progression(firstProgression, "F");
 
-            const highestNoteInTransposedChords = Note.sortedNames(
+            const highestNoteInTransposedChords = sortNotes(
                 progressionTransposed.chords.flatMap((n) => n),
                 Note.descending
             )[0];
@@ -38,7 +42,7 @@ describe("Test progression transposition methods", () => {
 
             const progressionTransposed = transpose_progression(firstProgression, "F", bounds);
 
-            const highestNoteInTransposedChords = Note.sortedNames(
+            const highestNoteInTransposedChords = sortNotes(
                 progressionTransposed.chords.flatMap((n) => n),
                 Note.descending
             )[0];

@@ -1,19 +1,19 @@
-import { Interval, Note } from "@tonaljs/tonal";
-import { EIntervalDistance, TNoteAllAccidentalOctave, TNoteSingleAccidental, TOctave } from "./utils";
+import { EIntervalDistance, TIntervalIntegers, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave } from "./utils";
+import { interval_data, interval_distance, is_higher_than_high_bound, is_lower_than_low_bound, note_transpose, sortNotes } from "./tonal-interface";
 
 export interface IProgression {
   readonly chords: Readonly<(Readonly<TNoteAllAccidentalOctave[]>)[]>;
   readonly bass: readonly TNoteAllAccidentalOctave[];
 }
 
-export type transpositionBounds = { high: TNoteAllAccidentalOctave; low: TNoteAllAccidentalOctave };
+export type transpositionBounds = { high: TNoteSingleAccidentalOctave; low: TNoteSingleAccidentalOctave };
 
 export function transpose_progression( // Test me!
   progression: IProgression,
   key: TNoteSingleAccidental,
   bounds: transpositionBounds = { high: "G5", low: "C4" }
 ) {
-  const distanceToKey = Interval.distance("C", key);
+  const distanceToKey = interval_distance("C", key);
   const transposed: IProgression = transpose_progression_by_interval(progression, distanceToKey);
   return adjust_transposition_within_bounds(transposed, bounds);
 }
@@ -21,20 +21,20 @@ export function transpose_progression( // Test me!
 function adjust_transposition_within_bounds(
   progression: IProgression,
   bounds: transpositionBounds) {
-  const notesSorted = Note.sortedNames(progression.chords.flatMap((n) => n));
-  const lowestNote = notesSorted[0];
-  const highestNote = notesSorted[notesSorted.length - 1];
+  const notesSorted = sortNotes(progression.chords.flatMap((n) => n));
+  const lowestNote = notesSorted.first();
+  const highestNote = notesSorted.last();
 
-  if (Note.sortedNames([bounds.low, lowestNote])[0] === lowestNote) {
+  if (is_lower_than_low_bound(lowestNote, bounds.low)) {
     return transpose_progression_by_interval(progression, EIntervalDistance.OctaveUp);
   }
-  if (Note.sortedNames([bounds.high, highestNote])[1] === highestNote) {
+  if (is_higher_than_high_bound(highestNote, bounds.high)) {
     return transpose_progression_by_interval(progression, EIntervalDistance.OctaveDown);
   }
   return progression;
 }
 
-export function transpose_progression_by_interval(progression: IProgression, interval: string) {
+export function transpose_progression_by_interval(progression: IProgression, interval: TIntervalIntegers) {
   return {
     chords: progression.chords.map((c) => c.transpose_by(interval)),
     bass: progression.bass.transpose_by(interval),
@@ -47,7 +47,7 @@ export function transpose_to_ascending(
   arr: readonly TNoteAllAccidentalOctave[]
 ) {
   if (index === 0) return n;
-  const getInterval = Interval.distance(arr[0], n);
-  const intervalData = Interval.get(getInterval);
-  return (intervalData.semitones! <= 0 ? Note.transpose(n, EIntervalDistance.OctaveUp) : n) as Readonly<TNoteAllAccidentalOctave>;
+  const interval = interval_distance(arr.first(), n);
+  const intervalData = interval_data(interval);
+  return (intervalData.semitones! <= 0 ? note_transpose(n, EIntervalDistance.OctaveUp) : n) as Readonly<TNoteAllAccidentalOctave>;
 }

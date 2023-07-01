@@ -21,7 +21,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
     const chromaticScale = create_scale(this.randomNote, "chromatic");
     this.chromaticScaleShuffled = chromatic_scale_notes(chromaticScale).shuffle_array();
     this.missingNote = this.chromaticScaleShuffled.slice(1, this.chromaticScaleShuffled.length).random_item();
-    this.startingNote = this.chromaticScaleShuffled[0];
+    this.startingNote = this.chromaticScaleShuffled.first();
   }
 
   get quiz_head() {

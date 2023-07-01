@@ -8,7 +8,7 @@ type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
-    return options[0].options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
+    return options.first().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
 
   randomNote;

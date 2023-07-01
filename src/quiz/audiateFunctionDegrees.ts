@@ -1,7 +1,7 @@
 import { INotePlay } from "../midiplay";
 import { IQuiz } from "./quiztypes/quiz-types";
 import { ITableHeader, TSyllable, syllables_in_key_of_c } from "../solfege";
-import { interval_distance, is_too_high, note_transpose, is_too_low } from "../tonal-interface";
+import { interval_distance, is_higher_than_high_bound, note_transpose, is_lower_than_low_bound } from "../tonal-interface";
 import {
   TNoteAllAccidentalOctave,
   TNoteSingleAccidental,
@@ -21,7 +21,7 @@ type TOptionType = [
 
 export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(options: TOptionType): boolean {
-    return options[0].options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
+    return options.first().options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
   key: TNoteSingleAccidental;
@@ -35,7 +35,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
 
     const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
-      return options[0].options.includes(syllables_in_key_of_c[key]);
+      return options.first().options.includes(syllables_in_key_of_c[key]);
     });
 
     const distanceToKey = interval_distance("C", this.key)
@@ -48,11 +48,11 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
       const randomOctave = options[1].options.random_item();
 
       const octaveNote = to_octave(note, randomOctave);
-      if (is_too_high(octaveNote)) {
+      if (is_higher_than_high_bound(octaveNote)) {
         return note_transpose(octaveNote, EIntervalDistance.OctaveDown);
       }
 
-      if (is_too_low(octaveNote)) {
+      if (is_lower_than_low_bound(octaveNote)) {
         return note_transpose(octaveNote, EIntervalDistance.OctaveUp);
       }
       return octaveNote as TNoteAllAccidentalOctave;

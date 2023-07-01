@@ -46,7 +46,7 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   constructor(options: Readonly<TOptionType>) {
     super(options);
     this.key = random_note_single_accidental();
-    const selectProgressions = progressions.filter(p => options[0].options.some(description => description === p.description));
+    const selectProgressions = progressions.filter(p => options.first().options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
     this.progressionTags = randomProgression.tags;
     this.progressionDescription = randomProgression.description;

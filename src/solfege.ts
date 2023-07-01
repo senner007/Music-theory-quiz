@@ -2,6 +2,7 @@ import { Interval, Note } from "@tonaljs/tonal";
 import { LogError } from "./dev-utils";
 import { INotePlay } from "./midiplay";
 import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, transpose_to_key } from "./utils";
+import { sortNotes } from "./tonal-interface";
 
 export interface ITableHeader {
   name: Readonly<string>,
@@ -25,7 +26,7 @@ export class SolfegeMelody {
 
   private sort_melody(): TNoteAllAccidentalOctave[] {
     const flatMelody = this.melody.map((n) => n.noteNames).flat();
-    return Note.sortedNames(flatMelody) as TNoteAllAccidentalOctave[];
+    return sortNotes(flatMelody) as TNoteAllAccidentalOctave[];
   }
 
   public get getMelody() {

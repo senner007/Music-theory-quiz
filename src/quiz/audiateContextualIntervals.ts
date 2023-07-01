@@ -70,10 +70,10 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
       return { noteNames: [n], duration: 2 };
     });
 
-    const firstNote = [interval[0]];
+    const firstNote = [interval.first()];
     const secondNote = [interval[1]];
 
-    const root: INotePlay[] = [{ noteNames: [this.scaleThirdOctave[0]], duration: 1 }];
+    const root: INotePlay[] = [{ noteNames: [this.scaleThirdOctave.first()], duration: 1 }];
 
     const scale = add_octave_above(this.scaleThirdOctave)
       .map((n): INotePlay => {

@@ -51,7 +51,7 @@ const quizzes: IQuiz<any>[] = [
         "q"
       );
 
-      const choiceSelection = quizzes.filter((q) => q.meta().name === choice)[0];
+      const choiceSelection = quizzes.filter((q) => q.meta().name === choice).first_and_only();
       await loopQuiz(choiceSelection);
       Log.clear();
     } catch (err) {

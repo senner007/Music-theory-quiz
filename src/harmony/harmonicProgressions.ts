@@ -38,7 +38,7 @@ export const progressions = [
   level_circle_of_fifths_extended,
   level_30_common,
   level_40
-];
+] as const;
 
 export function JSON_progressions_verify() {
   const progressionsTemp: string[] = [];

@@ -60,7 +60,7 @@ function replaceHeaders(table : string, tableHeaders: ITableHeader[]
 export class LogTable {
   static write(solfege: SolfegeMelody, tableHeader: ITableHeader[], timeSignatue: 1 | 2 | 3 | 4) {
     const solfegePagination = solfege.pagination(MAXDURATION, timeSignatue);
-    let tableHeadersSecond = tableHeader.splice(solfegePagination[0].duration() / timeSignatue);
+    let tableHeadersSecond = tableHeader.splice(solfegePagination.first().duration() / timeSignatue);
     const tableHeaders = [tableHeader, tableHeadersSecond]
 
     for (const [index, fragment] of solfegePagination.entries()) {

@@ -27,7 +27,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
   constructor(options: Readonly<TOptionsType>) {
     super(options);
     this.randomNote = random_note_single_accidental();
-    this.randomPatternName = options[0].options.random_item();
+    this.randomPatternName = options.first().options.random_item();
     this.randomPitchPattern = pitch_pattern_by_name(this.randomPatternName);
     const [chord, arppeggio] = this.prepare_audio();
     this.audioChord = chord;
