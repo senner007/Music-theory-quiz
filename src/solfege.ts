@@ -26,7 +26,7 @@ export class SolfegeMelody {
 
   private sort_melody(): TNoteAllAccidentalOctave[] {
     const flatMelody = this.melody.map((n) => n.noteNames).flat();
-    return sortNotes(flatMelody) as TNoteAllAccidentalOctave[];
+    return sortNotes(flatMelody);
   }
 
   public get getMelody() {
@@ -38,16 +38,16 @@ export class SolfegeMelody {
   }
 
   private get highest(): TNoteAllAccidentalOctave {
-    return this.sortedMelody.at(-1) as TNoteAllAccidentalOctave;
+    return this.sortedMelody.last()
   }
 
   get length() {
     return this.melody.length;
   }
 
-  durationAccumaltion() {
-    return this.melody.map((n) => n.duration).reduce((acc, cur, index) =>
-      [...acc, { index, total: (acc.at(-1)?.total || 0) + cur }], [] as { index: number, total: number }[]);
+  durationAccumulation() {
+    return this.melody.map((n) => n.duration).reduce((accumulator, current, index) =>
+      [...accumulator, { index, total: (accumulator.last()?.total || 0) + current }], [] as { index: number, total: number }[]);
   }
 
   duration(): number {
@@ -56,7 +56,7 @@ export class SolfegeMelody {
 
   pagination(maxDuration: number, timeSignature: 1 | 2 | 3 | 4) {
     if (this.duration() > maxDuration) {
-      const half = this.durationAccumaltion().filter(d => d.total === maxDuration - (maxDuration % this.timeSignature)).first_and_only().index;
+      const half = this.durationAccumulation().filter(d => d.total === maxDuration - (maxDuration % this.timeSignature)).first_and_only().index;
       const firstHalf = this.getMelody.slice(0, half + 1)
       const secondHalf = this.getMelody.slice(half + 1)
       return [
