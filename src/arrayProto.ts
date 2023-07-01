@@ -5,6 +5,7 @@ import { transpose_to_ascending } from "./transposition";
 import { TNoteAllAccidental, TNoteAllAccidentalOctave, to_octave, random_index, TOctave, TIntervalIntegers } from "./utils";
 
 type Last<T extends any[]> = [any, ...T][T["length"]];
+export type Reverse<T extends readonly any[]> = T extends readonly [infer F, ...infer Rest] ? [...Reverse<Rest>, F] : T;
 
 declare global {
 
@@ -20,13 +21,13 @@ declare global {
     last(): Last<this>
     remove_duplicate_objects(): Readonly<Array<T>>;
     contains(this: T[], otherArray: T[]): boolean
-    to_reverse(): Readonly<Array<T>>;
+    to_reverse(): Reverse<this>
   }
   interface ReadonlyArray<T> extends Array<T> { }
 }
 
-Array.prototype.to_reverse = function <U extends any[]>(this: U) {
-  return this.slice(0).reverse();
+Array.prototype.to_reverse = function < U extends any[]>(this: U) {
+  return this.slice(0).reverse() as Reverse<U>
 }
 
 Array.prototype.remove_duplicate_objects = function <U extends any[]>(this: U) {

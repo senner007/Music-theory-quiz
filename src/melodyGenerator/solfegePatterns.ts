@@ -1,3 +1,4 @@
+import { Reverse } from "../arrayProto";
 import { TSyllable } from "../solfege";
 
 export interface ISolfegePattern {
@@ -33,8 +34,8 @@ type TPatternLengthIndexesLength<T extends typeof solfegePatterns_pretypecheck[n
 type TTypeOrError = TPatternLengthIndexesLength<typeof solfegePatterns_pretypecheck[number]> extends true ? typeof solfegePatterns_pretypecheck : TPatternLengthIndexesLength<typeof solfegePatterns_pretypecheck[number]>
 
 
-function reverseSyllables<T extends ISolfegePattern["patterns"]>(patterns: T): T {
-    return patterns.map(p => p.to_reverse()) as T
+function reverseSyllables<const T extends ISolfegePattern["patterns"]>(patterns: T) {
+    return patterns.map(p => p.to_reverse()) as [Reverse<T[number]>]
 }
 
 const solfegePattern_001 = {
