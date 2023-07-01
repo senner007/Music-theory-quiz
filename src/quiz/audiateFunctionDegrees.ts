@@ -1,7 +1,7 @@
 import { INotePlay } from "../midiplay";
 import { IQuiz } from "./quiztypes/quiz-types";
 import { ITableHeader, TSyllable, syllables_in_key_of_c } from "../solfege";
-import { get_interval_distance, is_too_high, note_transpose, is_too_low } from "../tonal-interface";
+import { interval_distance, is_too_high, note_transpose, is_too_low } from "../tonal-interface";
 import {
   TNoteAllAccidentalOctave,
   TNoteSingleAccidental,
@@ -38,7 +38,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
       return options[0].options.includes(syllables_in_key_of_c[key]);
     });
 
-    const distanceToKey = get_interval_distance("C", this.key)
+    const distanceToKey = interval_distance("C", this.key)
     const syllableNotesTransposed = optionSyllableNotesInC.transpose_by(distanceToKey);
 
     const notes = options[2].options.random_item();

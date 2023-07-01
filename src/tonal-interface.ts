@@ -52,12 +52,12 @@ export function interval_from_semitones(semitones: number) {
     return Interval.fromSemitones(semitones) as TIntervalIntegers;
 }
 
-export function get_interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
+export function interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
     return Interval.distance(first, second) as TIntervalIntegers
 }
 
 export function interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
-    return Interval.num(get_interval_distance(first, second)) as number
+    return Interval.num(interval_distance(first, second)) as number
 }
 
 export function interval_to_absolute(interval: TIntervalIntegers) {

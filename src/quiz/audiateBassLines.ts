@@ -9,7 +9,7 @@ import {
   random_note_single_accidental,
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
-import { get_interval_distance, note_transpose } from "../tonal-interface";
+import { interval_distance, note_transpose } from "../tonal-interface";
 
 type TOptionType = [{ name : string, options : TProgression["description"][]}]
 
@@ -35,7 +35,7 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
     this.progressionIsMajor = randomProgression.isMajor;
     this.progressionDescription = randomProgression.description;
 
-    const keyDistance = get_interval_distance("C", this.key)
+    const keyDistance = interval_distance("C", this.key)
     this.randomBassLineInKey = randomProgression.bass.transpose_by(keyDistance);
   }
 

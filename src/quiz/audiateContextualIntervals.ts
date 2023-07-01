@@ -8,7 +8,7 @@ import {
   TIntervalAbsolute,
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
-import { create_scale, scale_notes, get_interval_distance, interval_to_absolute, add_octave_above } from "../tonal-interface";
+import { create_scale, scale_notes, interval_distance, interval_to_absolute, add_octave_above } from "../tonal-interface";
 
 type TOptionsType = [
   { name: string, options: string[] },
@@ -45,7 +45,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
     const secondTonePossibilities = randomScaleNotes
       .filter((n) => !(n === firstNote))
       .filter((n) => {
-        const intervalDistance = get_interval_distance(n, firstNote)
+        const intervalDistance = interval_distance(n, firstNote)
         return intervals.options.includes(interval_to_absolute(intervalDistance));
       });
 

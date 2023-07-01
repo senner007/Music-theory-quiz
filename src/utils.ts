@@ -6,7 +6,7 @@ import InterruptedPrompt from "inquirer-interrupted-prompt";
 import { Log } from "./logger/logSync";
 import { LogError } from "./dev-utils";
 import { math_floor } from "./random_func";
-import { get_interval_distance, interval_integer, note_transpose, note_variants } from "./tonal-interface";
+import { interval_distance, interval_integer, note_transpose, note_variants } from "./tonal-interface";
 
 export type TBaseNote = typeof baseNotes[number];
 export type TOctave = "2" | "3" | "4" | "5";
@@ -84,7 +84,7 @@ export function event_by_probability(chance: number) {
 }
 
 export function transpose_to_key(note: TNoteAllAccidentalOctave, key: TNoteAllAccidental | TNoteAllAccidentalOctave): TNoteAllAccidentalOctave {
-  const interval = get_interval_distance(key, "C")
+  const interval = interval_distance(key, "C")
   return note_transpose(note, interval)
 }
 

@@ -1,5 +1,5 @@
 
-import { interval_direction, get_interval_distance } from "../tonal-interface";
+import { interval_direction, interval_distance } from "../tonal-interface";
 import { interval_integer_absolute } from "../utils";
 import { IMelodyGeneratorBase, MelodyGeneratorBase } from "./melodyGenerator";
 
@@ -247,7 +247,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "major",
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
-                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === -1
+                        () => interval_direction(interval_distance(topNote, nextTopNote!)) === -1
                     ],
                     rhythm: [
                         { duration: 2 },
@@ -259,7 +259,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "major",
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
-                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === 1
+                        () => interval_direction(interval_distance(topNote, nextTopNote!)) === 1
                     ],
                     rhythm: [
                         { duration: 2 },
@@ -271,7 +271,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "minor",
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
-                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === -1
+                        () => interval_direction(interval_distance(topNote, nextTopNote!)) === -1
                     ],
                     rhythm: [
                         { duration: 2 },
@@ -283,7 +283,7 @@ export const MelodyPattern_005: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "minor",
                         () => nextTopNote !== undefined && interval_integer_absolute(topNote, nextTopNote) === 3,
-                        () => interval_direction(get_interval_distance(topNote, nextTopNote!)) === 1
+                        () => interval_direction(interval_distance(topNote, nextTopNote!)) === 1
                     ],
                     rhythm: [
                         { duration: 2 },
@@ -323,7 +323,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "major",
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
-                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === -1
+                        () => interval_direction(interval_distance(secondNote, nextSecondNote!)) === -1
                     ],
                     rhythm: [
                         { duration: 2 },
@@ -335,7 +335,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "major",
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
-                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === 1
+                        () => interval_direction(interval_distance(secondNote, nextSecondNote!)) === 1
                     ],
                     rhythm: [
                         { duration: 2 },
@@ -347,7 +347,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "minor",
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
-                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === -1
+                        () => interval_direction(interval_distance(secondNote, nextSecondNote!)) === -1
                     ],
                     rhythm: [
                         { duration: 2 },
@@ -359,7 +359,7 @@ export const MelodyPattern_006: IMelodyGeneratorBase = class extends MelodyGener
                     conditions: [
                         () => this.keyInfo.type === "minor",
                         () => nextSecondNote !== undefined && interval_integer_absolute(secondNote, nextSecondNote) === 3,
-                        () => interval_direction(get_interval_distance(secondNote, nextSecondNote!)) === 1
+                        () => interval_direction(interval_distance(secondNote, nextSecondNote!)) === 1
                     ],
                     rhythm: [
                         { duration: 2 },
