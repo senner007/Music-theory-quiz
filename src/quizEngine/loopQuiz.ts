@@ -1,4 +1,4 @@
-import { IQuizOptions, IQuiz } from "../quiz/quiz-types";
+import { IQuizOptions, IQuiz } from "../quiz/quiztypes/quiz-types";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 

@@ -1,6 +1,6 @@
 import "./arrayProto"
 import { customExit, is_interrupt } from "./utils";
-import { IQuiz } from "./quiz/quiz-types";
+import { IQuiz } from "./quiz/quiztypes/quiz-types";
 import { MissingScaleNote } from "./quiz/missingScaleNote";
 import { WhichTriad } from "./quiz/whichTriad";
 import { NameScaleDegree } from "./quiz/nameScaleDegree";

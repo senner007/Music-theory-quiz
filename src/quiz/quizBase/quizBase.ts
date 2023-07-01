@@ -1,5 +1,5 @@
 import { LogError } from "../../dev-utils";
-import { IQuiz } from "../quiz-types";
+import { IQuiz } from "../quiztypes/quiz-types";
 
 export interface IListener {
   listener: (_: any, key: any) => void;

@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
 import { INotePlay } from "../midiplay";
-import { IQuizInstance, IQuiz } from "./quiz-types";
+import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
 import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,

@@ -1,6 +1,6 @@
 
 import { random_note_single_accidental, TOctave } from "../utils";
-import { IQuiz } from "./quiz-types";
+import { IQuiz } from "./quiztypes/quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 import { allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interface";

@@ -1,5 +1,5 @@
 import { ObjectKeys, random_note_single_accidental } from "../utils";
-import { IQuizInstance, IQuiz } from "./quiz-types";
+import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
 import {
   get_pattern,
   pattern_intervals,
@@ -59,7 +59,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
     return pitchPatternKeyNames.map(this.get_pattern_description);
   }
   get question() {
-    return "Which pitch pattern do you hear?";
+    return "Which pitch pattern (or its inversion) do you hear?";
   }
   answer(): string {
     return this.get_pattern_description(this.randomPatternName)
@@ -68,7 +68,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
   audio() {
     return [
       { audio: [this.audioChord], keyboardKey: "space", onInit: true, channel: 1, message: "play trichord harmonically" },
-      { audio: [this.audioArpeggio], keyboardKey: "l", channel: 1, message: "play trichord sequentially" },
+      { audio: [this.audioArpeggio], keyboardKey: "s", channel: 1, message: "play trichord sequentially" },
     ];
   }
 
@@ -81,6 +81,11 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
       },
       name: "Hear trichord pitch patterns",
       description: "Identify the trichord pitch pattern that is being played",
+      instructions : [
+        "Try to sort the patterns ranging from consonant to dissonant.",
+        "Then try to associate each with a musical phenomena similar to associating intervals with songs. eg 0-2-6 has a dominant seven sound",
+        "Notice the pleasant sound of 0-1-5 even with the minor second"
+      ]
     };
   }
 };
