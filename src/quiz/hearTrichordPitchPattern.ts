@@ -1,7 +1,7 @@
 import { ObjectKeys, random_note_single_accidental } from "../utils";
 import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
 import {
-  get_pattern,
+  pitch_pattern_by_name,
   pattern_intervals,
   pitch_pattern_inversions,
   TPitchPatternName,
@@ -28,7 +28,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
     super(options);
     this.randomNote = random_note_single_accidental();
     this.randomPatternName = options[0].options.random_item();
-    this.randomPitchPattern = get_pattern(this.randomPatternName);
+    this.randomPitchPattern = pitch_pattern_by_name(this.randomPatternName);
     const [chord, arppeggio] = this.prepare_audio();
     this.audioChord = chord;
     this.audioArpeggio = arppeggio;

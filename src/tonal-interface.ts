@@ -48,8 +48,12 @@ export function note_transpose_by<T extends TNoteAllAccidental | TNoteAllAcciden
     return Note.transposeBy(interval) as unknown as (note: T) => T;
 }
 
+export function interval_from_semitones(semitones: number) {
+    return Interval.fromSemitones(semitones) as TIntervalIntegers;
+}
+
 export function get_interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
-    return Interval.distance(first, second) as TIntervalIntegers // fix since intervals can be negative also (eg. -2M)
+    return Interval.distance(first, second) as TIntervalIntegers
 }
 
 export function interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
