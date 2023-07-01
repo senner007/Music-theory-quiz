@@ -81,7 +81,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
           to_octave(this.key, "2"),
           to_octave(this.key, "3"),
           to_octave(note_transpose(this.key, "3M"), "3"),
-          to_octave(note_transpose(this.key, "P5"), "3"),
+          to_octave(note_transpose(this.key, "5P"), "3"),
         ],
         duration: 2,
       } as INotePlay,

@@ -2,7 +2,7 @@ import { LogError } from "./dev-utils";
 import { math_floor } from "./random_func";
 import { note_transpose } from "./tonal-interface";
 import { transpose_to_ascending } from "./transposition";
-import { TNoteAllAccidental, TNoteAllAccidentalOctave, to_octave, random_index, TOctave } from "./utils";
+import { TNoteAllAccidental, TNoteAllAccidentalOctave, to_octave, random_index, TOctave, TIntervalIntegers } from "./utils";
 
 declare global {
 
@@ -57,7 +57,7 @@ declare global {
 
   Array.prototype.transpose_by = function<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]> (
     this: U,
-    interval: string
+    interval: TIntervalIntegers
   ) : Readonly<U> {
     return this.map(n => note_transpose(n, interval)) as Readonly<U>;
   };

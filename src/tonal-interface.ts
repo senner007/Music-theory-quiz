@@ -38,7 +38,7 @@ export function create_chord(chordTonic: TNoteSingleAccidental, chordType: strin
     return ChordClass.get(chordTonic + " " + chordType);
 }
 
-export function note_transpose<T extends TNoteAllAccidental | TNoteAllAccidentalOctave>(note: T, interval: string): T {
+export function note_transpose<T extends TNoteAllAccidental | TNoteAllAccidentalOctave>(note: T, interval: TIntervalIntegers): T {
     return Note.transpose(note, interval) as T;
 }
 

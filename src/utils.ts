@@ -23,7 +23,7 @@ export type TIntervalAbsolute =
   "5P" | IntervalModifier<"5"> | 
   "6m" | "6M" | IntervalModifier<"6"> | 
   "7m" | "7M" | IntervalModifier<"7"> |
-  "P8" | IntervalModifier<"8"> 
+  "8P" | IntervalModifier<"8"> 
 
 // Intervals that can be both positive and negative : "-2M", "2M"
 export type TIntervalIntegers = TIntervalAbsolute | `-${TIntervalAbsolute}`

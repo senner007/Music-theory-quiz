@@ -64,7 +64,7 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
           to_octave(this.key, "2"),
           to_octave(this.key, "3"),
           to_octave(note_transpose(this.key, this.progressionIsMajor ? "3M" : "3m"), "3"),
-          to_octave(note_transpose(this.key, "P5"), "3"),
+          to_octave(note_transpose(this.key, "5P"), "3"),
         ],
         duration: 2,
       } as INotePlay,
