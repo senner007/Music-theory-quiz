@@ -60,7 +60,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
     const audio = this.chromaticScaleShuffled
         .filter(note => note !== this.missingNote)
         .to_octave_ascending(this.octave)
-        .map(note => { return { noteNames: [note], duration: 1 } as INotePlay });
+        .map(note => { return { noteNames: [note], duration: 1 } as const});
 
         return [ { audio : [audio], keyboardKey : "space", onInit : true, message : "play row"} ]
   }

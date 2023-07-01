@@ -11,7 +11,6 @@ import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import {  MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
-import { stateManager } from "./state/stateManagement";
 
 type TOptionType = [
   { name : string, options : TProgression["description"][]},
@@ -116,15 +115,15 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
           to_octave(note_transpose(this.key, "5P"), "3"),
         ],
         duration: 2,
-      } as INotePlay,
+      } as const,
     ];
 
     return [
-      { audio: audio, keyboardKey: "m", message: "play melody", display: true } as const,
+      { audio: audio, keyboardKey: "m", message: "play melody", display: true },
       { audio: [audioBass], keyboardKey: "b", message: "play bass line" },
       { audio: [audio, audioBass], keyboardKey: "space", message: "play melody with bass line" },
       { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
-    ]
+    ] as const
   }
 
   get table_header() {
