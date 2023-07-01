@@ -23,7 +23,7 @@ function fill_rows(solfege: SolfegeMelody, tableObject: ITableObject, lowestNote
 
   solfege.getMelody.forEach((melodyNote) => {
     melodyNote.noteNames.forEach((n) => {
-      const pitchRow: number = solfege.distance_from_lowest(n, lowestNote);
+      const pitchRow = solfege.distance_from_lowest(n, lowestNote);
       const pitchSyllable = solfege.syllable(n);
       tableObject[pitchRow][totalDuration] = pitchSyllable;
     });

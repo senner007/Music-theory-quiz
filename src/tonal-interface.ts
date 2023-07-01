@@ -52,6 +52,10 @@ export function interval_data(interval: TIntervalIntegers) {
     return Interval.get(interval)
 }
 
+export function interval_semitones(interval: TIntervalIntegers) {
+    return Interval.semitones(interval)
+}
+
 export function interval_from_semitones(semitones: number) {
     return Interval.fromSemitones(semitones) as TIntervalIntegers;
 }

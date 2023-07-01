@@ -1,8 +1,7 @@
-import { Interval, Note } from "@tonaljs/tonal";
 import { LogError } from "./dev-utils";
 import { INotePlay } from "./midiplay";
 import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, transpose_to_key } from "./utils";
-import { sortNotes } from "./tonal-interface";
+import { interval_distance, interval_semitones, sortNotes } from "./tonal-interface";
 
 export interface ITableHeader {
   name: Readonly<string>,
@@ -70,12 +69,16 @@ export class SolfegeMelody {
 
   syllable(note: TNoteAllAccidentalOctave): TSyllable {
     const transposedNote = transpose_to_key(note, this.key);
-    return syllables_in_key_of_c[remove_octave(transposedNote)] as TSyllable;
+    return syllables_in_key_of_c[remove_octave(transposedNote)];
   }
 
-  distance_from_lowest(note: TNoteAllAccidentalOctave, lowest: TNoteAllAccidentalOctave): number {
-    const intervalDistance = Interval.distance(lowest, note);
-    return Interval.semitones(intervalDistance) as number;
+  distance_from_lowest(note: TNoteAllAccidentalOctave, lowest: TNoteAllAccidentalOctave) {
+    const intervalDistance = interval_distance(lowest, note);
+    const semitones = interval_semitones(intervalDistance);
+    if (!semitones) {
+      LogError("Semitone calculation error")
+    }
+    return semitones
   }
 
   ambitus(lowest: TNoteAllAccidentalOctave): number {
