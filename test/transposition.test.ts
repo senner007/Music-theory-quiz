@@ -19,7 +19,7 @@ describe("Test progression transposition methods", () => {
     const highestNoteInChords = sortNotes(
         firstProgression.chords.flatMap((n) => n),
         Note.descending
-    )[0];
+    ).first();
 
     it("should transpose progression down an octave within default bounds when transposing up a fourth",
         () => {
@@ -29,7 +29,7 @@ describe("Test progression transposition methods", () => {
             const highestNoteInTransposedChords = sortNotes(
                 progressionTransposed.chords.flatMap((n) => n),
                 Note.descending
-            )[0];
+            ).first();
 
             expect(highestNoteInChords).toEqual("D5");
             expect(highestNoteInTransposedChords).toEqual("G4");
@@ -45,7 +45,7 @@ describe("Test progression transposition methods", () => {
             const highestNoteInTransposedChords = sortNotes(
                 progressionTransposed.chords.flatMap((n) => n),
                 Note.descending
-            )[0];
+            ).first();
 
             expect(highestNoteInChords).toEqual("D5");
             expect(highestNoteInTransposedChords).toEqual("G5");

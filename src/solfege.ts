@@ -34,7 +34,7 @@ export class SolfegeMelody {
   }
 
   public get lowest(): TNoteAllAccidentalOctave {
-    return this.sortedMelody[0];
+    return this.sortedMelody.first();
   }
 
   private get highest(): TNoteAllAccidentalOctave {
