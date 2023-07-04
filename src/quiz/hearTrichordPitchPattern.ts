@@ -1,4 +1,4 @@
-import { ObjectKeys, random_note_single_accidental } from "../utils";
+import { random_note_single_accidental } from "../utils";
 import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
 import {
   pitch_pattern_by_name,
@@ -9,8 +9,9 @@ import {
 } from "../pitchPatterns";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
+import { ObjectEntries } from "../objectUtils";
 
-const pitchPatternKeyNames = ObjectKeys(pitchPatterns);
+const pitchPatternKeyNames = ObjectEntries(pitchPatterns).keys;
 
 type TOptionsType = [{ name : string, options : readonly TPitchPatternName[]}]
 

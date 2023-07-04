@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
-import { keyinfo, numeral_by_symbol } from "../keyinfo/keyInfo";
+import { keyinfo, numeral_by_chordNotes, chord_by_chordNotes } from "../keyinfo/keyInfo";
 import { INotePlay } from "../midiplay";
 import { IQuiz } from "./quiztypes/quiz-types";
 import { ITableHeader } from "../solfege";
@@ -8,9 +8,10 @@ import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, random_note_single_accidental } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
-import {  MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodySingulate } from "../melodyGenerator/melodyPatterns";
+import {  MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodyPattern_007, MelodyPattern_008, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
+import { LogError } from "../dev-utils";
 
 type TOptionType = [
   { name : string, options : TProgression["description"][]},
@@ -19,12 +20,15 @@ type TOptionType = [
 
 const melodicPatterns = [
   MelodySingulate, 
+  MelodyChordal,
   MelodyPattern_001, 
   MelodyPattern_002, 
   MelodyPattern_003, 
   MelodyPattern_004,
   MelodyPattern_005,
   MelodyPattern_006,
+  MelodyPattern_007,
+  MelodyPattern_008,  
 ]
 
 export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
@@ -61,7 +65,15 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
     this.randomProgressionInKey = transpose_progression(randomProgressionInC, this.key);
 
     this.chords = this.randomProgressionInKey.chords.map((n, index: number) => {
-      return numeral_by_symbol(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
+      let chords
+      try {
+        chords = chord_by_chordNotes(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
+          .map(c => `${c.romanNumeral} - (${c.symbol})`)
+      } catch(error) {
+        const errorMessage = `Error obtaining roman numeral for progression ${this.progressionDescription} at chord index ${index}` 
+        LogError(`${(error as Error).message}\n${errorMessage}`)
+      }
+      return chords.length > 1 ? chords.join("|") : chords.first_and_only()
     });
 
     const randomMelodyPatternDescription =  options[1].options.random_item();
@@ -77,18 +89,14 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
 
   get quiz_head() {
     const description = this.progressionDescription
-      ? `Description: ${chalk.underline(this.progressionDescription)}`
+      ? `${chalk.underline(this.progressionDescription)}`
       : "";
 
-    const chords = `${this.chords.join(", ")}`;
-    const identifiers = this.progressionTags ? `Identifiers: ${chalk.underline(this.progressionTags.join(", "))}` : "";
-    return [
-      `${description} ${identifiers}`,
-      `${
-        this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
-      } progression in key of ${chalk.underline(
-        this.key + " " + (this.progressionIsMajor ? "Major" : "Minor")
-      )} : ${chords}`
+    const identifiers = this.progressionTags ? `Identifiers : ${chalk.underline(this.progressionTags.join(", "))}` : "";
+    return [`${this.progressionIsDiatonic 
+          ? chalk.underline("Diatonic") 
+          : chalk.underline("Non-diationic")
+        } progression in key of ${chalk.underline(this.key + " " + (this.progressionIsMajor ? "Major" : "Minor"))} (${description}) ${identifiers}`
     ];
   }
 

@@ -1,0 +1,30 @@
+{
+    "level": 50,
+    "description": "I I v7 V7/IV IV7, I7 I7 v7 V7/IV IV7",
+    "progressions": [
+      {
+        "chords": ["I", "I", "v743no1", "V7no1/IV", "IV743no1"],
+        "bass": ["C3", "C3", "G2", "C3", "F3"],
+        "description": "c50-1",
+        "isMajor": true,
+        "isDiatonic": false,
+        "tags": []
+      },
+      {
+        "chords": ["I742no1", "I742no1", "v743no1", "V7no1/IV", "IV743no1"],
+        "bass": ["C3", "C3", "G2", "C3", "F3"],
+        "description": "c50-2",
+        "isMajor": true,
+        "isDiatonic": false,
+        "tags": []
+      },
+      {
+        "chords": ["I743no1", "I743no1", "v7", "V743no1/IV", "IV7no1"],
+        "bass": ["C3", "C3", "G2", "C3", "F3"],
+        "description": "c50-3",
+        "isMajor": true,
+        "isDiatonic": false,
+        "tags": []
+      }                                         
+    ]
+  }

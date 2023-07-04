@@ -8,6 +8,9 @@ import { LogError } from "./dev-utils";
 import { math_floor } from "./random_func";
 import { interval_distance, interval_integer, note_transpose, note_variants } from "./tonal-interface";
 
+
+
+
 export type TBaseNote = typeof baseNotes[number];
 export type TOctave = "2" | "3" | "4" | "5";
 export type TNoteSingleAccidental = Readonly<`${TBaseNote}b` | TBaseNote | `${TBaseNote}#`>;
@@ -47,9 +50,6 @@ export function is_interrupt(err: unknown) {
   return err === InterruptedPrompt.EVENT_INTERRUPTED;
 }
 
-export function ObjectKeys<Obj extends {}>(obj: Obj): Readonly<(keyof Obj)[]> {
-  return Object.keys(obj) as (keyof Obj)[];
-}
 
 export function to_octave<T extends Readonly<TNoteAllAccidental>>(n: T, octave: TOctave) {
   return (n + octave) as TNoteAllAccidentalOctave;

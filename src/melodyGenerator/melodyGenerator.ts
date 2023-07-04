@@ -14,7 +14,7 @@ export interface IMelodicPattern {
 
 interface IMelodyFragment {
     note: TNoteAllAccidentalOctave[],
-    duration: 1 | 2 | 3 | 4
+    duration: 1 |  2 | 3 | 4
 }
 
 type TMinorVariant = "natural" | "harmonic" | "melodic"
@@ -29,7 +29,8 @@ export interface IMelodyGeneratorBase {
     new(currentChord: readonly TNoteAllAccidentalOctave[],
         previousChord: readonly IMelodyFragment[] | undefined,
         nextChord: readonly TNoteAllAccidentalOctave[] | undefined,
-        keyInfo: TKeyInfo
+        keyInfo: TKeyInfo,
+        index : number
     ): IMelodyGenerator
 }
 
@@ -71,7 +72,8 @@ export abstract class MelodyGeneratorBase {
         private currentChord: readonly TNoteAllAccidentalOctave[],
         protected previousChord: readonly IMelodyFragment[] | undefined,
         protected nextChord: readonly TNoteAllAccidentalOctave[] | undefined,
-        protected keyInfo: TKeyInfo
+        protected keyInfo: TKeyInfo,
+        protected index : number 
     ) {
         this.currentChordNotes = new ChordNotes(this.currentChord);
         this.previousTopNote = this.previousChord?.at(-1)?.note.at(-1)
@@ -190,7 +192,8 @@ export function melodyGenerator(
                     chord,
                     melodies.at(-1) as IMelodyFragment[] | undefined,
                     progression.chords[index + 1],
-                    keyInfo
+                    keyInfo,
+                    index
                 ).melody()
             melodies.push(melody)
         })

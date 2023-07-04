@@ -8,10 +8,10 @@ import {
   TOctave,
   random_note_single_accidental,
   to_octave,
-  ObjectKeys,
   EIntervalDistance
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
+import { ObjectEntries } from "../objectUtils";
 
 type TOptionType = [
   { name : string, options : TSyllable[]},
@@ -33,7 +33,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
 
     this.key = random_note_single_accidental();
 
-    const syllableKeysInC = ObjectKeys(syllables_in_key_of_c) 
+    const syllableKeysInC = ObjectEntries(syllables_in_key_of_c).keys 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
       return options.first().options.includes(syllables_in_key_of_c[key]);
     });

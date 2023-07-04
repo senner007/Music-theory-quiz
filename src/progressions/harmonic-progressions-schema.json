@@ -1,15 +1,19 @@
 {
   "title": "Progression",
   "type": "object",
-  "required": ["level", "description", "level"],
+  "required": [
+    "level",
+    "description",
+    "level"
+  ],
   "properties": {
     "level": {
-        "type": "number",
-        "title": "Level"
+      "type": "number",
+      "title": "Level"
     },
     "description": {
-        "type": "string",
-        "title": "Level"
+      "type": "string",
+      "title": "Level"
     },
     "progressions": {
       "type": "array",
@@ -18,7 +22,11 @@
       "items": {
         "title": "Progression",
         "type": "object",
-        "required": ["chords", "isDiatonic", "isMajor"],
+        "required": [
+          "chords",
+          "isDiatonic",
+          "isMajor"
+        ],
         "properties": {
           "chords": {
             "type": "array",
@@ -56,7 +64,21 @@
             "items": {
               "title": "tag",
               "type": "string",
-              "enum": ["Inversion", "DominantSeven", "Plagal", "Diminished", "CircleOfFifths", "SeventhChords", "SecondaryDominants", "Modulation", "AutumnLeaves", "Pachelbel", "AltidFrejdig"]
+              "enum": [
+                "Inversion",
+                "DominantSeven",
+                "Plagal",
+                "Diminished",
+                "CircleOfFifths",
+                "SeventhChords",
+                "SecondaryDominants",
+                "Modulation",
+                "AutumnLeaves",
+                "Pachelbel",
+                "AltidFrejdig",
+                "DenStoreMester",
+                "SkaerTordag"
+              ]
             }
           }
         }

@@ -4,8 +4,9 @@ import { MajorKey, MinorKey } from "@tonaljs/key";
 import { TRomanNumeral } from "../harmony/romanNumerals";
 import { key_info_minor } from "./minorkey";
 import { key_info_major } from "./majorkey";
+import { LogError } from "../dev-utils";
 
-export type TChordQualities = "M" |  "m" | "dim" | "aug" | "sus4" | "m7"
+export type TChordQualities = "M" | "m" | "dim" | "aug" | "sus4" | "m7"
 export type TKeyInfo = ReturnType<typeof key_info_minor> | ReturnType<typeof key_info_major>;
 
 function chords_from_qualities(chordQualities: readonly string[], scale: readonly string[]) {
@@ -28,11 +29,12 @@ export function primary_chords_and_inversions(chordQualities: TChordQualities[],
   function inversions(inversion: 1 | 2, identifier: "6" | "64") {
     return chord_inversion(primaryChords, inversion).map((c, index) => {
       let parts = romanNumerals[index].split("/");
-      return { ...c, romanNumeral: 
-        romanNumerals[index].includes("/") 
-          ? parts[0] + identifier + "/" + parts[1] 
-          : romanNumerals[index] + identifier 
-        };
+      return {
+        ...c, romanNumeral:
+          romanNumerals[index].includes("/")
+            ? parts[0] + identifier + "/" + parts[1]
+            : romanNumerals[index] + identifier
+      };
     });
   }
 
@@ -62,13 +64,16 @@ function replace_symbol(romanNumeral: TRomanNumeral, from: string, to: string) {
 }
 
 export function seventh_chords_inversions(seventhChordsSymbols: string[], romanNumerals: TRomanNumeral[]) {
-  const seventhChords = seventhChordsSymbols.map(c => Chord.get(c)).map((c, index) => {
-    return { ...c, romanNumeral: romanNumerals[index] };
-  });
+  const seventhChords = seventhChordsSymbols
+    .map(c => Chord.get(c))
+    .map((c, index) => {
+      return { ...c, romanNumeral: romanNumerals[index] };
+    });
 
   function seventh_inversions(inversion: 1 | 2 | 3, identifier: "65" | "43" | "42") {
-    return chord_inversion(seventhChords, inversion).map((c, index) => {
-      return { ...c, romanNumeral: replace_symbol(romanNumerals[index], "7", identifier) };
+    return chord_inversion(seventhChords, inversion)
+      .map((c, index) => {
+        return { ...c, romanNumeral: replace_symbol(romanNumerals[index], "7", identifier) };
     });
   }
 
@@ -85,19 +90,19 @@ export function seventh_chords_inversions(seventhChordsSymbols: string[], romanN
   } as const;
 }
 
- export function keyinfo(key: MajorKey | MinorKey) {
+export function keyinfo(key: MajorKey | MinorKey) {
   return key.type === "minor" ? key_info_minor(key) : key_info_major(key)
- }
+}
 
 
 function key_chords(keyInfo: TKeyInfo) {
   if (keyInfo.type === "major") {
     return [
       ...keyInfo.suspended.primarySuspended,
-      ...keyInfo.allPrimaryChords(), 
-      ...keyInfo.sevenths.allSevenths(), 
+      ...keyInfo.allPrimaryChords(),
+      ...keyInfo.sevenths.allSevenths(),
       ...keyInfo.dominants.allPrimaryChords(),
-      ...keyInfo.dominantSevenths.allSevenths(), 
+      ...keyInfo.dominantSevenths.allSevenths(),
       ...keyInfo.additional.allSevenths(),
       ...keyInfo.other
     ];
@@ -115,9 +120,17 @@ function key_chords(keyInfo: TKeyInfo) {
   ];
 }
 
-export function numeral_by_symbol(keyInfo: TKeyInfo, chordNotes: string[]) {
+export function chord_by_chordNotes(keyInfo: TKeyInfo, chordNotes: string[]) {
   const chordSymbols: string[] = Chord.detect(chordNotes, { assumePerfectFifth: true });
   const keyChords = key_chords(keyInfo);
-  const chordsFound = keyChords.filter(c => chordSymbols.includes(c.symbol)).remove_duplicate_objects().map(c => c.romanNumeral)
-  return chordsFound.length > 1 ? chordsFound.join("|") : chordsFound.first_and_only();
+  const chordsFoundInKey = keyChords.filter(c => chordSymbols.includes(c.symbol)).remove_duplicate_objects()
+  if (chordsFoundInKey.is_empty()) {
+    LogError(`Chord not found in ${keyInfo.type} key of ${keyInfo.tonic} for symbol(s) : ${chordSymbols.toString()}`) 
+  }
+  return chordsFoundInKey
+}
+
+export function numeral_by_chordNotes(keyInfo: TKeyInfo, chordNotes: string[]) {
+  const chords = chord_by_chordNotes(keyInfo, chordNotes)
+  return chords.length > 1 ? chords.map(c => c.romanNumeral).join("|") : chords.first_and_only().romanNumeral;
 }

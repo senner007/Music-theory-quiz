@@ -4,7 +4,7 @@ import { TNoteAllAccidentalOctave } from './utils';
 
 export interface INotePlay {
     noteNames: Readonly<TNoteAllAccidentalOctave[]>,
-    duration: 0.5 | 1 | 2 | 3 | 4;
+    duration: 1 | 2 | 3 | 4;
 }
 
 var output = new easymidi.Output('Microsoft GS Wavetable Synth');
