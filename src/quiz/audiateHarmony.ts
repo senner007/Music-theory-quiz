@@ -15,7 +15,8 @@ import { LogError } from "../dev-utils";
 
 type TOptionType = [
   { name: string, options: TProgression["description"][] },
-  { name: string, options: string[] }
+  { name: string, options: string[] },
+  { name: string, options: TNoteSingleAccidental[] }
 ]
 
 const melodicPatterns = [
@@ -46,7 +47,7 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   timeSignature = 4 as const; // from options - input to melody pattern
   constructor(options: Readonly<TOptionType>) {
     super(options);
-    this.key = random_note_single_accidental();
+    this.key = options.last().options.random_item();
     const selectProgressions = progressions.filter(p => options.first().options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
     this.progressionTags = randomProgression.tags;
@@ -139,9 +140,11 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   }
 
   static meta() {
+    const commonKeys : TNoteSingleAccidental[] = [ "C", "C#", "Db","D", "Eb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "Bb", "B"] 
     const options = [
       { name: "Progressions", options: progressions.map(p => p.description) as TProgression["description"][] },
       { name: "Melodic Patterns", options: melodicPatterns.map(m => m.description) as string[] },
+      { name: "Keys", options: commonKeys },
     ] as const
 
     return {
