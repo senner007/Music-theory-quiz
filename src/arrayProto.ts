@@ -75,7 +75,7 @@ Array.prototype.transpose_by = function <U extends TNoteAllAccidental[] | TNoteA
   this: U,
   interval: TIntervalIntegers
 ) {
-  return this.map(n => note_transpose(n, interval)) as Readonly<U>;
+  return this.map(n => note_transpose(n, interval)) as U;
 };
 
 
