@@ -1,4 +1,3 @@
-
 // https://stackoverflow.com/questions/66939607/how-to-make-an-array-of-all-the-strings-in-string-union-type
 // credits goes to https://stackoverflow.com/questions/50374908/transform-union-type-to-intersection-type/50375286#50375286
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
@@ -14,7 +13,6 @@ type UnionToOvlds<U> = UnionToIntersection<
 
 type PopUnion<U> = UnionToOvlds<U> extends (a: infer A) => void ? A : never;
 
-
 // credits goes to https://stackoverflow.com/questions/53953814/typescript-check-if-a-type-is-a-union#comment-94748994
 type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true;
 
@@ -27,16 +25,16 @@ type ObjectEntries<T, U = Required<T>> = {
     [K in keyof U]: [K, U[K]]
 }[keyof U]
 
-type toKeysOrValues<T extends any[], N extends 0 | 1> = {
-    [key in keyof T] : T[key][N]
+type TtoKeysOrValues<T extends any[], N extends 0 | 1> = {
+    [key in keyof T]: T[key][N]
 }
 
 // This creates type safe object entries, keys and values 
-export function ObjectEntries<const Obj extends Record<string, unknown>>(obj: Obj)  {
+export function ObjectEntries<const Obj extends Record<string, unknown>>(obj: Obj) {
     const entries = Object.entries(obj) as UnionToArray<ObjectEntries<Obj>>
     return {
-        entries : entries,
-        keys : (entries as any[]).map(o => o.first()),
-        values : (entries as any[]).map(o => o.last())
-    } as unknown as { entries : typeof entries, keys :toKeysOrValues<typeof entries, 0>, values : toKeysOrValues<typeof entries, 1> }
+        entries: entries,
+        keys: (entries as any[]).map(o => o.first()),
+        values: (entries as any[]).map(o => o.last())
+    } as unknown as { entries: typeof entries, keys: TtoKeysOrValues<typeof entries, 0>, values: TtoKeysOrValues<typeof entries, 1> }
 }
