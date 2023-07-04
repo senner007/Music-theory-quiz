@@ -8,27 +8,25 @@ import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, random_note_single_accidental } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
-import {  MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodyPattern_007, MelodyPattern_008, MelodySingulate } from "../melodyGenerator/melodyPatterns";
+import { MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyPattern_004, MelodyPattern_005, MelodyPattern_006, MelodySingulate } from "../melodyGenerator/melodyPatterns";
 import { romanNumeralChord } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
 
 type TOptionType = [
-  { name : string, options : TProgression["description"][]},
-  { name : string, options : string[]}
+  { name: string, options: TProgression["description"][] },
+  { name: string, options: string[] }
 ]
 
 const melodicPatterns = [
-  MelodySingulate, 
+  MelodySingulate,
   MelodyChordal,
-  MelodyPattern_001, 
-  MelodyPattern_002, 
-  MelodyPattern_003, 
+  MelodyPattern_001,
+  MelodyPattern_002,
+  MelodyPattern_003,
   MelodyPattern_004,
   MelodyPattern_005,
   MelodyPattern_006,
-  MelodyPattern_007,
-  MelodyPattern_008,  
 ]
 
 export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
@@ -69,20 +67,20 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       try {
         chords = chord_by_chordNotes(this.keyInfo, [this.randomProgressionInKey.bass[index], ...n])
           .map(c => `${c.romanNumeral} - (${c.symbol})`)
-      } catch(error) {
-        const errorMessage = `Error obtaining roman numeral for progression ${this.progressionDescription} at chord index ${index}` 
+      } catch (error) {
+        const errorMessage = `Error obtaining roman numeral for progression ${this.progressionDescription} at chord index ${index}`
         LogError(`${(error as Error).message}\n${errorMessage}`)
       }
       return chords.length > 1 ? chords.join("|") : chords.first_and_only()
     });
 
-    const randomMelodyPatternDescription =  options[1].options.random_item();
+    const randomMelodyPatternDescription = options[1].options.random_item();
     const melodicPattern = melodicPatterns.filter(pattern => pattern.description === randomMelodyPatternDescription).first_and_only()
     this.melody = melodyGenerator(
-      this.randomProgressionInKey, 
+      this.randomProgressionInKey,
       melodicPattern,
       this.keyInfo
-      );
+    );
   }
 
   protected override initTempo: number = 200;
@@ -93,10 +91,10 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       : "";
 
     const identifiers = this.progressionTags ? `Identifiers : ${chalk.underline(this.progressionTags.join(", "))}` : "";
-    return [`${this.progressionIsDiatonic 
-          ? chalk.underline("Diatonic") 
-          : chalk.underline("Non-diationic")
-        } progression in key of ${chalk.underline(this.key + " " + (this.progressionIsMajor ? "Major" : "Minor"))} (${description}) ${identifiers}`
+    return [`${this.progressionIsDiatonic
+      ? chalk.underline("Diatonic")
+      : chalk.underline("Non-diationic")
+      } progression in key of ${chalk.underline(this.key + " " + (this.progressionIsMajor ? "Major" : "Minor"))} (${description}) ${identifiers}`
     ];
   }
 
@@ -142,8 +140,8 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
 
   static meta() {
     const options = [
-      { name : "Progressions", options : progressions.map(p => p.description) as TProgression["description"][] },
-      { name : "Melodic Patterns", options : melodicPatterns.map(m =>  m.description) as string[] },
+      { name: "Progressions", options: progressions.map(p => p.description) as TProgression["description"][] },
+      { name: "Melodic Patterns", options: melodicPatterns.map(m => m.description) as string[] },
     ] as const
 
     return {
@@ -153,7 +151,7 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       name: "Audiate harmonic progressions",
       description: "Audiate the harmonic progression as solfege degrees",
       instructions: [
-        "Audiate various lines using the notes that make the harmony.", 
+        "Audiate various lines using the notes that make the harmony.",
         "Audiate with or without accompaniment.",
         "Also try to include non chord tones, passing tones, suspensions, escape tones, neighbouring tones, appogiatura and anticipation"
       ]
