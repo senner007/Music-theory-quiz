@@ -18,7 +18,9 @@ export function key_info_major(key: MajorKey ) {
       { symbol : Chord.detect([key.scale[6], key.scale[5], key.scale[0], key.scale[2]]).first_and_only(), romanNumeral : "via942" },
       { ...Chord.getChord("dim", note_transpose(key.scale.at(0) as TNoteAllAccidental, "1A")), romanNumeral : "I#dim" },
       { ...Chord.getChord("dim", note_transpose(key.scale.at(0) as TNoteAllAccidental, "1A"),  key.scale[2]), romanNumeral : "I#6dim" },
-      { ...Chord.getChord("dim", key.scale.at(2)), romanNumeral : "iiidim" }
+      { ...Chord.getChord("dim7", note_transpose(key.scale.at(1) as TNoteAllAccidental, "1A")), romanNumeral : "ii#dim7" },
+      { ...Chord.getChord("dim7", note_transpose(key.scale.at(5) as TNoteAllAccidental, "1A")), romanNumeral : "vi#dim7" },
+      { ...Chord.getChord("dim", key.scale.at(2)), romanNumeral : "iiidim" },
       // add to test - refactor
     ]
 

@@ -1,0 +1,22 @@
+{
+    "level": 70,
+    "description": "",
+    "progressions": [
+      {
+        "chords": ["I64", "ii43no1", "vidim7no5", "I64double5no3", "IV6"],
+        "bass": ["C4", "D4", "D#4", "E4", "F4"],
+        "description": "c70-1",
+        "isMajor": true,
+        "isDiatonic": false,
+        "tags": []
+      },
+      {
+        "chords": ["V65no5", "I", "I#dim", "V43no3", "I"],
+        "bass": ["G3", "A3", "A#3", "B3", "C4"],
+        "description": "c70-2",
+        "isMajor": true,
+        "isDiatonic": false,
+        "tags": []
+      }                                          
+    ]
+  }

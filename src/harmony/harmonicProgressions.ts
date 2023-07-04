@@ -28,6 +28,7 @@ const level_circle_of_fifths_extended = JSON.parse(fs.readFileSync("src/progress
 const level_30_common = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-common.json") as any) as TProgressionsJSON;
 const level_40 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-wkh.json") as any) as TProgressionsJSON;
 const level_50_common_jazz = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-common-jazz.json") as any) as TProgressionsJSON;
+const level_70_jazz_walkup = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-jazz-walkup.json") as any) as TProgressionsJSON;
 
 export const progressions = [
   level_1,
@@ -39,7 +40,8 @@ export const progressions = [
   level_circle_of_fifths_extended,
   level_30_common,
   level_40,
-  level_50_common_jazz
+  level_50_common_jazz,
+  level_70_jazz_walkup
 ] as const;
 
 export function JSON_progressions_verify() {
