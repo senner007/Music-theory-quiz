@@ -83,7 +83,6 @@ export class SolfegeMelody {
 
   ambitus(lowest: TNoteAllAccidentalOctave): number {
     const semitones = this.distance_from_lowest(this.highest, lowest);
-    if (!semitones) LogError("Semitone calculation error");
     return semitones;
   }
 }
