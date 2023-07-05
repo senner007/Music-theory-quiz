@@ -3,16 +3,16 @@
     "description": "I I v7 V7/IV IV7, I7 I7 v7 V7/IV IV7",
     "progressions": [
       {
-        "chords": ["I", "I", "v743no1", "V7no1/IV", "IV743no1"],
-        "bass": ["C3", "C3", "G2", "C3", "F3"],
+        "chords": ["ii7no5", "V42no5","I6", "I6", "v743no1", "V7no1/IV", "IV743no1"],
+        "bass": ["D3", "G2", "C3", "C3", "G2", "C3", "F2"],
         "description": "c50-1",
         "isMajor": true,
         "isDiatonic": false,
         "tags": []
       },
       {
-        "chords": ["I742no1", "I742no1", "v743no1", "V7no1/IV", "IV743no1"],
-        "bass": ["C3", "C3", "G2", "C3", "F3"],
+        "chords": ["ii7no5", "V42no5", "I7no1", "V7no1/V", "v743no1", "V7no1/IV", "IV743no1"],
+        "bass": ["D3", "G2", "C3", "D3", "G2", "C3", "F2"],
         "description": "c50-2",
         "isMajor": true,
         "isDiatonic": false,
