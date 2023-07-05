@@ -1,5 +1,3 @@
-
-
 // @ts-ignore
 import InterruptedPrompt from "inquirer-interrupted-prompt";
 
@@ -7,9 +5,6 @@ import { Log } from "./logger/logSync";
 import { LogError } from "./dev-utils";
 import { math_floor } from "./random_func";
 import { interval_distance, interval_integer, note_transpose, note_variants } from "./tonal-interface";
-
-
-
 
 export type TBaseNote = typeof baseNotes[number];
 export type TOctave = "2" | "3" | "4" | "5";
@@ -27,10 +22,19 @@ export type TIntervalAbsolute =
   "6m" | "6M" | IntervalModifier<"6"> | 
   "7m" | "7M" | IntervalModifier<"7"> |
   "8P" | IntervalModifier<"8"> 
+export enum EScaleSteps {
+  Tonic = 0,
+  SuperTonic = 1,
+  Mediant = 2,
+  SubDominant = 3,
+  Dominant = 4,
+  SubMediant = 5,
+  Leading = 6
+}
+
 
 // Intervals that can be both positive and negative : "-2M", "2M"
 export type TIntervalIntegers = TIntervalAbsolute | `-${TIntervalAbsolute}`
-
 
 export enum EIntervalDistance {
   OctaveUp = "8P",
@@ -49,7 +53,6 @@ export function customExit() {
 export function is_interrupt(err: unknown) {
   return err === InterruptedPrompt.EVENT_INTERRUPTED;
 }
-
 
 export function to_octave<T extends Readonly<TNoteAllAccidental>>(n: T, octave: TOctave) {
   return (n + octave) as TNoteAllAccidentalOctave;
