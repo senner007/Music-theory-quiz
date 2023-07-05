@@ -19,10 +19,10 @@ export const MelodyChordal: IMelodyGeneratorBase = class extends MelodyGenerator
 
     public melody() {
         const chord = [
-            this.currentChordNotes.top, 
-                    this.currentChordNotes.second, 
-                    this.currentChordNotes.third, 
-                    this.currentChordNotes.fourth
+            this.currentChordNotes.top,
+            this.currentChordNotes.second,
+            this.currentChordNotes.third,
+            this.currentChordNotes.fourth
         ].filter(c => c) as TNoteAllAccidentalOctave[]
 
         return [

@@ -1,10 +1,11 @@
-import { ChordType, Interval, Key, Note, ScaleType } from "@tonaljs/tonal";
+import { Chord, ChordType, Interval, Key, Note, ScaleType } from "@tonaljs/tonal";
 import { Scale } from "@tonaljs/scale";
 import { NoteComparator } from "@tonaljs/note";
 import { Scale as ScaleClass } from "@tonaljs/tonal";
 import { Chord as ChordClass } from "@tonaljs/tonal";
 import { EIntervalDistance, TBaseNote, TIntervalAbsolute, TIntervalIntegers, TNoteAllAccidental, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave, TNoteVariants, baseNotes } from "./utils";
 import { LogError } from "./dev-utils";
+import { TChord } from "./quiz/audiateHarmony";
 
 
 export function sortNotes(notes : TNoteAllAccidentalOctave[], comparator?: NoteComparator) {
@@ -114,4 +115,30 @@ export function note_variants(
 export function scale_range(scale: TNoteAllAccidental[], note: TNoteAllAccidentalOctave, rangefrom: EIntervalDistance, rangeto: EIntervalDistance) {
     let scaleRange = ScaleClass.rangeOf(scale);
     return scaleRange(note_transpose(note, rangefrom), note_transpose(note, rangeto)) as TNoteAllAccidentalOctave[];
+}
+
+export function get_chord_by_symbol(symbol : string) {
+    const chord = Chord.get(symbol)
+
+    if (chord.tonic === null) {
+        LogError("Chord tonic must not be null")
+    }
+
+    return chord as TChord;
+}
+
+export function get_chord(chordType : string, tonic : string, optionalRoot? : string) : TChord {
+    const chord = optionalRoot ? Chord.getChord(chordType, tonic, optionalRoot) : Chord.getChord(chordType, tonic)
+    if (chord.tonic === null) {
+        LogError("Chord tonic must not be null")
+    }
+    return {
+        symbol : chord.symbol,
+        tonic : chord.tonic, 
+        type : chord.type,
+        intervals : chord.intervals as TIntervalIntegers[], 
+        notes : chord.notes as TNoteAllAccidental[],
+        aliases: chord.aliases 
+    }
+
 }

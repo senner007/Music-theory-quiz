@@ -11,7 +11,7 @@ describe("Test Roman numerals for given chords in - Minor natural - key", () => 
     expect(numeral_by_chordNotes(key, ["Bb", "G", "Eb"])).toEqual("bIII64");
     expect(numeral_by_chordNotes(key, ["F", "Ab", "C", "Eb"])).toEqual("iv7");
     expect(numeral_by_chordNotes(key, ["Bb", "D", "G", "F"])).toEqual("v65");
-    expect(numeral_by_chordNotes(key, ["Eb", "Ab", "C", "G"])).toEqual("bVI43|bVIM43"); // Investigate !
+    expect(numeral_by_chordNotes(key, ["Eb", "Ab", "C", "G"])).toEqual("bVI43");
     expect(numeral_by_chordNotes(key, ["Ab", "Bb", "D", "F"])).toEqual("bVII42");
   });
 

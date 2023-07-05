@@ -22,11 +22,11 @@ function getRomanNumerals(progression: TProgression) {
   });
 }
 
-  test.each(allProgressions)("should get numerals in key for all progressions", (progression: TProgression) => {
-    try {
-      expect(getRomanNumerals(progression)).toEqual(expect.arrayContaining([expect.any(String)]));
-    } catch (error) {
-      throw new Error(`Progression : ${progression.description}\n${error}`)
-    }
-  });
+test.each(allProgressions)("should get numerals in key for all progressions", (progression: TProgression) => {
+  try {
+    expect(getRomanNumerals(progression)).toEqual(expect.arrayContaining([expect.any(String)]));
+  } catch (error) {
+    throw new Error(`Progression : ${progression.description}\n${error}`)
+  }
+});
 

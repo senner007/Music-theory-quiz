@@ -11,7 +11,7 @@ describe("Test Roman numerals for given chords in - Minor harmonic - key", () =>
     expect(numeral_by_chordNotes(key, ["B", "G", "Eb"])).toEqual("bIII+64");
     expect(numeral_by_chordNotes(key, ["F", "Ab", "C", "Eb"])).toEqual("iv7");
     expect(numeral_by_chordNotes(key, ["B", "D", "G", "F"])).toEqual("V65");
-    expect(numeral_by_chordNotes(key, ["Eb", "Ab", "C", "G"])).toEqual("bVI43|bVIM43");
+    expect(numeral_by_chordNotes(key, ["Eb", "Ab", "C", "G"])).toEqual("bVI43");
     expect(numeral_by_chordNotes(key, ["Ab", "B", "D", "F"])).toEqual("viio42");
   });
 });

@@ -4,7 +4,9 @@ import { EIntervalDistance, TNoteAllAccidental, TNoteAllAccidentalOctave, transp
 import { LogError } from "../dev-utils";
 import { remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
-import { scale_range } from "../tonal-interface";
+import { interval_distance, interval_semitones, note_transpose, scale_range } from "../tonal-interface";
+import { TChord } from "../quiz/audiateHarmony";
+import { Note } from "@tonaljs/tonal";
 
 export interface IMelodicPattern {
     readonly timeSignature: 2 | 3 | 4
@@ -26,7 +28,10 @@ interface IMelodyGenerator {
 export interface IMelodyGeneratorBase {
     id: string;
     description: string
-    new(currentChord: readonly TNoteAllAccidentalOctave[],
+    new(
+        currentChordDefinition: TChord,
+        previousChordDefinition: TChord | undefined,
+        currentChord: readonly TNoteAllAccidentalOctave[],
         previousChord: readonly IMelodyFragment[] | undefined,
         nextChord: readonly TNoteAllAccidentalOctave[] | undefined,
         keyInfo: TKeyInfo,
@@ -63,12 +68,37 @@ class ChordNotes {
     }
 }
 
+
+// Implement surrounding chord function logic to create more advanced patterns
+// Resolve leading tone and dominant sevenths
+// Avoid parallel fifths and octaves
+class ChordFunction {
+
+
+    constructor(private chord: TChord) {
+
+    }
+
+    protected get isDominant() : boolean {
+        return this.chord.aliases.includes("dom")
+    }
+
+    protected get leadingNote() : TNoteAllAccidentalOctave | undefined {
+        return note_transpose(this.chord.tonic as TNoteAllAccidentalOctave, "3M")
+    }
+}
+
 export abstract class MelodyGeneratorBase {
 
     protected currentChordNotes: ChordNotes;
     protected previousTopNote: TNoteAllAccidentalOctave | undefined
-
+    protected currentFunction;
+    protected previousFunction;
+    
     constructor(
+        private currentChordDefinition: TChord,
+        private previousChordDefinition: TChord | undefined,
+
         private currentChord: readonly TNoteAllAccidentalOctave[],
         protected previousChord: readonly IMelodyFragment[] | undefined,
         protected nextChord: readonly TNoteAllAccidentalOctave[] | undefined,
@@ -76,8 +106,9 @@ export abstract class MelodyGeneratorBase {
         protected index : number 
     ) {
         this.currentChordNotes = new ChordNotes(this.currentChord);
+        this.currentFunction = new ChordFunction(this.currentChordDefinition);
+        this.previousFunction = this.previousChordDefinition ? new ChordFunction(this.previousChordDefinition) : undefined
         this.previousTopNote = this.previousChord?.at(-1)?.note.at(-1)
-
     };
 
     private minor_variant(minorVariant: TMinorVariant): Readonly<TNoteAllAccidental[]> {
@@ -98,7 +129,7 @@ export abstract class MelodyGeneratorBase {
         if (this.keyInfo.type === "minor") {
             scale = this.minor_variant(minorVariant)
         } else {
-            scale = this.keyInfo.scale
+            scale = this.keyInfo.keyInfo.scale
         }
         return scale as Readonly<TNoteAllAccidental[]>;
     }
@@ -180,16 +211,19 @@ export abstract class MelodyGeneratorBase {
 export function melodyGenerator(
     progression: IProgression,
     melodyPattern: IMelodyGeneratorBase,
+    chords : TChord[],
     keyInfo: TKeyInfo
 ): IMelodicPattern {
 
     const melodies: IMelodyFragment[][] = []
     progression.chords.forEach(
-        (chord, index) => {
+        (chordNotes, index) => {
 
             const melody =
                 new melodyPattern(
-                    chord,
+                    chords[index],
+                    chords[index - 1],
+                    chordNotes,
                     melodies.at(-1) as IMelodyFragment[] | undefined,
                     progression.chords[index + 1],
                     keyInfo,

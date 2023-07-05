@@ -19,6 +19,7 @@ declare global {
     first_and_only(): this[0],
     first() : this[0],
     last(): Last<this>
+    at_or_throw(index : number): T
     remove_duplicate_objects(): Readonly<Array<T>>;
     contains(this: T[], otherArray: T[]): boolean
     to_reverse(): Reverse<this>
@@ -49,6 +50,18 @@ Array.prototype.is_empty = function <U extends any[]>(
 ) {
   return this.length === 0
 };
+
+
+Array.prototype.at_or_throw = function <U extends any[]>(
+  this: U,
+  index : number
+) : U {
+  if (this.at(index) === undefined) {
+    LogError("Invalid array index called!")
+  }
+  return this.at(index);
+};
+
 
 Array.prototype.first = function <U extends any[]>(
   this: U
