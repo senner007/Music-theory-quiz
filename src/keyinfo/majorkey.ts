@@ -2,7 +2,7 @@ import { Chord } from "@tonaljs/tonal";
 import { TRomanNumeral } from "../harmony/romanNumerals";
 import { MajorKey } from "@tonaljs/key";
 import { primary_chords_and_inversions, suspended_primary_chords, seventh_chords_inversions } from "./keyInfo";
-import { TNoteAllAccidental } from "../utils";
+import { EScaleSteps, TNoteAllAccidental } from "../utils";
 import { get_chord, note_transpose } from "../tonal-interface";
 import { ObjectEntries } from "../objectUtils";
 import { TChordRomanNumeral } from "../quiz/audiateHarmony";
@@ -20,7 +20,6 @@ function getChordByDetect(notes: TNoteAllAccidental[], tonic: string, romanNumer
   }
 }
 
-
 export function key_info_major(key: MajorKey) {
 
   const majorNumerals: TRomanNumeral[] = ["I", "ii", "iii", "IV", "V", "vi", "viio"];
@@ -32,19 +31,19 @@ export function key_info_major(key: MajorKey) {
   const scale = key.scale as readonly TNoteAllAccidental[];
 
   const other: TChordRomanNumeral[] = [
-    getChordByDetect([scale[6], scale[5], scale[0], scale[2]], scale[6], "via942"),
-    { ...get_chord("dim", note_transpose(scale.at(0) as TNoteAllAccidental, "1A")), romanNumeral: "I#dim" },
-    { ...get_chord("dim", note_transpose(scale.at(0) as TNoteAllAccidental, "1A"), scale[2]), romanNumeral: "I#6dim" },
-    { ...get_chord("dim7", note_transpose(scale.at(1) as TNoteAllAccidental, "1A")), romanNumeral: "ii#dim7" },
-    { ...get_chord("dim7", note_transpose(scale.at(5) as TNoteAllAccidental, "1A")), romanNumeral: "vi#dim7" },
-    { ...get_chord("dim", scale.at_or_throw(2)), romanNumeral: "iiidim" },
+    getChordByDetect([scale[EScaleSteps.Leading], scale[EScaleSteps.SubMediant], scale[EScaleSteps.Tonic], scale[EScaleSteps.Mediant]], scale[EScaleSteps.Leading], "via942"),
+    { ...get_chord("dim", note_transpose(scale.at_or_throw(EScaleSteps.Tonic), "1A")), romanNumeral: "I#dim" },
+    { ...get_chord("dim", note_transpose(scale.at_or_throw(EScaleSteps.Tonic), "1A"), scale[EScaleSteps.Mediant]), romanNumeral: "I#6dim" },
+    { ...get_chord("dim7", note_transpose(scale.at_or_throw(EScaleSteps.SuperTonic), "1A")), romanNumeral: "ii#dim7" },
+    { ...get_chord("dim7", note_transpose(scale.at_or_throw(EScaleSteps.SubMediant), "1A")), romanNumeral: "vi#dim7" },
+    { ...get_chord("dim", scale.at_or_throw(EScaleSteps.Mediant)), romanNumeral: "iiidim" },
     // add to test
   ]
 
   const additional = {
-    "vii7": get_chord("m7", scale.at_or_throw(-1)).symbol,
-    "v7": get_chord("m7", scale.at_or_throw(4)).symbol,
-    "V7add6": get_chord("7add6", scale.at_or_throw(4)).symbol
+    "vii7": get_chord("m7", scale.at_or_throw(EScaleSteps.Leading)).symbol,
+    "v7": get_chord("m7", scale.at_or_throw(EScaleSteps.Dominant)).symbol,
+    "V7add6": get_chord("7add6", scale.at_or_throw(EScaleSteps.Dominant)).symbol
   } as const
 
   return {
