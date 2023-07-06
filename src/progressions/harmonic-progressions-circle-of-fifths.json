@@ -1,6 +1,6 @@
 {
     "level": 20,
-    "description": "I IV vii iii vi ii V I",
+    "description": "Circle of fifths",
     "progressions": [
       {
         "chords": ["I64", "IV", "viio64", "iii", "vi64", "ii", "V64", "I6"],

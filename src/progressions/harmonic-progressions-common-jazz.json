@@ -1,6 +1,6 @@
 {
     "level": 50,
-    "description": "I I v7 V7/IV IV7, I7 I7 v7 V7/IV IV7",
+    "description": "Modulation to IV",
     "progressions": [
       {
         "chords": ["ii7no5", "V42no5","I6", "I6", "v743no1", "V7no1/IV", "IV743no1"],

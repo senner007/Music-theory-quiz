@@ -1,6 +1,6 @@
 {
     "level": 21,
-    "description": "I IV vii iii vi ii V I",
+    "description": "Circle of fifths - extended and secondary dominants",
     "progressions": [
       {
         "chords": ["I64", "vi", "vii42no5", "V", "vi42no5", "IV", "V42no5", "I6"],
