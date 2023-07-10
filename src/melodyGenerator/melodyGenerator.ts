@@ -24,7 +24,6 @@ type TMinorVariant = "natural" | "harmonic" | "melodic"
 
 interface IMelodyGenerator {
     melody(): IMelodyFragment[]
-    chordNotes: ChordNotes;
     chordFunction: ChordFunction;
     bassNote : TNoteAllAccidentalOctave;
 }
