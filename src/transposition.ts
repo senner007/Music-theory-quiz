@@ -1,4 +1,4 @@
-import { EIntervalDistance, TIntervalIntegers, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave } from "./utils";
+import { EIntervalDistance, TIntervalInteger, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave } from "./utils";
 import { interval_data, interval_distance, is_higher_than_high_bound, is_lower_than_low_bound, note_transpose, sortNotes } from "./tonal-interface";
 
 export interface IProgression {
@@ -23,7 +23,7 @@ function adjust_transposition_within_bounds(
   bounds: transpositionBounds) {
   const notesSorted = sortNotes(progression.chords.flatMap((n) => n));
   const lowestNote = notesSorted.first();
-  const highestNote = notesSorted.last();
+  const highestNote = notesSorted.at_or_throw(-1);
 
   if (is_lower_than_low_bound(lowestNote, bounds.low)) {
     return transpose_progression_by_interval(progression, EIntervalDistance.OctaveUp);
@@ -34,7 +34,7 @@ function adjust_transposition_within_bounds(
   return progression;
 }
 
-export function transpose_progression_by_interval(progression: IProgression, interval: TIntervalIntegers) {
+export function transpose_progression_by_interval(progression: IProgression, interval: TIntervalInteger) {
   return {
     chords: progression.chords.map((c) => c.transpose_by(interval)),
     bass: progression.bass.transpose_by(interval),

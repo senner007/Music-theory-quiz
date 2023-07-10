@@ -1,0 +1,42 @@
+{
+    "level": 2,
+    "description": "Experimental",
+    "progressions": [
+      {
+        "chords": ["I6", "V42no5", "Idouble1no3", "ii", "V64", "vi64"],
+        "bass": ["C3", "D3", "E3", "F3", "G3", "A3"],
+        "description": "e1",
+        "isMajor": true,
+        "isDiatonic": false
+      },
+      {
+        "chords": ["I", "V43no3", "I", "ii", "V64", "vi64"],
+        "bass": ["C3", "B2", "C3", "F3", "G3", "A3"],
+        "description": "e2",
+        "isMajor": true,
+        "isDiatonic": false
+      },
+      {
+        "chords": ["I", "V43no3", "vi6", "I6", "ii6", "IV", "V42no1"],
+        "bass": ["C3", "B2", "A2", "G2", "F2", "D2", "G2"],
+        "description": "e3",
+        "isMajor": true,
+        "isDiatonic": false
+      },
+      {
+        "chords": ["I6", "I6", "V64", "Idouble1no3", "V42no5", "I6"],
+        "bass": ["C3", "G3", "F3", "E3", "D3", "C3"],
+        "description": "e4",
+        "isMajor": true,
+        "isDiatonic": false
+      },
+      {
+        "chords": ["i6", "bVII64", "bVI", "V7"],
+        "bass": ["C3", "Bb2", "Ab2", "G2"],
+        "description": "e5",
+        "isMajor": false,
+        "isDiatonic": false
+      }
+    ]
+  }
+  

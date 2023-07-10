@@ -27,7 +27,7 @@
         "isDiatonic": true
       },
       {
-        "chords": ["I6-a", "V64-a", "vi6-a", "iii64", "IV6", "I64", "ii6", "V64", "I6"],
+        "chords": ["I-a", "V6-a", "vi6-a", "iii64", "IV6", "I64", "ii6", "V64", "I6"],
         "bass": ["C4", "G3", "A3", "E3", "F3", "C3", "D3", "G2", "C3"],
         "description": "c30-4",
         "isMajor": true,
@@ -35,7 +35,7 @@
         "tags": ["Pachelbel"]
       },
       {
-        "chords": ["I6-a", "V64-a", "vi6-a", "iii64", "IV6", "I-a", "IV64-a", "V6-a", "I64"],
+        "chords": ["I-a", "V6-a", "vi6-a", "iii64", "IV6", "I-a", "IV64-a", "V6-a", "I64"],
         "bass": ["C4", "G3", "A3", "E3", "F3", "C3", "F3", "G3", "C3"],
         "description": "c30-5",
         "isMajor": true,
@@ -43,7 +43,7 @@
         "tags": ["Pachelbel"]
       },
       {
-        "chords": ["I64", "V6-a", "vi64", "ii64", "V7add6no5no9no1(3rdInv)", "V42no1", "I6"],
+        "chords": ["I64", "V6-a", "vi", "ii64", "V7add6no5no9no1(3rdInv)", "V42no1", "I6"],
         "bass": ["C4", "B3", "A3", "F3", "G3", "G3", "C4"],
         "description": "c30-6",
         "isMajor": true,

@@ -5,6 +5,7 @@ import { Log } from "./logger/logSync";
 import { LogError } from "./dev-utils";
 import { math_floor } from "./random_func";
 import { interval_distance, interval_integer, note_transpose, note_variants } from "./tonal-interface";
+import { Interval } from "@tonaljs/tonal";
 
 export type TBaseNote = typeof baseNotes[number];
 export type TOctave = "2" | "3" | "4" | "5";
@@ -34,7 +35,7 @@ export enum EScaleSteps {
 
 
 // Intervals that can be both positive and negative : "-2M", "2M"
-export type TIntervalIntegers = TIntervalAbsolute | `-${TIntervalAbsolute}`
+export type TIntervalInteger = TIntervalAbsolute | `-${TIntervalAbsolute}`
 
 export enum EIntervalDistance {
   OctaveUp = "8P",
@@ -125,4 +126,7 @@ export function interval_integer_absolute(first: TNoteAllAccidental | TNoteAllAc
   return Math.abs(interval_integer(first, second)) as number
 }
 
+export function interval_simplify(interval: TIntervalInteger) {
+  return Interval.simplify(interval) as TIntervalInteger
+}
 

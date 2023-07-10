@@ -1,5 +1,8 @@
 import { TNoteAllAccidentalOctave } from "../utils";
 import { to_octave_above } from "../tonal-interface";
+import { IProgression } from "../transposition";
+import { TKeyInfo, chords_by_chordNotes, resolveAmbiguousChords } from "../keyinfo/keyInfo";
+import { LogError } from "../dev-utils";
 
 type TRomanNumeralDict = Record<string, TNoteAllAccidentalOctave[]>;
 
@@ -15,6 +18,7 @@ export const romanNumeralsDict = {
   iM7: ["C4", "Eb4", "G4", "B4"],
   i7: [],
   I: ["C4", "E4", "G4"],
+  Idouble1no3: ["C4", "G4", "C5"],
   I6: ["E4", "G4", "C5"],
   I64: ["G4", "C5", "E5"],
   I64double5no3: ["G4", "C5", "G5"],
@@ -46,6 +50,7 @@ export const romanNumeralsDict = {
   Vsus4: ["G4", "C4", "D5"],
   v: [],
   v7: ["G4", "Bb4", "D5", "F5"],
+  "v43" : ["D4", "F4", "G4", "Bb4"],
   "v743no1" : ["D4", "F4", "Bb4"], // wrong name
   ii: ["D4", "F4", "A4"],
   ii7 : [],
@@ -149,4 +154,19 @@ export function romanNumeralChord(romanNumeral: TRomanNumeral | TRomanNumeralAbo
 
 export function to_roman_numeral(romanNumeral: TRomanNumeral | TRomanNumeralAbove): TRomanNumeral {
   return romanNumeral.replace(/-a/g, "") as TRomanNumeral;
+}
+
+export function progression_to_chords(progression : IProgression, keyInfo : TKeyInfo) {
+  return progression
+      .chords
+      .map((n, index: number) => {
+      try {
+        const chords = chords_by_chordNotes(keyInfo, [progression.bass[index], ...n])
+        const chord = resolveAmbiguousChords(chords, keyInfo, [progression.bass[index], ...n], progression)
+        return chord;
+      } catch (error) {
+        const errorMessage = `Error obtaining roman numeral at chord index ${index}`
+        LogError(`${(error as Error).message}\n${errorMessage}`)
+      }
+    });
 }

@@ -3,13 +3,13 @@ import { Scale } from "@tonaljs/scale";
 import { NoteComparator } from "@tonaljs/note";
 import { Scale as ScaleClass } from "@tonaljs/tonal";
 import { Chord as ChordClass } from "@tonaljs/tonal";
-import { EIntervalDistance, TBaseNote, TIntervalAbsolute, TIntervalIntegers, TNoteAllAccidental, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave, TNoteVariants, baseNotes } from "./utils";
+import { EIntervalDistance, TBaseNote, TIntervalAbsolute, TIntervalInteger, TNoteAllAccidental, TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteSingleAccidentalOctave, TNoteVariants, baseNotes } from "./utils";
 import { LogError } from "./dev-utils";
 import { TChord } from "./quiz/audiateHarmony";
 
 
 export function sortNotes(notes : TNoteAllAccidentalOctave[], comparator?: NoteComparator) {
-    return Note.sortedNames(notes, comparator) as TNoteAllAccidentalOctave[];
+    return Note.sortedNames(notes, comparator) as readonly TNoteAllAccidentalOctave[];
 }
 
 export function is_lower_than_low_bound(n: TNoteAllAccidentalOctave, lowBound: TNoteSingleAccidentalOctave = "F3") {
@@ -45,35 +45,35 @@ export function create_chord(chordTonic: TNoteSingleAccidental, chordType: strin
     return ChordClass.get(chordTonic + " " + chordType);
 }
 
-export function note_transpose<T extends TNoteAllAccidental | TNoteAllAccidentalOctave>(note: T, interval: TIntervalIntegers): T {
+export function note_transpose<T extends TNoteAllAccidental | TNoteAllAccidentalOctave>(note: T, interval: TIntervalInteger): T {
     return Note.transpose(note, interval) as T;
 }
 
-export function interval_data(interval: TIntervalIntegers) {
+export function interval_data(interval: TIntervalInteger) {
     return Interval.get(interval)
 }
 
-export function interval_semitones(interval: TIntervalIntegers) {
+export function interval_semitones(interval: TIntervalInteger) {
     return Interval.semitones(interval)
 }
 
 export function interval_from_semitones(semitones: number) {
-    return Interval.fromSemitones(semitones) as TIntervalIntegers;
+    return Interval.fromSemitones(semitones) as TIntervalInteger;
 }
 
 export function interval_distance(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
-    return Interval.distance(first, second) as TIntervalIntegers
+    return Interval.distance(first, second) as TIntervalInteger
 }
 
 export function interval_integer(first: TNoteAllAccidental | TNoteAllAccidentalOctave, second: TNoteAllAccidental | TNoteAllAccidentalOctave) {
     return Interval.num(interval_distance(first, second)) as number
 }
 
-export function interval_to_absolute(interval: TIntervalIntegers) {
+export function interval_to_absolute(interval: TIntervalInteger) {
     return interval.replace(/[-]/g, "") as TIntervalAbsolute;
 }
 
-export function interval_direction(interval: TIntervalIntegers) {
+export function interval_direction(interval: TIntervalInteger) {
     return Interval.get(interval).dir as 1 | -1
 }
 
@@ -135,10 +135,11 @@ export function get_chord(chordType : string, tonic : string, optionalRoot? : st
     return {
         symbol : chord.symbol,
         tonic : chord.tonic, 
-        type : chord.type,
-        intervals : chord.intervals as TIntervalIntegers[], 
+        intervals : chord.intervals as TIntervalInteger[], 
         notes : chord.notes as TNoteAllAccidental[],
-        aliases: chord.aliases 
+        aliases: chord.aliases,
+        quality: chord.quality, 
+        type : chord.type,
     }
 
 }

@@ -1,7 +1,7 @@
 import { expect, vi, describe, test, afterEach, Mock } from "vitest";
 import { keyinfo, key_chords } from "../src/keyinfo/keyInfo";
 import { get_key } from "../src/tonal-interface";
-import { TChord } from "../src/quiz/audiateHarmony"
+import { TChord, TChordRomanNumeral } from "../src/quiz/audiateHarmony"
 
 const keyTypeMajor = get_key("C", "major")
 const keyTypeMinor = get_key("C", "major")
@@ -14,7 +14,32 @@ describe("Test chords returned from keyinfo", () => {
         const keyInfo = keyinfo(keyType);
         const keyInfoChords = key_chords(keyInfo)
 
-        test.each(keyInfoChords)("chords must have a tonic", (chord: TChord) => {
+        test.each(keyInfoChords)("chords must have a roman numeral", (chord: TChordRomanNumeral) => {
+            try {
+      
+                expect(chord.romanNumeral).not.toBeNull();
+                expect(chord.tonic.length).toBeGreaterThan(0);
+                expect(chord.tonic[0]).not.toEqual(" ");
+            } catch (error) {
+
+                throw new Error(`Progression : ${chord.romanNumeral}\n${error}`)
+            }
+        });
+
+        test.each(keyInfoChords)("chords that are secondary dominants must have the alias : 'secDom'", (chord: TChordRomanNumeral) => {
+
+            try {
+                if (chord.romanNumeral.includes("/")) {
+                    expect(chord.aliases).toContain("secDom")
+                } else {
+                    expect(chord.aliases).not.toContain("secDom");
+                }
+            } catch (error) {
+                throw new Error(`Progression : ${chord.romanNumeral} ${chord.aliases}\n${error}`)
+            }
+        });
+
+        test.each(keyInfoChords)("chords must have a tonic", (chord: TChordRomanNumeral) => {
             try {
       
                 expect(chord.tonic).not.toBeNull();
@@ -26,7 +51,7 @@ describe("Test chords returned from keyinfo", () => {
             }
         });
 
-        test.each(keyInfoChords)("chords must have a symbol", (chord: TChord) => {
+        test.each(keyInfoChords)("chords must have a symbol", (chord: TChordRomanNumeral) => {
             try {
                 expect(chord.symbol).not.toBeNull();
                 expect(chord.symbol.length).toBeGreaterThan(0);
@@ -37,7 +62,7 @@ describe("Test chords returned from keyinfo", () => {
             }
         });
 
-        test.each(keyInfoChords)("chords must have notes", (chord: TChord) => {
+        test.each(keyInfoChords)("chords must have notes", (chord: TChordRomanNumeral) => {
             try {
                 expect(chord.notes).toEqual(expect.arrayContaining([expect.any(String)]));
                 expect(chord.notes.length).toBeGreaterThan(2);

@@ -28,6 +28,13 @@ function chord_inversion(chord: TChord, inversion: number): TChord {
   return get_chord(type, chord.tonic, chord.notes[inversion]);
 } 
 
+function secondaryDominantAlias(chords : TChordRomanNumeral[] ) {
+  return chords.map(c => {
+    const isSecondary = c.romanNumeral.includes("/")
+    return {...c, aliases : isSecondary ? [...c.aliases, "secDom"] : c.aliases  }
+  })
+}
+
 
 
 export function primary_chords_and_inversions(chordQualities: TChordQualities[], romanNumerals: TRomanNumeral[], scale: readonly string[]) {
@@ -47,14 +54,15 @@ export function primary_chords_and_inversions(chordQualities: TChordQualities[],
     });
   }
 
-  const firstInversionChords = inversions(1, "6")
-  const secondInversionChords = inversions(2, "64")
+  const firstInversionChords = inversions(1, "6");
+  const secondInversionChords = inversions(2, "64");
+
+  const allPrimary = [...primaryChords, ...firstInversionChords, ...secondInversionChords];
+
+  const allPrimarySecondayAlias = secondaryDominantAlias(allPrimary);
 
   return {
-    primaryChords,
-    firstInversionChords,
-    secondInversionChords,
-    allPrimaryChords: () => [...primaryChords, ...firstInversionChords, ...secondInversionChords],
+    allPrimaryChords: () => allPrimarySecondayAlias,
   } as const;
 }
 
@@ -90,19 +98,18 @@ export function seventh_chords_inversions(seventhChordsSymbols: string[], romanN
   const secondInversionChords = seventh_inversions(2, "43")
   const thirdInversionChords = seventh_inversions(3, "42")
 
+  const allSevenths = [...seventhChords, ...firstInversionChords, ...secondInversionChords, ...thirdInversionChords];
+
+  const secondarySeventhsAlias = secondaryDominantAlias(allSevenths)
+
   return {
-    root: seventhChords,
-    firstInversion: firstInversionChords,
-    secondInversion: secondInversionChords,
-    thirdInversion: thirdInversionChords,
-    allSevenths: () => [...seventhChords, ...firstInversionChords, ...secondInversionChords, ...thirdInversionChords],
+    allSevenths: () => secondarySeventhsAlias,
   } as const;
 }
 
 export function keyinfo(key: MajorKey | MinorKey) {
   return key.type === "minor" ? key_info_minor(key) : key_info_major(key)
 }
-
 
 export function key_chords(keyInfo: TKeyInfo) {
   if (keyInfo.type === "major") {

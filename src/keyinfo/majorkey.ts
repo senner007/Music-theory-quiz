@@ -15,8 +15,9 @@ function getChordByDetect(notes: TNoteAllAccidental[], tonic: string, romanNumer
     aliases: [],
     tonic: tonic,
     notes: notes,
+    intervals: [], // add test to ensure intervals always present
+    quality : "Unknown" as const, // Fix - should not be unknown
     type: "",
-    intervals: [] // add test to ensure intervals always present
   }
 }
 

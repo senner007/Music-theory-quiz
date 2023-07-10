@@ -1,12 +1,13 @@
 import { TKeyInfo } from "../keyinfo/keyInfo";
 import { IProgression } from "../transposition";
-import { EIntervalDistance, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
+import { EIntervalDistance, TIntervalInteger, TNoteAllAccidental, TNoteAllAccidentalOctave, transpose_to_key } from "../utils";
 import { LogError } from "../dev-utils";
 import { remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
-import { interval_distance, interval_semitones, note_transpose, scale_range } from "../tonal-interface";
 import { TChord } from "../quiz/audiateHarmony";
-import { Note } from "@tonaljs/tonal";
+import {  note } from "@tonaljs/tonal";
+import { Conditions, GlobalConditions } from "./patternConditions";
+import { note_transpose, scale_range } from "../tonal-interface";
 
 export interface IMelodicPattern {
     readonly timeSignature: 2 | 3 | 4
@@ -14,7 +15,7 @@ export interface IMelodicPattern {
     readonly bass: readonly TNoteAllAccidentalOctave[];
 }
 
-interface IMelodyFragment {
+export interface IMelodyFragment {
     note: TNoteAllAccidentalOctave[],
     duration: 1 |  2 | 3 | 4
 }
@@ -23,25 +24,21 @@ type TMinorVariant = "natural" | "harmonic" | "melodic"
 
 interface IMelodyGenerator {
     melody(): IMelodyFragment[]
+    chordNotes: ChordNotes;
+    chordFunction: ChordFunction;
+    bassNote : TNoteAllAccidentalOctave;
 }
 
 export interface IMelodyGeneratorBase {
     id: string;
     description: string
-    new(
-        currentChordDefinition: TChord,
-        previousChordDefinition: TChord | undefined,
-        currentChord: readonly TNoteAllAccidentalOctave[],
-        previousChord: readonly IMelodyFragment[] | undefined,
-        nextChord: readonly TNoteAllAccidentalOctave[] | undefined,
-        keyInfo: TKeyInfo,
-        index : number
-    ): IMelodyGenerator
+    new(options : IMelodyOptions): IMelodyGenerator
 }
 
 export interface IPattern {
     description: typeof solfegePatterns[number]["description"],
-    conditions: (((solfegePatterns: ISolfegePattern["patterns"]) => boolean) | (() => boolean))[],
+    conditions: (((solfegePatterns: TNoteAllAccidentalOctave[] | undefined) => boolean) | (() => boolean))[],
+    isCadence : boolean;
     rhythm: { duration: 1 | 2 | 3 | 4 }[]
 }
 
@@ -56,62 +53,113 @@ class ChordNotes {
     public second;
     public third;
     public fourth;
+    public all : TNoteAllAccidentalOctave[];
     constructor(private chord: readonly TNoteAllAccidentalOctave[]) {
 
         this.top = chord.at(-1) as TNoteAllAccidentalOctave;
         this.second = chord.at(-2) as TNoteAllAccidentalOctave;
         this.third = chord.at(-3) as TNoteAllAccidentalOctave | undefined;
         this.fourth = chord.at(-4) as TNoteAllAccidentalOctave | undefined;
+        this.all = chord;
         if (chord.length > 4) {
-            LogError("More than 4 chord notes - refactor")
+            LogError("More than 4 chord notes")
         }
     }
 }
 
+export class ChordFunction {
 
-// Implement surrounding chord function logic to create more advanced patterns
-// Resolve leading tone and dominant sevenths
-// Avoid parallel fifths and octaves
-class ChordFunction {
-
-
-    constructor(private chord: TChord) {
+    constructor(private chord: TChord, private key : TNoteAllAccidental) {
 
     }
 
-    protected get isDominant() : boolean {
+    public get isMajor() : boolean {
+        return this.chord.quality === "Major"
+    }
+
+    public get isDominant() : boolean {
+        return note_transpose(this.chord.tonic as TNoteAllAccidental, "4P") === this.key || this.isDominantSeventh || this.isSecondaryDominant
+    }
+
+    public get isDominantSeventh() : boolean {
         return this.chord.aliases.includes("dom")
     }
 
-    protected get leadingNote() : TNoteAllAccidentalOctave | undefined {
-        return note_transpose(this.chord.tonic as TNoteAllAccidentalOctave, "3M")
+    public get isSecondaryDominant() : boolean {
+        return this.chord.aliases.includes("secDom")
+    }
+    
+    public get tonic() {
+        return this.chord.tonic as TNoteAllAccidental
+    }
+
+    public get third() {
+        const indexOfThirdInterval = this.chord.intervals.findIndex(i => i === "3M" || i === "3m")
+        if (indexOfThirdInterval !== -1) {
+            return this.chord.notes.at(indexOfThirdInterval)
+        }
+        return undefined
+    }
+
+    public get seventh(): TNoteAllAccidental | undefined {
+
+        const indexOfSeventhInterval = this.chord.intervals.findIndex(i => i === "7M" || i === "7m")
+        if (indexOfSeventhInterval !== -1) {
+
+            return this.chord.notes.at(indexOfSeventhInterval)
+        }
+        return undefined
+    }
+
+    public get minorSeventh() : TNoteAllAccidental {
+
+        return note_transpose(this.tonic, "-2M")
+    } 
+
+    public get leadingNote() : TNoteAllAccidental | undefined {
+        return this.isDominant === true ? note_transpose(this.tonic, "3M") : undefined
     }
 }
 
-export abstract class MelodyGeneratorBase {
 
-    protected currentChordNotes: ChordNotes;
+export abstract class MelodyGeneratorBase implements IMelodyGenerator {
+
+    public chordNotes: ChordNotes;
     protected previousTopNote: TNoteAllAccidentalOctave | undefined
-    protected currentFunction;
-    protected previousFunction;
+    public chordFunction : ChordFunction
+    protected conditions;
+    private previousGenerator;
+    private keyInfo;
+    public bassNote; 
+    private nextChordFunction: ChordFunction | undefined;
+    private previousMelody;
     
-    constructor(
-        private currentChordDefinition: TChord,
-        private previousChordDefinition: TChord | undefined,
+    constructor(IMelodyOptions : IMelodyOptions) {
 
-        private currentChord: readonly TNoteAllAccidentalOctave[],
-        protected previousChord: readonly IMelodyFragment[] | undefined,
-        protected nextChord: readonly TNoteAllAccidentalOctave[] | undefined,
-        protected keyInfo: TKeyInfo,
-        protected index : number 
-    ) {
-        this.currentChordNotes = new ChordNotes(this.currentChord);
-        this.currentFunction = new ChordFunction(this.currentChordDefinition);
-        this.previousFunction = this.previousChordDefinition ? new ChordFunction(this.previousChordDefinition) : undefined
-        this.previousTopNote = this.previousChord?.at(-1)?.note.at(-1)
+        this.chordNotes = new ChordNotes(IMelodyOptions.currentChord);
+        this.chordFunction = new ChordFunction(IMelodyOptions.currentChordFunction, IMelodyOptions.keyInfo.tonic as TNoteAllAccidental);
+        this.previousGenerator = IMelodyOptions.previousGenerator;
+        
+        this.keyInfo = IMelodyOptions.keyInfo
+        this.bassNote = IMelodyOptions.bass;
+        this.nextChordFunction =  IMelodyOptions.nextChordFunction ? new ChordFunction(IMelodyOptions.nextChordFunction, this.keyInfo.tonic as TNoteAllAccidental) : undefined
+        this.previousMelody = IMelodyOptions.previousMelody
+        this.conditions = new Conditions(
+            this.chordFunction, 
+            this.previousGenerator?.chordFunction, 
+            this.previousMelody, 
+            this.keyInfo, 
+            this.nextChordFunction
+            );
+      
     };
 
+    
+    abstract globalConditions : typeof GlobalConditions
+
     private minor_variant(minorVariant: TMinorVariant): Readonly<TNoteAllAccidental[]> {
+
+
         if (this.keyInfo.type !== "minor") {
             LogError("Not minor scale error")
         }
@@ -123,14 +171,28 @@ export abstract class MelodyGeneratorBase {
         return obj[minorVariant]
     }
 
+    private correct_scale_to_fit_non_diatonic_chord(scale: readonly TNoteAllAccidental[]) {
+        return scale.map(n => { 
+            const noteFromChord = this.chordNotes.all.find(c => {
+                return note(c).letter ===  note(n).letter
+            })
+            if (noteFromChord && remove_octave(noteFromChord) !== n) {
+                return remove_octave(noteFromChord)
+            } 
+            return n;
+        });
+    }
 
     private key_scale(minorVariant: TMinorVariant): readonly TNoteAllAccidental[] {
-        let scale;
+        let scale : readonly TNoteAllAccidental[];
         if (this.keyInfo.type === "minor") {
             scale = this.minor_variant(minorVariant)
         } else {
             scale = this.keyInfo.keyInfo.scale
         }
+
+        scale = this.correct_scale_to_fit_non_diatonic_chord(scale);
+       
         return scale as Readonly<TNoteAllAccidental[]>;
     }
 
@@ -150,47 +212,62 @@ export abstract class MelodyGeneratorBase {
 
 
     pattern_executor(
-        patternObjs: readonly [...IPattern[], IPatternCadence],
+        patternObjs: readonly [...IPattern[]],
         fallback: () => IMelodyFragment[],
     ) {
-        if (!this.nextChord) {
-            const cadence = patternObjs.filter(p => p.description === "cadence").first_and_only() as IPatternCadence
-            return cadence.returnValue();
-        }
+
+        const globalConditions = new this.globalConditions(
+            this.chordFunction,
+            this.previousGenerator?.chordFunction,
+            this.previousMelody,
+            this.keyInfo,
+            this.nextChordFunction,
+            this.previousGenerator?.bassNote,
+            this.bassNote
+        ) 
 
         let melody;
-        for (const patternObj of patternObjs.filter(p => p.description !== "cadence") as IPattern[]) {
+        for (const patternObj of patternObjs) {
             if (melody) {
                 break;
             }
 
-            const solfegePattern = solfegePatterns.filter(p => p.description === patternObj.description).first_and_only();
-            const allConditionsMet = patternObj.conditions.every(condition => condition(solfegePattern.patterns));
-
-            if (!allConditionsMet) {
+            if (patternObj.isCadence !== this.conditions.isCadence) {
                 continue;
             }
 
-            const notesMinorVariants = (["natural", "harmonic", "melodic"] as TMinorVariant[]).map(v => {
-                return solfegePattern.indexes.map(i => {
-                    try {
-                        return this.scale_note_from_range(this.currentChord.at(i.index)!, i.step, v)!
-                    } catch (error) {
-                        return "*";
-                    }
+            const solfegePattern = solfegePatterns.filter(p => p.description === patternObj.description).first_and_only();
+           
+            const notesMinorVariants = (["natural", "harmonic", "melodic"] as TMinorVariant[])
+                .map(v => {
+                    return solfegePattern.indexes.map(i => {
+                        try {
+                            return this.scale_note_from_range(this.chordNotes.all.at(i.index)!, i.step, v)!
+                        } catch (error) {
+                            return "*";
+                        }
+                    })
                 })
-            }).filter(v => !v.includes("*")) as TNoteAllAccidentalOctave[][]
+                .filter(v => !v.includes("*")) as TNoteAllAccidentalOctave[][]
 
             for (const pattern of solfegePattern.patterns) {
 
-                const notes = notesMinorVariants.find(v => {
+                const patternMatch = notesMinorVariants.find(v => {
                     const variantSolfege = v.map(n => this.solfege_syllable(n))
                     return variantSolfege.toString() === pattern.toString();
                 })
 
-                if (notes) {
+                const allConditionsMet = patternObj.conditions.every(condition => condition(patternMatch));
+                const globalConditionsMet = globalConditions.globalConditionsCheck(patternMatch)
+
+
+                if (!allConditionsMet || !globalConditionsMet) {
+                    continue;
+                }
+
+                if (patternMatch) {
                     melody = patternObj.rhythm.map((r, index) => {
-                        return { note: [notes[index]], duration: r.duration }
+                        return { note: [patternMatch[index]], duration: r.duration }
                     })
                     break;
                 }
@@ -208,6 +285,17 @@ export abstract class MelodyGeneratorBase {
 }
 
 
+interface IMelodyOptions {
+    currentChordFunction: TChord,
+    currentChord: readonly TNoteAllAccidentalOctave[],
+    keyInfo: TKeyInfo,
+    index : number,
+    bass : TNoteAllAccidentalOctave;
+    previousGenerator : Omit<IMelodyGenerator, "melody"> | undefined;
+    previousMelody: IMelodyFragment[] | undefined;
+    nextChordFunction : TChord | undefined;
+}
+
 export function melodyGenerator(
     progression: IProgression,
     melodyPattern: IMelodyGeneratorBase,
@@ -215,21 +303,26 @@ export function melodyGenerator(
     keyInfo: TKeyInfo
 ): IMelodicPattern {
 
-    const melodies: IMelodyFragment[][] = []
+    const generators : IMelodyGenerator[] = [];
+    const melodies : IMelodyFragment[][] = []
     progression.chords.forEach(
         (chordNotes, index) => {
 
-            const melody =
-                new melodyPattern(
-                    chords[index],
-                    chords[index - 1],
-                    chordNotes,
-                    melodies.at(-1) as IMelodyFragment[] | undefined,
-                    progression.chords[index + 1],
-                    keyInfo,
-                    index
-                ).melody()
+            const args : IMelodyOptions = {
+                currentChordFunction : chords[index],
+                currentChord : chordNotes,
+                keyInfo: keyInfo,
+                index : index,
+                bass : progression.bass[index],
+                previousGenerator : generators.at(-1),
+                previousMelody : melodies.at(-1),
+                nextChordFunction : chords[index +1]
+            }
+
+            const generator = new melodyPattern(args)
+            const melody = generator.melody();
             melodies.push(melody)
+            generators.push(generator)
         })
     return {
         timeSignature: 4, // refactor and include different time signatures

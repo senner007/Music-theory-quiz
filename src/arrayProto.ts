@@ -2,32 +2,35 @@ import { LogError } from "./dev-utils";
 import { math_floor } from "./random_func";
 import { note_transpose } from "./tonal-interface";
 import { transpose_to_ascending } from "./transposition";
-import { TNoteAllAccidental, TNoteAllAccidentalOctave, to_octave, random_index, TOctave, TIntervalIntegers } from "./utils";
+import { TNoteAllAccidental, TNoteAllAccidentalOctave, to_octave, random_index, TOctave, TIntervalInteger } from "./utils";
 
-type Last<T extends any[]> = [any, ...T][T["length"]];
+type Last<T extends readonly any[]> = [any, ...T][T["length"]];
 export type Reverse<T extends readonly any[]> = T extends readonly [infer F, ...infer Rest] ? [...Reverse<Rest>, F] : T;
+
 
 declare global {
 
   interface Array<T> {
     to_octave_ascending(this: TNoteAllAccidental[], octave: TOctave): Readonly<Array<TNoteAllAccidentalOctave>>;
-    transpose_by<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]>(this: U, interval: TIntervalIntegers): Readonly<U>;
+    transpose_by<U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]>(this: U, interval: TIntervalInteger): Readonly<U>;
     comma_sequence(): string;
     shuffle_array(): Readonly<Array<T>>;
     random_item(): T;
     is_empty(): boolean
-    first_and_only(): this[0],
-    first() : this[0],
-    last(): Last<this>
-    at_or_throw(index : number): T
+    at_or_throw(index: number): T
+    first_and_only(): this[0];
+    first(): this[0];
     remove_duplicate_objects(): Readonly<Array<T>>;
     contains(this: T[], otherArray: T[]): boolean
-    to_reverse(): Reverse<this>
+    last(): Last<this>;
+    to_reverse(): Reverse<this>;
   }
-  interface ReadonlyArray<T> extends Array<T> { }
+  interface ReadonlyArray<T> extends Array<T> {
+
+  }
 }
 
-Array.prototype.to_reverse = function < U extends any[]>(this: U) {
+Array.prototype.to_reverse = function <U extends any[]>(this: U) {
   return this.slice(0).reverse() as Reverse<U>
 }
 
@@ -54,8 +57,8 @@ Array.prototype.is_empty = function <U extends any[]>(
 
 Array.prototype.at_or_throw = function <U extends any[]>(
   this: U,
-  index : number
-) : U {
+  index: number
+): U {
   if (this.at(index) === undefined) {
     LogError("Invalid array index called!")
   }
@@ -65,14 +68,14 @@ Array.prototype.at_or_throw = function <U extends any[]>(
 
 Array.prototype.first = function <U extends any[]>(
   this: U
-) : U[0] {
+): U[0] {
   return this.at(0);
 };
 
 Array.prototype.last = function <U extends any[]>(
   this: U
 ) {
-  return this.at(-1);
+  return this.at(-1)
 };
 
 Array.prototype.first_and_only = function <U extends any[]>(
@@ -86,7 +89,7 @@ Array.prototype.first_and_only = function <U extends any[]>(
 
 Array.prototype.transpose_by = function <U extends TNoteAllAccidental[] | TNoteAllAccidentalOctave[]>(
   this: U,
-  interval: TIntervalIntegers
+  interval: TIntervalInteger
 ) {
   return this.map(n => note_transpose(n, interval)) as U;
 };

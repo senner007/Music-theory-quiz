@@ -11,7 +11,7 @@
         "tags": []
       },
       {
-        "chords": ["ii7no5", "V42no5", "I7no1", "V7no1/V", "v743no1", "V7no1/IV", "IV743no1"],
+        "chords": ["ii7no5", "V42no5", "I7no1", "V7no1/V", "v43", "V7no1/IV", "IV743no1"],
         "bass": ["D3", "G2", "C3", "D3", "G2", "C3", "F2"],
         "description": "c50-2",
         "isMajor": true,

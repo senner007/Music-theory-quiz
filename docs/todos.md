@@ -19,4 +19,4 @@
 - store options in state
 - time signature 3 to harmonic melodies
 - set midi device through command line option
-- add logic to always resolve the leading tone in melodic patterns
+- add rule to ensure the closest note is selected in fallback pattern (note : c40-4-p16)

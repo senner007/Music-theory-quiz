@@ -46,13 +46,16 @@ const solfegePattern_001 = {
         { index: EChordNote.Top, step: EStep.None }],
     patterns: [
         ["Do", "Re", "Mi"],
+        ["Re", "Mi", "Fa"],
         ["Mi", "Fa", "So"],
         ["Fa", "So", "La"],
         ["So", "La", "Ti"],
+        ["So", "La", "Te"],
         ["La", "Ti", "Do"],
         ["Ti", "Do", "Re"],
 
         ["Do", "Re", "Me"],
+        ["Re", "Me", "Fa"],
         ["Me", "Fa", "So"],
         ["Fa", "So", "Le"],
         ["Le", "Te", "Do"],
@@ -90,24 +93,41 @@ const solfegePattern_003 = {
     ]
 } as const
 
+
 const solfegePattern_004 = {
-    description: "Second-(NT-below)-Second",
+    description: "Top-(NT-below)-Top",
     indexes: [
-        { index: EChordNote.Second, step: EStep.None },
-        { index: EChordNote.Second, step: EStep.Below },
-        { index: EChordNote.Second, step: EStep.None }],
+        { index: EChordNote.Top, step: EStep.None },
+        { index: EChordNote.Top, step: EStep.Below },
+        { index: EChordNote.Top, step: EStep.None }],
     patterns: [
         ["Do", "Ti", "Do"],
+        ["Re", "Do", "Re"],
         ["Mi", "Re", "Mi"],
+        ["Fa", "Mi", "Fa"],
         ["So", "Fa", "So"],
+        ["Se", "Fa", "Se"],
+        ["La", "So", "La"],
+        ["Te", "La", "Te"],
+        ["Ti", "La", "Ti"],
 
         ["Do", "Ti", "Do"],
         ["Me", "Re", "Me"],
+        ["Fa", "Me", "Fa"],
         ["Le", "So", "Le"],
     ]
 } as const
 
 const solfegePattern_005 = {
+    description: "Second-(NT-below)-Second",
+    indexes: [
+        { index: EChordNote.Second, step: EStep.None },
+        { index: EChordNote.Second, step: EStep.Below },
+        { index: EChordNote.Second, step: EStep.None }],
+    patterns: solfegePattern_004.patterns
+} as const
+
+const solfegePattern_006 = {
     description: "Top-Second (M3/m3)",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
@@ -115,7 +135,7 @@ const solfegePattern_005 = {
     patterns: reverseSyllables(solfegePattern_003.patterns)
 } as const
 
-const solfegePattern_006 = {
+const solfegePattern_007 = {
     description: "Third-PT-Second (M3/m3)",
     indexes: [
         { index: EChordNote.Third, step: EStep.None },
@@ -124,7 +144,7 @@ const solfegePattern_006 = {
     patterns: solfegePattern_001.patterns
 } as const
 
-const solfegePattern_007 = {
+const solfegePattern_008 = {
     description: "Second-Third (M3/m3)",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
@@ -132,7 +152,7 @@ const solfegePattern_007 = {
     patterns: reverseSyllables(solfegePattern_003.patterns)
 } as const
 
-const solfegePattern_008 = {
+const solfegePattern_009 = {
     description: "Third-Second (M3/m3)",
     indexes: [
         { index: EChordNote.Third, step: EStep.None },
@@ -140,7 +160,7 @@ const solfegePattern_008 = {
     patterns: solfegePattern_003.patterns
 } as const
 
-const solfegePattern_009 = {
+const solfegePattern_010 = {
     description: "Top-(PT-below)-Major",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
@@ -156,7 +176,7 @@ const solfegePattern_009 = {
     ]
 } as const
 
-const solfegePattern_010 = {
+const solfegePattern_011 = {
     description: "Top-(PT-above)-Major",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
@@ -164,7 +184,7 @@ const solfegePattern_010 = {
     patterns: reverseSyllables(solfegePattern_009.patterns)
 } as const
 
-const solfegePattern_011 = {
+const solfegePattern_012 = {
     description: "Second-(PT-below)-Major",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
@@ -172,7 +192,7 @@ const solfegePattern_011 = {
     patterns: solfegePattern_009.patterns
 } as const
 
-const solfegePattern_012 = {
+const solfegePattern_013 = {
     description: "Second-(PT-above)-Major",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
@@ -180,7 +200,7 @@ const solfegePattern_012 = {
     patterns: reverseSyllables(solfegePattern_009.patterns)
 } as const
 
-const solfegePattern_013 = {
+const solfegePattern_014 = {
     description: "Top-(PT-below)-Minor",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
@@ -196,7 +216,7 @@ const solfegePattern_013 = {
     ]
 } as const
 
-const solfegePattern_014 = {
+const solfegePattern_015 = {
     description: "Top-(PT-above)-Minor",
     indexes: [
         { index: EChordNote.Top, step: EStep.None },
@@ -206,7 +226,7 @@ const solfegePattern_014 = {
     })
 } as const
 
-const solfegePattern_015 = {
+const solfegePattern_016 = {
     description: "Second-(PT-below)-Minor",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
@@ -214,7 +234,7 @@ const solfegePattern_015 = {
     patterns: solfegePattern_013.patterns
 } as const
 
-const solfegePattern_016 = {
+const solfegePattern_017 = {
     description: "Second-(PT-above)-Minor",
     indexes: [
         { index: EChordNote.Second, step: EStep.None },
@@ -223,6 +243,77 @@ const solfegePattern_016 = {
         return s.toString() !== 'So,Le'
     })
 } as const
+
+const solfegePattern_018 = {
+    description: "(Second-(PT-above))-((PT-below)-Top)-Major",
+    indexes: [
+        { index: EChordNote.Second, step: EStep.None },
+        { index: EChordNote.Second, step: EStep.Above },
+        { index: EChordNote.Top, step: EStep.Below },
+        { index: EChordNote.Top, step: EStep.None }
+    ],
+    patterns: [
+        ["Fa", "So", "La", "Ti"],
+        ["Re", "Mi", "Fa", "So"],
+        ["La", "Ti", "Do", "Re"],
+        ["Do", "Re", "Mi", "Fa"],
+        ["Mi", "Fa", "So", "La"]
+    ]
+    
+} as const
+
+const solfegePattern_019 = {
+    description: "(Top-(PT-below))-((PT-above)-Second)-Major",
+    indexes: [
+        { index: EChordNote.Top, step: EStep.None },
+        { index: EChordNote.Top, step: EStep.Below },
+        { index: EChordNote.Second, step: EStep.Above },
+        { index: EChordNote.Second, step: EStep.None }
+    ],
+    patterns: reverseSyllables(solfegePattern_018.patterns)
+    
+} as const
+
+const solfegePattern_020 = {
+    description: "Cadence01",
+    indexes: [
+        { index: EChordNote.Top, step: EStep.None },
+    ],
+    patterns: [
+        ["Do"],
+        ["Re"],
+        ["Mi"],
+        ["Fa"],
+        ["So"],
+        ["La"],
+        ["Ti"],
+
+        ["Me"],
+        ["Le"],
+        ["Te"]
+    ]
+    
+} as const
+
+const solfegePattern_021 = {
+    description: "Cadence02",
+    indexes: [
+        { index: EChordNote.Second, step: EStep.None },
+    ],
+    patterns: solfegePattern_020.patterns
+    
+} as const
+
+
+const solfegePattern_022 = {
+    description: "Cadence03",
+    indexes: [
+        { index: EChordNote.Third, step: EStep.None },
+    ],
+    patterns: solfegePattern_020.patterns
+    
+} as const
+
 
 const solfegePatterns_pretypecheck = [
     solfegePattern_001,
@@ -241,6 +332,12 @@ const solfegePatterns_pretypecheck = [
     solfegePattern_014,
     solfegePattern_015,
     solfegePattern_016,
+    solfegePattern_017,
+    solfegePattern_018,
+    solfegePattern_019,
+    solfegePattern_020,
+    solfegePattern_021,
+    solfegePattern_022
 ] as const
 
 

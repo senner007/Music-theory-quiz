@@ -1,5 +1,5 @@
 import { interval_from_semitones, note_transpose } from "./tonal-interface";
-import { TIntervalIntegers, TNoteAllAccidental } from "./utils";
+import { TIntervalInteger, TNoteAllAccidental } from "./utils";
 
 export type TPitchPatternName = keyof typeof pitchPatterns;
 
@@ -24,11 +24,11 @@ export function pitch_pattern_by_name(patternName : TPitchPatternName) {
     return pitchPatterns[patternName];
 }
 
-export function pattern_intervals(pattern: TPattern): [TIntervalIntegers, TIntervalIntegers] {
+export function pattern_intervals(pattern: TPattern): [TIntervalInteger, TIntervalInteger] {
     return [interval_from_semitones(pattern[1]), interval_from_semitones(pattern[2] - pattern[1])]
 }
 
-export function pitch_pattern_inversions(note: TNoteAllAccidental, intervals : [TIntervalIntegers, TIntervalIntegers]) {
+export function pitch_pattern_inversions(note: TNoteAllAccidental, intervals : [TIntervalInteger, TIntervalInteger]) {
     const note2 = note_transpose(note, intervals[0]);
     const note3 = note_transpose(note2, intervals[1]);
 

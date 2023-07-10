@@ -23,7 +23,7 @@ export class SolfegeMelody {
     this.verify_duration_length();
   }
 
-  private sort_melody(): TNoteAllAccidentalOctave[] {
+  private sort_melody() {
     const flatMelody = this.melody.map((n) => n.noteNames).flat();
     return sortNotes(flatMelody);
   }
@@ -36,7 +36,7 @@ export class SolfegeMelody {
     return this.sortedMelody.first();
   }
 
-  private get highest(): TNoteAllAccidentalOctave {
+  private get highest() {
     return this.sortedMelody.last()
   }
 
@@ -45,8 +45,9 @@ export class SolfegeMelody {
   }
 
   durationAccumulation() {
-    return this.melody.map((n) => n.duration).reduce((accumulator, current, index) =>
-      [...accumulator, { index, total: (accumulator.last()?.total || 0) + current }], [] as { index: number, total: number }[]);
+    const duration = this.melody.map((n) => n.duration);
+    return duration.reduce((accumulator, current, index) =>
+      [...accumulator, { index, total: (accumulator.at(-1)?.total || 0) + current }], [] as { index: number, total: number }[]);
   }
 
   duration(): number {

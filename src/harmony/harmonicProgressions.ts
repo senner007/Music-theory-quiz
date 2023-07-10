@@ -30,6 +30,8 @@ const level_40 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressi
 const level_50_common_jazz = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-common-jazz.json") as any) as TProgressionsJSON;
 const level_70_jazz_walkup = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-jazz-walkup.json") as any) as TProgressionsJSON;
 
+const experimental = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-experimental.json") as any) as TProgressionsJSON;
+
 export const progressions = [
   level_1,
   level_2,
@@ -41,7 +43,8 @@ export const progressions = [
   level_30_common,
   level_40,
   level_50_common_jazz,
-  level_70_jazz_walkup
+  level_70_jazz_walkup,
+  experimental
 ] as const;
 
 export function JSON_progressions_verify() {
