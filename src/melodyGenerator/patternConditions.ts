@@ -82,7 +82,7 @@ export class Conditions {
         return pattern.first() === this.previousNotes.at_or_throw(-1).note.first();
     }
 
-    public pattern_includes_tonic(pattern: TNoteAllAccidentalOctave[] | undefined) {
+    protected pattern_includes_tonic(pattern: TNoteAllAccidentalOctave[] | undefined) {
         if (!pattern) return false;
         if (!this.currentFunction.tonic) return false;
 
@@ -96,14 +96,14 @@ export class Conditions {
         return pattern.map(n => remove_octave(n)).includes(this.currentFunction.third) == true
     }
 
-    public pattern_includes_seventh(pattern: TNoteAllAccidentalOctave[] | undefined) {
+    protected pattern_includes_seventh(pattern: TNoteAllAccidentalOctave[] | undefined) {
         if (!pattern) return false;
         if (!this.currentFunction.seventh) return false;
 
         return pattern.map(n => remove_octave(n)).includes(this.currentFunction.seventh) == true
     }
 
-    public get is_tonic_to_previous_dominant(): boolean {
+    protected get is_tonic_to_previous_dominant(): boolean {
         if (!this.previousFunction) return false;
         
         const IntervalFifth = "5P";
@@ -112,7 +112,7 @@ export class Conditions {
             && (this.previous_notes_contains_seventh || this.previous_notes_contains_leading_note)
     }
 
-    public pattern_includes_dominant_resolution(pattern: TNoteAllAccidentalOctave[] | undefined) {
+    protected pattern_includes_dominant_resolution(pattern: TNoteAllAccidentalOctave[] | undefined) {
         if (!pattern) return false;
         if (!this.previousFunction) return false;
         if (!this.is_tonic_to_previous_dominant) return false;

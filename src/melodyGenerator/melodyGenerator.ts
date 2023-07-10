@@ -125,12 +125,11 @@ export class ChordFunction {
 export abstract class MelodyGeneratorBase implements IMelodyGenerator {
 
     public chordNotes: ChordNotes;
-    protected previousTopNote: TNoteAllAccidentalOctave | undefined
     public chordFunction : ChordFunction
-    protected conditions;
+    public conditions;
+    public bassNote; 
     private previousGenerator;
     private keyInfo;
-    public bassNote; 
     private nextChordFunction: ChordFunction | undefined;
     private previousMelody;
     
