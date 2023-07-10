@@ -144,6 +144,7 @@ export class Conditions extends ConditionHelpers {
     public get isCadence(): boolean {
         return this.nextChordFunction === undefined
     }
+
 }
 
 export class GlobalConditions extends Conditions {

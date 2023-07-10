@@ -8,7 +8,7 @@ import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, TIntervalInteger, TNoteAllAccidental } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
-import { MelodyChordal, MelodyPattern_001, MelodyTopSingulate } from "../melodyGenerator/melodyPatterns";
+import { MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyTopSingulate } from "../melodyGenerator/melodyPatterns";
 import { progression_to_chords, romanNumeralChord } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
@@ -36,7 +36,8 @@ export interface TChordRomanNumeral extends TChord  {
 const melodicPatterns = [
   MelodyTopSingulate,
   MelodyChordal,
-  MelodyPattern_001
+  MelodyPattern_001,
+  MelodyPattern_002
 ]
 
 export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {

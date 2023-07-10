@@ -48,16 +48,16 @@ export interface IPatternCadence {
 
 class ChordNotes {
 
-    public top;
-    public second;
-    public third;
+    public Soprano;
+    public Alto;
+    public Tenor;
     public fourth;
     public all : TNoteAllAccidentalOctave[];
     constructor(private chord: readonly TNoteAllAccidentalOctave[]) {
 
-        this.top = chord.at(-1) as TNoteAllAccidentalOctave;
-        this.second = chord.at(-2) as TNoteAllAccidentalOctave;
-        this.third = chord.at(-3) as TNoteAllAccidentalOctave | undefined;
+        this.Soprano = chord.at(-1) as TNoteAllAccidentalOctave;
+        this.Alto = chord.at(-2) as TNoteAllAccidentalOctave;
+        this.Tenor = chord.at(-3) as TNoteAllAccidentalOctave | undefined;
         this.fourth = chord.at(-4) as TNoteAllAccidentalOctave | undefined;
         this.all = chord;
         if (chord.length > 4) {
@@ -124,9 +124,10 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
     public conditions;
     public bassNote; 
     private previousGenerator;
-    private keyInfo;
+    public keyInfo;
     private nextChordFunction: ChordFunction | undefined;
     private previousMelody;
+    public nextChord;
     
     constructor(IMelodyOptions : IMelodyOptions) {
 
@@ -145,7 +146,8 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
             this.keyInfo, 
             this.nextChordFunction
             );
-      
+        
+        this.nextChord = IMelodyOptions.nextChord;
     };
 
     
@@ -254,7 +256,6 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
                 const allConditionsMet = patternObj.conditions.every(condition => condition(patternMatch));
                 const globalConditionsMet = globalConditions.globalConditionsCheck(patternMatch)
 
-
                 if (!allConditionsMet || !globalConditionsMet) {
                     continue;
                 }
@@ -288,6 +289,7 @@ interface IMelodyOptions {
     previousGenerator : Omit<IMelodyGenerator, "melody"> | undefined;
     previousMelody: IMelodyFragment[] | undefined;
     nextChordFunction : TChord | undefined;
+    nextChord : readonly TNoteAllAccidentalOctave[];
 }
 
 export function melodyGenerator(
@@ -310,7 +312,8 @@ export function melodyGenerator(
                 bass : progression.bass[index],
                 previousGenerator : generators.at(-1),
                 previousMelody : melodies.at(-1),
-                nextChordFunction : chords[index +1]
+                nextChordFunction : chords[index +1],
+                nextChord : progression.chords[index +1]
             }
 
             const generator = new melodyPattern(args)
