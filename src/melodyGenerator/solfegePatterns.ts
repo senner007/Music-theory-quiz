@@ -59,6 +59,7 @@ const solfegePattern_001 = {
         ["Me", "Fa", "So"],
         ["Fa", "So", "Le"],
         ["Le", "Te", "Do"],
+        ["Te", "Do", "Re"],
 
     ]
 } as const

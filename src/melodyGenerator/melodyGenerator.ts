@@ -78,6 +78,7 @@ export class ChordFunction {
 
     public get isDominant() : boolean {
         return note_transpose(this.chord.tonic as TNoteAllAccidental, "4P") === this.key || this.isDominantSeventh || this.isSecondaryDominant
+        // TODO the fifth is not always major
     }
 
     public get isDominantSeventh() : boolean {
@@ -109,11 +110,6 @@ export class ChordFunction {
         }
         return undefined
     }
-
-    public get minorSeventh() : TNoteAllAccidental {
-
-        return note_transpose(this.tonic, "-2M")
-    } 
 
     public get leadingNote() : TNoteAllAccidental | undefined {
         return this.isDominant === true ? note_transpose(this.tonic, "3M") : undefined
