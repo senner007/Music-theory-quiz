@@ -108,8 +108,8 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
             ] as const,
             () => {
                 if (this.conditions.note_same_as_previous([altoNote]) || this.conditions.pattern_includes_third([sopranoNote])) { 
-                    // add check for parallels condition and choose closest note
-                    // refactor global conditions
+                    // add check for parallels condition and choose closest - not different note
+                    // refactor into global conditions
                     return [
                         { note: [sopranoNote], duration: 4 as const },
                     ]
