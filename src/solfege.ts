@@ -14,7 +14,7 @@ export type TSyllable = typeof syllables_in_key_of_c[TSolfegeDict];
 
 export class SolfegeMelody {
   private verify_duration_length() {
-    if (this.duration() > 40) LogError("Melody duration exceeded");
+    if (this.duration() > 50) LogError("Melody duration exceeded");
   }
 
   private sortedMelody;

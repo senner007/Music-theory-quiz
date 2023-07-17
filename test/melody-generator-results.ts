@@ -502,7 +502,7 @@ const testProgression_05 = {
       },
       {
         note: [
-          "F#4",
+          "A4",
         ],
         duration: 4,
       },
@@ -551,10 +551,6 @@ const testProgression_05 = {
     ]
   }
 } as const
-
-
-
-
 
 
 export const test_Progressions = [

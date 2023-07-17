@@ -38,10 +38,10 @@ describe("Test Roman numerals for given chords in - Major - key", () => {
     expect(numeral_by_chordNotes(key, ["B", "A", "B", "D"])).toEqual("vii7");
     expect(numeral_by_chordNotes(key, ["A", "B", "D", "F"])).toEqual("viio42");
     expect(numeral_by_chordNotes(key, ["D", "F#", "A"])).toEqual("V/V");
-    expect(numeral_by_chordNotes(key, ["C", "E", "G", "Bb"])).toEqual("V7/IV");
+    expect(numeral_by_chordNotes(key, ["C", "E", "G", "Bb"])).toEqual("V7/IV|I7dom");
     expect(numeral_by_chordNotes(key, ["A", "C#", "E", "G"])).toEqual("V7/ii");
     expect(numeral_by_chordNotes(key, ["D#", "F#", "A", "B"])).toEqual("V65/iii");
-    expect(numeral_by_chordNotes(key, ["G", "Bb", "C", "E"])).toEqual("V43/IV");
+    expect(numeral_by_chordNotes(key, ["G", "Bb", "C", "E"])).toEqual("V43/IV|I43dom");
     expect(numeral_by_chordNotes(key, ["C", "D", "F#", "A"])).toEqual("V42/V");
     expect(numeral_by_chordNotes(key, ["E", "D", "E", "G#"])).toEqual("V7/vi");
   });
@@ -54,10 +54,10 @@ describe("Test Roman numerals for given chords in - Major - key", () => {
     expect(numeral_by_chordNotes(key, ["F#", "A", "C", "D"])).toEqual("V65/V");
     expect(numeral_by_chordNotes(key, ["A", "F#", "C", "D"])).toEqual("V43/V");
     expect(numeral_by_chordNotes(key, ["C", "F#", "A", "D"])).toEqual("V42/V");
-    expect(numeral_by_chordNotes(key, ["C", "E", "G", "Bb"])).toEqual("V7/IV");
+    expect(numeral_by_chordNotes(key, ["C", "E", "G", "Bb"])).toEqual("V7/IV|I7dom");
     expect(numeral_by_chordNotes(key, ["A", "C#", "E", "G"])).toEqual("V7/ii");
     expect(numeral_by_chordNotes(key, ["D#", "F#", "A", "B"])).toEqual("V65/iii");
-    expect(numeral_by_chordNotes(key, ["G", "Bb", "C", "E"])).toEqual("V43/IV");
+    expect(numeral_by_chordNotes(key, ["G", "Bb", "C", "E"])).toEqual("V43/IV|I43dom");
     expect(numeral_by_chordNotes(key, ["C", "D", "F#", "A"])).toEqual("V42/V");
     expect(numeral_by_chordNotes(key, ["E", "D", "E", "G#"])).toEqual("V7/vi");
   });

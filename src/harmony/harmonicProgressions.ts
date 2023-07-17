@@ -7,9 +7,12 @@ export type TProgression = Readonly<{
   chords: Readonly<(TRomanNumeral | TRomanNumeralAbove)[]>;
   bass: Readonly<TNoteAllAccidentalOctave[]>;
   isMajor: boolean;
-  description?: string;
   isDiatonic: boolean;
   tags: string[];
+  description: string;
+  scale? : string;
+  voiceLeading? :string[];
+
 }>;
 
 type TProgressionsJSON = {

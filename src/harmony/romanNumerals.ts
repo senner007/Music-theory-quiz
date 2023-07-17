@@ -25,14 +25,19 @@ export const romanNumeralsDict = {
   Isus4: ["C4", "F4", "G4"],
   I7: [],
   I7no1: ["E4", "G4", "B4"],
-  "I743no1" : ["G4", "B4", "E5"],
-  "I742no1" : ["B3", "E4", "G4"],
+  "I43no1" : ["G4", "B4", "E5"],
+  "I42no1" : ["B3", "E4", "G4"],
+  I7dom : [ ],
   "I#dim" : ["C#4", "E4", "G4"],
   "I#6dim" : ["E4", "G4", "C#5"],
+  bV7dom : [],
   "V/iv": ["C4", "E4", "G4"],
   "V7/iv": ["C4", "E4", "G4", "Bb4"],
   "V7/IV": [],
-  "V7no1/IV": ["E4", "G4", "Bb4"],
+  "V7no1/IV": ["E4", "G4", "Bb4"], // wrong name
+  "I65domno1": ["E4", "G4", "Bb4"],
+  "I43domno1": ["G4", "Bb4", "E5"],
+  "V65no5/IV": ["E4", "Bb4", "C5"],
   "V743no1/IV" : ["G4", "Bb4", "E5"],
   V: ["G4", "B4", "D5"],
   V64: ["D4", "G4", "B4"],
@@ -41,13 +46,14 @@ export const romanNumeralsDict = {
   V7no5: ["G4", "B4", "F5"],
   V65no5 : ["B3", "F4", "G4"],
   V43no3 : ["D4", "F4", "G4"],
+  V43no3wide : ["G3", "D4", "F4"],
   V42no5: ["F4", "G4", "B4"],
   V42no1: ["F4", "B4", "D5"],
   V6: ["B3", "D4", "G4"],
   V7add6 : [],
   "V7add6no5no9no1(3rdInv)" : ["F4", "B4", "E5"],
   V43no1: ["D4", "F4", "B4"],
-  Vsus4: ["G4", "C4", "D5"],
+  Vsus4: ["D4", "G4", "C5"],
   v: [],
   v7: ["G4", "Bb4", "D5", "F5"],
   "v43" : ["D4", "F4", "G4", "Bb4"],
@@ -56,7 +62,8 @@ export const romanNumeralsDict = {
   ii7 : [],
   ii7no5: ["D4", "F4", "C5"],
   ii43: ["A4", "C5", "D5", "F5"],
-  ii65no3: ["A4", "C5", "D5"],
+  ii65no3: ["A4", "C5", "D5"], // wrong name
+  ii65no5: ["F4", "C5", "D5"],
   ii43no1: ["A4", "C5", "F5"],
   iio: ["D4", "F4", "Ab4"],
   iio7: [],
@@ -74,6 +81,7 @@ export const romanNumeralsDict = {
   "V7no5/V": ["D4", "F#4", "C5"],
   "V7no1/V": ["C4", "F#4", "A4"],
   "V65/V": ["F#4", "A4", "C5", "D5"],
+  bIII7dom : [],
   iii: ["E4", "G4", "B4"],
   iii6: ["G4", "B4", "E5"],
   iii64: ["B4", "E5", "G5"],
@@ -103,6 +111,9 @@ export const romanNumeralsDict = {
   IV7no1 : ["A4", "C5", "E5"],
   IV743no1: ["C4", "E4", "A4"],
   "IV#dim" : ["F#4", "A4", "C5"],
+  IV7dom : ["F4", "A4", "C5", "Eb5"],
+  IV42domno1 : ["Eb4", "A4", "C5"],
+  IV42domno5 : ["F4", "A4", "Eb5"],
   vi: ["A4", "C5", "E5"],
   vi6: ["C4", "E4", "A4"],
   vi64: ["E4", "A4", "C5"],
@@ -121,6 +132,7 @@ export const romanNumeralsDict = {
   bVI64: ["Eb4", "Ab4", "C5"],
   bVIM7: [],
   bVI7: [],
+  bVI7dom : [],
   vidim7: ["A4", "C5", "Eb5", "Gb5"],
   "vidim7no5" : ["A4", "C5", "Gb5"],
   "V/ii": ["A4", "C#5", "E5"],
@@ -138,6 +150,7 @@ export const romanNumeralsDict = {
   bVII6: ["D4", "F4", "Bb4"],
   bVII64: ["F4", "Bb4", "D5"],
   bVII7: [],
+  bVII7dom : [],
   "V/bVII": ["F4", "A4", "C5"],
   "V7/bVII": ["F4", "A4", "C5", "Eb5"],
   "V/iii": ["B4", "D#5", "F#5"],
@@ -156,13 +169,13 @@ export function to_roman_numeral(romanNumeral: TRomanNumeral | TRomanNumeralAbov
   return romanNumeral.replace(/-a/g, "") as TRomanNumeral;
 }
 
-export function progression_to_chords(progression : IProgression, keyInfo : TKeyInfo) {
+export function progression_to_chords(progression : IProgression, keyInfo : TKeyInfo, scaletype? : string) {
   return progression
       .chords
       .map((n, index: number) => {
       try {
         const chords = chords_by_chordNotes(keyInfo, [progression.bass[index], ...n])
-        const chord = resolveAmbiguousChords(chords, keyInfo, [progression.bass[index], ...n], progression)
+        const chord = resolveAmbiguousChords(chords, keyInfo, [progression.bass[index], ...n], progression, scaletype)
         return chord;
       } catch (error) {
         const errorMessage = `Error obtaining roman numeral at chord index ${index}`

@@ -36,6 +36,26 @@
         "description": "e5",
         "isMajor": false,
         "isDiatonic": false
+      },
+      {
+        "chords": ["I65domno1", "IV42domno1", "I65domno1", "I65domno1", "IV42domno1", "IV42domno1", "I65domno1", "V42no1/ii","ii65no5", "V42no5", "V65no5/IV", "V42no5"],
+        "bass": ["C3", "F2", "C3", "C3", "F2", "F2", "C3", "A2", "D3", "G2", "C3", "G2"],
+        "description": "e6",
+        "isMajor": true,
+        "isDiatonic": false,
+        "scale" : "mixolydian",
+        "tags" : ["12BarBlues"],
+        "voiceLeading": ["NoVoiceLeading"]
+      },
+      {
+        "chords": ["I43domno1", "IV42domno5", "I43domno1", "I43domno1", "IV42domno5", "IV42domno5", "I43domno1", "V42no1/ii","ii65no5", "V7no5", "I43domno1", "V42no1"],
+        "bass": ["C3", "F2", "C3", "C3", "F2", "F2", "C3", "A2", "D3", "G2", "C3", "G2"],
+        "description": "e7",
+        "isMajor": true,
+        "isDiatonic": false,
+        "scale" : "mixolydian",
+        "tags" : ["12BarBlues"],
+        "voiceLeading": ["NoVoiceLeading"]
       }
     ]
   }

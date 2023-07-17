@@ -116,6 +116,7 @@ export class Conditions extends ConditionHelpers {
     }
 
     protected pattern_includes_dominant_resolution(pattern: TNoteAllAccidentalOctave[] | undefined): boolean  {
+
         if (!pattern) return false;
         if (!this.previousFunction) return false;
         if (!this.is_tonic_to_previous_dominant) return false;
@@ -124,13 +125,13 @@ export class Conditions extends ConditionHelpers {
         const includesLeadingResolutionSeventh = this.notes_contain(pattern, this.previousFunction.leadingNote!);
         const includesSeventhResolutionMajor = this.notes_contain(pattern, note_transpose(this.previousFunction.tonic!, "-3m"))
         const includesSeventhResolutionMinor = this.notes_contain(pattern, note_transpose(this.previousFunction.tonic!, "-3M"))
-
         if (this.previous_notes_contains_leading_note && this.previous_notes_contains_minor_seventh) {
             return includesLeadingResolutionTonic
                 && (includesSeventhResolutionMajor || includesSeventhResolutionMinor)
         }
 
         if (this.previous_notes_contains_leading_note) {
+
             return includesLeadingResolutionTonic || includesLeadingResolutionSeventh
         }
 
@@ -147,7 +148,27 @@ export class Conditions extends ConditionHelpers {
 
 }
 
-export class GlobalConditions extends Conditions {
+
+export interface IGlobalConditions {
+    globalConditionsCheck(pattern: TNoteAllAccidentalOctave[] | undefined): boolean  
+}
+
+export interface IGlobalConditionsClass {
+    id : string;
+    new( currentFunction: ChordFunction,
+        previousFunction: ChordFunction | undefined,
+        previousNotes: readonly IMelodyFragment[] | undefined,
+        keyInfo: TKeyInfo,
+        nextChordFunction: ChordFunction | undefined,
+        previousBass: TNoteAllAccidentalOctave | undefined,
+        bass: TNoteAllAccidentalOctave
+    ): IGlobalConditions
+} 
+
+
+export class GlobalConditions extends Conditions implements IGlobalConditions {
+
+    static id = "GlobalConditions"
     constructor(
         currentFunction: ChordFunction,
         previousFunction: ChordFunction | undefined,
@@ -191,5 +212,27 @@ export class GlobalConditions extends Conditions {
 
         return true;
     }
+
+}
+
+export class NoVoiceLeadning extends Conditions implements IGlobalConditions  {
+
+    static id = "NoVoiceLeading"
+    constructor(
+        currentFunction: ChordFunction,
+        previousFunction: ChordFunction | undefined,
+        previousNotes: readonly IMelodyFragment[] | undefined,
+        keyInfo: TKeyInfo,
+        nextChordFunction: ChordFunction | undefined,
+        private previousBass: TNoteAllAccidentalOctave | undefined,
+        private bass: TNoteAllAccidentalOctave
+    ) {
+        super(currentFunction, previousFunction, previousNotes, keyInfo, nextChordFunction)
+    }
+
+    public globalConditionsCheck(pattern: TNoteAllAccidentalOctave[] | undefined): boolean  {
+        return true
+    }
+
 
 }

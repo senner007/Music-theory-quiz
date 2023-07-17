@@ -7,38 +7,43 @@ import { ITableHeader } from "../solfege";
 import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, TIntervalInteger, TNoteAllAccidental } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
-import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
-import { MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyTopSingulate } from "../melodyGenerator/melodyPatterns";
+import { IMelodyGeneratorBase, melodyGenerator, MelodyGeneratorBase } from "../melodyGenerator/melodyGenerator";
+import {
+  MelodyChordal,
+  MelodyPattern_001,
+  MelodyPattern_002,
+  MelodyTopSingulate,
+} from "../melodyGenerator/melodyPatterns";
 import { progression_to_chords, romanNumeralChord } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
 
 type TOptionType = [
-  { name: string, options: TProgression["description"][] },
-  { name: string, options: string[] },
-  { name: string, options: TNoteSingleAccidental[] }
-]
+  { name: string; options: TProgression["description"][] },
+  { name: string; options: string[] },
+  { name: string; options: TNoteSingleAccidental[] }
+];
 
-export interface TChord  {
-  symbol : string;
-  aliases : string[]
-  tonic : string,
-  intervals: TIntervalInteger[],
-  notes : TNoteAllAccidental[]
-  quality: "Major" | "Minor" | "Augmented" | "Diminished" | "Unknown"
-  type? : string,
-} 
+export interface TChord {
+  symbol: string;
+  aliases: string[];
+  tonic: string;
+  intervals: TIntervalInteger[];
+  notes: TNoteAllAccidental[];
+  quality: "Major" | "Minor" | "Augmented" | "Diminished" | "Unknown";
+  type?: string;
+}
 
-export interface TChordRomanNumeral extends TChord  {
+export interface TChordRomanNumeral extends TChord {
   romanNumeral: string;
-} 
+}
 
-const melodicPatterns = [
+const melodicPatterns: IMelodyGeneratorBase[] = [
   MelodyTopSingulate,
   MelodyChordal,
   MelodyPattern_001,
   MelodyPattern_002
-]
+];
 
 export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
@@ -57,28 +62,26 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   timeSignature = 4 as const; // from options - input to melody pattern
   constructor(options: Readonly<TOptionType>) {
     super(options);
-  
-    this.key = options.last()
-      .options
-      .random_item();
 
-    const selectProgressions = progressions
-      .filter(p => options.first()
-      .options
-      .some(description => description === p.description));
- 
+    this.key = "C";
+
+    const selectProgressions = progressions.filter((p) =>
+      options.first().options.some((description) => description === p.description)
+    );
+
     const randomProgression = selectProgressions
-      .map(p => p.progressions)
+      .map((p) => p.progressions)
       .flat()
+      // .filter((p) => p.description === "e7")
       .random_item();
 
     this.progressionTags = randomProgression.tags;
     this.progressionDescription = randomProgression.description;
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
-    const keyType = get_key(this.key, this.progressionIsMajor ? "major" : "minor")
+    const keyType = get_key(this.key, this.progressionIsMajor ? "major" : "minor");
     this.keyInfo = keyinfo(keyType);
-    
+
     const randomProgressionInC = {
       chords: randomProgression.chords.map((c) => romanNumeralChord(c)),
       bass: randomProgression.bass,
@@ -87,39 +90,47 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
     this.randomProgressionInKey = transpose_progression(randomProgressionInC, this.key);
 
     try {
-      this.chords = progression_to_chords(this.randomProgressionInKey, this.keyInfo)
+      this.chords = progression_to_chords(this.randomProgressionInKey, this.keyInfo, randomProgression.scale);
     } catch (error) {
-      const errorMessage = `${error} ${this.progressionDescription} `
-      LogError(`${(error as Error).message}\n${errorMessage}`)
+      const errorMessage = `${error} ${this.progressionDescription} `;
+      LogError(`${(error as Error).message}\n${errorMessage}`);
     }
 
-    const randomMelodyPatternDescription = options[1].options
-      .random_item();
-
     const melodicPattern = melodicPatterns
-      .filter(pattern => pattern.description === randomMelodyPatternDescription)
-      .first_and_only()
-    
-    this.melody = melodyGenerator(
-      this.randomProgressionInKey,
-      melodicPattern,
-      this.chords,
-      this.keyInfo
-    );
+      .filter((p) => {
+        return !randomProgression.voiceLeading ? true : randomProgression.voiceLeading.includes(p.globalConditions.id)
+      }
+      )
+      .filter((pattern) => options[1].options.includes(pattern.description))
+      .random_item()
+
+    try {
+      this.melody = melodyGenerator(
+        this.randomProgressionInKey,
+        melodicPattern,
+        this.chords,
+        this.keyInfo,
+        randomProgression.scale
+      );
+    } catch (error) {
+      LogError(
+        `${error} progression description : ${this.progressionDescription} melodic pattern: ${melodicPattern.id}`
+      );
+    }
   }
 
   protected override initTempo: number = 200;
 
   get quiz_head() {
-    const description = this.progressionDescription
-      ? `${chalk.underline(this.progressionDescription)}`
-      : "";
+    const description = this.progressionDescription ? `${chalk.underline(this.progressionDescription)}` : "";
 
     const identifiers = this.progressionTags ? `Identifiers : ${chalk.underline(this.progressionTags.join(", "))}` : "";
-    return [`${this.progressionIsDiatonic
-      ? chalk.underline("Diatonic")
-      : chalk.underline("Non-diationic")
-      } progression in key of ${chalk.underline(this.key + " " + (this.progressionIsMajor ? "Major" : "Minor"))} (${description}) ${identifiers}`
+    return [
+      `${
+        this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
+      } progression in key of ${chalk.underline(
+        this.key + " " + (this.progressionIsMajor ? "Major" : "Minor")
+      )} (${description}) ${identifiers}`,
     ];
   }
 
@@ -154,35 +165,51 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       { audio: [audioBass], keyboardKey: "b", message: "play bass line" },
       { audio: [audio, audioBass], keyboardKey: "space", message: "play melody with bass line" },
       { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
-    ] as const
+    ] as const;
   }
 
   get table_header() {
-    return this.chords.map(chord => `${chord.romanNumeral} (${chord.symbol})`)
-    .map((c): ITableHeader => {
-      return { name: c, duration: this.melody.timeSignature };
-    });
+    return this.chords
+      .map((chord) => `${chord.romanNumeral} (${chord.symbol})`)
+      .map((c): ITableHeader => {
+        return { name: c, duration: this.melody.timeSignature };
+      });
   }
 
   static meta() {
-    const commonKeys : TNoteSingleAccidental[] = [ "C", "C#", "Db","D", "Eb", "F", "F#", "Gb", "G", "G#", "Ab", "A", "Bb", "B"] 
+    const commonKeys: TNoteSingleAccidental[] = [
+      "C",
+      "C#",
+      "Db",
+      "D",
+      "Eb",
+      "F",
+      "F#",
+      "Gb",
+      "G",
+      "G#",
+      "Ab",
+      "A",
+      "Bb",
+      "B",
+    ];
     const options = [
-      { name: "Progressions", options: progressions.map(p => p.description) as TProgression["description"][] },
-      { name: "Melodic Patterns", options: melodicPatterns.map(m => m.description) as string[] },
+      { name: "Progressions", options: progressions.map((p) => p.description) as TProgression["description"][] },
+      { name: "Melodic Patterns", options: melodicPatterns.map((m) => m.description) as string[] },
       { name: "Keys", options: commonKeys },
-    ] as const
+    ] as const;
 
     return {
       get all_options() {
-        return options
+        return options;
       },
       name: "Audiate harmonic progressions",
       description: "Audiate the harmonic progression as solfege degrees",
       instructions: [
         "Audiate various lines using the notes that make the harmony.",
         "Audiate with or without accompaniment.",
-        "Also try to include non chord tones, passing tones, suspensions, escape tones, neighbouring tones, appogiatura and anticipation"
-      ]
+        "Also try to include non chord tones, passing tones, suspensions, escape tones, neighbouring tones, appogiatura and anticipation",
+      ],
     };
   }
 };

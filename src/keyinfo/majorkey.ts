@@ -28,6 +28,7 @@ export function key_info_major(key: MajorKey) {
   const majorSevenths: TRomanNumeral[] = ["I7", "ii7", "iii7", "IV7", "V7", "vi7", "viio7"];
   const secondaryDominants: TRomanNumeral[] = ["I", "V/V", "V/vi", "IV", "V", "V/ii", "V/iii"];
   const secondaryDominantSevenths: TRomanNumeral[] = ["V7/ii", "V7/iii", "V7/IV", "V7/V", "V7/vi"];
+  const substituteDominantSevenths: TRomanNumeral[] = ["I7dom", "bIII7dom", "IV7dom", "bV7dom", "bVI7dom", "bVII7dom"];
 
   const scale = key.scale as readonly TNoteAllAccidental[];
 
@@ -47,6 +48,9 @@ export function key_info_major(key: MajorKey) {
     "V7add6": get_chord("7add6", scale.at_or_throw(EScaleSteps.Dominant)).symbol
   } as const
 
+  // adds the I7dom chord used with eg. blues progressions
+  const substituteDominants = [get_chord("7", scale.at_or_throw(EScaleSteps.Tonic)).symbol, ...key.substituteDominants]
+  
   return {
     ...primary_chords_and_inversions(["M", "m", "m", "M", "M", "m", "dim"], majorNumerals, key.scale),
     keyInfo: { ...key, scale: scale },
@@ -56,6 +60,7 @@ export function key_info_major(key: MajorKey) {
     sevenths: seventh_chords_inversions(key.chords, majorSevenths),
     secondaryMajor: primary_chords_and_inversions(["M", "M", "M", "M", "M", "M", "M"], secondaryDominants, key.scale),
     secondaryDominants: seventh_chords_inversions(key.secondaryDominants.filter(c => c !== ""), secondaryDominantSevenths),
+    substituteDominants : seventh_chords_inversions(substituteDominants.filter(c => c !== ""), substituteDominantSevenths),
     additional: seventh_chords_inversions(
       ObjectEntries(additional).values, ObjectEntries(additional).keys,
     ),

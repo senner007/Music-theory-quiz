@@ -5,8 +5,8 @@ import { LogError } from "../dev-utils";
 import { remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
 import { TChord } from "../quiz/audiateHarmony";
-import {  note } from "@tonaljs/tonal";
-import { Conditions, GlobalConditions } from "./patternConditions";
+import {  Scale, note } from "@tonaljs/tonal";
+import { Conditions, GlobalConditions, IGlobalConditions, IGlobalConditionsClass } from "./patternConditions";
 import { note_transpose, scale_range } from "../tonal-interface";
 
 export interface IMelodicPattern {
@@ -31,6 +31,7 @@ interface IMelodyGenerator {
 export interface IMelodyGeneratorBase {
     id: string;
     description: string
+    globalConditions: IGlobalConditionsClass
     new(options : IMelodyOptions): IMelodyGenerator
 }
 
@@ -128,6 +129,7 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
     private nextChordFunction: ChordFunction | undefined;
     private previousMelody;
     public nextChord;
+    private scale;
     
     constructor(IMelodyOptions : IMelodyOptions) {
 
@@ -148,10 +150,11 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
             );
         
         this.nextChord = IMelodyOptions.nextChord;
+        this.scale = IMelodyOptions.scale
     };
 
     
-    abstract globalConditions : typeof GlobalConditions
+    static globalConditions: IGlobalConditionsClass = GlobalConditions
 
     private minor_variant(minorVariant: TMinorVariant): Readonly<TNoteAllAccidental[]> {
 
@@ -179,21 +182,33 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
         });
     }
 
+    private progression_scale(minorVariant: TMinorVariant): readonly TNoteAllAccidental[] {
+        let scale : readonly TNoteAllAccidental[];
+        if (this.scale) {
+            scale = Scale.get(`${this.keyInfo.tonic} ${this.scale}`).notes as TNoteAllAccidental[];
+        } else {
+            scale = this.key_scale(minorVariant);
+        }
+       
+        scale = this.correct_scale_to_fit_non_diatonic_chord(scale);
+        return scale;
+       
+    }
+
     private key_scale(minorVariant: TMinorVariant): readonly TNoteAllAccidental[] {
+
         let scale : readonly TNoteAllAccidental[];
         if (this.keyInfo.type === "minor") {
             scale = this.minor_variant(minorVariant)
         } else {
             scale = this.keyInfo.keyInfo.scale
         }
-
-        scale = this.correct_scale_to_fit_non_diatonic_chord(scale);
        
-        return scale as Readonly<TNoteAllAccidental[]>;
+        return scale
     }
 
     private scale_note_from_range(note: TNoteAllAccidentalOctave, index: number, minorVariant: TMinorVariant) {
-        const range = scale_range(this.key_scale(minorVariant), note,  EIntervalDistance.OctaveUp, EIntervalDistance.OctaveDown)
+        const range = scale_range(this.progression_scale(minorVariant), note,  EIntervalDistance.OctaveUp, EIntervalDistance.OctaveDown)
         const noteIndex = range.findIndex(n => n === note)
         if (noteIndex === -1) {
             throw new Error("scale note not found")
@@ -209,10 +224,9 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
 
     pattern_executor(
         patternObjs: readonly [...IPattern[]],
-        fallback: () => IMelodyFragment[],
     ) {
 
-        const globalConditions = new this.globalConditions(
+        const globalConditions = new MelodyGeneratorBase.globalConditions(
             this.chordFunction,
             this.previousGenerator?.chordFunction,
             this.previousMelody,
@@ -224,7 +238,9 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
 
         let melody;
         for (const patternObj of patternObjs) {
+
             if (melody) {
+               
                 break;
             }
 
@@ -254,7 +270,7 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
                 })
 
                 const allConditionsMet = patternObj.conditions.every(condition => condition(patternMatch));
-                const globalConditionsMet = globalConditions.globalConditionsCheck(patternMatch)
+                const globalConditionsMet = globalConditions?.globalConditionsCheck(patternMatch)
 
                 if (!allConditionsMet || !globalConditionsMet) {
                     continue;
@@ -273,7 +289,8 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
             return melody
         }
 
-        return fallback();
+        throw new Error("Fail to generate appropriate pattern")
+
     }
 
     abstract melody(): IMelodyFragment[];
@@ -290,13 +307,15 @@ interface IMelodyOptions {
     previousMelody: IMelodyFragment[] | undefined;
     nextChordFunction : TChord | undefined;
     nextChord : readonly TNoteAllAccidentalOctave[];
+    scale? : string;
 }
 
 export function melodyGenerator(
     progression: IProgression,
     melodyPattern: IMelodyGeneratorBase,
     chords : TChord[],
-    keyInfo: TKeyInfo
+    keyInfo: TKeyInfo,
+    scale? : string
 ): IMelodicPattern {
 
     const generators : IMelodyGenerator[] = [];
@@ -313,7 +332,8 @@ export function melodyGenerator(
                 previousGenerator : generators.at(-1),
                 previousMelody : melodies.at(-1),
                 nextChordFunction : chords[index +1],
-                nextChord : progression.chords[index +1]
+                nextChord : progression.chords[index +1],
+                scale
             }
 
             const generator = new melodyPattern(args)

@@ -58,6 +58,17 @@
             "description": "Is the progression major or minor",
             "type": "boolean"
           },
+          "voiceLeading": {
+            "type": "array",
+            "description": "Optional voice leading rules allowed",
+            "items": {
+              "title": "voiceleading",
+              "type": "string",
+              "enum": [
+                "NoVoiceLeading"
+              ]
+            }
+          },
           "tags": {
             "type": "array",
             "description": "Optional tags to describe description",
@@ -77,7 +88,8 @@
                 "Pachelbel",
                 "AltidFrejdig",
                 "DenStoreMester",
-                "SkaerTordag"
+                "SkaerTordag",
+                "12BarBlues"
               ]
             }
           }

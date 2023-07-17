@@ -119,6 +119,7 @@ export function key_chords(keyInfo: TKeyInfo) {
       ...keyInfo.sevenths.allSevenths(),
       ...keyInfo.secondaryMajor.allPrimaryChords(),
       ...keyInfo.secondaryDominants.allSevenths(),
+      ...keyInfo.substituteDominants.allSevenths(),
       ...keyInfo.additional.allSevenths(),
       ...keyInfo.other
     ]
@@ -151,7 +152,21 @@ export function numeral_by_chordNotes(keyInfo: TKeyInfo, chordNotes: string[]) {
   return chords.length > 1 ? chords.map(c => c.romanNumeral).join("|") : chords.first_and_only().romanNumeral;
 }
 
-export function resolveAmbiguousChords(chords : TChordRomanNumeral[], keyInfo : TKeyInfo, chordNotes: string[], progression : IProgression) {
+export function resolveAmbiguousChords(
+    chords : TChordRomanNumeral[], 
+    keyInfo : TKeyInfo, 
+    chordNotes: string[], 
+    progression : IProgression,
+    scaletype? : string
+    ) {
+  if (scaletype === "mixolydian") {
+
+    const I7dom = chords.find(c => c.romanNumeral === "I7dom")
+    if (I7dom) {
+      return I7dom
+    }
+    
+  }
   // add advanced logic here to resolve issue when chord functions are ambiguous
   // example ["F", "A", "C", "Eb"] i C minor melodic could equal IV7 or V7/bVII depending on the surrounding context;
   // pending implementation return first item

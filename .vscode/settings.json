@@ -11,6 +11,7 @@
             "/src/progressions/harmonic-progressions-circle-of-fifths-extended.json",
             "/src/progressions/harmonic-progressions-common.json",
             "/src/progressions/harmonic-progressions-wkh.json",
+            "/src/progressions/harmonic-progressions-experimental.json",
           ],
           "url": "./src/progressions/harmonic-progressions-schema.json"
         }
