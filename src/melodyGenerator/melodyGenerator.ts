@@ -6,8 +6,9 @@ import { remove_octave, syllables_in_key_of_c } from "../solfege";
 import { ISolfegePattern, solfegePatterns } from "./solfegePatterns";
 import { TChord } from "../quiz/audiateHarmony";
 import {  Scale, note } from "@tonaljs/tonal";
-import { Conditions, GlobalConditions, IGlobalConditions, IGlobalConditionsClass } from "./patternConditions";
+import { Conditions } from "./patternConditions";
 import { note_transpose, scale_range } from "../tonal-interface";
+import { IGlobalConditionsClass, GlobalConditions } from "./globalConditions";
 
 export interface IMelodicPattern {
     readonly timeSignature: 2 | 3 | 4

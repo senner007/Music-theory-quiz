@@ -2,8 +2,8 @@
 
 import { interval_direction, interval_distance } from "../tonal-interface";
 import { TNoteAllAccidentalOctave, interval_integer_absolute } from "../utils";
+import { NoVoiceLeadning } from "./globalConditions";
 import { IMelodyGeneratorBase, MelodyGeneratorBase } from "./melodyGenerator";
-import { GlobalConditions,  NoVoiceLeadning } from "./patternConditions";
 
 export const MelodyTopSingulate: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
     static id = "pattern_top_singulate";
