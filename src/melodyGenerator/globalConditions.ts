@@ -2,7 +2,7 @@ import { TKeyInfo } from "../keyinfo/keyInfo";
 import { interval_distance } from "../tonal-interface";
 import { TNoteAllAccidentalOctave, interval_simplify } from "../utils";
 import { ChordFunction, IMelodyFragment } from "./melodyGenerator";
-import { IGlobalConditions, Conditions } from "./patternConditions";
+import { Conditions } from "./patternConditions";
 
 export interface IGlobalConditionsClass {
   id: string;
@@ -15,6 +15,10 @@ export interface IGlobalConditionsClass {
     previousBass: TNoteAllAccidentalOctave | undefined,
     bass: TNoteAllAccidentalOctave
   ): IGlobalConditions;
+}
+
+export interface IGlobalConditions {
+    globalConditionsCheck(pattern: TNoteAllAccidentalOctave[] | undefined): boolean  
 }
 
 export class GlobalConditions extends Conditions implements IGlobalConditions {
