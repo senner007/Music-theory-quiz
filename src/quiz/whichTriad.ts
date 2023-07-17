@@ -7,6 +7,9 @@ import { allChordNamesSorted, create_chord } from "../tonal-interface";
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const WhichTriad: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+
+  static readonly id = "WhichTriad"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((chordType) => allChordNamesSorted.includes(chordType));
   }

@@ -8,6 +8,9 @@ import { allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interfa
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+
+  static readonly id = "HearTetraChord"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }

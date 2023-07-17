@@ -18,6 +18,9 @@ type TOptionsType = [
 export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends AudiateQuizBase<
   TOptionsType
 > {
+  static readonly id = "AudiateContextualIntervals"
+
+
   verify_options(_: TOptionsType): boolean {
     return true;
   }

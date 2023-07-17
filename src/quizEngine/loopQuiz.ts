@@ -2,7 +2,7 @@ import { IQuizOptions, IQuiz } from "../quiz/quiztypes/quiz-types";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 
-export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
+export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Record<string, unknown> | undefined) {
 
   var options: IQuizOptions[] = [];
   const allOptions = QuizClass.meta().all_options;
@@ -10,11 +10,21 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>) {
   if (!allOptions.is_empty()) {
     for (const optionType of allOptions) {
       try {
-        const selectOptions = await LogAsync.checkboxes(
-          optionType.options,
-          `Please select: ${optionType.name} or quit(q)`,
-          "q"
-        );
+        let selectOptions
+        if (cliOptions) {
+          selectOptions = optionType.name in cliOptions ? cliOptions[optionType.name] : optionType.options
+        } else {
+          if ("isCli" in optionType) {
+            selectOptions = optionType.options
+          } else {
+            selectOptions = await LogAsync.checkboxes(
+              optionType.options,
+              `Please select: ${optionType.name} or quit(q)`,
+              "q"
+            );
+          }
+          
+        }
         options.push({ name: optionType.name, options: selectOptions })
       } catch (err) {
         return;

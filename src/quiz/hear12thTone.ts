@@ -6,6 +6,9 @@ import { INotePlay } from "../midiplay";
 import { create_scale, chromatic_scale_notes, interval_distance } from "../tonal-interface";
 
 export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<never []> {
+
+  static readonly id = "Hear12thTone"
+
   verify_options(): boolean {
     return true;
   }

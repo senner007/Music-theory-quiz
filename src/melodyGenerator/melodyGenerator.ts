@@ -270,14 +270,15 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
                     return variantSolfege.toString() === pattern.toString();
                 })
 
-                const allConditionsMet = patternObj.conditions.every(condition => condition(patternMatch));
-                const globalConditionsMet = globalConditions?.globalConditionsCheck(patternMatch)
-
-                if (!allConditionsMet || !globalConditionsMet) {
-                    continue;
-                }
-
                 if (patternMatch) {
+
+                    const allConditionsMet = patternObj.conditions.every(condition => condition(patternMatch));
+                    const globalConditionsMet = globalConditions?.globalConditionsCheck(patternMatch)
+    
+                    if (!allConditionsMet || !globalConditionsMet) {
+                        continue;
+                    }
+                    
                     melody = patternObj.rhythm.map((r, index) => {
                         return { note: [patternMatch[index]], duration: r.duration }
                     })

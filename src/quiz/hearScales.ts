@@ -7,6 +7,9 @@ import { add_octave_above, allScaleNamesSorted, create_scale, scale_notes } from
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+
+  static readonly id = "HearScales"
+
   verify_options(options: TOptionType): boolean {
     return options.first().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }

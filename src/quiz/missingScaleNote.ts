@@ -9,6 +9,9 @@ import { allScaleNamesSorted, create_scale, scale_notes, note_variants } from ".
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+
+  static readonly id = "MissingScaleNote"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }

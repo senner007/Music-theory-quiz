@@ -12,6 +12,9 @@ import { allScaleNamesSorted, create_scale, scale_note_at_index, note_variants }
 type TOptionType = [{ name : string, options : readonly string[] }]
 
 export const NameScaleDegree: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+
+  static readonly id = "NameScaleDegree"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
