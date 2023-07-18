@@ -1,8 +1,8 @@
 ### Cli options:
 
-#### Available cli options:
+#### Cli options help:
 
-To see available quiz types<code>--what</code> and <code>--type [quiz type] --what</code> to see quiz type specific options.
+<code>--what</code> for available quiz types and <code>--type [quiz type] --what</code> for type specific options.
 
 #### Select quiz type using cli without haviing to go through menu.
 
