@@ -12,7 +12,7 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Re
       try {
         let selectOptions
         if (cliOptions) {
-          selectOptions = optionType.name in cliOptions ? cliOptions[optionType.name] : optionType.options
+          selectOptions = optionType.cliShort in cliOptions ? cliOptions[optionType.cliShort] : optionType.options
         } else {
           if ("isCli" in optionType) {
             selectOptions = optionType.options
@@ -25,7 +25,7 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Re
           }
           
         }
-        options.push({ name: optionType.name, options: selectOptions })
+        options.push({ ...optionType, options: selectOptions })
       } catch (err) {
         return;
       }

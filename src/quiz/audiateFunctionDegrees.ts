@@ -14,9 +14,9 @@ import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { ObjectEntries } from "../objectUtils";
 
 type TOptionType = [
-  { name : string, options : TSyllable[]},
-  { name : string, options : TOctave[]},
-  { name : string, options : number[]}
+  { name : string, options : TSyllable[], cliShort : string},
+  { name : string, options : TOctave[], cliShort : string},
+  { name : string, options : number[], cliShort : string}
 ]
 
 export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
@@ -109,9 +109,9 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
     return {
       get all_options(): TOptionType {
         return [
-          { name : "Syllables", options : ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"]},
-          { name : "Octaves", options : ["2","3", "4"]},
-          { name : "Notes", options : [6, 12, 18]},
+          { name : "Syllables", options : ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"], cliShort : "s"},
+          { name : "Octaves", options : ["2","3", "4"], cliShort : "o"},
+          { name : "Notes", options : [6, 12, 18], cliShort : "n"},
 
         ];
       },

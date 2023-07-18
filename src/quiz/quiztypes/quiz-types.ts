@@ -5,14 +5,13 @@ export interface IQuizInstance {
   cleanup() : Promise<void>
 }
 
-export type IQuizOptions = {
+type IOptions = {
   name: string;
   options : any;
-} | {
-  name : string;
-  isCli : true;
-  options : any;
+  cliShort: string
 }
+
+export type IQuizOptions = IOptions | (IOptions & { isCli : true })
 
 export interface IQuiz<T extends IQuizOptions[]>  {
   new (options: Readonly<T>): IQuizInstance;

@@ -4,7 +4,9 @@ import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 import { add_octave_above, allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [
+  { name : string, options : readonly string[], cliShort : string }
+]
 
 export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
 
@@ -79,7 +81,7 @@ export const HearScales: IQuiz<TOptionType> = class extends ListeningQuizBase<TO
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Scale options", options : [
+        return [{ name : "Scale options", cliShort : "s", options : [
             "aeolian",
             "altered",
             "augmented",

@@ -19,10 +19,10 @@ import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
 
 type TOptionType = [
-  { name: string; options: TProgression["description"][] },
-  { name: string; options: string[] },
-  { name: string; options: TNoteSingleAccidental[] },
-  { name: string; isCli : true, options : string[] }
+  { name: string; options: TProgression["description"][], cliShort: string; },
+  { name: string; options: string[], cliShort: string; },
+  { name: string; options: TNoteSingleAccidental[], cliShort: string; },
+  { name: string; isCli : true, options : string[], cliShort: string; }
 ];
 
 export interface TChord {
@@ -199,10 +199,10 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       "B",
     ];
     const options = [
-      { name: "Progressions", options: progressions.map((p) => p.description) as TProgression["description"][] },
-      { name: "Melodic Patterns", options: melodicPatterns.map((m) => m.description) as string[] },
-      { name: "Keys", options: commonKeys },
-      { name: "progression", isCli : true, options : progressions.map(p => p.progressions).flat().map(p => p.description) }
+      { name: "Progressions", options: progressions.map((p) => p.description) as TProgression["description"][], cliShort : "ps" },
+      { name: "Melodic Patterns", options: melodicPatterns.map((m) => m.description) as string[], cliShort : "m" },
+      { name: "Keys", options: commonKeys, cliShort : "k" },
+      { name: "Progression", isCli : true, options : progressions.map(p => p.progressions).flat().map(p => p.description), cliShort : "p" }
     ] as const;
 
     return {

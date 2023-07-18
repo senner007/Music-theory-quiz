@@ -13,7 +13,7 @@ import { ObjectEntries } from "../objectUtils";
 
 const pitchPatternKeyNames = ObjectEntries(pitchPatterns).keys;
 
-type TOptionsType = [{ name : string, options : readonly TPitchPatternName[]}]
+type TOptionsType = [{ name : string, options : readonly TPitchPatternName[], cliShort : string}]
 
 export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsType> {
 
@@ -82,7 +82,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Pitch patterns", options : pitchPatternKeyNames }] as const;
+        return [{ name : "Pitch patterns", options : pitchPatternKeyNames, cliShort : "p" }] as const;
       },
       name: "Hear trichord pitch patterns",
       description: "Identify the trichord pitch pattern that is being played",
