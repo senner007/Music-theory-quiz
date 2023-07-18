@@ -2,7 +2,7 @@ import { IQuizOptions, IQuiz } from "../quiz/quiztypes/quiz-types";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
 
-export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Record<string, unknown> | undefined) {
+export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Record<string, IQuizOptions["options"]> | undefined) {
 
   var options: IQuizOptions[] = [];
   const allOptions = QuizClass.meta().all_options;

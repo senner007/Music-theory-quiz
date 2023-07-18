@@ -7,7 +7,7 @@ export interface IQuizInstance {
 
 type IOptions = {
   name: string;
-  options : any;
+  options : string[];
   cliShort: string
 }
 

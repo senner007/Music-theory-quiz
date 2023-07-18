@@ -30,14 +30,6 @@ export function getCliOptions() {
     quizOptions.flat().forEach((o) => {
       program.addOption(
         new Option(`--${o.cliShort} <string...>`, `${o.name}`)
-          .argParser((value: any, previous: any) => {
-            const returnValue = typeof o.options[0] === "number" ? Number(value) : value;
-  
-            if (previous) {
-              return [previous, returnValue].flat();
-            }
-            return returnValue;
-        })
         .choices(o.options)
       );
     });
