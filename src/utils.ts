@@ -45,9 +45,9 @@ export type TNoteVariants = [`${TBaseNote}bb`, `${TBaseNote}b`, TBaseNote, `${TB
 
 export const baseNotes = ["C", "D", "E", "F", "G", "A", "B"] as const;
 
-export function customExit() {
+export function customExit(message : string = "Bye for now") {
   Log.clear();
-  Log.write("Bye for now");
+  Log.write(message);
   process.exit();
 }
 

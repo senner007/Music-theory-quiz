@@ -6,9 +6,12 @@ import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
 import { allScaleNamesSorted, create_scale, scale_notes, note_variants } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[], cliShort : string }]
 
 export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+
+  static readonly id = "MissingScaleNote"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
@@ -46,7 +49,7 @@ export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<T
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Scale types", options: [
+        return [{ name : "Scale types", cliShort : "s", options: [
           "major",
           "aeolian",
           "dorian",

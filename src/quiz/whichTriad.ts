@@ -4,9 +4,12 @@ import chalk from "chalk";
 import { TextQuizBase } from "./quizBase/textBase";
 import { allChordNamesSorted, create_chord } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[], cliShort : string }]
 
 export const WhichTriad: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+
+  static readonly id = "WhichTriad"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((chordType) => allChordNamesSorted.includes(chordType));
   }
@@ -41,7 +44,7 @@ export const WhichTriad: IQuiz<TOptionType> = class extends TextQuizBase<TOption
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Chord types", options : ["major", "minor", "augmented", "diminished"] }] as const;
+        return [{ name : "Chord types", options : ["major", "minor", "augmented", "diminished"], cliShort : "c" }] as const;
       },
       name: "Which triad",
       description: "Choose the notes that make up the triad",

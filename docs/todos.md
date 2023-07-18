@@ -1,4 +1,4 @@
-## Todos:
+### Todos:
 - play mp3 harmonic dictations with node ffplay
 - add purpose and philosophy
 - release .exe files

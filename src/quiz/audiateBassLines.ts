@@ -11,7 +11,9 @@ import {
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { interval_distance, note_transpose } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : TProgression["description"][]}]
+type TOptionType = [
+  { name : string, options : TProgression["description"][], cliShort : string}
+]
 
 export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
   verify_options(_: TOptionType): boolean {
@@ -85,10 +87,14 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
 
   protected override initTempo : number = 500;
 
+  static readonly id = "AudiateBassLines"
+
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Bass lines", options : progressions.map(p => p.description) as TProgression["description"][] }] as const
+        return [
+          { name : "Bass lines", options : progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" }
+        ] as const
       },
       name: "Audiate bass lines",
       description: "Audiate the harmonic progression bass line as solfege degrees",

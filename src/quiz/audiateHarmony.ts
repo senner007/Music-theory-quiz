@@ -4,7 +4,7 @@ import { keyinfo, chords_by_chordNotes, resolveAmbiguousChords } from "../keyinf
 import { INotePlay } from "../midiplay";
 import { IQuiz } from "./quiztypes/quiz-types";
 import { ITableHeader } from "../solfege";
-import { transpose_progression } from "../transposition";
+import { IProgression, transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, TIntervalInteger, TNoteAllAccidental } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { IMelodyGeneratorBase, melodyGenerator, MelodyGeneratorBase } from "../melodyGenerator/melodyGenerator";
@@ -19,9 +19,10 @@ import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
 
 type TOptionType = [
-  { name: string; options: TProgression["description"][] },
-  { name: string; options: string[] },
-  { name: string; options: TNoteSingleAccidental[] }
+  { name: string; options: TProgression["description"][], cliShort: string; },
+  { name: string; options: string[], cliShort: string; },
+  { name: string; options: TNoteSingleAccidental[], cliShort: string; },
+  { name: string; isCli : true, options : string[], cliShort: string; }
 ];
 
 export interface TChord {
@@ -63,7 +64,9 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   constructor(options: Readonly<TOptionType>) {
     super(options);
 
-    this.key = "C";
+    this.key = options[2]
+    .options
+    .random_item();
 
     const selectProgressions = progressions.filter((p) =>
       options.first().options.some((description) => description === p.description)
@@ -72,7 +75,7 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
     const randomProgression = selectProgressions
       .map((p) => p.progressions)
       .flat()
-      // .filter((p) => p.description === "e7")
+      .filter(p => options.last().options.includes(p.description))
       .random_item();
 
     this.progressionTags = randomProgression.tags;
@@ -176,6 +179,8 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       });
   }
 
+  static readonly id = "AudiateHarmony"
+
   static meta() {
     const commonKeys: TNoteSingleAccidental[] = [
       "C",
@@ -194,9 +199,10 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       "B",
     ];
     const options = [
-      { name: "Progressions", options: progressions.map((p) => p.description) as TProgression["description"][] },
-      { name: "Melodic Patterns", options: melodicPatterns.map((m) => m.description) as string[] },
-      { name: "Keys", options: commonKeys },
+      { name: "Progressions", options: progressions.map((p) => p.description) as TProgression["description"][], cliShort : "ps" },
+      { name: "Melodic Patterns", options: melodicPatterns.map((m) => m.description) as string[], cliShort : "m" },
+      { name: "Keys", options: commonKeys, cliShort : "k" },
+      { name: "Progression", isCli : true, options : progressions.map(p => p.progressions).flat().map(p => p.description), cliShort : "p" }
     ] as const;
 
     return {

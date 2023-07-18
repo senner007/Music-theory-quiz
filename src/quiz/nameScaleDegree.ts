@@ -9,9 +9,12 @@ import {
 import { TextQuizBase } from "./quizBase/textBase";
 import { allScaleNamesSorted, create_scale, scale_note_at_index, note_variants } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[], cliShort : string }]
 
 export const NameScaleDegree: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+
+  static readonly id = "NameScaleDegree"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
@@ -45,7 +48,7 @@ export const NameScaleDegree: IQuiz<TOptionType> = class extends TextQuizBase<TO
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Scale types", options: [
+        return [{ name : "Scale types", cliShort : "s", options: [
           "major",
           "aeolian",
           "dorian",

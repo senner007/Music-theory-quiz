@@ -49,29 +49,3 @@ export const progressions = [
   level_70_jazz_walkup,
   experimental
 ] as const;
-
-export function JSON_progressions_verify() {
-  const progressionsTemp: string[] = [];
-  const progressionsArray: TProgression[] = progressions.map(p => p.progressions).flat();
-  progressionsArray.forEach((key, keyIndex) => {
-    const chordsString = key.chords.join("") + key.bass.join("");
-    if (progressionsTemp.includes(chordsString)) {
-      LogError(
-        `Json content error at: 
-Description : ${key.description} progression : ${chordsString}
-Progression is not unique. Similar to progression at index: ${progressionsTemp.indexOf(chordsString)}`
-      );
-    }
-    progressionsTemp.push(chordsString);
-
-    key.chords.forEach((chord, chordIndex) => {
-      if (!(chord in romanNumeralsDict || to_roman_numeral(chord) in romanNumeralsDict)) {
-        LogError(
-          `Json content error at: 
-Index : ${chordIndex} chord : ${chord}
-Roman numeral not in dictionary`
-        );
-      }
-    });
-  });
-};

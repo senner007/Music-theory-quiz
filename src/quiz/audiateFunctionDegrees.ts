@@ -14,12 +14,15 @@ import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { ObjectEntries } from "../objectUtils";
 
 type TOptionType = [
-  { name : string, options : TSyllable[]},
-  { name : string, options : TOctave[]},
-  { name : string, options : number[]}
+  { name : string, options : TSyllable[], cliShort : string},
+  { name : string, options : TOctave[], cliShort : string},
+  { name : string, options : string[], cliShort : string}
 ]
 
 export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
+
+  static readonly id = "AudiateFunctionalDegrees"
+
   verify_options(options: TOptionType): boolean {
     return options.first().options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
@@ -43,7 +46,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
 
     const notes = options[2].options.random_item();
 
-    this.initAudio = [...Array(notes).keys()].map((_) => {
+    this.initAudio = [...Array(Number(notes)).keys()].map((_) => {
       const note = syllableNotesTransposed.random_item();
       const randomOctave = options[1].options.random_item();
 
@@ -106,9 +109,9 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
     return {
       get all_options(): TOptionType {
         return [
-          { name : "Syllables", options : ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"]},
-          { name : "Octaves", options : ["2","3", "4"]},
-          { name : "Notes", options : [6, 12, 18]},
+          { name : "Syllables", options : ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"], cliShort : "s"},
+          { name : "Octaves", options : ["2","3", "4"], cliShort : "o"},
+          { name : "Notes", options : ["6", "12", "18"], cliShort : "n"},
 
         ];
       },

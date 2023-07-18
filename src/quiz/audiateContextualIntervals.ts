@@ -11,13 +11,15 @@ import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { create_scale, scale_notes, interval_distance, interval_to_absolute, add_octave_above } from "../tonal-interface";
 
 type TOptionsType = [
-  { name: string, options: string[] },
-  { name: string, options: TIntervalAbsolute[] }
-]
+  { name: string, options: string[], cliShort : string },
+  { name: string, options: TIntervalAbsolute[], cliShort : string }
+];
 
 export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends AudiateQuizBase<
   TOptionsType
 > {
+  static readonly id = "AudiateContextualIntervals"
+
   verify_options(_: TOptionsType): boolean {
     return true;
   }
@@ -62,8 +64,6 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
   get question() {
     return "";
   }
-
- 
 
   audio() {
     const interval = this.interval.map((n): INotePlay => {
@@ -116,8 +116,8 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
         ];
         const intervals: TIntervalAbsolute[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
         return [
-          { name : "scales", options : scales }, 
-          { name : "intervals", options: intervals }
+          { name : "Scales", options : scales, cliShort : "s" }, 
+          { name : "Intervals", options: intervals, cliShort : "i" }
         ];
       },
       name: "Audiate contextual intervals",

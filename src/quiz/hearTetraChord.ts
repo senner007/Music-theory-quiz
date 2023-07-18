@@ -5,9 +5,12 @@ import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 import { allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[] }]
+type TOptionType = [{ name : string, options : readonly string[], cliShort : string }]
 
 export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+
+  static readonly id = "HearTetraChord"
+
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
@@ -67,7 +70,7 @@ export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBas
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Scale types", options : [
+        return [{ name : "Scale types", cliShort : "s", options : [
           "major",
           "aeolian",
           "phrygian",
