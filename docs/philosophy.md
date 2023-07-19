@@ -1,0 +1,3 @@
+### Philosophy
+This is an attempt to create a more meaningful approach to ear training and to try to bridge the gap between theory and aural perception. Traditional ear training often focuses on abstract and disconnected concepts that have limited impact on the development of relevant musicianship skills.
+This initiative is not intended to replace the work done with musical instruments; rather, it aims to inspire musicians to integrate theoretical concepts into their instrument practice. Hopefully it will serve as a reminder that music theory and practice are intricately intertwined, and both should be given equal importance.
