@@ -56,6 +56,7 @@ const romanNumeralsDict = {
   "V7add6no5no9no1(3rdInv)" : ["F4", "B4", "E5"],
   V43no1: ["D4", "F4", "B4"],
   Vsus4: ["D4", "G4", "C5"],
+  V7b5 : ["G4", "B4", "Db5", "F5"],
   v: [],
   v7: ["G4", "Bb4", "D5", "F5"],
   "v43" : ["D4", "F4", "G4", "Bb4"],
@@ -85,6 +86,7 @@ const romanNumeralsDict = {
   "V7no5/V": ["D4", "F#4", "C5"],
   "V7no1/V": ["C4", "F#4", "A4"],
   "V65/V": ["F#4", "A4", "C5", "D5"],
+
   bIII7dom : [],
   iii: ["E4", "G4", "B4"],
   iii6: ["G4", "B4", "E5"],
@@ -138,6 +140,7 @@ const romanNumeralsDict = {
   bVIM7: [],
   bVI7: [],
   bVI7dom : [],
+  bIV7b5 : [],
   vidim7: ["A4", "C5", "Eb5", "Gb5"],
   "vidim7no5" : ["A4", "C5", "Gb5"],
   "V/ii": ["A4", "C#5", "E5"],

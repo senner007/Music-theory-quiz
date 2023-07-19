@@ -2,6 +2,8 @@ import { TRomanNumeral } from "../harmony/romanNumerals";
 import { MinorKey } from "@tonaljs/key";
 import { primary_chords_and_inversions, seventh_chords_inversions, TChordQualities } from "./keyInfo";
 import { get_chord } from "../tonal-interface";
+import { EScaleSteps, TNoteAllAccidental } from "../utils";
+import { ObjectEntries } from "../objectUtils";
 
 export function key_info_minor(key: MinorKey) {
 
@@ -16,6 +18,12 @@ export function key_info_minor(key: MinorKey) {
   const naturalSecondaryDominants: TRomanNumeral[] = ["V/iv", "V/V", "bIII", "V/bVII", "V", "bVI", "bVII"];
   const naturalDecondaryDominantsSevenths: TRomanNumeral[] = ["V7/iv", "V7/V", "V7/bVI", "V7/bVII", "V7", "V7/bii", "bVII7"];
 
+  const naturalScale = key.natural.scale as readonly TNoteAllAccidental[];
+
+  const additional = {
+    "bIV7b5": get_chord("7b5", naturalScale.at_or_throw(EScaleSteps.SubMediant)).symbol
+  } as const
+
   // this chord is overriden since the library has this set to m6 chord and not mMaj7
   const melodicChords = [...key.melodic.chords] as string[];
   melodicChords[0] = key.melodic.tonic + "mMaj7";
@@ -28,7 +36,10 @@ export function key_info_minor(key: MinorKey) {
       ...primary_chords_and_inversions(["m", "dim", "M", "m", "m", "M", "M"], naturalNumerals, key.natural.scale),
       ...seventh_chords_inversions(key.natural.chords as TChordQualities[], naturalSevenths),
       secondaryDominants: primary_chords_and_inversions(["M", "M", "M", "M", "M", "M", "M"], naturalSecondaryDominants, key.natural.scale),
-      secondaryDominantsSevenths: seventh_chords_inversions(key.natural.scale.map(n => get_chord("7", n).symbol), naturalDecondaryDominantsSevenths)
+      secondaryDominantsSevenths: seventh_chords_inversions(key.natural.scale.map(n => get_chord("7", n).symbol), naturalDecondaryDominantsSevenths),
+      additional: seventh_chords_inversions(
+        ObjectEntries(additional).values, ObjectEntries(additional).keys,
+      ),
     },
     harmonic: {
       ...key.harmonic,

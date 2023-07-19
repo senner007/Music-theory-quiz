@@ -128,12 +128,14 @@ export function key_chords(keyInfo: TKeyInfo) {
   return [
     ...keyInfo.natural.allPrimaryChords(),
     ...keyInfo.natural.allSevenths(),
+    ...keyInfo.natural.additional.allSevenths(),
     ...keyInfo.harmonic.allPrimaryChords(),
     ...keyInfo.harmonic.allSevenths(),
     ...keyInfo.melodic.allPrimaryChords(),
     ...keyInfo.melodic.allSevenths(),
     ...keyInfo.natural.secondaryDominants.allPrimaryChords(),
     ...keyInfo.natural.secondaryDominantsSevenths.allSevenths(),
+    
   ]
 }
 

@@ -45,7 +45,8 @@ export function key_info_major(key: MajorKey) {
   const additional = {
     "vii7": get_chord("m7", scale.at_or_throw(EScaleSteps.Leading)).symbol,
     "v7": get_chord("m7", scale.at_or_throw(EScaleSteps.Dominant)).symbol,
-    "V7add6": get_chord("7add6", scale.at_or_throw(EScaleSteps.Dominant)).symbol
+    "V7add6": get_chord("7add6", scale.at_or_throw(EScaleSteps.Dominant)).symbol,
+    "V7b5": get_chord("7b5", scale.at_or_throw(EScaleSteps.Dominant)).symbol // not used yet
   } as const
 
   // adds the I7dom chord used with eg. blues progressions
