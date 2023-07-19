@@ -14,7 +14,7 @@ import {
   MelodyPattern_002,
   MelodyTopSingulate,
 } from "../melodyGenerator/melodyPatterns";
-import { progression_to_chords, romanNumeralChord } from "../harmony/romanNumerals";
+import { progression_to_chords, romanNueralDict } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
 
@@ -86,7 +86,7 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
     this.keyInfo = keyinfo(keyType);
 
     const randomProgressionInC = {
-      chords: randomProgression.chords.map((c) => romanNumeralChord(c)),
+      chords: randomProgression.chords.map((c) => romanNueralDict.notes(c)),
       bass: randomProgression.bass,
     };
 

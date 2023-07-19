@@ -12,6 +12,8 @@
             "/src/progressions/harmonic-progressions-common.json",
             "/src/progressions/harmonic-progressions-wkh.json",
             "/src/progressions/harmonic-progressions-experimental.json",
+            "/src/progressions/harmonic-progressions-jazz-walkup.json",
+            "/src/progressions/harmonic-progressions-partimento.json",
           ],
           "url": "./src/progressions/harmonic-progressions-schema.json"
         }

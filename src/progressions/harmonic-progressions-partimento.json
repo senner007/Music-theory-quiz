@@ -1,0 +1,38 @@
+{
+  "level": 100,
+  "description": "Partimento - rule of the octave",
+  "progressions": [
+    {
+      "chords": ["I6", "V42no5", "I6", "ii7no3", "V64", "IVno3", "V42no3", "I6"],
+      "bass": ["C3", "D3", "E3", "F3", "G3", "A3", "B3", "C4"],
+      "description": "parti-1",
+      "isMajor": true,
+      "isDiatonic": true,
+      "tags": ["Partimento"]
+    },
+    {
+      "chords": ["I6", "V64no3double5", "V7no5/V", "V64", "V64", "I6", "V42no5", "I6"],
+      "bass": ["C4", "B3", "A3", "G3", "F3", "E3", "D3", "C3"],
+      "description": "parti-2",
+      "isMajor": true,
+      "isDiatonic": true,
+      "tags": ["Partimento"]
+    },
+    {
+      "chords": ["i6", "V42no5", "i6", "iio7no3", "V64", "IVno3", "V42no3", "i6"],
+      "bass": ["C3", "D3", "Eb3", "F3", "G3", "A3", "B3", "C4"],
+      "description": "parti-3",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Partimento"]
+    },
+    {
+      "chords": ["i6", "V64no3double5", "V7no5/V", "V64", "V64", "i6", "V42no5", "i6"],
+      "bass": ["C4", "B3", "A3", "G3", "F3", "Eb3", "D3", "C3"],
+      "description": "parti-4",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Partimento"]
+    }
+  ]
+}

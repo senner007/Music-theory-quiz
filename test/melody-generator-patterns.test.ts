@@ -3,7 +3,7 @@ import { get_key } from "../src/tonal-interface";
 import { melodyGenerator } from "../src/melodyGenerator/melodyGenerator";
 import { MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyTopSingulate} from "../src/melodyGenerator/melodyPatterns";
 import { keyinfo } from "../src/keyinfo/keyInfo";
-import { progression_to_chords, romanNumeralChord } from "../src/harmony/romanNumerals";
+import { progression_to_chords, romanNueralDict } from "../src/harmony/romanNumerals";
 import { IProgression } from "../src/transposition";
 import { test_Progressions } from "./melody-generator-results";
 import { progressions } from "../src/harmony/harmonicProgressions";
@@ -13,7 +13,7 @@ describe("Test progression generate expected melodic patterns", () => {
     for (const progression of test_Progressions) {
 
         const progressionChordNotes: IProgression = {
-            chords: progression.chords.map((c) => romanNumeralChord(c)),
+            chords: progression.chords.map((c) => romanNueralDict.notes(c)),
             bass: progression.bass,
         };
 
@@ -37,7 +37,7 @@ describe("Test progression generate expected melodic patterns", () => {
     for (const progression of progs) {
 
         const progressionChordNotes: IProgression = {
-            chords: progression.chords.map((c) => romanNumeralChord(c)),
+            chords: progression.chords.map((c) => romanNueralDict.notes(c)),
             bass: progression.bass,
         };
 

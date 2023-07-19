@@ -33,8 +33,14 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Re
   }
 
   while (true) {
-    const quiz = new QuizClass(options);
-
+    let quiz
+    try {
+      quiz = new QuizClass(options);
+    } catch(error) {
+      Log.error((error as Error).message);
+      break;
+    }
+    
     Log.clear();
     Log.write(QuizClass.meta().description);
 

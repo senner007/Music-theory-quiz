@@ -1,8 +1,8 @@
 import { expect, vi, describe, test, afterEach, Mock } from "vitest";
 import { TProgression, progressions } from "../src/harmony/harmonicProgressions";
-import { romanNumeralChord } from "../src/harmony/romanNumerals";
 import { keyinfo, numeral_by_chordNotes } from "../src/keyinfo/keyInfo";
 import { get_key } from "../src/tonal-interface";
+import { romanNueralDict } from "../src/harmony/romanNumerals";
 
 const allProgressions = progressions
   .map(p => p.progressions)
@@ -13,7 +13,7 @@ function getRomanNumerals(progression: TProgression) {
   const keyType = get_key("C", progression.isMajor ? "major" : "minor")
   const keyInfo = keyinfo(keyType);
   const progressionChordNotes = {
-    chords: progression.chords.map((c) => romanNumeralChord(c)),
+    chords: progression.chords.map((c) => romanNueralDict.notes(c)),
     bass: progression.bass,
   };
 

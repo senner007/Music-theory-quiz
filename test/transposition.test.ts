@@ -2,9 +2,9 @@ import { Note } from "@tonaljs/tonal";
 import { expect, describe, test, it } from "vitest";
 import { progressions} from "../src/harmony/harmonicProgressions";
 import { IProgression, transpose_progression, transpositionBounds } from "../src/transposition";
-import { romanNumeralChord } from "../src/harmony/romanNumerals";
 import { sortNotes } from "../src/tonal-interface";
 import "../src/arrayProto"
+import { romanNueralDict } from "../src/harmony/romanNumerals";
 
 describe("Test progression transposition methods", () => {
 
@@ -13,7 +13,7 @@ describe("Test progression transposition methods", () => {
     
 
     const firstProgression: IProgression = {
-        chords: progressions.first().progressions.first().chords.map((c) => romanNumeralChord(c)),
+        chords: progressions.first().progressions.first().chords.map((c) => romanNueralDict.notes(c)),
         bass: progressions.first().progressions.first().bass,
     };
     const highestNoteInChords = sortNotes(

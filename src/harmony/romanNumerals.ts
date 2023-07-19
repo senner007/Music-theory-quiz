@@ -4,14 +4,14 @@ import { IProgression } from "../transposition";
 import { TKeyInfo, chords_by_chordNotes, resolveAmbiguousChords } from "../keyinfo/keyInfo";
 import { LogError } from "../dev-utils";
 
-type TRomanNumeralDict = Record<string, TNoteAllAccidentalOctave[]>;
+type TRomanNumeralDict = Record<string, readonly TNoteAllAccidentalOctave[]>;
 
 export type TRomanNumeral = keyof typeof romanNumeralsDict;
 
 export type TRomanNumeralAbove = `${TRomanNumeral}-a`;
 
 // TODO : split into base and sevenths types
-export const romanNumeralsDict = {
+const romanNumeralsDict = {
   i: ["C4", "Eb4", "G4"],
   i6: ["Eb4", "G4", "C5"],
   i64: ["G4", "C5", "Eb5"],
@@ -40,7 +40,9 @@ export const romanNumeralsDict = {
   "V65no5/IV": ["E4", "Bb4", "C5"],
   "V743no1/IV" : ["G4", "Bb4", "E5"],
   V: ["G4", "B4", "D5"],
+  V6: ["B3", "D4", "G4"],
   V64: ["D4", "G4", "B4"],
+  V64no3double5: ["D4", "G4", "D5"],
   V7: ["G4", "B4", "D5", "F5"],
   V7no1 : ["B4", "D5", "F5"],
   V7no5: ["G4", "B4", "F5"],
@@ -48,8 +50,8 @@ export const romanNumeralsDict = {
   V43no3 : ["D4", "F4", "G4"],
   V43no3wide : ["G3", "D4", "F4"],
   V42no5: ["F4", "G4", "B4"],
+  V42no3 : ["F4", "G4", "D5"],
   V42no1: ["F4", "B4", "D5"],
-  V6: ["B3", "D4", "G4"],
   V7add6 : [],
   "V7add6no5no9no1(3rdInv)" : ["F4", "B4", "E5"],
   V43no1: ["D4", "F4", "B4"],
@@ -61,6 +63,7 @@ export const romanNumeralsDict = {
   ii: ["D4", "F4", "A4"],
   ii7 : [],
   ii7no5: ["D4", "F4", "C5"],
+  ii7no3: ["D4", "A4", "C5"],
   ii43: ["A4", "C5", "D5", "F5"],
   ii65no3: ["A4", "C5", "D5"], // wrong name
   ii65no5: ["F4", "C5", "D5"],
@@ -69,6 +72,7 @@ export const romanNumeralsDict = {
   iio7: [],
   iio6: ["F4", "Ab4", "D5"],
   iio64: ["Ab4", "D5", "F5"],
+  iio7no3: ["D4", "Ab4", "C5"],
   ii6: ["F4", "A4", "D5"],
   ii64: ["A4", "D5", "F5"],
   ii6no3: ["A4", "D5"],
@@ -103,6 +107,7 @@ export const romanNumeralsDict = {
   iv64: ["C4", "F4", "Ab4"],
   iv7: [],
   IV: ["F4", "A4", "C5"],
+  IVno3: ["F4", "C5"],
   IV6: ["A4", "C5", "F5"],
   IV6no3: ["C5", "F5"],
   IV64: ["C4", "F4", "A4"],
@@ -155,19 +160,38 @@ export const romanNumeralsDict = {
   "V7/bVII": ["F4", "A4", "C5", "Eb5"],
   "V/iii": ["B4", "D#5", "F#5"],
   "V7/iii": ["B4", "D#5", "F#5", "A5"]
-} satisfies TRomanNumeralDict;
+} as const satisfies TRomanNumeralDict
 
-export function romanNumeralChord(romanNumeral: TRomanNumeral | TRomanNumeralAbove) {
-  if (romanNumeral.includes("-a")) {
-    const basicRomanNumeral: TRomanNumeral = to_roman_numeral(romanNumeral as TRomanNumeralAbove);
-    return to_octave_above(romanNumeralsDict[basicRomanNumeral]);
+class RomanNumeralDictionary {
+  private readonly romanNumerals = romanNumeralsDict;
+
+  private to_roman_numeral(romanNumeral: TRomanNumeralAbove): TRomanNumeral {
+    return romanNumeral.replace(/-a/g, "") as TRomanNumeral;
   }
-  return romanNumeralsDict[romanNumeral as TRomanNumeral];
+
+  private octave_roman_numeral (roamnNumeralOctave : TRomanNumeralAbove) {
+    const romanNumeralNoOctave: TRomanNumeral = this.to_roman_numeral(roamnNumeralOctave);
+    return to_octave_above(this.romanNumerals[romanNumeralNoOctave]);
+  }
+
+  notes(romanNumeral : TRomanNumeral | TRomanNumeralAbove) {
+
+    let chord;
+    if (romanNumeral.includes("-a")) {
+      chord = this.octave_roman_numeral(romanNumeral as TRomanNumeralAbove)
+    } else {
+      chord = this.romanNumerals[romanNumeral as TRomanNumeral];
+    }
+
+    if (chord === undefined) {
+      LogError(`Roman numeral: ${romanNumeral} does not exist in dictionary`)
+    }
+
+    return chord;
+  }
 }
 
-export function to_roman_numeral(romanNumeral: TRomanNumeral | TRomanNumeralAbove): TRomanNumeral {
-  return romanNumeral.replace(/-a/g, "") as TRomanNumeral;
-}
+export const romanNueralDict = new RomanNumeralDictionary();
 
 export function progression_to_chords(progression : IProgression, keyInfo : TKeyInfo, scaletype? : string) {
   return progression

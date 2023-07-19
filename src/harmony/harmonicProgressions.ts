@@ -1,7 +1,7 @@
 import { TNoteAllAccidentalOctave } from "../utils";
 import fs from "fs";
 import { LogError } from "../dev-utils";
-import { TRomanNumeralAbove, TRomanNumeral, romanNumeralsDict, to_roman_numeral } from "./romanNumerals";
+import { TRomanNumeralAbove, TRomanNumeral  } from "./romanNumerals";
 
 export type TProgression = Readonly<{
   chords: Readonly<(TRomanNumeral | TRomanNumeralAbove)[]>;
@@ -32,9 +32,9 @@ const level_30_common = JSON.parse(fs.readFileSync("src/progressions/harmonic-pr
 const level_40 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-wkh.json") as any) as TProgressionsJSON;
 const level_50_common_jazz = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-common-jazz.json") as any) as TProgressionsJSON;
 const level_70_jazz_walkup = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-jazz-walkup.json") as any) as TProgressionsJSON;
+const partimento = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-partimento.json") as any) as TProgressionsJSON;
 
 const experimental = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-experimental.json") as any) as TProgressionsJSON;
-
 export const progressions = [
   level_1,
   level_2,
@@ -47,5 +47,6 @@ export const progressions = [
   level_40,
   level_50_common_jazz,
   level_70_jazz_walkup,
-  experimental
+  experimental,
+  partimento
 ] as const;
