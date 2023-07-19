@@ -51,8 +51,20 @@ export function customExit(message : string = "Bye for now") {
   process.exit();
 }
 
-export function is_interrupt(err: unknown) {
-  return err === InterruptedPrompt.EVENT_INTERRUPTED;
+export class FatalError extends Error {
+  constructor(message: string) {
+    super(message);
+    Log.error("Fatal Error");
+    this.name = "FatalError";
+  }
+}
+
+export function is_interrupt(error: unknown) {
+  return error === InterruptedPrompt.EVENT_INTERRUPTED;
+}
+
+export function is_fatal(error: unknown) {
+  return error instanceof FatalError
 }
 
 export function to_octave<T extends Readonly<TNoteAllAccidental>>(n: T, octave: TOctave) {

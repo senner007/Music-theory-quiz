@@ -1,11 +1,12 @@
 import "./arrayProto";
-import { customExit, is_interrupt } from "./utils";
+import { customExit, is_fatal, is_interrupt } from "./utils";
 import { loopQuiz } from "./quizEngine/loopQuiz";
 import { LogAsync } from "./logger/logAsync";
 import easymidi from "easymidi";
 import { Log } from "./logger/logSync";
 import { getCliOptions } from "./cliOptions/cliOptions";
 import { quizContainer } from "./quizContainer";
+import { LogError } from "./dev-utils";
 
 process.stdin.setMaxListeners(20);
 Log.clear();
@@ -37,6 +38,9 @@ let cliOptions = getCliOptions();
     } catch (err) {
       if (is_interrupt(err)) {
         customExit();
+      }
+      if (is_fatal(err)) {
+        customExit((err as Error).message);
       }
     }
   }

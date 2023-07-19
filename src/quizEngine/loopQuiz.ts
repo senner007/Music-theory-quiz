@@ -1,6 +1,7 @@
 import { IQuizOptions, IQuiz } from "../quiz/quiztypes/quiz-types";
 import { Log } from "../logger/logSync";
 import { LogAsync } from "../logger/logAsync";
+import { FatalError, customExit } from "../utils";
 
 export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Record<string, IQuizOptions["options"]> | undefined) {
 
@@ -37,8 +38,7 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Re
     try {
       quiz = new QuizClass(options);
     } catch(error) {
-      Log.error((error as Error).message);
-      break;
+      throw new FatalError((error as Error).message)
     }
     
     Log.clear();
