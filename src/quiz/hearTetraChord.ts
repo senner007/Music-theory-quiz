@@ -9,8 +9,6 @@ type TOptionType = [{ name : string, options : readonly string[], cliShort : str
 
 export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
 
-  static readonly id = "HearTetraChord"
-
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }

@@ -8,8 +8,6 @@ type TOptionType = [{ name : string, options : readonly string[], cliShort : str
 
 export const WhichTriad: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
 
-  static readonly id = "WhichTriad"
-
   verify_options(options: TOptionType): boolean {
     return options.first_and_only().options.every((chordType) => allChordNamesSorted.includes(chordType));
   }

@@ -22,7 +22,7 @@ let cliOptions = getCliOptions();
     try {
       let choiceSelection;
       if(cliOptions) {
-        choiceSelection = quizContainer.filter((q) => q.id === cliOptions!.type).first_and_only();
+        choiceSelection = quizContainer.filter((q) => q.name === cliOptions!.type).first_and_only();
       } else {
         const choice = await LogAsync.questions_in_list(
           quizContainer.map((quiz) => quiz.meta().name),

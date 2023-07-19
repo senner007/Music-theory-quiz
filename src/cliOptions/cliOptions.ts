@@ -19,10 +19,10 @@ export function getCliOptions() {
   
     program
       .addOption(new Option("-t, --type <string>", "quiz type")
-      .choices(quizContainer.map((q) => q.id)))
+      .choices(quizContainer.map((q) => q.name)))
     
     const quizOptions = quizContainer
-      .filter(q => q.id === classType)
+      .filter(q => q.name === classType)
       .map((q: IQuiz<IQuizOptions[]>) => {
         return q.meta().all_options;
       });

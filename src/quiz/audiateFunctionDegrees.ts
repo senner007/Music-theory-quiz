@@ -21,8 +21,6 @@ type TOptionType = [
 
 export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
 
-  static readonly id = "AudiateFunctionalDegrees"
-
   verify_options(options: TOptionType): boolean {
     return options.first().options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }

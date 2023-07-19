@@ -17,9 +17,6 @@ type TOptionsType = [{ name : string, options : readonly TPitchPatternName[], cl
 
 export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsType> {
 
-  static readonly id = "HearTrichordPitchPatterns"
-
-
   verify_options(options: TOptionsType): boolean {
     return options.first_and_only().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }

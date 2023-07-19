@@ -179,8 +179,6 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
       });
   }
 
-  static readonly id = "AudiateHarmony"
-
   static meta() {
     const commonKeys: TNoteSingleAccidental[] = [
       "C",

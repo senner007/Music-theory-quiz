@@ -87,8 +87,6 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
 
   protected override initTempo : number = 500;
 
-  static readonly id = "AudiateBassLines"
-
   static meta() {
     return {
       get all_options() {
