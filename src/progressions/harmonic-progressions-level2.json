@@ -1,6 +1,6 @@
 {
     "level": 2,
-    "description": "Basic I VI II V I, I VI IV V I(including II6 and V7)",
+    "description": "Level2",
     "progressions": [
       {
         "chords": ["I6", "vi64", "IV", "V64", "I6"],
