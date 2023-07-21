@@ -2,9 +2,9 @@ import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
 import { keyinfo, chords_by_chordNotes, resolveAmbiguousChords } from "../keyinfo/keyInfo";
 import { INotePlay } from "../midiplay";
-import { IQuiz } from "./quiztypes/quiz-types";
+import { IQuiz, IQuizOptions, TOptionsReturnType } from "./quiztypes/quiz-types";
 import { ITableHeader } from "../solfege";
-import { IProgression, transpose_progression } from "../transposition";
+import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, TIntervalInteger, TNoteAllAccidental } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { IMelodyGeneratorBase, melodyGenerator, MelodyGeneratorBase } from "../melodyGenerator/melodyGenerator";
@@ -18,12 +18,93 @@ import { progression_to_chords, romanNueralDict } from "../harmony/romanNumerals
 import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
 
-type TOptionType = [
-  { name: string; options: TProgression["description"][], cliShort: string; },
-  { name: string; options: string[], cliShort: string; },
-  { name: string; options: TNoteSingleAccidental[], cliShort: string; },
-  { name: string; isCli : true, options : string[], cliShort: string; }
+const commonKeys: TNoteSingleAccidental[] = [
+  "C",
+  "C#",
+  "Db",
+  "D",
+  "Eb",
+  "F",
+  "F#",
+  "Gb",
+  "G",
+  "G#",
+  "Ab",
+  "A",
+  "Bb",
+  "B",
 ];
+
+class Options {
+  private static progressions = {
+    name: "Progressions",
+    options: () => progressions.map((p) => p.description) as TProgression["description"][],
+    cliShort: "ps",
+  };
+
+  private static melodicPatterns = {
+    name: "Melodic Patterns",
+    options: (prev: TOptionsReturnType<IQuizOptions[]> | undefined) => {
+      // console.log(prev)
+      if (!prev) {
+        LogError(`Conditional options depends on previous options at ${this.melodicPatterns.name}`);
+      }
+      const progressionsOptions = prev.filter((p) => p.name === this.progressions.name).first_and_only().options;
+      const ps = progressions
+        .filter((ps) => progressionsOptions.includes(ps.description))
+        .map((p) => p.progressions)
+        .flat();
+
+      const m = melodicPatterns
+        .filter((m) => {
+          return ps.some((p) => (!p.voiceLeading ? true : p.voiceLeading.includes(m.globalConditions.id)));
+        })
+        .map((m) => m.description) as string[];
+
+        // console.log(m)
+        return m;
+    },
+    cliShort: "m",
+  };
+
+  private static keys = {
+    name: "Keys",
+    options: () => commonKeys,
+    cliShort: "k",
+  };
+
+  private static progression = {
+    name: "Progression",
+    isCli: true,
+    options: (prev: TOptionsReturnType<IQuizOptions[]> | undefined) => {
+
+      if (!prev) {
+        LogError(`Conditional options depends on previous options at ${this.progression.name}`);
+      }
+
+      const mp = prev.filter((p) => p.name === this.melodicPatterns.name).first_and_only().options;
+      const prevPs = prev.filter((p) => p.name === this.progressions.name).first_and_only().options;
+
+      const melodicPatternsChosen = melodicPatterns
+        .filter(m => mp.includes(m.description))
+        .map(m => m.globalConditions.id)
+
+      return progressions
+        .filter(p => prevPs.includes(p.description))
+        .map((p) => p.progressions)
+        .flat()
+        .filter(p  => !p.voiceLeading ? true :  p.voiceLeading.some(v => melodicPatternsChosen.includes(v)))
+        .map((p) => p.description);
+    },
+    cliShort: "p",
+  };
+
+  static get options() {
+    return [this.progressions, this.melodicPatterns, this.keys, this.progression] as const;
+  }
+}
+
+type TOptionsType = typeof Options.options;
 
 export interface TChord {
   symbol: string;
@@ -43,11 +124,11 @@ const melodicPatterns: IMelodyGeneratorBase[] = [
   MelodyTopSingulate,
   MelodyChordal,
   MelodyPattern_001,
-  MelodyPattern_002
+  MelodyPattern_002,
 ];
 
-export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
-  verify_options(_: TOptionType): boolean {
+export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {
+  verify_options(_: TOptionsReturnType<TOptionsType>): boolean {
     return true;
   }
 
@@ -61,30 +142,29 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   progressionIsMajor;
   keyInfo;
   timeSignature = 4 as const; // from options - input to melody pattern
-  constructor(options: Readonly<TOptionType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
 
-    this.key = options[2]
-    .options
+    const [optionsProgressions, optiosMelodicPatterns, optionsKeys, optionsProgression] = options;
+    // TODO : deconstruct similarly in all classes
+
+    this.key = optionsKeys.options.random_item();
+    
+    const randomProgression = progressions
+    .filter((p) => optionsProgressions.options.includes(p.description))
+    .map((p) => p.progressions)
+    .flat()
+    .filter((p) => optionsProgression.options.includes(p.description))
     .random_item();
 
-    const selectProgressions = progressions.filter((p) =>
-      options.first().options.some((description) => description === p.description)
-    );
-
-    const randomProgression = selectProgressions
-      .map((p) => p.progressions)
-      .flat()
-      .filter(p => options.last().options.includes(p.description))
-      .random_item();
-
+    
     this.progressionTags = randomProgression.tags;
     this.progressionDescription = randomProgression.description;
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
     const keyType = get_key(this.key, this.progressionIsMajor ? "major" : "minor");
     this.keyInfo = keyinfo(keyType);
-
+    
     const randomProgressionInC = {
       chords: randomProgression.chords.map((c) => romanNueralDict.notes(c)),
       bass: randomProgression.bass,
@@ -100,12 +180,8 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
     }
 
     const melodicPattern = melodicPatterns
-      .filter((p) => {
-        return !randomProgression.voiceLeading ? true : randomProgression.voiceLeading.includes(p.globalConditions.id)
-      }
-      )
-      .filter((pattern) => options[1].options.includes(pattern.description))
-      .random_item()
+      .filter((pattern) => optiosMelodicPatterns.options.includes(pattern.description))
+      .random_item();
 
     try {
       this.melody = melodyGenerator(
@@ -180,32 +256,9 @@ export const AudiateHarmony: IQuiz<TOptionType> = class extends AudiateQuizBase<
   }
 
   static meta() {
-    const commonKeys: TNoteSingleAccidental[] = [
-      "C",
-      "C#",
-      "Db",
-      "D",
-      "Eb",
-      "F",
-      "F#",
-      "Gb",
-      "G",
-      "G#",
-      "Ab",
-      "A",
-      "Bb",
-      "B",
-    ];
-    const options = [
-      { name: "Progressions", options: progressions.map((p) => p.description) as TProgression["description"][], cliShort : "ps" },
-      { name: "Melodic Patterns", options: melodicPatterns.map((m) => m.description) as string[], cliShort : "m" },
-      { name: "Keys", options: commonKeys, cliShort : "k" },
-      { name: "Progression", isCli : true, options : progressions.map(p => p.progressions).flat().map(p => p.description), cliShort : "p" }
-    ] as const;
-
     return {
       get all_options() {
-        return options;
+        return Options.options;
       },
       name: "Audiate harmonic progressions",
       description: "Audiate the harmonic progression as solfege degrees",

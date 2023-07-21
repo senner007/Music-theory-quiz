@@ -2,15 +2,28 @@ import {
   random_note_single_accidental,
   variant_to_base,
 } from "../utils";
-import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
+import { IQuizInstance, IQuiz, TOptionsReturnType, IQuizOptions } from "./quiztypes/quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
 import { allScaleNamesSorted, create_scale, scale_notes, note_variants } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[], cliShort : string }]
+const options = [{ name : "Scale types", cliShort : "s", options: () => [
+  "major",
+  "aeolian",
+  "dorian",
+  "phrygian",
+  "lydian",
+  "mixolydian",
+  "locrian",
+  "harmonic minor",
+  "melodic minor",
+]
+}] as const;
 
-export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+type TOptionsType = typeof options;
 
-  verify_options(options: TOptionType): boolean {
+export const MissingScaleNote: IQuiz<TOptionsType> = class extends TextQuizBase<TOptionsReturnType<TOptionsType>> {
+
+  verify_options(options: TOptionsReturnType<TOptionsType>): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
 
@@ -18,7 +31,7 @@ export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<T
   scaleStringMissingNote;
   randomNote;
   randomNoteVariants;
-  constructor(options: Readonly<TOptionType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
 
     this.scale = create_scale(random_note_single_accidental(), options.first().options.random_item());
@@ -47,18 +60,7 @@ export const MissingScaleNote: IQuiz<TOptionType> = class extends TextQuizBase<T
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Scale types", cliShort : "s", options: [
-          "major",
-          "aeolian",
-          "dorian",
-          "phrygian",
-          "lydian",
-          "mixolydian",
-          "locrian",
-          "harmonic minor",
-          "melodic minor",
-        ]
-      }] as const;
+        return options;
       },
       name: "Name the missing scale note",
       description: "Choose the correct name for the missing scale note",

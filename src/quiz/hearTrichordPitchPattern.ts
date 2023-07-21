@@ -1,5 +1,5 @@
 import { random_note_single_accidental } from "../utils";
-import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
+import { IQuizInstance, IQuiz, TOptionsReturnType, IQuizOptions } from "./quiztypes/quiz-types";
 import {
   pitch_pattern_by_name,
   pattern_intervals,
@@ -13,11 +13,13 @@ import { ObjectEntries } from "../objectUtils";
 
 const pitchPatternKeyNames = ObjectEntries(pitchPatterns).keys;
 
-type TOptionsType = [{ name : string, options : readonly TPitchPatternName[], cliShort : string}]
+const options = [{ name : "Pitch patterns", options : () => pitchPatternKeyNames, cliShort : "p" }] as const;
 
-export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsType> {
+type TOptionsType = typeof options;
 
-  verify_options(options: TOptionsType): boolean {
+export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsReturnType<TOptionsType>> {
+
+  verify_options(options: TOptionsReturnType<TOptionsType>): boolean {
     return options.first_and_only().options.every((pattern) => pitchPatternKeyNames.includes(pattern));
   }
 
@@ -26,7 +28,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
   randomPatternName;
   audioChord;
   audioArpeggio;
-  constructor(options: Readonly<TOptionsType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
     this.randomNote = random_note_single_accidental();
     this.randomPatternName = options.first().options.random_item();
@@ -79,7 +81,7 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Pitch patterns", options : pitchPatternKeyNames, cliShort : "p" }] as const;
+        return options;
       },
       name: "Hear trichord pitch patterns",
       description: "Identify the trichord pitch pattern that is being played",

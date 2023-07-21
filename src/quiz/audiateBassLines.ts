@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
 import { INotePlay } from "../midiplay";
-import { IQuizInstance, IQuiz } from "./quiztypes/quiz-types";
+import { IQuizInstance, IQuiz, IQuizOptions, TOptionsReturnType } from "./quiztypes/quiz-types";
 import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,
@@ -11,12 +11,15 @@ import {
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { interval_distance, note_transpose } from "../tonal-interface";
 
-type TOptionType = [
-  { name : string, options : TProgression["description"][], cliShort : string}
-]
 
-export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
-  verify_options(_: TOptionType): boolean {
+export const bassLineOptions = [
+  { name : "Bass lines", options : () => progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" }
+] as const
+
+type TOptionsType = typeof bassLineOptions
+
+export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {
+  verify_options(_: TOptionsReturnType<TOptionsType>): boolean {
     return true;
   }
 
@@ -27,7 +30,7 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
   progressionIsDiatonic;
   progressionIsMajor;
   timeSignature = 4 as const;
-  constructor(options: Readonly<TOptionType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
     this.key = random_note_single_accidental();
     const selectProgressions = progressions.filter(p => options.first_and_only().options.some(description => description === p.description));
@@ -90,9 +93,7 @@ export const AudiateBassLines: IQuiz<TOptionType> = class extends AudiateQuizBas
   static meta() {
     return {
       get all_options() {
-        return [
-          { name : "Bass lines", options : progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" }
-        ] as const
+        return bassLineOptions
       },
       name: "Audiate bass lines",
       description: "Audiate the harmonic progression bass line as solfege degrees",

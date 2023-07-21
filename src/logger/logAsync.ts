@@ -94,7 +94,8 @@ class LogAsyncUtil {
           choices: choices.options,
           pageSize: 20,
           interruptedKeyName: interruptKey,
-          loop : false
+          loop : false,
+          validate : (input : any[]) => input.length === 0 ? false : true
         },
       ]);
 

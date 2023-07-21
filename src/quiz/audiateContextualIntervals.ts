@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { INotePlay } from "../midiplay";
-import { IQuiz } from "./quiztypes/quiz-types";
+import { IQuiz, IQuizOptions, TOptionsReturnType } from "./quiztypes/quiz-types";
 import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,
@@ -10,16 +10,32 @@ import {
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { create_scale, scale_notes, interval_distance, interval_to_absolute, add_octave_above } from "../tonal-interface";
 
-type TOptionsType = [
-  { name: string, options: string[], cliShort : string },
-  { name: string, options: TIntervalAbsolute[], cliShort : string }
+const scales = [
+  "major",
+  "aeolian",
+  "major pentatonic",
+  "dorian",
+  // "phrygian",
+  "lydian",
+  "mixolydian",
+  // "locrian",
+  "harmonic minor",
+  "melodic minor",
+];
+const intervals: TIntervalAbsolute[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
+
+const options =  [
+  { name : "Scales", options : () => scales, cliShort : "s" }, 
+  { name : "Intervals", options:() =>  intervals, cliShort : "i" }
 ];
 
+type TOptionsType = typeof options;
+
 export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends AudiateQuizBase<
-  TOptionsType
+TOptionsReturnType<TOptionsType>
 > {
 
-  verify_options(_: TOptionsType): boolean {
+  verify_options(_: TOptionsReturnType<TOptionsType>): boolean {
     return true;
   }
 
@@ -28,7 +44,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
   interval;
   scaleThirdOctave;
   timeSignature = 1 as const;
-  constructor(options: Readonly<TOptionsType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
     const [scaletypes, intervals] = options;
     this.key = random_note_single_accidental();
@@ -101,23 +117,7 @@ export const AudiateContextualIntervals: IQuiz<TOptionsType> = class extends Aud
   static meta() {
     return {
       get all_options(): TOptionsType {
-        const scales = [
-          "major",
-          "aeolian",
-          "major pentatonic",
-          "dorian",
-          // "phrygian",
-          "lydian",
-          "mixolydian",
-          // "locrian",
-          "harmonic minor",
-          "melodic minor",
-        ];
-        const intervals: TIntervalAbsolute[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
-        return [
-          { name : "Scales", options : scales, cliShort : "s" }, 
-          { name : "Intervals", options: intervals, cliShort : "i" }
-        ];
+        return options;
       },
       name: "Audiate contextual intervals",
       description: "Audiate the contextual interval",

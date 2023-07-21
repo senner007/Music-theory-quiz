@@ -1,15 +1,23 @@
 
 import { random_note_single_accidental, TOctave } from "../utils";
-import { IQuiz } from "./quiztypes/quiz-types";
+import { IQuiz, IQuizOptions, TOptionsReturnType } from "./quiztypes/quiz-types";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
 import { INotePlay } from "../midiplay";
 import { allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[], cliShort : string }]
+const options = [{ name : "Scale types", cliShort : "s", options :  () => [
+  "major",
+  "aeolian",
+  "phrygian",
+  "lydian",
+  "altered",
+]}] as const
 
-export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBase<TOptionType> {
+type TOptionsType = typeof options;
 
-  verify_options(options: TOptionType): boolean {
+export const HearTetraChord: IQuiz<TOptionsType> = class extends ListeningQuizBase<TOptionsReturnType<TOptionsType>> {
+
+  verify_options(options: TOptionsReturnType<TOptionsType>): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
 
@@ -28,7 +36,7 @@ export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBas
     .map(note => { return { noteNames: [note], duration: 1, channel : 1 } })
   }
 
-  constructor(options: Readonly<TOptionType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
     this.randomNote = random_note_single_accidental();
 
@@ -68,13 +76,7 @@ export const HearTetraChord: IQuiz<TOptionType> = class extends ListeningQuizBas
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Scale types", cliShort : "s", options : [
-          "major",
-          "aeolian",
-          "phrygian",
-          "lydian",
-          "altered",
-      ]}] as const
+        return options
       },
       name: "Hear tetrachord",
       description: "Choose the correct spelling after listening to the tetrachord",

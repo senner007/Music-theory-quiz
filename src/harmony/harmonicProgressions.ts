@@ -12,7 +12,6 @@ export type TProgression = Readonly<{
   description: string;
   scale? : string;
   voiceLeading? :string[];
-
 }>;
 
 type TProgressionsJSON = {

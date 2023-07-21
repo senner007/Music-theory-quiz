@@ -1,5 +1,5 @@
 import { INotePlay } from "../midiplay";
-import { IQuiz } from "./quiztypes/quiz-types";
+import { IQuiz, IQuizOptions, TOptionsReturnType } from "./quiztypes/quiz-types";
 import { ITableHeader, TSyllable, syllables_in_key_of_c } from "../solfege";
 import { interval_distance, is_higher_than_high_bound, note_transpose, is_lower_than_low_bound } from "../tonal-interface";
 import {
@@ -13,15 +13,18 @@ import {
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { ObjectEntries } from "../objectUtils";
 
-type TOptionType = [
-  { name : string, options : TSyllable[], cliShort : string},
-  { name : string, options : TOctave[], cliShort : string},
-  { name : string, options : string[], cliShort : string}
-]
 
-export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends AudiateQuizBase<TOptionType> {
+const options = [
+  { name : "Syllables", options : () => ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"] as TSyllable[], cliShort : "s"},
+  { name : "Octaves", options : () =>  ["2","3", "4"] as const, cliShort : "o"},
+  { name : "Notes", options : () =>  ["6", "12", "18"] as const, cliShort : "n"},
+] as const;
 
-  verify_options(options: TOptionType): boolean {
+type TOptionsType = typeof options;
+
+export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {
+
+  verify_options(options: TOptionsReturnType<TOptionsType>): boolean {
     return options.first().options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
@@ -29,7 +32,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
   initAudio;
   stepnumber: number = 12; // in options
   timeSignature = 1 as const;
-  constructor(options: Readonly<TOptionType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
 
     this.key = random_note_single_accidental();
@@ -105,13 +108,8 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionType> = class extends Audiat
 
   static meta() {
     return {
-      get all_options(): TOptionType {
-        return [
-          { name : "Syllables", options : ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"], cliShort : "s"},
-          { name : "Octaves", options : ["2","3", "4"], cliShort : "o"},
-          { name : "Notes", options : ["6", "12", "18"], cliShort : "n"},
-
-        ];
+      get all_options() {
+        return options;
       },
       name: "Audiate functional solfege degrees",
       description: "Audiate the solfege degrees shown in the table below",

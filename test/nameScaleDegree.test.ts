@@ -1,7 +1,8 @@
 import { it, expect, vi, describe, test, afterEach, Mock } from "vitest";
-import { NameScaleDegree } from "../src/quiz/nameScaleDegree";
+import { NameScaleDegree, nameScaleDegreeOptions } from "../src/quiz/nameScaleDegree";
 import chalk from "chalk";
 import { math_floor } from "../src/random_func";
+import { TOptionsReturnType } from "../src/quiz/quiztypes/quiz-types";
 
 describe("Test NameScaleDegree quiz", () => {
 
@@ -18,7 +19,14 @@ describe("Test NameScaleDegree quiz", () => {
   test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
 
     (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
-    const quiz = new NameScaleDegree(NameScaleDegree.meta().all_options);
+
+    const options = nameScaleDegreeOptions.map(o =>  {
+      return {name : o.name, options : o.options() }
+    }) as TOptionsReturnType<typeof nameScaleDegreeOptions>
+
+
+    const quiz = new NameScaleDegree(options);
+
     expect(math_floor).toBeCalledTimes(4);
     expect(quiz.quiz_head).toEqual([quizHeadOutput[mathFloorReturnValue]]);
   });

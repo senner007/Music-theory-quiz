@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { IQuiz } from "./quiztypes/quiz-types";
+import { IQuiz, IQuizOptions, TOptionsReturnType } from "./quiztypes/quiz-types";
 import {
   random_note_single_accidental,
   number_to_degree,
@@ -9,11 +9,24 @@ import {
 import { TextQuizBase } from "./quizBase/textBase";
 import { allScaleNamesSorted, create_scale, scale_note_at_index, note_variants } from "../tonal-interface";
 
-type TOptionType = [{ name : string, options : readonly string[], cliShort : string }]
+export const nameScaleDegreeOptions = [{ name : "Scale types", cliShort : "s", options: () => [
+  "major",
+  "aeolian",
+  "dorian",
+  "phrygian",
+  "lydian",
+  "mixolydian",
+  "locrian",
+  "harmonic minor",
+  "melodic minor",
+]
+}] as const;
 
-export const NameScaleDegree: IQuiz<TOptionType> = class extends TextQuizBase<TOptionType> {
+type TOptionsType = typeof nameScaleDegreeOptions
 
-  verify_options(options: TOptionType): boolean {
+export const NameScaleDegree: IQuiz<TOptionsType> = class extends TextQuizBase<TOptionsReturnType<TOptionsType>> {
+
+  verify_options(options: TOptionsReturnType<TOptionsType>): boolean {
     return options.first_and_only().options.every((scaleType) => allScaleNamesSorted.includes(scaleType));
   }
 
@@ -21,7 +34,7 @@ export const NameScaleDegree: IQuiz<TOptionType> = class extends TextQuizBase<TO
   randomDegree;
   randomNote;
   randomNoteVariants;
-  constructor(options: Readonly<TOptionType>) {
+  constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
     this.scale = create_scale(random_note_single_accidental(), options.first().options.random_item());
     const randomIndex = random_index(this.scale.notes);
@@ -46,18 +59,7 @@ export const NameScaleDegree: IQuiz<TOptionType> = class extends TextQuizBase<TO
   static meta() {
     return {
       get all_options() {
-        return [{ name : "Scale types", cliShort : "s", options: [
-          "major",
-          "aeolian",
-          "dorian",
-          "phrygian",
-          "lydian",
-          "mixolydian",
-          "locrian",
-          "harmonic minor",
-          "melodic minor",
-        ]
-      }] as const;
+        return nameScaleDegreeOptions;
       },
       name: "Name the scale degree note",
       description: "Choose the correct note name for the scale degree",

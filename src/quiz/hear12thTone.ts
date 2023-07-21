@@ -1,11 +1,10 @@
 import { base_notes, TOctave } from "../utils";
-import {  IQuiz } from "./quiztypes/quiz-types";
+import {  IQuiz, TOptionsReturnType } from "./quiztypes/quiz-types";
 import chalk from "chalk";
 import { ListeningQuizBase } from "./quizBase/listeningQuizBase";
-import { INotePlay } from "../midiplay";
 import { create_scale, chromatic_scale_notes, interval_distance } from "../tonal-interface";
 
-export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<never []> {
+export const Hear12thTone: IQuiz<[]> = class extends ListeningQuizBase<[]> {
 
   verify_options(): boolean {
     return true;
@@ -16,7 +15,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
   chromaticScaleShuffled;
   missingNote;
   octave : TOctave = "4";
-  constructor(options: Readonly<never[]>) {
+  constructor(options: Readonly<[]>) {
     super(options);
     this.randomNote = base_notes().random_item();
     const chromaticScale = create_scale(this.randomNote, "chromatic");
@@ -71,7 +70,7 @@ export const Hear12thTone: IQuiz<never []> = class extends ListeningQuizBase<nev
   static meta() {
     return {
       get all_options() {
-        return [];
+        return [] as const
       },
       name: "Hear the missing 12th tone",
       description: "Listen to the 12-tone row with one note missing. Identify the missing note.",
