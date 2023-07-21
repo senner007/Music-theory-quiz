@@ -180,6 +180,9 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
     }
 
     const melodicPattern = melodicPatterns
+      .filter((p) => {
+        return !randomProgression.voiceLeading ? true : randomProgression.voiceLeading.includes(p.globalConditions.id)
+      })
       .filter((pattern) => optiosMelodicPatterns.options.includes(pattern.description))
       .random_item();
 
