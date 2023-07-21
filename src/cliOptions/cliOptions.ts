@@ -11,6 +11,10 @@ function checkArrayOrder(arr1: string[], arr2: string[]): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
+function formatProcessArgs(ars : string) { // remove ^
+  return ars.replace(/\^/g,"");
+}
+
 function everyElementIn(arr1: any[], arr2: any[]) {
   return arr1.every((r) => arr2.includes(r));
 }
@@ -23,6 +27,7 @@ function findArgsForOption(arg: string) {
   const argsArray = [];
   for (let i = argsTypeIndex + 1; i < process.argv.length; i++) {
     if (process.argv[i].startsWith("--")) break;
+    process.argv[i] = formatProcessArgs(process.argv[i])
     argsArray.push(process.argv[i]);
   }
   return argsArray;
@@ -74,6 +79,7 @@ function setTypeConditionalOptions(quizOptions: IQuizOptions[]) {
 }
 
 export function getCliOptions() {
+
   program
     .showHelpAfterError()
     .helpOption("--what", "more information")
