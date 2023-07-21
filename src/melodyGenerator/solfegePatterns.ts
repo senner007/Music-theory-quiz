@@ -66,7 +66,7 @@ const solfegePattern_001 = {
     ]
 } as const
 
-const solfegePattern_002 = {
+const solfegePattern_002 = { 
     description: "Soprano-PT-Alto (M3/m3)",
     indexes: [
         { index: EChordNote.Soprano, step: EStep.None },
@@ -82,6 +82,7 @@ const solfegePattern_003 = {
         { index: EChordNote.Soprano, step: EStep.None }],
     patterns: [
         ["Do", "Mi"],
+        ["Re", "Fa"],
         ["Mi", "So"],
         ["Fa", "La"],
         ["So", "Ti"],
@@ -248,7 +249,7 @@ const solfegePattern_017 = {
 } as const
 
 const solfegePattern_018 = {
-    description: "(Alto-(PT-above))-((PT-below)-Soprano)-Major",
+    description: "(Alto-(PT-above))-((PT-below)-Soprano)",
     indexes: [
         { index: EChordNote.Alto, step: EStep.None },
         { index: EChordNote.Alto, step: EStep.Above },
@@ -266,7 +267,7 @@ const solfegePattern_018 = {
 } as const
 
 const solfegePattern_019 = {
-    description: "(Soprano-(PT-below))-((PT-above)-Alto)-Major",
+    description: "(Soprano-(PT-below))-((PT-above)-Alto)",
     indexes: [
         { index: EChordNote.Soprano, step: EStep.None },
         { index: EChordNote.Soprano, step: EStep.Below },
@@ -347,6 +348,128 @@ const solfegePattern_025 = {
     
 } as const
 
+const solfegePattern_026 = {
+    description: "Alto-Soprano-PT-below-Soprano",
+    indexes: [
+        { index: EChordNote.Alto, step: EStep.None },
+        { index: EChordNote.Soprano, step: EStep.None },
+        { index: EChordNote.Soprano, step: EStep.Below },
+        { index: EChordNote.Soprano, step: EStep.None },
+    ],
+    patterns: [
+        ["Do", "Mi", "Re", "Mi"],
+        ["Re", "Fa", "Mi", "Fa"],
+        ["Mi", "So", "Fa", "So"],
+        ["Fa", "La", "So", "La"],
+        ["So", "Ti", "La", "Ti"],
+        ["La", "Do", "Ti", "Do"],
+
+        ["Do", "Me", "Re", "Me"],
+        ["Re", "Fa", "Me", "Fa"],
+        ["Me", "So", "Fa", "So"],
+        ["Fa", "Le", "So", "Le"],
+        ["So", "Ti", "La", "Ti"],
+        ["Le", "Do", "Te", "Do"]
+    ]
+    
+} as const
+
+
+const solfegePattern_027 = {
+    description: "Soprano-Tenor (M6/m6)",
+    indexes: [
+        { index: EChordNote.Soprano, step: EStep.None },
+        { index: EChordNote.Tenor, step: EStep.None },
+    
+    ],
+    patterns: [
+        ["Do", "Mi"],
+        ["Re", "Fa"],
+        ["Mi", "So"],
+        ["Fa", "La"],
+        ["So", "Ti"],
+        ["La", "Do"],
+        ["Ti", "Re"],
+
+        ["Do", "Me"],
+        ["Re", "Fa"],
+        ["Me", "So"],
+        ["Fa", "Le"],
+        ["So", "Te"],
+        ["Le", "Do"],
+        ["Te", "Re"]
+    ]
+    
+} as const
+
+const solfegePattern_028 = {
+    description: "Soprano-Soprano",
+    indexes: [
+        { index: EChordNote.Soprano, step: EStep.None },
+        { index: EChordNote.Soprano, step: EStep.None },
+    ],
+    patterns: [
+        ["Do", "Do"],
+        ["Re", "Re"],
+        ["Mi", "Mi"],
+        ["Fa", "Fa"],
+        ["So", "So"],
+        ["La", "La"],
+        ["Ti", "Ti"],
+
+        ["Me", "So"],
+        ["Le", "Le"],
+        ["Te", "Te"]
+    ]
+    
+} as const
+
+const solfegePattern_029 = {
+    description: "PT-Above-Soprano",
+    indexes: [
+        { index: EChordNote.Soprano, step: EStep.Above },
+        { index: EChordNote.Soprano, step: EStep.None },
+    ],
+    patterns: [
+        ["Re", "Do"],
+        ["Mi", "Re"],
+        ["Fa", "Mi"],
+        ["So", "Fa"],
+        ["La", "So"],
+        ["Ti", "La"],
+        ["Do", "Ti"],
+
+        ["Le", "So"],
+        ["Te", "Le"],
+        ["Do", "Te"]
+    ]
+    
+} as const
+
+const solfegePattern_030 = {
+    description: "PT-Above-Alto",
+    indexes: [
+        { index: EChordNote.Alto, step: EStep.Above },
+        { index: EChordNote.Alto, step: EStep.None },
+    ],
+    patterns: solfegePattern_029.patterns
+    
+} as const
+
+const solfegePattern_031 = {
+    description: "PT-Above-Tenor",
+    indexes: [
+        { index: EChordNote.Tenor, step: EStep.Above },
+        { index: EChordNote.Tenor, step: EStep.None },
+    ],
+    patterns: solfegePattern_029.patterns
+    
+} as const
+
+
+
+
+
 
 const solfegePatterns_pretypecheck = [
     solfegePattern_001,
@@ -373,7 +496,15 @@ const solfegePatterns_pretypecheck = [
     solfegePattern_022,
     solfegePattern_023,
     solfegePattern_024,
-    solfegePattern_025
+    solfegePattern_025,
+    solfegePattern_026,
+    solfegePattern_027,
+    solfegePattern_028,
+    solfegePattern_029,
+    solfegePattern_030,
+    solfegePattern_031,
+
+
 ] as const
 
 

@@ -1,7 +1,7 @@
 import { expect, vi, describe, test, afterEach, Mock, it } from "vitest";
 import { get_key } from "../src/tonal-interface";
 import { melodyGenerator } from "../src/melodyGenerator/melodyGenerator";
-import { MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyTopSingulate} from "../src/melodyGenerator/melodyPatterns";
+import { MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyPattern_003, MelodyTopSingulate} from "../src/melodyGenerator/melodyPatterns";
 import { keyinfo } from "../src/keyinfo/keyInfo";
 import { progression_to_chords, romanNueralDict } from "../src/harmony/romanNumerals";
 import { IProgression } from "../src/transposition";
@@ -44,7 +44,7 @@ describe("Test progression generate expected melodic patterns", () => {
         const keyType = get_key("C", progression.isMajor ? "major" : "minor")
         const keyInfo = keyinfo(keyType);
 
-        const melodyPatterns = [MelodyTopSingulate, MelodyChordal, MelodyPattern_001, MelodyPattern_002]
+        const melodyPatterns = [MelodyTopSingulate, MelodyChordal, MelodyPattern_001, MelodyPattern_002, MelodyPattern_003]
 
         const patterns = melodyPatterns.filter((p) => {
             return !progression.voiceLeading ? true : progression.voiceLeading.includes(p.globalConditions.id)

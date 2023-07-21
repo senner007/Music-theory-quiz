@@ -247,16 +247,6 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         { duration: 4 },
                     ],
                 },
-                 {
-                    description: "FallbackAlto",
-                    conditions: [
-                        () => true,
-                    ],
-                    isCadence : false,
-                    rhythm: [
-                        { duration: 4 },
-                    ],
-                },
                 {
                     description: "FallbackSoprano",
                     conditions: [
@@ -281,5 +271,165 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
             ]);
     }
 }
+
+
+export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
+    
+    static id = "pattern_003";
+    static description = "Soprano-Tenor (M6/m6) Alto-Soprano (M3/m3) Soprano-Alto (M3/m3)";
+    
+    public melody() {
+
+        const sopranoNote = this.chordNotes.Soprano
+        const altoNote = this.chordNotes.Alto;
+        const tenorNote = this.chordNotes.Tenor;
+
+        const nextSopranoNote = this.nextChord?.at(-1);
+        const nextAltoNote = this.nextChord?.at(-2);
+        const previousMelody = this.previousMelody
+        const key = this.keyInfo.type;
+        const index = this.index;
+        const totalIndex = this.totalIndex;
+        
+  
+        return this.pattern_executor(
+            [
+                {
+                    description: "Soprano-Tenor (M6/m6)",
+                    conditions: [
+                        () => tenorNote !== undefined && interval_integer_absolute(sopranoNote, tenorNote) === 6,
+                        // () => index !== totalIndex -2  
+                    ],
+                    isCadence : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+                 {
+                    description: "Alto-Soprano (M3/m3)",
+                    conditions: [
+                        () => interval_integer_absolute(sopranoNote, altoNote) === 3,
+                    ],
+                    isCadence : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Soprano-Alto (M3/m3)",
+                    conditions: [
+                        () => interval_integer_absolute(sopranoNote, altoNote) === 3,
+                    ],
+                    isCadence : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "PT-Above-Soprano",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+                {
+                    description: "PT-Above-Alto",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+                {
+                    description: "PT-Above-Tenor",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+                {
+                    description: "CadenceSoprano",
+                    conditions: [
+                        () => true,
+                    ],
+                    isCadence : true,
+
+                    rhythm: [
+                        { duration: 4 },
+                    ],
+                },
+                {
+                    description: "CadenceAlto",
+                    conditions: [
+                        () => true,
+                    ],
+                    isCadence : true,
+                    rhythm: [
+                        { duration: 4 },
+                    ],
+                },
+                {
+                    description: "CadenceTenor",
+                    conditions: [
+                        () => true,
+                    ],
+                    isCadence : true,
+                    rhythm: [
+                        { duration: 4 },
+                    ],
+                },
+                {
+                    description: "PT-Above-Soprano",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : true,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+                {
+                    description: "PT-Above-Alto",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : true,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+                {
+                    description: "PT-Above-Tenor",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : true,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+
+            ]);
+    }
+}
+
+
 
 

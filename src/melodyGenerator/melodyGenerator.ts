@@ -128,9 +128,11 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
     private previousGenerator;
     public keyInfo;
     private nextChordFunction: ChordFunction | undefined;
-    private previousMelody;
+    public previousMelody;
     public nextChord;
     private scale;
+    public index;
+    public totalIndex;
     
     constructor(IMelodyOptions : IMelodyOptions) {
 
@@ -152,6 +154,8 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
         
         this.nextChord = IMelodyOptions.nextChord;
         this.scale = IMelodyOptions.scale
+        this.index = IMelodyOptions.index;
+        this.totalIndex = IMelodyOptions.totalIndex;
     };
 
     
@@ -304,6 +308,7 @@ interface IMelodyOptions {
     currentChord: readonly TNoteAllAccidentalOctave[],
     keyInfo: TKeyInfo,
     index : number,
+    totalIndex : number,
     bass : TNoteAllAccidentalOctave;
     previousGenerator : Omit<IMelodyGenerator, "melody"> | undefined;
     previousMelody: IMelodyFragment[] | undefined;
@@ -330,6 +335,7 @@ export function melodyGenerator(
                 currentChord : chordNotes,
                 keyInfo: keyInfo,
                 index : index,
+                totalIndex : progression.chords.length,
                 bass : progression.bass[index],
                 previousGenerator : generators.at(-1),
                 previousMelody : melodies.at(-1),

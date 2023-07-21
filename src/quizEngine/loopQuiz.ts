@@ -34,7 +34,6 @@ export async function loopQuiz(QuizClass: IQuiz<IQuizOptions[]>, cliOptions : Re
   }
 
   while (true) {
-    // console.log(options)
     let quiz
     try {
       quiz = new QuizClass(options);

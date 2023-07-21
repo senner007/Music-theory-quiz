@@ -12,6 +12,7 @@ import {
   MelodyChordal,
   MelodyPattern_001,
   MelodyPattern_002,
+  MelodyPattern_003,
   MelodyTopSingulate,
 } from "../melodyGenerator/melodyPatterns";
 import { progression_to_chords, romanNueralDict } from "../harmony/romanNumerals";
@@ -45,7 +46,6 @@ class Options {
   private static melodicPatterns = {
     name: "Melodic Patterns",
     options: (prev: TOptionsReturnType<IQuizOptions[]> | undefined) => {
-      // console.log(prev)
       if (!prev) {
         LogError(`Conditional options depends on previous options at ${this.melodicPatterns.name}`);
       }
@@ -55,14 +55,11 @@ class Options {
         .map((p) => p.progressions)
         .flat();
 
-      const m = melodicPatterns
+      return melodicPatterns
         .filter((m) => {
           return ps.some((p) => (!p.voiceLeading ? true : p.voiceLeading.includes(m.globalConditions.id)));
         })
         .map((m) => m.description) as string[];
-
-        // console.log(m)
-        return m;
     },
     cliShort: "m",
   };
@@ -125,6 +122,7 @@ const melodicPatterns: IMelodyGeneratorBase[] = [
   MelodyChordal,
   MelodyPattern_001,
   MelodyPattern_002,
+  MelodyPattern_003
 ];
 
 export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {
