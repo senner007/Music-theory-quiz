@@ -3,6 +3,10 @@ import { quizContainer } from "../quizContainer";
 import { IQuiz, IQuizOptions, TOptionsReturnType } from "../quiz/quiztypes/quiz-types";
 import chalk from "chalk";
 import { ObjectEntries } from "../objectUtils";
+import { isDev } from "../dev-utils";
+
+
+export const quizTypeArg = "qt"
 
 function checkArrayOrder(arr1: string[], arr2: string[]): boolean {
   const a = arr1.filter((a) => arr2.includes(a));
@@ -36,7 +40,7 @@ function findArgsForOption(arg: string) {
 const line = "-------------------------------------------";
 
 function setClassTypeOption() {
-  const classType = findArgsForOption("--type");
+  const classType = findArgsForOption(`--${quizTypeArg}`);
   const allClassTypes = quizContainer.map((q) => q.name);
 
   if (classType && classType.length > 1) {
@@ -45,7 +49,7 @@ function setClassTypeOption() {
 
   program.addOption(
     new Option(
-      "-t, --type <string>",
+      `--${quizTypeArg} <string>`,
       `Quiz type ${
         classType
           ? `- ${allClassTypes.includes(classType.first_and_only()) ? chalk.green(classType) : chalk.red(classType)}`
@@ -80,11 +84,14 @@ function setTypeConditionalOptions(quizOptions: IQuizOptions[]) {
 
 export function getCliOptions() {
 
+  console.log(process.argv)
+
+
   program
     .showHelpAfterError()
     .helpOption("--what", "more information")
-    .addHelpText("after", "\nQuiz arguments help:\n--type [quiz type] --what")
-    .addHelpText("after", "Example:\n$ npm run dev -- --type AudiateHarmony --m Chords --k C --p e1 e2");
+    .addHelpText("after", `\nQuiz arguments help:\n--${quizTypeArg} [quiz type] --what`)
+    .addHelpText("after", `Example:\n$ npm run dev -- --${quizTypeArg} AudiateHarmony --m Chords --k C --p e1 e2`);
 
   const classType = setClassTypeOption();
 
