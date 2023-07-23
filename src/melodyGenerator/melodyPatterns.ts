@@ -298,7 +298,6 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                     description: "Soprano-Tenor (M6/m6)",
                     conditions: [
                         () => tenorNote !== undefined && interval_integer_absolute(sopranoNote, tenorNote) === 6,
-                        // () => index !== totalIndex -2  
                     ],
                     isCadence : false,
                     rhythm: [
