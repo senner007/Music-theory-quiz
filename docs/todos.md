@@ -1,13 +1,10 @@
 ### Todos:
 - play mp3 harmonic dictations with node ffplay
-- add purpose and philosophy
 - release .exe files
 - improve similarity of scale selection in "Hear Scales" quiz
 - add count in for audiate
-- tempo param to each audio part
 - hear progressions quiz
 - provide links to free theory resources
-- add secondary dominants roman numeral lookup for minor keys key info
 - reuse trichord to play tetrachord, add options for harmonic playing, random order
 - determine trichord over major/minor
 - refactor transposition logic
@@ -20,3 +17,4 @@
 - time signature 3 to harmonic melodies
 - set midi device through command line option
 - add rule to ensure the closest note is selected in fallback pattern (note : c40-4-p16)
+- recursive generator implementation
