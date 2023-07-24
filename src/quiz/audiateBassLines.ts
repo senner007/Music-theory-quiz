@@ -1,19 +1,20 @@
 import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
 import { INotePlay } from "../midiplay";
-import { IQuizInstance, IQuiz, IQuizOptions, TOptionsReturnType } from "./quiztypes/quiz-types";
+import { IQuiz, TOptionsReturnType } from "./quiztypes/quiz-types";
 import { ITableHeader } from "../solfege";
 import {
   TNoteSingleAccidental,
   to_octave,
-  random_note_single_accidental,
+  commonKeys,
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { interval_distance, note_transpose } from "../tonal-interface";
 
 
 export const bassLineOptions = [
-  { name : "Bass lines", options : () => progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" }
+  { name : "Bass lines", options : () => progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" },
+  { name : "Keys",  options: () => commonKeys, cliShort : "b" }
 ] as const
 
 type TOptionsType = typeof bassLineOptions
@@ -32,8 +33,11 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
   timeSignature = 4 as const;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
-    this.key = random_note_single_accidental();
-    const selectProgressions = progressions.filter(p => options.first_and_only().options.some(description => description === p.description));
+
+    const [bassLinesOptions, optionsKeys] = options;
+
+    this.key = optionsKeys.options.random_item();
+    const selectProgressions = progressions.filter(p => bassLinesOptions.options.some(description => description === p.description));
     const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
 
     this.progressionIsDiatonic = randomProgression.isDiatonic;

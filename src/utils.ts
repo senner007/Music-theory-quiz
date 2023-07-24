@@ -142,3 +142,20 @@ export function interval_simplify(interval: TIntervalInteger) {
   return Interval.simplify(interval) as TIntervalInteger
 }
 
+export const commonKeys: TNoteSingleAccidental[] = [
+  "C",
+  "C#",
+  "Db",
+  "D",
+  "Eb",
+  "F",
+  "F#",
+  "Gb",
+  "G",
+  "G#",
+  "Ab",
+  "A",
+  "Bb",
+  "B",
+];
+
