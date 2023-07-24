@@ -112,7 +112,7 @@ export class Conditions extends ConditionHelpers {
         const IntervalFifth = "5P";
         return this.previousFunction.isDominant
             && ((this.previousFunction.tonic === note_transpose(this.currentFunction.tonic, IntervalFifth)) || this.is_deceptive_to_previous_dominant)
-            && (this.previous_notes_contains_seventh || this.previous_notes_contains_leading_note)
+            && (this.previous_notes_contains_minor_seventh || this.previous_notes_contains_leading_note)
     }
 
     protected pattern_includes_dominant_resolution(pattern: TNoteAllAccidentalOctave[] | undefined): boolean  {
