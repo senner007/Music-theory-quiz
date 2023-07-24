@@ -34,30 +34,32 @@ describe("Test AudiateBassLines quiz", () => { // put in mocks folder
   });
 
   const quizHeadOutput = [
-    [`Description: c1-1\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("Cb Major")}`],
+    [`Description: c1-1\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("C Major")}`],
     [`Description: c1-2\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("D Minor")}`],
-    [`Description: c1-3\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("E# Minor")}`]
+    [`Description: c1-3\n${chalk.underline("Diatonic")} progression bass line in key of ${chalk.underline("E Minor")}`]
   ];
 
   const options = bassLineOptions.map(o =>  {
     return {name : o.name, options : o.options() }
   }) as TOptionsReturnType<typeof bassLineOptions>
 
-  test.each([0, 1, 2])("should generate quiz head text", (mathFloorReturnValue: number) => {
+  options[1].options = ["C", "D", "E"];
+
+  test.each([0, 1])("should generate quiz head text", (mathFloorReturnValue: number) => {
     (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
 
     const quiz = new AudiateBassLines(options);
-    expect(math_floor).toBeCalledTimes(3);
+    expect(math_floor).toBeCalledTimes(2);
     expect(quiz.quiz_head).toEqual(quizHeadOutput[mathFloorReturnValue]);
   });
 
   const solfegeMelodies = [
     {
       melody: [
-        { noteNames: ['Cb4'], duration: 1 },
-        { noteNames: ['Fb3'], duration: 1 },
-        { noteNames: ['Gb3'], duration: 1 },
-        { noteNames: ['Cb4'], duration: 1 }
+        { noteNames: ['C3'], duration: 1 },
+        { noteNames: ['F2'], duration: 1 },
+        { noteNames: ['G2'], duration: 1 },
+        { noteNames: ['C3'], duration: 1 }
       ]
     },
     {
@@ -70,15 +72,15 @@ describe("Test AudiateBassLines quiz", () => { // put in mocks folder
     },
     {
       melody: [
-        { noteNames: ['E#3'], duration: 1 },
-        { noteNames: ['A#3'], duration: 1 },
-        { noteNames: ['B#3'], duration: 1 },
-        { noteNames: ['E#3'], duration: 1 }
+        { noteNames: ['E3'], duration: 1 },
+        { noteNames: ['A3'], duration: 1 },
+        { noteNames: ['B3'], duration: 1 },
+        { noteNames: ['E3'], duration: 1 }
       ]
     },
   ];
 
-  test.each([0, 1, 2])("should generate solfege degrees to LogTable", async (mathFloorReturnValue: number) => {
+  test.each([0, 1])("should generate solfege degrees to LogTable", async (mathFloorReturnValue: number) => {
     (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
     (<Mock>LogTable.write).mockImplementation((solfege: SolfegeMelody) => {
       expect(solfege.getMelody).toEqual(solfegeMelodies[mathFloorReturnValue].melody);
