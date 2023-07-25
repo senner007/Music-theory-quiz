@@ -56,6 +56,13 @@
         "scale" : "mixolydian",
         "tags" : ["12BarBlues"],
         "voiceLeading": ["NoVoiceLeading"]
+      },
+      {
+        "chords": ["I6", "V42no5", "I6", "I6" ],
+        "bass": ["C3", "G2", "C3", "C3"],
+        "description": "e8",
+        "isMajor": true,
+        "isDiatonic": true
       }
     ]
   }

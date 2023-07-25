@@ -3,16 +3,16 @@
 import { interval_direction, interval_distance } from "../tonal-interface";
 import { TNoteAllAccidentalOctave, interval_integer_absolute } from "../utils";
 import { NoVoiceLeadning } from "./globalConditions";
-import { IMelodyGeneratorBase, MelodyGeneratorBase } from "./melodyGenerator";
+import { IMelodyGeneratorBase, MelodyGeneratorBase } from "./melodyGeneratorBase";
 
 export const MelodyTopSingulate: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
     static id = "pattern_top_singulate";
     static description = "Soprano";
     static override globalConditions = NoVoiceLeadning;
     public melody() {
-        return [
+        return [{ isFallback : false, melody :[
             { note: [this.chordNotes.Soprano], duration: 4 as const }
-        ]
+        ]}]
     }
 }
 
@@ -28,10 +28,10 @@ export const MelodyChordal: IMelodyGeneratorBase = class extends MelodyGenerator
             this.chordNotes.fourth
         ].filter(c => c) as TNoteAllAccidentalOctave[]
 
-        return [
+        return [{ isFallback : false , melody : [
             { note: chord, duration: 4 as const }
 
-        ]
+        ]}]
     }
 }
 
@@ -53,6 +53,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => interval_integer_absolute(altoNote, sopranoNote) === 3,
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 1 },
                         { duration: 1 },
@@ -65,6 +66,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => interval_integer_absolute(altoNote, sopranoNote) !== 3,
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 1 },
                         { duration: 1 },
@@ -78,6 +80,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -88,7 +91,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
-
+                    isFallback : false,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -99,6 +102,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -109,6 +113,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -119,6 +124,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -129,6 +135,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -162,6 +169,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                     
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 },
@@ -175,6 +183,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => interval_direction(interval_distance(altoNote, nextAltoNote!)) === 1
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 },
@@ -188,6 +197,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => interval_direction(interval_distance(altoNote, nextAltoNote!)) === -1
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 },
@@ -201,6 +211,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => interval_direction(interval_distance(altoNote, nextAltoNote!)) === 1
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 },
@@ -212,6 +223,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
 
                     rhythm: [
                         { duration: 4 },
@@ -223,6 +235,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -233,6 +246,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -243,6 +257,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -253,6 +268,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -263,6 +279,7 @@ export const MelodyPattern_002: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -300,20 +317,10 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => tenorNote !== undefined && interval_integer_absolute(sopranoNote, tenorNote) === 6,
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 }
-                    ],
-                },
-                 {
-                    description: "Alto-Soprano (M3/m3)",
-                    conditions: [
-                        () => interval_integer_absolute(sopranoNote, altoNote) === 3,
-                    ],
-                    isCadence : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 },
                     ],
                 },
                 {
@@ -322,39 +329,58 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => interval_integer_absolute(sopranoNote, altoNote) === 3,
                     ],
                     isCadence : false,
+                    isFallback : false,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 },
                     ],
                 },
+                 {
+                    description: "Alto-Soprano (M3/m3)",
+                    conditions: [
+                        () => interval_integer_absolute(sopranoNote, altoNote) === 3,
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+               
                 {
                     description: "PT-Above-Soprano",
                     conditions: [
                         () => true
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 }
                     ],
                 },
+               
                 {
                     description: "PT-Above-Alto",
                     conditions: [
                         () => true
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 }
                     ],
                 },
+     
                 {
                     description: "PT-Above-Tenor",
                     conditions: [
                         () => true
                     ],
                     isCadence : false,
+                    isFallback : true,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 }
@@ -366,6 +392,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
 
                     rhythm: [
                         { duration: 4 },
@@ -377,6 +404,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -387,6 +415,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => true,
                     ],
                     isCadence : true,
+                    isFallback : false,
                     rhythm: [
                         { duration: 4 },
                     ],
@@ -397,6 +426,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => true
                     ],
                     isCadence : true,
+                    isFallback : true,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 }
@@ -408,6 +438,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => true
                     ],
                     isCadence : true,
+                    isFallback : true,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 }
@@ -419,6 +450,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                         () => true
                     ],
                     isCadence : true,
+                    isFallback : true,
                     rhythm: [
                         { duration: 2 },
                         { duration: 2 }

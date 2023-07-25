@@ -149,7 +149,7 @@ const solfegePattern_007 = {
 } as const
 
 const solfegePattern_008 = {
-    description: "Alto-Third (M3/m3)",
+    description: "Alto-Tenor (M3/m3)",
     indexes: [
         { index: EChordNote.Alto, step: EStep.None },
         { index: EChordNote.Tenor, step: EStep.None }],
@@ -397,7 +397,9 @@ const solfegePattern_027 = {
         ["Fa", "Le"],
         ["So", "Te"],
         ["Le", "Do"],
-        ["Te", "Re"]
+        ["Te", "Re"],
+
+        ["Di", "Mi"],
     ]
     
 } as const

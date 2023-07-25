@@ -1,8 +1,8 @@
 import { remove_octave } from "../solfege";
 import { interval_distance, note_transpose } from "../tonal-interface";
 import { TNoteAllAccidental, TNoteAllAccidentalOctave, interval_simplify } from "../utils";
-import { ChordFunction, IMelodyFragment } from "./melodyGenerator";
 import { TKeyInfo } from "../keyinfo/keyInfo";
+import { ChordFunction, IMelodyFragment } from "./melodyGeneratorBase";
 
 
 class ConditionHelpers {

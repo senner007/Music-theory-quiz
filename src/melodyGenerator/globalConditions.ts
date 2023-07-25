@@ -1,7 +1,7 @@
 import { TKeyInfo } from "../keyinfo/keyInfo";
 import { interval_distance } from "../tonal-interface";
 import { TNoteAllAccidentalOctave, interval_simplify } from "../utils";
-import { ChordFunction, IMelodyFragment } from "./melodyGenerator";
+import { ChordFunction, IMelodyFragment } from "./melodyGeneratorBase";
 import { Conditions } from "./patternConditions";
 
 export interface IGlobalConditionsClass {

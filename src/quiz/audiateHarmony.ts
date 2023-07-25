@@ -7,7 +7,7 @@ import { ITableHeader } from "../solfege";
 import { transpose_progression } from "../transposition";
 import { TNoteSingleAccidental, to_octave, TIntervalInteger, TNoteAllAccidental, commonKeys } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
-import { IMelodyGeneratorBase, melodyGenerator, MelodyGeneratorBase } from "../melodyGenerator/melodyGenerator";
+import { melodyGenerator } from "../melodyGenerator/melodyGenerator";
 import {
   MelodyChordal,
   MelodyPattern_001,
@@ -18,6 +18,7 @@ import {
 import { progression_to_chords, romanNueralDict } from "../harmony/romanNumerals";
 import { get_key, note_transpose } from "../tonal-interface";
 import { LogError } from "../dev-utils";
+import { IMelodyGeneratorBase } from "../melodyGenerator/melodyGeneratorBase";
 
 class Options {
   private static progressions = {
