@@ -60,7 +60,8 @@ const romanNumeralsDict = {
   V43no1: ["D4", "F4", "B4"],
   Vsus4: ["D4", "G4", "C5"],
   V7b5 : ["G4", "B4", "Db5", "F5"],
-  v: [],
+  v: ["G4", "Bb4", "D5"],
+  v6: ["Bb4", "D5", "G5"],
   v7: ["G4", "Bb4", "D5", "F5"],
   "v43" : ["D4", "F4", "G4", "Bb4"],
   "v743no1" : ["D4", "F4", "Bb4"], // wrong name
