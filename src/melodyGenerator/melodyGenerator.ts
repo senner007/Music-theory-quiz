@@ -67,6 +67,7 @@ export function melodyGenerator(
   const memoize = new Memoize();
 
   function outerRecurse(fallbackAllowed: number[]): IMelodyFragment[][] {
+    // Recursion with backtracking to try all combinations of patterns. On fail store the index, retry and permit fallback pattern at fail point.
     function recurse(
       currentChord: readonly TNoteAllAccidentalOctave[],
       acc: [IMelodyFragment[], IMelodyGenerator][]
@@ -75,7 +76,7 @@ export function melodyGenerator(
 
       failIndex = index > failIndex ? index : failIndex;
 
-      const previous = acc.at(-1);
+      const previous = acc.last();
       const previousMelody: IMelodyFragment[] | undefined = previous ? previous[0] : undefined;
       const previousGenerator: IMelodyGenerator | undefined = previous ? previous[1] : undefined;
 
@@ -129,11 +130,15 @@ export function melodyGenerator(
       return false;
     }
 
-    const melody = recurse(progression.chords[0], []);
+    const melody = recurse(progression.chords.first_or_throw(), []);
 
     if (Array.isArray(melody)) {
-      return melody.map((o) => o[0]);
+      return melody.map((o) => o.first());
     } else {
+        // throw if the failIndex has not increased. 
+        if (fallbackAllowed.includes(failIndex)) {
+            LogError(`Failed to create melody at chord index : ${failIndex}`)
+        }
       return outerRecurse([...fallbackAllowed, failIndex]); // permit fallback melody where recursion fails.
     }
   }
