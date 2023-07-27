@@ -51,7 +51,7 @@ export class GlobalConditions extends Conditions implements IGlobalConditions {
     if (!this.previousLastNote) return true;
 
     const distancePrevious = interval_simplify(interval_distance(this.previousBass!, this.previousLastNote));
-    const distanceCurrent = interval_simplify(interval_distance(this.bass, pattern.first()));
+    const distanceCurrent = interval_simplify(interval_distance(this.bass, pattern.first_or_throw()));
 
     if (
       (distancePrevious === "1P" || distancePrevious === "5P" || distancePrevious === "8P") &&

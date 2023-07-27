@@ -13,11 +13,11 @@ export function sortNotes(notes : TNoteAllAccidentalOctave[], comparator?: NoteC
 }
 
 export function is_lower_than_low_bound(n: TNoteAllAccidentalOctave, lowBound: TNoteSingleAccidentalOctave = "F3") {
-    return sortNotes([n, lowBound])[0] === n;
+    return sortNotes([n, lowBound]).first_or_throw() === n;
 }
 
 export function is_higher_than_high_bound(n: TNoteAllAccidentalOctave, highBound: TNoteSingleAccidentalOctave = "G5") {
-    return sortNotes([n, highBound])[1] === n;
+    return sortNotes([n, highBound]).last_or_throw() === n;
 }
 
 export const allChordNamesSorted = ChordType.all()
@@ -30,7 +30,7 @@ export const allScaleNamesSorted = ScaleType.all()
     .sort();
 
 export function add_octave_above(notes: readonly TNoteAllAccidentalOctave[]): readonly TNoteAllAccidentalOctave[] {
-    return [...notes, note_transpose(notes.first(), EIntervalDistance.OctaveUp) as TNoteAllAccidentalOctave];
+    return [...notes, note_transpose(notes.first_or_throw(), EIntervalDistance.OctaveUp) as TNoteAllAccidentalOctave];
 }
 
 export function to_octave_above(notes: Readonly<TNoteAllAccidentalOctave[]>): TNoteAllAccidentalOctave[] {

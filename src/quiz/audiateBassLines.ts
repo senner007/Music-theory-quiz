@@ -1,16 +1,12 @@
 import chalk from "chalk";
 import { progressions, TProgression } from "../harmony/harmonicProgressions";
-import { INotePlay } from "../midiplay";
 import { IQuiz, TOptionsReturnType } from "./quiztypes/quiz-types";
-import { ITableHeader } from "../solfege";
 import {
-  TNoteSingleAccidental,
   to_octave,
   commonKeys,
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { interval_distance, note_transpose } from "../tonal-interface";
-
 
 export const bassLineOptions = [
   { name : "Bass lines", options : () => progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" },
@@ -24,8 +20,7 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
     return true;
   }
 
-  key: TNoteSingleAccidental;
-
+  key;
   randomBassLineInKey;
   progressionDescription
   progressionIsDiatonic;
@@ -62,8 +57,8 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
   }
 
   audio() {
-    const bassLine = this.randomBassLineInKey.map((n): INotePlay => {
-      return { noteNames: [n], duration: 1 };
+    const bassLine = this.randomBassLineInKey.map(n => {
+      return { noteNames: [n], duration: 1 } as const;
     });
 
     const keyAudio = [
@@ -76,19 +71,19 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
           to_octave(note_transpose(this.key, "5P"), "3"),
         ],
         duration: 2,
-      } as INotePlay,
+      } as const,
     ];
 
     return [
-      { audio: bassLine, keyboardKey: "space", message: "play bass line", display: true } as const,
-      { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
-    ];
+      { audio: bassLine, keyboardKey: "space", message: "play bass line", display: true, solo: true },
+      { audio: keyAudio, keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key", solo: true },
+    ] as const;
   }
 
   get table_header() {
-    return this.randomBassLineInKey.map((_, index): ITableHeader => {
+    return this.randomBassLineInKey.map((_, index) => {
       index++;
-      return { name: index.toString().padStart(2, '0'), duration: 1 };
+      return { name: index.toString().padStart(2, '0'), duration: 1 } as const;
     });
   }
 

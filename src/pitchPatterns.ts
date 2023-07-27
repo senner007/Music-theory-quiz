@@ -29,8 +29,8 @@ export function pattern_intervals(pattern: TPattern): [TIntervalInteger, TInterv
 }
 
 export function pitch_pattern_inversions(note: TNoteAllAccidental, intervals : [TIntervalInteger, TIntervalInteger]) {
-    const note2 = note_transpose(note, intervals[0]);
-    const note3 = note_transpose(note2, intervals[1]);
+    const note2 = note_transpose(note, intervals.first_or_throw());
+    const note3 = note_transpose(note2, intervals.last_or_throw());
 
     const note2Inversion = note_transpose(note, intervals[1]);
 

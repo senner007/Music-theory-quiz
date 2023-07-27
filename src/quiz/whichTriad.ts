@@ -18,7 +18,9 @@ export const WhichTriad: IQuiz<TOptionsType> = class extends TextQuizBase<TOptio
   chordTypesAndNotes;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
-    const chordOptions = options.first_and_only().options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
+    const [chordTypeOptions] = options;
+
+    const chordOptions = chordTypeOptions.options.map((chordType) => create_chord(random_note_single_accidental(), chordType));
     this.chordTypesAndNotes = chordOptions
       .map((chord) => {
         return { chord: chord, notes: chord.notes.shuffle_array().comma_sequence() };
@@ -37,7 +39,7 @@ export const WhichTriad: IQuiz<TOptionsType> = class extends TextQuizBase<TOptio
   get question() {
     return `What notes spell the triad?`;
   }
-  answer(): string {
+  answer() {
     return this.randomChord.notes;
   }
 

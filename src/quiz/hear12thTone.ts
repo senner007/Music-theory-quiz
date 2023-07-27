@@ -39,7 +39,7 @@ export const Hear12thTone: IQuiz<[]> = class extends ListeningQuizBase<[]> {
     return this.missingNote;
   }
 
-  override feedback_wrong(): string {
+  override feedback_wrong() {
     const chromaticScaleShuffledInOctave = this.chromaticScaleShuffled
     .filter(note => note !== this.missingNote)
     .to_octave_ascending(this.octave);
@@ -62,7 +62,9 @@ export const Hear12thTone: IQuiz<[]> = class extends ListeningQuizBase<[]> {
         .to_octave_ascending(this.octave)
         .map(note => { return { noteNames: [note], duration: 1 } as const});
 
-        return [ { audio : [audio], keyboardKey : "space", onInit : true, message : "play row"} ]
+    return [ 
+      { audio : audio, keyboardKey : "space", onInit : true, message : "play row", solo : true} 
+    ] as const
   }
 
   protected override initTempo : number = 200;

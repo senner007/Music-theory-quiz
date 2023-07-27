@@ -114,8 +114,8 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
     return true;
   }
 
-  key: TNoteSingleAccidental;
-  chords: TChordRomanNumeral[];
+  key;
+  chords;
   randomProgressionInKey;
   melody;
   progressionTags;
@@ -126,9 +126,7 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
   timeSignature = 4 as const; // from options - input to melody pattern
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
-
     const [optionsProgressions, optiosMelodicPatterns, optionsKeys, optionsProgression] = options;
-    // TODO : deconstruct similarly in all classes
 
     this.key = optionsKeys.options.random_item();
     
@@ -203,11 +201,11 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
   }
 
   audio() {
-    const audio = this.melody.melodyNotes.map((n): INotePlay => {
+    const audio = this.melody.melodyNotes.map((n) => {
       return { noteNames: n.note, duration: n.duration };
     });
 
-    const audioBass = this.melody.bass.map((n, index): INotePlay => {
+    const audioBass = this.melody.bass.map((n, index) => {
       return { noteNames: [n], duration: this.melody.timeSignature };
     });
 
@@ -225,10 +223,10 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
     ];
 
     return [
-      { audio: audio, keyboardKey: "m", message: "play melody", display: true },
-      { audio: [audioBass], keyboardKey: "b", message: "play bass line" },
+      { audio: audio, keyboardKey: "m", message: "play melody", display: true, solo: true },
+      { audio: audioBass, keyboardKey: "b", message: "play bass line", solo : true },
       { audio: [audio, audioBass], keyboardKey: "space", message: "play melody with bass line" },
-      { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key" },
+      { audio: keyAudio, keyboardKey: "l", onInit: true, backgroundChannel: true, message: "establish key", solo : true },
     ] as const;
   }
 

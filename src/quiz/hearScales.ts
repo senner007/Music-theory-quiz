@@ -114,9 +114,12 @@ export const HearScales: IQuiz<TOptionsType> = class extends ListeningQuizBase<T
   octave: TOctave = "4";
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
+
+    const [scaleOptions] = options
+
     const nChoices = 7; // should be option parameter
     this.randomNote = random_note_single_accidental();
-    const allScales = options.first_and_only().options.shuffle_array().map(scaleName => {
+    const allScales = scaleOptions.options.shuffle_array().map(scaleName => {
       const scale = create_scale(this.randomNote, scaleName);
       return { scale: scale, description: scale.type + " - " + scale.intervals };
     });
@@ -132,11 +135,11 @@ export const HearScales: IQuiz<TOptionsType> = class extends ListeningQuizBase<T
 
   }
 
-  private prepare_audio (): INotePlay[] {
+  private prepare_audio () {
     const scaleNotes = scale_notes(this.scalePick.scale).to_octave_ascending(this.octave);
       const scaleNotesWithOctave = add_octave_above(scaleNotes);
       const scaleNotesAudio = scaleNotesWithOctave
-        .map(note => { return { noteNames: [note], duration: 1 } as INotePlay })
+        .map(note => { return { noteNames: [note], duration: 1 } as const})
       
       if (event_by_probability(50)) {
         scaleNotesAudio.reverse();
@@ -163,8 +166,8 @@ export const HearScales: IQuiz<TOptionsType> = class extends ListeningQuizBase<T
 
   audio() {
     return [ 
-      { audio : [this.initAudio], keyboardKey : "space", onInit : true, message : "play scale"}
-    ]
+      { audio : this.initAudio, keyboardKey : "space", onInit : true, message : "play scale", solo : true}
+    ] as const
   }
 
   protected override initTempo : number = 200;

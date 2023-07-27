@@ -28,28 +28,29 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends Audia
     return options.first().options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
-  key: TNoteSingleAccidental;
+  key
   initAudio;
-  stepnumber: number = 12; // in options
   timeSignature = 1 as const;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
+
+    const [syllableOptions, octaveOptions, nNotesOptions] = options;
 
     this.key = random_note_single_accidental();
 
     const syllableKeysInC = ObjectEntries(syllables_in_key_of_c).keys 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
-      return options.first().options.includes(syllables_in_key_of_c[key]);
+      return syllableOptions.options.includes(syllables_in_key_of_c[key]);
     });
 
     const distanceToKey = interval_distance("C", this.key)
     const syllableNotesTransposed = optionSyllableNotesInC.transpose_by(distanceToKey);
 
-    const notes = options[2].options.random_item();
+    const notes = nNotesOptions.options.random_item();
 
     this.initAudio = [...Array(Number(notes)).keys()].map((_) => {
       const note = syllableNotesTransposed.random_item();
-      const randomOctave = options[1].options.random_item();
+      const randomOctave = octaveOptions.options.random_item();
 
       const octaveNote = to_octave(note, randomOctave);
       if (is_higher_than_high_bound(octaveNote)) {
@@ -74,8 +75,8 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends Audia
   }
 
   audio() {
-    const audio = this.initAudio.map((n): INotePlay => {
-      return { noteNames: [n], duration: 1 };
+    const audio = this.initAudio.map((n)  => {
+      return { noteNames: [n], duration: 1 } as const;
     });
 
     const keyAudio = [
@@ -88,19 +89,19 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends Audia
           to_octave(note_transpose(this.key, "5P"), "3"),
         ],
         duration: 2,
-      } as INotePlay,
+      } as const,
     ];
 
     return [
-      { audio: audio, keyboardKey: "space", message: "play melody", display: true } as const,
-      { audio: [keyAudio], keyboardKey: "l", onInit: true, backgroundChannel : true, message: "establish key" },
-    ];
+      { audio: audio, keyboardKey: "space", message: "play melody", display: true, solo : true },
+      { audio: keyAudio, keyboardKey: "l", onInit: true, backgroundChannel : true, message: "establish key", solo : true },
+    ] as const;
   }
 
   get table_header() {
-    return this.initAudio.map((_, index): ITableHeader => {
+    return this.initAudio.map((_, index) => {
       index++;
-      return { name: index.toString().padStart(2, '0'), duration: 1 };
+      return { name: index.toString().padStart(2, '0'), duration: 1 } as const;
     });
   }
 

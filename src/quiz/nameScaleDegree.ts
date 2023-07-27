@@ -36,7 +36,9 @@ export const NameScaleDegree: IQuiz<TOptionsType> = class extends TextQuizBase<T
   randomNoteVariants;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
-    this.scale = create_scale(random_note_single_accidental(), options.first().options.random_item());
+    const [scaleTypeOptions] = options;
+
+    this.scale = create_scale(random_note_single_accidental(), scaleTypeOptions.options.random_item());
     const randomIndex = random_index(this.scale.notes);
     this.randomNote = scale_note_at_index(this.scale, randomIndex);
     this.randomDegree = number_to_degree(randomIndex);
@@ -52,7 +54,7 @@ export const NameScaleDegree: IQuiz<TOptionsType> = class extends TextQuizBase<T
   get question() {
     return `Which is the degree?`;
   }
-  answer(): string {
+  answer() {
     return this.randomNote;
   }
 

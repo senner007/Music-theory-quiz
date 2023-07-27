@@ -33,8 +33,9 @@ export const MissingScaleNote: IQuiz<TOptionsType> = class extends TextQuizBase<
   randomNoteVariants;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
+    const [scaleTypeOptions] = options
 
-    this.scale = create_scale(random_note_single_accidental(), options.first().options.random_item());
+    this.scale = create_scale(random_note_single_accidental(), scaleTypeOptions.options.random_item());
     this.randomNote = scale_notes(this.scale).random_item();
 
     this.scaleStringMissingNote = this.scale.notes

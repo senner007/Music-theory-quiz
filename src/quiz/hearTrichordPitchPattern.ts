@@ -30,8 +30,10 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
   audioArpeggio;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
+    const [pitchPatternOptions] = options
+
     this.randomNote = random_note_single_accidental();
-    this.randomPatternName = options.first().options.random_item();
+    this.randomPatternName = pitchPatternOptions.options.random_item();
     this.randomPitchPattern = pitch_pattern_by_name(this.randomPatternName);
     const [chord, arppeggio] = this.prepare_audio();
     this.audioChord = chord;
@@ -71,9 +73,9 @@ export const HearTrichordPitchPatterns: IQuiz<TOptionsType> = class extends List
 
   audio() {
     return [
-      { audio: [this.audioChord], keyboardKey: "space", onInit: true, channel: 1, message: "play trichord harmonically" },
-      { audio: [this.audioArpeggio], keyboardKey: "s", channel: 1, message: "play trichord sequentially" },
-    ];
+      { audio: this.audioChord, keyboardKey: "space", onInit: true, channel: 1, message: "play trichord harmonically", solo : true },
+      { audio: this.audioArpeggio, keyboardKey: "s", channel: 1, message: "play trichord sequentially", solo : true },
+    ] as const;
   }
 
   protected override initTempo : number = 200;

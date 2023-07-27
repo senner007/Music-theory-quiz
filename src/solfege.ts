@@ -1,6 +1,6 @@
 import { LogError } from "./dev-utils";
 import { INotePlay } from "./midiplay";
-import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, transpose_to_key } from "./utils";
+import { TNoteAllAccidentalOctave, TNoteSingleAccidental, TNoteAllAccidental, transpose_to_key, splitArrayInChunks } from "./utils";
 import { interval_distance, interval_semitones, sortNotes } from "./tonal-interface";
 
 export interface ITableHeader {
@@ -14,11 +14,11 @@ export type TSyllable = typeof syllables_in_key_of_c[TSolfegeDict];
 
 export class SolfegeMelody {
   private verify_duration_length() {
-    if (this.duration() > 50) LogError("Melody duration exceeded");
+    if (this.duration() > 60) LogError("Melody duration exceeded");
   }
 
   private sortedMelody;
-  constructor(private melody: INotePlay[], private key: TNoteSingleAccidental, private timeSignature: 1 | 2 | 3 | 4) {
+  constructor(private melody: INotePlay[], private key: TNoteSingleAccidental, public timeSignature: 1 | 2 | 3 | 4) {
     this.sortedMelody = this.sort_melody();
     this.verify_duration_length();
   }
@@ -32,12 +32,12 @@ export class SolfegeMelody {
     return Object.freeze(this.melody);
   }
 
-  public get lowest(): TNoteAllAccidentalOctave {
-    return this.sortedMelody.first();
+  public get lowest() {
+    return this.sortedMelody.first_or_throw();
   }
 
   private get highest() {
-    return this.sortedMelody.last()
+    return this.sortedMelody.last_or_throw()
   }
 
   get length() {
@@ -47,23 +47,19 @@ export class SolfegeMelody {
   durationAccumulation() {
     const duration = this.melody.map((n) => n.duration);
     return duration.reduce((accumulator, current, index) =>
-      [...accumulator, { index, total: (accumulator.at(-1)?.total || 0) + current }], [] as { index: number, total: number }[]);
+      [...accumulator, { index, total: (accumulator.last()?.total || 0) + current }], [] as { index: number, total: number }[]);
   }
 
   duration(): number {
     return this.melody.map((n) => n.duration).reduce((a, b) => a + b, 0);
   }
 
-  pagination(maxDuration: number, timeSignature: 1 | 2 | 3 | 4) {
+  pagination(maxDuration: number) {
     if (this.duration() > maxDuration) {
       const half = this.durationAccumulation().filter(d => d.total === maxDuration - (maxDuration % this.timeSignature)).first_and_only().index;
-      const firstHalf = this.getMelody.slice(0, half + 1)
-      const secondHalf = this.getMelody.slice(half + 1)
-      return [
-        new SolfegeMelody(firstHalf, this.key, this.timeSignature),
-        new SolfegeMelody(secondHalf, this.key, this.timeSignature)
-      ]
-
+      return splitArrayInChunks(this.getMelody, half +1).map(chunk => {
+        return new SolfegeMelody(chunk, this.key, this.timeSignature) 
+      })
     }
     return [this];
   }
@@ -82,8 +78,8 @@ export class SolfegeMelody {
     return semitones
   }
 
-  ambitus(lowest: TNoteAllAccidentalOctave): number {
-    const semitones = this.distance_from_lowest(this.highest, lowest);
+  ambitus(): number {
+    const semitones = this.distance_from_lowest(this.highest, this.lowest);
     return semitones;
   }
 }

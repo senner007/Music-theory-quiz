@@ -21,13 +21,13 @@ const scales = [
   // "locrian",
   "harmonic minor",
   "melodic minor",
-];
-const intervals: TIntervalAbsolute[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"];
+] as const;
+const intervals: TIntervalAbsolute[] = ["2m", "2M", "3m", "3M", "4P", "4A", "5d", "5P", "6m", "6M"] as const;
 
 const options =  [
   { name : "Scales", options : () => scales, cliShort : "s" }, 
   { name : "Intervals", options:() =>  intervals, cliShort : "i" }
-];
+] as const;
 
 type TOptionsType = typeof options;
 
@@ -47,6 +47,7 @@ TOptionsReturnType<TOptionsType>
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
     const [scaletypes, intervals] = options;
+    
     this.key = random_note_single_accidental();
     this.randomScaleType = scaletypes.options.random_item();
     const randomScale = create_scale(this.key, this.randomScaleType);
@@ -67,7 +68,7 @@ TOptionsReturnType<TOptionsType>
       });
 
     const secondNote = secondTonePossibilities.random_item();
-    this.interval = [firstNote, secondNote];
+    this.interval = [firstNote, secondNote] as const;
   }
 
   get quiz_head() {
@@ -81,34 +82,32 @@ TOptionsReturnType<TOptionsType>
   }
 
   audio() {
-    const interval = this.interval.map((n): INotePlay => {
-      return { noteNames: [n], duration: 2 };
+    const interval = this.interval.map((n) => {
+      return { noteNames: [n], duration: 2 } as const;
     });
 
-    const firstNote = [interval.first()];
-    const secondNote = [interval[1]];
+    const [firstNote, secondNote] = interval;
 
-    const root: INotePlay[] = [{ noteNames: [this.scaleThirdOctave.first()], duration: 1 }];
+    const root = [{ noteNames: [this.scaleThirdOctave.first_or_throw()], duration: 1 } as const];
 
     const scale = add_octave_above(this.scaleThirdOctave)
-      .map((n): INotePlay => {
-        return { noteNames: [n], duration: 1 };
+      .map(n  => {
+        return { noteNames: [n], duration: 1 } as const;
       });
 
     return [
-      { audio: interval, keyboardKey: "space", message: "play interval", display: true } as const,
-      { audio: [firstNote], keyboardKey: "a", onInit: true, message: "play the fist note" },
-      { audio: [secondNote], keyboardKey: "s", message: "play the second note" },
-      { audio: [root], keyboardKey: "d", message: "play the root of the scale" },
-      { audio: [scale], keyboardKey: "f", message: "play the scale" },
-
-    ];
+      { audio: interval, keyboardKey: "space", message: "play interval", display: true, solo : true },
+      { audio: [firstNote], keyboardKey: "a", onInit: true, message: "play the fist note", solo : true },
+      { audio: [secondNote], keyboardKey: "s", message: "play the second note", solo : true },
+      { audio: root, keyboardKey: "d", message: "play the root of the scale", solo : true },
+      { audio: scale, keyboardKey: "f", message: "play the scale", solo : true },
+    ] as const;
   }
 
   get table_header() {
-    return this.interval.map((_, index): ITableHeader => {
+    return this.interval.map((_, index) => {
       index++;
-      return { name: index.toString().padStart(2, "0"), duration: 2 };
+      return { name: index.toString().padStart(2, "0"), duration: 2 } as const;
     });
   }
 
@@ -116,7 +115,7 @@ TOptionsReturnType<TOptionsType>
 
   static meta() {
     return {
-      get all_options(): TOptionsType {
+      get all_options() {
         return options;
       },
       name: "Audiate contextual intervals",

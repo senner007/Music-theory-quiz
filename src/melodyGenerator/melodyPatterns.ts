@@ -301,7 +301,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
         const altoNote = this.chordNotes.Alto;
         const tenorNote = this.chordNotes.Tenor;
 
-        const nextSopranoNote = this.nextChord?.at(-1);
+        const nextSopranoNote = this.nextChord?.last();
         const nextAltoNote = this.nextChord?.at(-2);
         const previousMelody = this.previousMelody
         const key = this.keyInfo.type;

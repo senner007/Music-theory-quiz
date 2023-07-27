@@ -24,7 +24,7 @@ function chord_inversions(chords: TChord[], inversion: number) {
 }
 
 function chord_inversion(chord: TChord, inversion: number): TChord {
- const type = chord.type === "" || chord.type === undefined ? chord.aliases.first() : chord.type; 
+ const type = chord.type === "" || chord.type === undefined ? chord.aliases.first_or_throw() : chord.type; 
   return get_chord(type, chord.tonic, chord.notes[inversion]);
 } 
 
@@ -172,5 +172,5 @@ export function resolveAmbiguousChords(
   // add advanced logic here to resolve issue when chord functions are ambiguous
   // example ["F", "A", "C", "Eb"] i C minor melodic could equal IV7 or V7/bVII depending on the surrounding context;
   // pending implementation return first item
-  return chords.first();
+  return chords.first_or_throw();
 }

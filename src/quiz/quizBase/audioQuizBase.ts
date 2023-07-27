@@ -15,14 +15,24 @@ interface IAudioPlayBase {
 interface IAudioPlayMix extends IAudioPlayBase {
   audio: INotePlay[][];
   display?: false
+  solo?: false;
 }
 
 interface IAudioPlaySolo extends IAudioPlayBase {
   audio: INotePlay[]
-  display: true;
+  display?: boolean;
+  solo: true;
 }
 
-type IAudioPlay = IAudioPlaySolo | IAudioPlayMix;
+interface IAudioSoloDisplay extends IAudioPlayBase {
+  audio: INotePlay[]
+  display: true;
+  solo: true;
+}
+
+// type IAudioPlay = IAudioSoloDisplay | IAudioPlaySolo | IAudioPlayMix;
+
+type TAudioPlayParts = readonly [IAudioSoloDisplay, ...(IAudioPlaySolo | IAudioPlayMix)[]] | readonly (IAudioSoloDisplay | IAudioPlaySolo | IAudioPlayMix)[]
 
 export abstract class AudioQuizBase<T> extends QuizBase<T> {
 
@@ -54,7 +64,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
 
   protected tempoText() { return `Tempo : ${this.oppositeSizeInRange(this.get_tempo().tempo)} - Change with key command: Ctrl-(left/right)` };
 
-  private create_listeners(audioParts: IAudioPlay[]): IListener[] {
+  private create_listeners(audioParts: TAudioPlayParts): IListener[] {
 
     return audioParts.map((audioPart) => {
       let abortControl = { ac: new AbortController() };
@@ -65,7 +75,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
             .filter(l => l.isBackgroundChannel === audioPart.backgroundChannel) // abort everything where backgroundChannel property is equal to current
             .forEach(l => l.acObj?.ac.abort());
           abortControl.ac = new AbortController();
-          if (audioPart.display) {
+          if (audioPart.solo) {
             play_midi(audioPart.audio, abortControl.ac, audioPart.backgroundChannel ? this.BACKGROUND_CHANNEL : 1, this.get_tempo().tempo);
           } else {
             audioPart.audio.forEach((audio, index) => {
@@ -103,7 +113,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
     };
   }
 
-  abstract audio(): IAudioPlay[];
+  abstract audio(): TAudioPlayParts;
 
   abstract call_quiz(): Promise<string | never>;
 

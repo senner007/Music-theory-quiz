@@ -22,8 +22,8 @@ function adjust_transposition_within_bounds(
   progression: IProgression,
   bounds: transpositionBounds) {
   const notesSorted = sortNotes(progression.chords.flatMap((n) => n));
-  const lowestNote = notesSorted.first();
-  const highestNote = notesSorted.at_or_throw(-1);
+  const lowestNote = notesSorted.first_or_throw();
+  const highestNote = notesSorted.last_or_throw();
 
   if (is_lower_than_low_bound(lowestNote, bounds.low)) {
     return transpose_progression_by_interval(progression, EIntervalDistance.OctaveUp);
@@ -47,7 +47,7 @@ export function transpose_to_ascending(
   arr: readonly TNoteAllAccidentalOctave[]
 ) {
   if (index === 0) return n;
-  const interval = interval_distance(arr.first(), n);
+  const interval = interval_distance(arr.first_or_throw(), n);
   const intervalData = interval_data(interval);
   return (intervalData.semitones! <= 0 ? note_transpose(n, EIntervalDistance.OctaveUp) : n) as Readonly<TNoteAllAccidentalOctave>;
 }

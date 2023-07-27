@@ -38,9 +38,11 @@ export const HearTetraChord: IQuiz<TOptionsType> = class extends ListeningQuizBa
 
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
+    const [scaleOptions] = options;
+
     this.randomNote = random_note_single_accidental();
 
-    const scales = options.first_and_only().options.map(scaleType => 
+    const scales = scaleOptions.options.map(scaleType => 
       create_scale(this.randomNote, scaleType)
     );
 
@@ -68,7 +70,7 @@ export const HearTetraChord: IQuiz<TOptionsType> = class extends ListeningQuizBa
   }
 
   audio() {
-    return [ { audio : [this.initAudio], keyboardKey : "space", onInit : true, message: "play tetrachord"} ]
+    return [ { audio : this.initAudio, keyboardKey : "space", onInit : true, message: "play tetrachord", solo : true} ] as const
   }
 
   protected override initTempo : number = 200;

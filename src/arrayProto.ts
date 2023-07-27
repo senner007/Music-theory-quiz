@@ -4,9 +4,10 @@ import { note_transpose } from "./tonal-interface";
 import { transpose_to_ascending } from "./transposition";
 import { TNoteAllAccidental, TNoteAllAccidentalOctave, to_octave, random_index, TOctave, TIntervalInteger } from "./utils";
 
-type Last<T extends readonly any[]> = [any, ...T][T["length"]];
+type Last<T extends readonly any[]> = T extends readonly [...infer _, infer L] ? L : T[number] | undefined
+type LastCertain<T extends readonly any[]> = T extends readonly [...infer _, infer L] ? L : T[number]
+type First<T extends readonly any[]> = T extends readonly [infer F, ...infer _] ? F : T[number] | undefined
 export type Reverse<T extends readonly any[]> = T extends readonly [infer F, ...infer Rest] ? [...Reverse<Rest>, F] : T;
-
 
 declare global {
 
@@ -19,10 +20,12 @@ declare global {
     is_empty(): boolean
     at_or_throw(index: number): T
     first_and_only(): this[0];
-    first(): this[0];
+    first(): First<this>;
+    first_or_throw(): this[0]; 
     remove_duplicate_objects(): Readonly<Array<T>>;
     contains(this: T[], otherArray: T[]): boolean
     last(): Last<this>;
+    last_or_throw() : LastCertain<this>
     to_reverse(): Reverse<this>;
   }
   interface ReadonlyArray<T> extends Array<T> {
@@ -72,10 +75,28 @@ Array.prototype.first = function <U extends any[]>(
   return this.at(0);
 };
 
+Array.prototype.first_or_throw = function <U extends any[]>(
+  this: U
+): U[0] {
+  if (this.at(0) === undefined) {
+    LogError("Array first element is undefined")
+  }
+  return this.at(0);
+};
+
 Array.prototype.last = function <U extends any[]>(
   this: U
 ) {
   return this.at(-1)
+};
+
+Array.prototype.last_or_throw = function <U extends any[]>(
+  this: U
+) {
+  if (this.at(-1) === undefined) {
+    LogError("Array last element is undefined")
+  }
+  return this.at(-1);
 };
 
 Array.prototype.first_and_only = function <U extends any[]>(
