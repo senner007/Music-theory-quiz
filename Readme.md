@@ -3,7 +3,7 @@
 ### Introduction:
 Train your ears to recognize melodic and harmonic patterns with ear training and theory exercises. Develop your ability to distinguish different musical elements, enhancing your improvisational skills and enabling you to play by ear with greater accuracy and fluency.
 Learn to audiate musical elements, structures, pitches and harmony without using an instrument. 
-Hear the diatonic relationships and learn to produce tonal relationships in your mind.
+Hear and produce diatonic relationships in your mind.
 
 ### Docs:
 See the /docs folder
