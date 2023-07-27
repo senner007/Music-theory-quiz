@@ -37,7 +37,7 @@ export class Conditions extends ConditionHelpers {
         if (this.keyInfo.type === "major") {
 
             const isSecondAboveDominant = this.currentFunction.tonic === note_transpose(this.previousFunction.tonic, "2M");
-            const isMinor = this.currentFunction.isMajor
+            const isMinor = !this.currentFunction.isMajor
 
             if (isSecondAboveDominant && isMinor) {
                 return true;
@@ -46,6 +46,8 @@ export class Conditions extends ConditionHelpers {
         }
 
         if (this.keyInfo.type === "minor") {
+
+            // TODO : test me!
 
             const isSecondAboveDominant = this.previousFunction.tonic === note_transpose(this.currentFunction.tonic, "2m");
             const isMajor = this.currentFunction.isMajor
