@@ -1,0 +1,86 @@
+{
+  "level": 100,
+  "description": "Baroque",
+  "progressions": [
+    {
+      "chords": ["i-a", "i-a", "bVII", "bVII", "bVI", "bVI", "v", "v"],
+      "bass": ["C3", "C3", "Bb2", "Bb2", "Ab2", "Ab2", "G2", "G2"],
+      "description": "gs-1",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Greensleeves"]
+    },
+    {
+      "chords": ["i64", "i-a", "bVII", "bVII6-a", "bVI", "bVI6-a", "v", "v6"],
+      "bass": ["C3", "C3", "Bb2", "Bb2", "Ab2", "Ab2", "G2", "G2"],
+      "description": "gs-2",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Greensleeves"]
+    },
+    {
+      "chords": ["i-a", "i-a", "bVII", "bVII", "bVI", "V", "i64"],
+      "bass": ["C3", "C3", "Bb2", "Bb2", "Ab2", "G2", "C3"],
+      "description": "gs-3",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Greensleeves"]
+    },
+    {
+      "chords": ["i-a", "i-a", "bVII", "bVII6-a", "bVI", "V", "i64"],
+      "bass": ["C3", "C3", "Bb2", "Bb2", "Ab2", "G2", "C3"],
+      "description": "gs-4",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Greensleeves"]
+    },
+    {
+      "chords": ["bIII64", "bIII64", "bVII", "bVII", "bVI", "bVI", "v", "v"],
+      "bass": ["Eb3", "Eb3", "Bb2", "Bb2", "Ab2", "Ab2", "G2", "G2"],
+      "description": "gs-5",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Greensleeves"]
+    },
+    {
+      "chords": ["bIII64", "bIII64", "bVII", "bVII", "bVI", "V", "i64"],
+      "bass": ["Eb3", "Eb3", "Bb2", "Bb2", "Ab2", "G2", "C3"],
+      "description": "gs-6",
+      "isMajor": false,
+      "isDiatonic": true,
+      "tags": ["Greensleeves"]
+    },
+    {
+        "chords": ["i64", "V", "i64", "bVII", "bIII64", "bVII", "i64", "V", "i64"],
+        "bass": ["C3", "G2", "C3", "Bb2", "Eb3", "Bb2", "C3", "G2", "C3"],
+        "description" : "e10",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["LaFolia"]
+      },
+      {
+        "chords": ["i6", "V42no5", "i6", "bVII64", "bIII6", "bVII64", "i6", "V42no5", "i6"],
+        "bass": ["C3", "G2", "C3", "Bb2", "Eb3", "Bb2", "C3", "G2", "C3"],
+        "description" : "e11",
+        "isMajor": false,
+        "isDiatonic": true,
+        "tags": ["LaFolia"]
+      },
+      {
+        "chords": ["I6", "V64no3double5", "V7no5/V", "V64", "I6", "ii7no3", "V64", "I6"],
+        "bass": ["C4", "B3", "A3", "G3", "E3", "F3", "G3", "C3"],
+        "description" : "e12",  
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Goldberg"]
+      },
+      {
+        "chords": ["I-a", "V6-a", "V64/V", "V6-a", "I64", "ii65no3", "V", "I64"],
+        "bass": ["C4", "B3", "A3", "G3", "E3", "F3", "G3", "C3"],
+        "description" : "e13",
+        "isMajor": true,
+        "isDiatonic": true,
+        "tags": ["Goldberg"]
+      }
+  ]
+}
