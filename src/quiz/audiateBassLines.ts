@@ -10,7 +10,7 @@ import { interval_distance, note_transpose } from "../tonal-interface";
 
 export const bassLineOptions = [
   { name : "Bass lines", options : () => progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" },
-  { name : "Keys",  options: () => commonKeys, cliShort : "b" }
+  { name : "Keys",  options: () => commonKeys, cliShort : "k" }
 ] as const
 
 type TOptionsType = typeof bassLineOptions

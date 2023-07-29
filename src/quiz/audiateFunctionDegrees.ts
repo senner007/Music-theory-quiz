@@ -8,7 +8,8 @@ import {
   TOctave,
   random_note_single_accidental,
   to_octave,
-  EIntervalDistance
+  EIntervalDistance,
+  commonKeys
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { ObjectEntries } from "../objectUtils";
@@ -18,6 +19,7 @@ const options = [
   { name : "Syllables", options : () => ["Do", "Ra", "Re", "Me", "Mi", "Fa", "Fi", "So", "Le", "La","Ti"] as TSyllable[], cliShort : "s"},
   { name : "Octaves", options : () =>  ["2","3", "4"] as const, cliShort : "o"},
   { name : "Notes", options : () =>  ["6", "12", "18"] as const, cliShort : "n"},
+  { name : "Keys",  options: () => commonKeys, cliShort : "k" }
 ] as const;
 
 type TOptionsType = typeof options;
@@ -34,9 +36,9 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends Audia
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
 
-    const [syllableOptions, octaveOptions, nNotesOptions] = options;
+    const [syllableOptions, octaveOptions, nNotesOptions, optionsKeys] = options;
 
-    this.key = random_note_single_accidental();
+    this.key = optionsKeys.options.random_item();
 
     const syllableKeysInC = ObjectEntries(syllables_in_key_of_c).keys 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {

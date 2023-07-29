@@ -121,8 +121,9 @@ const romanNumeralsDict = {
   IV64: ["C4", "F4", "A4"],
   IVsus4: ["F4", "Bb4", "C5"],
   IV7: ["F4", "A4", "C5", "E5"],
+  IV7no3: ["F4", "C5", "E5"],
   IV7no1 : ["A4", "C5", "E5"],
-  IV743no1: ["C4", "E4", "A4"],
+  IV743no1: ["C4", "E4", "A4"], // wrong name
   "IV#dim" : ["F#4", "A4", "C5"],
   IV7dom : ["F4", "A4", "C5", "Eb5"],
   IV42domno1 : ["Eb4", "A4", "C5"],

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "SET NODE_ENV=dev&&nodemon src/main.ts --no-stdin --exitcrash",
     "dev-nocheck": "SET NODE_ENV=dev&&nodemon src/main.ts --no-stdin --config nodemon-transpile-only.json --exitcrash",
-    "display": "npm run dev",
+    "harm": "npm run dev -- --qt AudiateHarmony --p",
     "build": "tsc",
     "prod": "npm run build && node dist/main.js",
     "test": "vitest --run"
