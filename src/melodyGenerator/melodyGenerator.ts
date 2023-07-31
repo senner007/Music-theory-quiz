@@ -26,6 +26,7 @@ export interface IMelodyOptions {
   index: number;
   totalIndex: number;
   bass: TNoteAllAccidentalOctave;
+  previousBass: TNoteAllAccidentalOctave | undefined;
   previousGenerator: Omit<IMelodyGenerator, "melody"> | undefined;
   previousMelody: IMelodyFragment[] | undefined;
   nextChordFunction: TChord | undefined;
@@ -66,7 +67,7 @@ export function melodyGenerator(
 
   const memoize = new Memoize();
 
-  function outerRecurse(fallbackAllowed: number[]): IMelodyFragment[][] {
+  function outerRecurse(fallbackAllowed: Set<number>): IMelodyFragment[][] {
     // Recursion with backtracking to try all combinations of patterns. On fail store the index, retry and permit fallback pattern at fail point.
     function recurse(
       currentChord: readonly TNoteAllAccidentalOctave[],
@@ -87,6 +88,7 @@ export function melodyGenerator(
         index: index,
         totalIndex: progression.chords.length,
         bass: progression.bass[index],
+        previousBass : progression.bass[index-1],
         previousGenerator: previousGenerator,
         previousMelody: previousMelody,
         nextChordFunction: chords[index + 1],
@@ -111,7 +113,7 @@ export function melodyGenerator(
       const indexBump = index + 1;
 
       for (const m of melodies) {
-        if (m.isFallback && !fallbackAllowed.includes(index)) {
+        if (m.isFallback && !fallbackAllowed.has(index)) {
           // return false if melody is fallback and not part of current recursive iteration
           return false;
         }
@@ -135,15 +137,28 @@ export function melodyGenerator(
     if (Array.isArray(melody)) {
       return melody.map((o) => o.first());
     } else {
-        // throw if the failIndex has not increased. 
-        if (fallbackAllowed.includes(failIndex)) {
+        let fallbackAllowedArray: number[] = []
+
+        // add failIndex to fallbackAllowed if not contained already
+        if (!fallbackAllowed.has(failIndex)) {
+          fallbackAllowedArray = [...fallbackAllowed, failIndex]
+        }
+
+        // add failIndex -1 to fallbackAllowed if failIndex already within
+        if (fallbackAllowed.has(failIndex)) {
+          fallbackAllowed
+          fallbackAllowedArray = [...fallbackAllowed, failIndex -1].filter(n => n !== failIndex)
+        }
+
+        // throw if fallbackAllowed contains all failbackIndexes   
+        if (fallbackAllowed.size === chords.length) {
             LogError(`Failed to create melody at chord index : ${failIndex}`)
         }
-      return outerRecurse([...fallbackAllowed, failIndex]); // permit fallback melody where recursion fails.
+      return outerRecurse(new Set([...fallbackAllowedArray])); // permit fallback melody where recursion fails.
     }
   }
 
-  const melody = outerRecurse([]);
+  const melody = outerRecurse(new Set<number>([]));
 
   return {
     timeSignature: 4, // refactor and include different time signatures
