@@ -419,43 +419,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
                     rhythm: [
                         { duration: 4 },
                     ],
-                },
-                {
-                    description: "PT-Above-Soprano",
-                    conditions: [
-                        () => true
-                    ],
-                    isCadence : true,
-                    isFallback : true,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 }
-                    ],
-                },
-                {
-                    description: "PT-Above-Alto",
-                    conditions: [
-                        () => true
-                    ],
-                    isCadence : true,
-                    isFallback : true,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 }
-                    ],
-                },
-                {
-                    description: "PT-Above-Tenor",
-                    conditions: [
-                        () => true
-                    ],
-                    isCadence : true,
-                    isFallback : true,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 }
-                    ],
-                },
+                }
 
             ]);
     }

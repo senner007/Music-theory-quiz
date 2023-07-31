@@ -41,8 +41,7 @@ export function melodyGenerator(
   keyInfo: TKeyInfo,
   scale?: string
 ): IMelodicPattern {
-  let failIndex = 0;
-
+  
   // Memoization lookup to improve performance of recursive backtracking.
   class Memoize {
     private memoization: Record<string, TMelodyPatterns> = {};
@@ -68,6 +67,9 @@ export function melodyGenerator(
   const memoize = new Memoize();
 
   function outerRecurse(fallbackAllowed: Set<number>): IMelodyFragment[][] {
+
+    let failIndex = 0;
+
     // Recursion with backtracking to try all combinations of patterns. On fail store the index, retry and permit fallback pattern at fail point.
     function recurse(
       currentChord: readonly TNoteAllAccidentalOctave[],
@@ -137,6 +139,9 @@ export function melodyGenerator(
     if (Array.isArray(melody)) {
       return melody.map((o) => o.first());
     } else {
+
+
+
         let fallbackAllowedArray: number[] = []
 
         // add failIndex to fallbackAllowed if not contained already
@@ -144,17 +149,30 @@ export function melodyGenerator(
           fallbackAllowedArray = [...fallbackAllowed, failIndex]
         }
 
-        // add failIndex -1 to fallbackAllowed if failIndex already within
-        if (fallbackAllowed.has(failIndex)) {
-          fallbackAllowed
-          fallbackAllowedArray = [...fallbackAllowed, failIndex -1].filter(n => n !== failIndex)
-        }
+        // handle case where a solution can not be found and so arriving at the same failIndex
+        // here we gradually step back and add failIndex from the top until arriving at 0 where error is thrown
+        // example : if fallbackAllowed contains [5,4,1] then add 3 : [3,1] an retry from with fallback pattern at that index 
+        // if fallbackAllowed contains [3,2,1] then throw error. 
+        else {  
+          
+          const sortAndReversed = [...fallbackAllowed].sort().reverse();
 
-        // throw if fallbackAllowed contains all failbackIndexes   
-        if (fallbackAllowed.size === chords.length) {
+          console.log(sortAndReversed)
+          
+          const indexToAdd = sortAndReversed.find((n, index) => n -1 !== sortAndReversed[index +1])! -1;
+
+          fallbackAllowedArray = [...fallbackAllowed, indexToAdd].filter(n => !(n > indexToAdd));
+
+          console.log(fallbackAllowedArray)
+
+          if (indexToAdd === 0) {
             LogError(`Failed to create melody at chord index : ${failIndex}`)
+          }
+
         }
-      return outerRecurse(new Set([...fallbackAllowedArray])); // permit fallback melody where recursion fails.
+   
+       
+      return outerRecurse(new Set([...fallbackAllowedArray]));
     }
   }
 
