@@ -78,7 +78,7 @@
         "tags": ["Plagal"]
       },
       {
-        "chords": ["i64", "iv", "i64", "V", "i6"],
+        "chords": ["i64", "iv6", "i64", "V", "i6"],
         "bass": ["C4", "F3", "C4", "G3", "C3"],
         "description": "c3-11",
         "isMajor": false,

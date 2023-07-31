@@ -439,7 +439,6 @@ const solfegePattern_029 = {
     patterns: [
         ["Re", "Do"],
         ["Mi", "Re"],
-        ["Fa", "Mi"],
         ["So", "Fa"],
         ["La", "So"],
         ["Ti", "La"],

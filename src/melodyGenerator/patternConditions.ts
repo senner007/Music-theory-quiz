@@ -1,5 +1,5 @@
 import { remove_octave } from "../solfege";
-import { interval_distance, note_transpose } from "../tonal-interface";
+import { interval_direction, interval_distance, note_transpose } from "../tonal-interface";
 import { TNoteAllAccidental, TNoteAllAccidentalOctave, interval_simplify } from "../utils";
 import { TKeyInfo } from "../keyinfo/keyInfo";
 import { ChordFunction, IMelodyFragment } from "./melodyGeneratorBase";
@@ -23,7 +23,9 @@ export class Conditions extends ConditionHelpers {
         protected previousFunction: ChordFunction | undefined,
         protected previousMelody: readonly IMelodyFragment[] | undefined,
         private keyInfo: TKeyInfo,
-        protected nextChordFunction: ChordFunction | undefined
+        protected nextChordFunction: ChordFunction | undefined,
+        protected previousBassNote : TNoteAllAccidentalOctave | undefined,
+        protected bassNote : TNoteAllAccidentalOctave,
     ) {
         super();
         this.previousNotes = this.previousMelody?.map(n => n.note).flat();
@@ -95,6 +97,7 @@ export class Conditions extends ConditionHelpers {
 
         return pattern.first() === this.previousLastNote
     }
+
 
     protected pattern_includes_tonic(pattern: TNoteAllAccidentalOctave[] | undefined): boolean  {
         return this.notes_contain(pattern, this.currentFunction.tonic)

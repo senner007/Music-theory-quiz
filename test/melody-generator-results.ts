@@ -466,21 +466,9 @@ const testProgression_05 = {
       },
       {
         note: [
-          "G4",
-        ],
-        duration: 1,
-      },
-      {
-        note: [
-          "A4",
-        ],
-        duration: 1,
-      },
-      {
-        note: [
           "B4",
         ],
-        duration: 2,
+        duration: 4,
       },
       {
         note: [

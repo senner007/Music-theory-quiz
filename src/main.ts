@@ -6,9 +6,7 @@ import easymidi from "easymidi";
 import { Log } from "./logger/logSync";
 import { getCliOptions } from "./cliOptions/cliOptions";
 import { quizContainer } from "./quizContainer";
-import { LogError } from "./dev-utils";
 import { QUIZ_TYPE_ARG } from "./cliOptions/cliOptionsHelpers";
-import { Chord } from "@tonaljs/tonal";
 
 process.stdin.setMaxListeners(20);
 Log.clear();
@@ -17,11 +15,6 @@ Log.write("Found MIDI outputs:");
 for (const mididevice of easymidi.getOutputs()) {
   Log.success(mididevice);
 }
-
-console.log(
-  Chord.detect(["A", "C", "E", "F"])
-)
-
 
 let cliOptions = getCliOptions();
 

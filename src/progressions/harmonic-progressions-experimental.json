@@ -1,127 +1,150 @@
 {
-    "level": 2,
-    "description": "Experimental",
-    "progressions": [
-      {
-        "chords": ["I6", "V42no5", "Idouble1no3", "ii", "V64", "vi64"],
-        "bass": ["C3", "D3", "E3", "F3", "G3", "A3"],
-        "description": "e1",
-        "isMajor": true,
-        "isDiatonic": false
-      },
-      {
-        "chords": ["I", "V43no3", "I", "ii", "V64", "vi64"],
-        "bass": ["C3", "B2", "C3", "F3", "G3", "A3"],
-        "description": "e2",
-        "isMajor": true,
-        "isDiatonic": false
-      },
-      {
-        "chords": ["I", "V43no3", "vi6", "I6", "ii6", "IV", "V42no1"],
-        "bass": ["C3", "B2", "A2", "G2", "F2", "D2", "G2"],
-        "description": "e3",
-        "isMajor": true,
-        "isDiatonic": false
-      },
-      {
-        "chords": ["I6", "I6", "V64", "Idouble1no3", "V42no5", "I6"],
-        "bass": ["C3", "G3", "F3", "E3", "D3", "C3"],
-        "description": "e4",
-        "isMajor": true,
-        "isDiatonic": false
-      },
-      {
-        "chords": ["i6", "bVII64", "bVI", "V7"],
-        "bass": ["C3", "Bb2", "Ab2", "G2"],
-        "description": "e5",
-        "isMajor": false,
-        "isDiatonic": false
-      },
-      {
-        "chords": ["I65domno1", "IV42domno1", "I65domno1", "I65domno1", "IV42domno1", "IV42domno1", "I65domno1", "V42no1/ii","ii65no5", "V42no5", "V65no5/IV", "V42no5"],
-        "bass": ["C3", "F2", "C3", "C3", "F2", "F2", "C3", "A2", "D3", "G2", "C3", "G2"],
-        "description": "e6",
-        "isMajor": true,
-        "isDiatonic": false,
-        "scale" : "mixolydian",
-        "tags" : ["12BarBlues"],
-        "voiceLeading": ["NoVoiceLeading"]
-      },
-      {
-        "chords": ["I43domno1", "IV42domno5", "I43domno1", "I43domno1", "IV42domno5", "IV42domno5", "I43domno1", "V42no1/ii","ii65no5", "V7no5", "I43domno1", "V42no1"],
-        "bass": ["C3", "F2", "C3", "C3", "F2", "F2", "C3", "A2", "D3", "G2", "C3", "G2"],
-        "description": "e7",
-        "isMajor": true,
-        "isDiatonic": false,
-        "scale" : "mixolydian",
-        "tags" : ["12BarBlues"],
-        "voiceLeading": ["NoVoiceLeading"]
-      },
-      {
-        "chords": ["I6", "V42no5", "I6", "I6" ],
-        "bass": ["C3", "G2", "C3", "C3"],
-        "description": "e8",
-        "isMajor": true, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["IV", "I6", "Vsus4", "vi64" ],
-        "bass": ["F3", "C3", "G2", "A2"],
-        "description": "pop-1",
-        "isMajor": true, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["IV6", "I-a", "V", "vi" ],
-        "bass": ["F3", "C3", "G2", "A2"],
-        "description": "pop-2",
-        "isMajor": true, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["I6", "iii", "vi64", "IV" ],
-        "bass": ["C3", "E3", "A2", "F2"],
-        "description": "pop-3",
-        "isMajor": true, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["I64", "iii6", "vi", "IV6" ],
-        "bass": ["C3", "E3", "A2", "F2"],
-        "description": "pop-4",
-        "isMajor": true, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["i64", "bIII6", "bVII", "IV6" ],
-        "bass": ["C3", "Eb3", "Bb2", "F2"],
-        "description": "pop-5",
-        "isMajor": false, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["i-a", "bIII64", "bVII6-a", "IV64-a" ],
-        "bass": ["C3", "Eb3", "Bb2", "F2"],
-        "description": "pop-6",
-        "isMajor": false, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["IV", "vi64", "I6", "V64" ],
-        "bass": ["F3", "A3", "C3", "G3"],
-        "description": "pop-7",
-        "isMajor": true, 
-        "isDiatonic": true
-      },
-      {
-        "chords": ["IV6", "vi", "I64", "V" ],
-        "bass": ["F3", "A3", "C3", "G3"],
-        "description": "pop-8",
-        "isMajor": true, 
-        "isDiatonic": true
-      }
-    ]
-  }
-  
-
-  
+  "level": 2,
+  "description": "Experimental",
+  "progressions": [
+    {
+      "chords": ["I6", "V42no5", "Idouble1no3", "ii", "V64", "vi64"],
+      "bass": ["C3", "D3", "E3", "F3", "G3", "A3"],
+      "description": "e1",
+      "isMajor": true,
+      "isDiatonic": false
+    },
+    {
+      "chords": ["I", "V43no3", "I", "ii", "V64", "vi64"],
+      "bass": ["C3", "B2", "C3", "F3", "G3", "A3"],
+      "description": "e2",
+      "isMajor": true,
+      "isDiatonic": false
+    },
+    {
+      "chords": ["I", "V43no3", "vi6", "I6", "ii6", "IV", "V42no1"],
+      "bass": ["C3", "B2", "A2", "G2", "F2", "D2", "G2"],
+      "description": "e3",
+      "isMajor": true,
+      "isDiatonic": false
+    },
+    {
+      "chords": ["I6", "I6", "V64", "Idouble1no3", "V42no5", "I6"],
+      "bass": ["C3", "G3", "F3", "E3", "D3", "C3"],
+      "description": "e4",
+      "isMajor": true,
+      "isDiatonic": false
+    },
+    {
+      "chords": ["i6", "bVII64", "bVI", "V7"],
+      "bass": ["C3", "Bb2", "Ab2", "G2"],
+      "description": "e5",
+      "isMajor": false,
+      "isDiatonic": false
+    },
+    {
+      "chords": [
+        "I65domno1",
+        "IV42domno1",
+        "I65domno1",
+        "I65domno1",
+        "IV42domno1",
+        "IV42domno1",
+        "I65domno1",
+        "V42no1/ii",
+        "ii65no5",
+        "V42no5",
+        "V65no5/IV",
+        "V42no5"
+      ],
+      "bass": ["C3", "F2", "C3", "C3", "F2", "F2", "C3", "A2", "D3", "G2", "C3", "G2"],
+      "description": "e6",
+      "isMajor": true,
+      "isDiatonic": false,
+      "scale": "mixolydian",
+      "tags": ["12BarBlues"],
+      "voiceLeading": ["NoVoiceLeading"]
+    },
+    {
+      "chords": [
+        "I43domno1",
+        "IV42domno5",
+        "I43domno1",
+        "I43domno1",
+        "IV42domno5",
+        "IV42domno5",
+        "I43domno1",
+        "V42no1/ii",
+        "ii65no5",
+        "V7no5",
+        "I43domno1",
+        "V42no1"
+      ],
+      "bass": ["C3", "F2", "C3", "C3", "F2", "F2", "C3", "A2", "D3", "G2", "C3", "G2"],
+      "description": "e7",
+      "isMajor": true,
+      "isDiatonic": false,
+      "scale": "mixolydian",
+      "tags": ["12BarBlues"],
+      "voiceLeading": ["NoVoiceLeading"]
+    },
+    {
+      "chords": ["I6", "V42no5", "I6", "I6"],
+      "bass": ["C3", "G2", "C3", "C3"],
+      "description": "e8",
+      "isMajor": true,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["IV", "I6", "Vsus4", "vi64"],
+      "bass": ["F3", "C3", "G2", "A2"],
+      "description": "pop-1",
+      "isMajor": true,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["IV6", "I-a", "V", "vi"],
+      "bass": ["F3", "C3", "G2", "A2"],
+      "description": "pop-2",
+      "isMajor": true,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["I6", "iii", "vi64", "IV"],
+      "bass": ["C3", "E3", "A2", "F2"],
+      "description": "pop-3",
+      "isMajor": true,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["I64", "iii6", "vi", "IV6"],
+      "bass": ["C3", "E3", "A2", "F2"],
+      "description": "pop-4",
+      "isMajor": true,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["i64", "bIII6", "bVII", "IV6"],
+      "bass": ["C3", "Eb3", "Bb2", "F2"],
+      "description": "pop-5",
+      "isMajor": false,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["i-a", "bIII64", "bVII6-a", "IV64-a"],
+      "bass": ["C3", "Eb3", "Bb2", "F2"],
+      "description": "pop-6",
+      "isMajor": false,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["IV", "vi64", "I6", "V64"],
+      "bass": ["F3", "A3", "C3", "G3"],
+      "description": "pop-7",
+      "isMajor": true,
+      "isDiatonic": true
+    },
+    {
+      "chords": ["IV6", "vi", "I64", "V"],
+      "bass": ["F3", "A3", "C3", "G3"],
+      "description": "pop-8",
+      "isMajor": true,
+      "isDiatonic": true
+    }
+  ]
+}

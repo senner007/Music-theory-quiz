@@ -55,6 +55,7 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
   public chordFunction: ChordFunction;
   public conditions;
   public bassNote;
+  public previousBassNote;
   private previousGenerator;
   public keyInfo;
   private nextChordFunction: ChordFunction | undefined;
@@ -74,6 +75,7 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
 
     this.keyInfo = IMelodyOptions.keyInfo;
     this.bassNote = IMelodyOptions.bass;
+    this.previousBassNote = IMelodyOptions.previousBass;
     this.nextChordFunction = IMelodyOptions.nextChordFunction
       ? new ChordFunction(IMelodyOptions.nextChordFunction, this.keyInfo.tonic as TNoteAllAccidental)
       : undefined;
@@ -83,7 +85,9 @@ export abstract class MelodyGeneratorBase implements IMelodyGenerator {
       this.previousGenerator?.chordFunction,
       this.previousMelody,
       this.keyInfo,
-      this.nextChordFunction
+      this.nextChordFunction,
+      this.previousBassNote,
+      this.bassNote,
     );
 
     this.nextChord = IMelodyOptions.nextChord;

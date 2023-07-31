@@ -50,7 +50,7 @@ export const MelodyPattern_001: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "Alto-PT-Soprano (M3/m3)",
                     conditions: [
-                        () => interval_integer_absolute(altoNote, sopranoNote) === 3,
+                        () => interval_integer_absolute(altoNote, sopranoNote) === 3
                     ],
                     isCadence : false,
                     isFallback : false,
