@@ -13,6 +13,7 @@ import {
   MelodyPattern_001,
   MelodyPattern_002,
   MelodyPattern_003,
+  MelodyPattern_004,
   MelodyTopSingulate,
 } from "../melodyGenerator/melodyPatterns";
 import { progression_to_chords, romanNueralDict } from "../harmony/romanNumerals";
@@ -106,7 +107,8 @@ const melodicPatterns: IMelodyGeneratorBase[] = [
   MelodyChordal,
   MelodyPattern_001,
   MelodyPattern_002,
-  MelodyPattern_003
+  MelodyPattern_003,
+  MelodyPattern_004
 ];
 
 export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {

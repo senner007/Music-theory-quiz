@@ -177,6 +177,7 @@ const solfegePattern_010 = {
         ["Ti", "La"],
         ["La", "So"],
         ["So", "Fa"],
+        ["So", "Fi"],
         ["Fa", "Mi"],
         ["Mi", "Re"],
         ["Re", "Do"],
@@ -252,7 +253,7 @@ const solfegePattern_017 = {
 } as const
 
 const solfegePattern_018 = {
-    description: "(Alto-(PT-above))-((PT-below)-Soprano)",
+    description: "Alto-(PT-above)-(PT-below)-Soprano-Major",
     indexes: [
         { index: EChordNote.Alto, step: EStep.None },
         { index: EChordNote.Alto, step: EStep.Above },
@@ -260,17 +261,18 @@ const solfegePattern_018 = {
         { index: EChordNote.Soprano, step: EStep.None }
     ],
     patterns: [
-        ["Fa", "So", "La", "Ti"],
-        ["Re", "Mi", "Fa", "So"],
-        ["La", "Ti", "Do", "Re"],
         ["Do", "Re", "Mi", "Fa"],
-        ["Mi", "Fa", "So", "La"]
+        ["Re", "Mi", "Fa", "So"],
+        ["Mi", "Fa", "So", "La"],
+        ["Fa", "So", "La", "Ti"],
+        ["La", "Ti", "Do", "Re"],
+        ["So", "La", "Ti", "Do"],
     ]
     
 } as const
 
 const solfegePattern_019 = {
-    description: "(Soprano-(PT-below))-((PT-above)-Alto)",
+    description: "Soprano-(PT-below)-(PT-above)-Alto-Major",
     indexes: [
         { index: EChordNote.Soprano, step: EStep.None },
         { index: EChordNote.Soprano, step: EStep.Below },
@@ -471,8 +473,45 @@ const solfegePattern_031 = {
     
 } as const
 
+const solfegePattern_032 = { 
+    description: "Alto-PT-Tenor (M3/m3)",
+    indexes: [
+        { index: EChordNote.Soprano, step: EStep.None },
+        { index: EChordNote.Soprano, step: EStep.Below },
+        { index: EChordNote.Alto, step: EStep.None }],
+    patterns: reverseSyllables(solfegePattern_001.patterns)
+} as const
 
+const solfegePattern_033 = {
+    description: "Alto-(PT-above)-(PT-below)-Soprano-Minor",
+    indexes: [
+        { index: EChordNote.Alto, step: EStep.None },
+        { index: EChordNote.Alto, step: EStep.Above },
+        { index: EChordNote.Soprano, step: EStep.Below },
+        { index: EChordNote.Soprano, step: EStep.None }
+    ],
+    patterns: [
+        ["Do", "Re", "Me", "Fa"],
+        ["Re", "Me", "Fa", "So"],
+        ["Me", "Fa", "So", "Le"],
+        ["Fa", "So", "Le", "Te"],
+        ["Le", "Te", "Do", "Re"],
+        ["So", "Le", "Te", "Do"],
+    ]
+    
+} as const
 
+const solfegePattern_034 = {
+    description: "Soprano-(PT-below)-(PT-above)-Alto-Minor",
+    indexes: [
+        { index: EChordNote.Soprano, step: EStep.None },
+        { index: EChordNote.Soprano, step: EStep.Below },
+        { index: EChordNote.Alto, step: EStep.Above },
+        { index: EChordNote.Alto, step: EStep.None }
+    ],
+    patterns: reverseSyllables(solfegePattern_033.patterns)
+    
+} as const
 
 
 
@@ -508,7 +547,11 @@ const solfegePatterns_pretypecheck = [
     solfegePattern_029,
     solfegePattern_030,
     solfegePattern_031,
+    solfegePattern_032,
+    solfegePattern_033,
+    solfegePattern_034
 
+        
 
 ] as const
 

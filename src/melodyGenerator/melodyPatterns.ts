@@ -425,6 +425,372 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
     }
 }
 
+export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
+    
+    static id = "pattern_004";
+    static description = "pt4";
+    
+    public melody() {
+
+        const sopranoNote = this.chordNotes.Soprano
+        const altoNote = this.chordNotes.Alto;
+        const tenorNote = this.chordNotes.Tenor;
+
+        const nextSopranoNote = this.nextChord?.last();
+        const nextAltoNote = this.nextChord?.at(-2);
+        const previousMelody = this.previousMelody
+        const key = this.keyInfo.type;
+        const index = this.index;
+        const totalIndex = this.totalIndex;
+        const previousNote = previousMelody?.last()?.note.last()
+
+        const isSecond = (note1: TNoteAllAccidentalOctave, note2: TNoteAllAccidentalOctave) => 
+            interval_distance(note1, note2) === "2M" || 
+            interval_distance(note1, note2) === "-2M" || 
+            interval_distance(note1, note2) === "2m" ||
+            interval_distance(note1, note2) === "-2m";
+
+            
+        
+  
+        return this.pattern_executor(
+            [
+                {
+                    description: "Alto-PT-Soprano (M3/m3)",
+                    conditions: [
+                        () => interval_integer_absolute(altoNote, sopranoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                        
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },
+                {
+                    description: "Soprano-PT-Alto (M3/m3)",
+                    conditions: [
+                        () => interval_integer_absolute(altoNote, sopranoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },
+                {
+                    description: "Tenor-PT-Alto (M3/m3)",
+                    conditions: [
+                        () => tenorNote !== undefined,
+                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, tenorNote!)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },
+                {
+                    description: "Alto-PT-Tenor (M3/m3)",
+                    conditions: [
+                        () => tenorNote !== undefined,
+                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },
+                {
+                    description: "Alto-(PT-above)-(PT-below)-Soprano-Major",
+                    conditions: [
+                        () => key === "major",
+                        () => interval_integer_absolute(altoNote, sopranoNote) === 4,
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+
+                    ],
+                },
+                {
+                    description: "Alto-(PT-above)-(PT-below)-Soprano-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => interval_integer_absolute(altoNote, sopranoNote) === 4,
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+
+                    ],
+                },
+                {
+                    description: "Soprano-(PT-below)-(PT-above)-Alto-Major",
+                    conditions: [
+                        () => key === "major",
+                        () => interval_integer_absolute(altoNote, sopranoNote) === 4,
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+
+                    ],
+                },
+                {
+                    description: "Soprano-(PT-below)-(PT-above)-Alto-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => interval_integer_absolute(altoNote, sopranoNote) === 4,
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 1 },
+
+                    ],
+                },
+                {
+                    description: "Soprano-(PT-below)-Major",
+                    conditions: [
+                        () => key === "major",
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Soprano-(PT-above)-Major",
+                    conditions: [
+                        () => key === "major",
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Alto-(PT-below)-Major",
+                    conditions: [
+                        () => key === "major",
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Alto-(PT-above)-Major",
+                    conditions: [
+                        () => key === "major",
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Soprano-(PT-below)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Soprano-(PT-above)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },   
+                {
+                    description: "Alto-(PT-below)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Alto-(PT-above)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Soprano-(NT-below)-Soprano",
+                    conditions: [
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : true,
+                    rhythm: [
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Alto-(NT-below)-Alto",
+                    conditions: [
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : true,
+                    rhythm: [
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 2 },
+                    ],
+                },                            
+                {
+                    description: "PT-Above-Soprano",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : false,
+                    isFallback : true,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+               
+                {
+                    description: "PT-Above-Alto",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : false,
+                    isFallback : true,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+     
+                {
+                    description: "PT-Above-Tenor",
+                    conditions: [
+                        () => true
+                    ],
+                    isCadence : false,
+                    isFallback : true,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 }
+                    ],
+                },
+                {
+                    description: "CadenceSoprano",
+                    conditions: [
+                        () => true,
+                    ],
+                    isCadence : true,
+                    isFallback : false,
+
+                    rhythm: [
+                        { duration: 4 },
+                    ],
+                },
+                {
+                    description: "CadenceAlto",
+                    conditions: [
+                        () => true,
+                    ],
+                    isCadence : true,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 4 },
+                    ],
+                },
+                {
+                    description: "CadenceTenor",
+                    conditions: [
+                        () => true,
+                    ],
+                    isCadence : true,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 4 },
+                    ],
+                }
+
+            ]);
+    }
+}
+
 
 
 
