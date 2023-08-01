@@ -16,6 +16,11 @@ export class Log {
     static write(content: string) {
       console.log(content);
     }
+
+    static devLog(content: any) {
+      if (!isDev()) return;
+      Log.write(chalk.yellow(content));
+    }
   
     static success(content: string) {
       this.write(chalk.green(content));

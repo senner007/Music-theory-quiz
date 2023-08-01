@@ -16,6 +16,7 @@ import { Conditions } from "./patternConditions";
 import { note_transpose, scale_range } from "../tonal-interface";
 import { IGlobalConditionsClass, GlobalConditions } from "./globalConditions";
 import { IMelodyFragment, IMelodyGeneratorBase, IMelodicPattern, IMelodyGenerator, TMelodyPatterns } from "./melodyGeneratorBase";
+import { Log } from "../logger/logSync";
 
 
 
@@ -151,19 +152,20 @@ export function melodyGenerator(
 
         // handle case where a solution can not be found and so arriving at the same failIndex
         // here we gradually step back and add failIndex from the top until arriving at 0 where error is thrown
-        // example : if fallbackAllowed contains [5,4,1] then add 3 : [3,1] an retry from with fallback pattern at that index 
+        // example : if fallbackAllowed contains: [5,4,1] then add 3 resulting in: [3,1] and retry with fallback patterns at given indexes 
         // if fallbackAllowed contains [3,2,1] then throw error. 
         else {  
           
-          const sortAndReversed = [...fallbackAllowed].sort().reverse();
+          const sortedAndReversed = [...fallbackAllowed].sort().to_reverse();
 
-          console.log(sortAndReversed)
+          Log.devLog("Generator debugging:\n")
+          Log.devLog(sortedAndReversed)
           
-          const indexToAdd = sortAndReversed.find((n, index) => n -1 !== sortAndReversed[index +1])! -1;
+          const indexToAdd = sortedAndReversed.find((n, index) => n -1 !== sortedAndReversed[index +1])! -1;
 
           fallbackAllowedArray = [...fallbackAllowed, indexToAdd].filter(n => !(n > indexToAdd));
 
-          console.log(fallbackAllowedArray)
+          Log.devLog(fallbackAllowedArray)
 
           if (indexToAdd === 0) {
             LogError(`Failed to create melody at chord index : ${failIndex}`)
@@ -172,7 +174,7 @@ export function melodyGenerator(
         }
    
        
-      return outerRecurse(new Set([...fallbackAllowedArray]));
+      return outerRecurse(new Set(fallbackAllowedArray));
     }
   }
 

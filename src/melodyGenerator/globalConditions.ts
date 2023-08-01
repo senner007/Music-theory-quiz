@@ -38,19 +38,19 @@ export class GlobalConditions extends Conditions implements IGlobalConditions {
   public globalConditionsCheck(pattern: TNoteAllAccidentalOctave[] | undefined): boolean {
     return (
       this.hasNoParallelOctavesOrFifths(pattern) 
-      && this.resolvesDominant(pattern)
-      && this.noDirectMotionToPerfectIntervals(pattern)
+      && this.resolvesPreviousDominant(pattern)
+      && this.noDirectMotionLeapsToPerfectIntervals(pattern)
     );
   }
 
-  private resolvesDominant(pattern: TNoteAllAccidentalOctave[] | undefined): boolean {
+  private resolvesPreviousDominant(pattern: TNoteAllAccidentalOctave[] | undefined): boolean {
     if (this.is_tonic_to_previous_dominant) {
       return this.pattern_includes_dominant_resolution(pattern);
     }
     return true;
   }
 
-  private noDirectMotionToPerfectIntervals(pattern: TNoteAllAccidentalOctave[] | undefined): boolean {
+  private noDirectMotionLeapsToPerfectIntervals(pattern: TNoteAllAccidentalOctave[] | undefined): boolean {
     if (!this.previousMelody) return true;
     if (!pattern) return true;
     if (!this.previousBassNote) return true;
