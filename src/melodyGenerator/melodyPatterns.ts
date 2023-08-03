@@ -440,7 +440,7 @@ export const MelodyPattern_003: IMelodyGeneratorBase = class extends MelodyGener
 export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGeneratorBase {
     
     static id = "pattern_004";
-    static description = "pt4";
+    static description = "Stepwise";
     
     public melody() {
 
@@ -595,6 +595,69 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
 
                     ],
                 },
+                {
+                    description: "Tenor-PT-Alto-Major (M3/m3)",
+                    conditions: [
+                        () => key === "major",
+                        () => tenorNote !== undefined,
+                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, tenorNote!)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },
+                {
+                    description: "Tenor-PT-Alto-Minor (M3/m3)",
+                    conditions: [
+                        () => key === "minor",
+                        () => tenorNote !== undefined,
+                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, tenorNote!)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },
+                {
+                    description: "Alto-PT-Tenor (M3/m3)-Major",
+                    conditions: [
+                        () => tenorNote !== undefined,
+                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },
+                {
+                    description: "Alto-PT-Tenor (M3/m3)-Minor",
+                    conditions: [
+                        () => tenorNote !== undefined,
+                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 1 },
+                        { duration: 1 },
+                    ],
+                },               
+               
                 {
                     description: "Alto-(PT-below)-(PT-above)-Tenor-Major",
                     conditions: [
@@ -790,6 +853,58 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                     ],
                 },
                 {
+                    description: "Soprano-(PT-below)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Soprano-(PT-above)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },   
+                {
+                    description: "Alto-(PT-below)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Alto-(PT-above)-Minor",
+                    conditions: [
+                        () => key === "minor",
+                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
+                    ],
+                    isCadence : false,
+                    isFallback : false,
+                    rhythm: [
+                        { duration: 2 },
+                        { duration: 2 },
+                    ],
+                }, 
+                {
                     description: "(PT-above)-Tenor-Major",
                     conditions: [
                         () => key === "major",
@@ -846,120 +961,6 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                     ],
                 },
                 {
-                    description: "Soprano-(PT-below)-Minor",
-                    conditions: [
-                        () => key === "minor",
-                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 },
-                    ],
-                },
-                {
-                    description: "Soprano-(PT-above)-Minor",
-                    conditions: [
-                        () => key === "minor",
-                        () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 },
-                    ],
-                },   
-                {
-                    description: "Alto-(PT-below)-Minor",
-                    conditions: [
-                        () => key === "minor",
-                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 },
-                    ],
-                },
-                {
-                    description: "Alto-(PT-above)-Minor",
-                    conditions: [
-                        () => key === "minor",
-                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 2 },
-                    ],
-                }, 
-                {
-                    description: "Tenor-PT-Alto-Major (M3/m3)",
-                    conditions: [
-                        () => key === "major",
-                        () => tenorNote !== undefined,
-                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
-                        () => previousNote === undefined ? true : isSecond(previousNote, tenorNote!)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 1 },
-                        { duration: 1 },
-                    ],
-                },
-                {
-                    description: "Tenor-PT-Alto-Minor (M3/m3)",
-                    conditions: [
-                        () => key === "minor",
-                        () => tenorNote !== undefined,
-                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
-                        () => previousNote === undefined ? true : isSecond(previousNote, tenorNote!)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 1 },
-                        { duration: 1 },
-                    ],
-                },
-                {
-                    description: "Alto-PT-Tenor (M3/m3)-Major",
-                    conditions: [
-                        () => tenorNote !== undefined,
-                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
-                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 1 },
-                        { duration: 1 },
-                    ],
-                },
-                {
-                    description: "Alto-PT-Tenor (M3/m3)-Minor",
-                    conditions: [
-                        () => tenorNote !== undefined,
-                        () => interval_integer_absolute(tenorNote!, altoNote) === 3,
-                        () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
-                    ],
-                    isCadence : false,
-                    isFallback : false,
-                    rhythm: [
-                        { duration: 2 },
-                        { duration: 1 },
-                        { duration: 1 },
-                    ],
-                },               
-                {
                     description: "Soprano-(NT-below)-Soprano",
                     conditions: [
                         (pattern) => previousNote === undefined ? true : isSecond(previousNote, pattern?.first()!)
@@ -984,7 +985,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                         { duration: 1 },
                         { duration: 2 },
                     ],
-                },                  
+                },         
                
                 {
                     description: "CadenceSoprano",
