@@ -1,8 +1,8 @@
 {
-  "name": "ts-test",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "music-theory",
+  "version": "0.1.0",
+  "description": "Harmony based music theory and ear training",
+  "main": "main.js",
   "scripts": {
     "dev": "SET NODE_ENV=dev&&nodemon src/main.ts --no-stdin --exitcrash",
     "dev-nocheck": "SET NODE_ENV=dev&&nodemon src/main.ts --no-stdin --config nodemon-transpile-only.json --exitcrash",
@@ -11,8 +11,8 @@
     "prod": "npm run build && node dist/main.js",
     "test": "vitest --run"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Ear training", "Music theory", "Harmony", "Solfege", "tonal", "Typescript"],
+  "author": "Niels Theil Gregersen",
   "license": "ISC",
   "dependencies": {
     "@tonaljs/tonal": "^4.8.0",
