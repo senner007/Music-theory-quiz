@@ -5,6 +5,9 @@ Train your ears to recognize melodic and harmonic patterns with ear training and
 Learn to audiate musical elements, structures, pitches and harmony without using an instrument. 
 Hear and produce diatonic relationships in your mind.
 
+### Current status:
+Working
+
 ### Docs:
 See the /docs folder
 
