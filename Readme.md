@@ -6,7 +6,7 @@ Learn to audiate musical elements, structures, pitches and harmony without using
 Hear and produce diatonic relationships in your mind.
 
 ### Current status:
-Working
+Working. See the releases
 
 ### Docs:
 See the /docs folder
