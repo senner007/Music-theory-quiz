@@ -127,7 +127,7 @@
     },
     {
       "chords": ["i-a", "bIII64", "bVII6-a", "IV64-a"],
-      "bass": ["C3", "Eb3", "Bb2", "F2"],
+      "bass": ["C3", "Eb3", "Bb2", "F3"],
       "description": "pop-6",
       "isMajor": false,
       "isDiatonic": true

@@ -11,25 +11,9 @@
       "tags": ["Greensleeves"]
     },
     {
-      "chords": ["i64", "i-a", "bVII", "bVII6-a", "bVI", "bVI6-a", "v", "v6"],
-      "bass": ["C3", "C3", "Bb2", "Bb2", "Ab2", "Ab2", "G2", "G2"],
-      "description": "gs-2",
-      "isMajor": false,
-      "isDiatonic": true,
-      "tags": ["Greensleeves"]
-    },
-    {
       "chords": ["i-a", "i-a", "bVII", "bVII", "bVI", "V", "i64"],
       "bass": ["C3", "C3", "Bb2", "Bb2", "Ab2", "G2", "C3"],
-      "description": "gs-3",
-      "isMajor": false,
-      "isDiatonic": true,
-      "tags": ["Greensleeves"]
-    },
-    {
-      "chords": ["i-a", "i-a", "bVII", "bVII6-a", "bVI", "V", "i64"],
-      "bass": ["C3", "C3", "Bb2", "Bb2", "Ab2", "G2", "C3"],
-      "description": "gs-4",
+      "description": "gs-2",
       "isMajor": false,
       "isDiatonic": true,
       "tags": ["Greensleeves"]
@@ -37,7 +21,7 @@
     {
       "chords": ["bIII64", "bIII64", "bVII", "bVII", "bVI", "bVI", "v", "v"],
       "bass": ["Eb3", "Eb3", "Bb2", "Bb2", "Ab2", "Ab2", "G2", "G2"],
-      "description": "gs-5",
+      "description": "gs-3",
       "isMajor": false,
       "isDiatonic": true,
       "tags": ["Greensleeves"]
@@ -45,7 +29,7 @@
     {
       "chords": ["bIII64", "bIII64", "bVII", "bVII", "bVI", "V", "i64"],
       "bass": ["Eb3", "Eb3", "Bb2", "Bb2", "Ab2", "G2", "C3"],
-      "description": "gs-6",
+      "description": "gs-4",
       "isMajor": false,
       "isDiatonic": true,
       "tags": ["Greensleeves"]

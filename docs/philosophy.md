@@ -1,3 +1,8 @@
 ### Philosophy
 This is an attempt to create a more meaningful approach to ear training and to try to bridge the gap between theory and aural perception. Traditional ear training often focuses on abstract and disconnected concepts that have limited impact on the development of relevant musicianship skills.
 This initiative is not intended to replace the work done with musical instruments; rather, it aims to inspire musicians to integrate theoretical concepts into their instrument practice. Hopefully it will serve as a reminder that music theory and practice are intricately intertwined, and both should be given equal importance.
+
+### Ear training
+This app teaches tonal relationships, also called functional harmony. Music is a stream of notes that relate back to previous notes forming constantly evolving connections with the past which can then be percieved as a meaningful and coherent structure. Knowing this, it makes sense to view and practice musical elements as part of a broader context.
+And so, in music, intervals and chords never exist in isolation and their sound and character are influenced by their surroundings. As an example, a minor chord may sound different when simultanious notes are placed underneath or above it, likewise, its relation to the tonic or whether it is part of an evolving phrase or a cadence also determines how we perceive the sound of it.
+We understand this when we play music, but tend to forget it when we practice. Therefore, practice must be made relevant and personal, while assessing its effectiveness along the way.

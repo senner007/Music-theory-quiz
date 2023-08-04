@@ -22,13 +22,6 @@
         "description": "c40-3-p5",
         "isMajor": true,
         "isDiatonic": true
-      },
-      {
-        "chords": ["i6", "V64", "i6", "i", "V6", "V64", "i6"],
-        "bass": ["C3", "G2", "C3", "C3", "G3", "G3", "C3"],
-        "description": "c40-4-p16",
-        "isMajor": false,
-        "isDiatonic": true
       }
                                     
     ]
