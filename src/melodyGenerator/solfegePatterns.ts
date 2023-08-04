@@ -587,7 +587,7 @@ const solfegePattern_040 = {
     indexes: [
         { index: EChordNote.Alto, step: EStep.Below },
         { index: EChordNote.Alto, step: EStep.None }],
-    patterns: solfegePattern_010.patterns
+    patterns: reverseSyllables(solfegePattern_010.patterns)
 } as const
 
 const solfegePattern_041 = {
@@ -595,7 +595,7 @@ const solfegePattern_041 = {
     indexes: [
         { index: EChordNote.Alto, step: EStep.Above },
         { index: EChordNote.Alto, step: EStep.None }],
-    patterns: reverseSyllables(solfegePattern_010.patterns)
+    patterns: solfegePattern_010.patterns
 } as const
 
 const solfegePattern_042 = {
@@ -603,7 +603,7 @@ const solfegePattern_042 = {
     indexes: [
         { index: EChordNote.Alto, step: EStep.Below },
         { index: EChordNote.Alto, step: EStep.None }],
-    patterns: solfegePattern_014.patterns
+    patterns: reverseSyllables(solfegePattern_014.patterns)
 } as const
 
 const solfegePattern_043 = {
@@ -611,9 +611,7 @@ const solfegePattern_043 = {
     indexes: [
         { index: EChordNote.Alto, step: EStep.Above },
         { index: EChordNote.Alto, step: EStep.None }],
-    patterns: reverseSyllables(solfegePattern_014.patterns).filter(s => {
-        return s.toString() !== 'So,Le'
-    })
+    patterns: solfegePattern_014.patterns
 } as const
 
 const solfegePattern_044 = {
@@ -621,7 +619,7 @@ const solfegePattern_044 = {
     indexes: [
         { index: EChordNote.Soprano, step: EStep.Below },
         { index: EChordNote.Soprano, step: EStep.None }],
-    patterns: solfegePattern_010.patterns
+    patterns: reverseSyllables(solfegePattern_010.patterns)
 } as const
 
 const solfegePattern_045 = {
@@ -629,7 +627,7 @@ const solfegePattern_045 = {
     indexes: [
         { index: EChordNote.Soprano, step: EStep.Above },
         { index: EChordNote.Soprano, step: EStep.None }],
-    patterns: reverseSyllables(solfegePattern_010.patterns)
+    patterns: solfegePattern_010.patterns
 } as const
 
 const solfegePattern_046 = {
@@ -637,7 +635,7 @@ const solfegePattern_046 = {
     indexes: [
         { index: EChordNote.Soprano, step: EStep.Below },
         { index: EChordNote.Soprano, step: EStep.None }],
-    patterns: solfegePattern_014.patterns
+    patterns: reverseSyllables(solfegePattern_014.patterns)
 } as const
 
 const solfegePattern_047 = {
@@ -645,9 +643,7 @@ const solfegePattern_047 = {
     indexes: [
         { index: EChordNote.Soprano, step: EStep.Above },
         { index: EChordNote.Soprano, step: EStep.None }],
-    patterns: reverseSyllables(solfegePattern_014.patterns).filter(s => {
-        return s.toString() !== 'So,Le'
-    })
+    patterns: solfegePattern_014.patterns
 } as const
 
 const solfegePattern_048 = {
@@ -655,7 +651,7 @@ const solfegePattern_048 = {
     indexes: [
         { index: EChordNote.Tenor, step: EStep.Below },
         { index: EChordNote.Tenor, step: EStep.None }],
-    patterns: solfegePattern_010.patterns
+    patterns: reverseSyllables(solfegePattern_010.patterns)
 } as const
 
 const solfegePattern_049 = {
@@ -663,7 +659,7 @@ const solfegePattern_049 = {
     indexes: [
         { index: EChordNote.Tenor, step: EStep.Above },
         { index: EChordNote.Tenor, step: EStep.None }],
-    patterns: reverseSyllables(solfegePattern_010.patterns)
+    patterns: solfegePattern_010.patterns
 } as const
 
 const solfegePattern_050 = {
@@ -671,7 +667,7 @@ const solfegePattern_050 = {
     indexes: [
         { index: EChordNote.Tenor, step: EStep.Below },
         { index: EChordNote.Tenor, step: EStep.None }],
-    patterns: solfegePattern_014.patterns
+    patterns: reverseSyllables(solfegePattern_014.patterns)
 } as const
 
 const solfegePattern_051 = {
@@ -679,9 +675,7 @@ const solfegePattern_051 = {
     indexes: [
         { index: EChordNote.Tenor, step: EStep.Above },
         { index: EChordNote.Tenor, step: EStep.None }],
-    patterns: reverseSyllables(solfegePattern_014.patterns).filter(s => {
-        return s.toString() !== 'So,Le'
-    })
+    patterns: solfegePattern_014.patterns
 } as const
 
 const solfegePattern_052 = {

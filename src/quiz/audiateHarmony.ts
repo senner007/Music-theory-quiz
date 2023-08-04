@@ -108,7 +108,7 @@ const melodicPatterns: IMelodyGeneratorBase[] = [
   MelodyPattern_001,
   MelodyPattern_002,
   MelodyPattern_003,
-  MelodyPattern_004
+  MelodyPattern_004,
 ];
 
 export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {

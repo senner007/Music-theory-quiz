@@ -52,11 +52,11 @@ export function melodyGenerator(
     }
 
     getMemoized(index: number, prevMelody: IMelodyFragment[] | undefined) {
-      const lookup = this.createLookup(index, prevMelody);
-      if (this.memoization[lookup]) {
-        return this.memoization[lookup];
+      const lookup = this.createLookup(index, prevMelody)
+      if (lookup in this.memoization) {
+        return { isMemoized : true , melodies : this.memoization[lookup] } as const
       }
-      return false;
+      return { isMemoized : false } as const
     }
 
     memoize(index: number, prevMelody: IMelodyFragment[] | undefined, melody: TMelodyPatterns) {
@@ -100,12 +100,12 @@ export function melodyGenerator(
       };
 
       const generator = new melodyPattern(args);
-      let melodies;
+      let melodies: TMelodyPatterns
 
       const memoizedMelodies = memoize.getMemoized(index, previousMelody);
 
-      if (memoizedMelodies) {
-        melodies = memoizedMelodies;
+      if (memoizedMelodies.isMemoized) {
+        melodies = memoizedMelodies.melodies;
       } else {
         melodies = generator.melody();
         memoize.memoize(index, previousMelody, melodies);
@@ -140,8 +140,6 @@ export function melodyGenerator(
     if (Array.isArray(melody)) {
       return melody.map((o) => o.first());
     } else {
-
-
 
         let fallbackAllowedArray: number[] = []
 
