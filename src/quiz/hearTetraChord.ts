@@ -7,7 +7,7 @@ import { allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interfa
 
 const options = [{ name : "Scale types", cliShort : "s", options :  () => [
   "major",
-  "aeolian",
+  "minor",
   "phrygian",
   "lydian",
   "altered",

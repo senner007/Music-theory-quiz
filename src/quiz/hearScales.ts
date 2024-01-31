@@ -5,7 +5,7 @@ import { INotePlay } from "../midiplay";
 import { add_octave_above, allScaleNamesSorted, create_scale, scale_notes } from "../tonal-interface";
 
 const options = [{ name : "Scale options", cliShort : "s", options : () => [
-  "aeolian",
+  "minor",
   "altered",
   "augmented",
   "augmented heptatonic",

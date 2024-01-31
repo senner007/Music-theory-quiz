@@ -11,7 +11,7 @@ import { allScaleNamesSorted, create_scale, scale_note_at_index, note_variants }
 
 export const nameScaleDegreeOptions = [{ name : "Scale types", cliShort : "s", options: () => [
   "major",
-  "aeolian",
+  "minor",
   "dorian",
   "phrygian",
   "lydian",

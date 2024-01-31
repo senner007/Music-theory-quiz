@@ -8,7 +8,7 @@ import { allScaleNamesSorted, create_scale, scale_notes, note_variants } from ".
 
 const options = [{ name : "Scale types", cliShort : "s", options: () => [
   "major",
-  "aeolian",
+  "minor",
   "dorian",
   "phrygian",
   "lydian",

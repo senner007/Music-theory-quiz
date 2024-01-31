@@ -12,7 +12,7 @@ import { create_scale, scale_notes, interval_distance, interval_to_absolute, add
 
 const scales = [
   "major",
-  "aeolian",
+  "minor",
   "major pentatonic",
   "dorian",
   // "phrygian",

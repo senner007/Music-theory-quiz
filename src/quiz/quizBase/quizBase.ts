@@ -38,7 +38,7 @@ export abstract class QuizBase<T> {
   private error_check_options(options: Readonly<T>): void | never {
     const optionsAreValid = this.verify_options(options);
     const quizConstructor: IQuiz<any> = this.constructor as IQuiz<any>;
-    if (!optionsAreValid) LogError("options invalid in class: " + "'" + quizConstructor.meta.name + "'");
+    if (!optionsAreValid) LogError("options invalid in class: " + "'" + quizConstructor.name + "'");
   }
 
   protected abstract verify_options(options: Readonly<T>): boolean;

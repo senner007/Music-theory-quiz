@@ -3,6 +3,7 @@ import { NameScaleDegree, nameScaleDegreeOptions } from "../src/quiz/nameScaleDe
 import chalk from "chalk";
 import { math_floor } from "../src/random_func";
 import { TOptionsReturnType } from "../src/quiz/quiztypes/quiz-types";
+import { allScaleNamesSorted } from "../src/tonal-interface";
 
 describe("Test NameScaleDegree quiz", () => {
 
@@ -12,7 +13,7 @@ describe("Test NameScaleDegree quiz", () => {
 
   const quizHeadOutput = [
     `The ${chalk.underline("1st degree")} in Cb major`,
-    `The ${chalk.underline("2nd degree")} in D aeolian`,
+    `The ${chalk.underline("2nd degree")} in D minor`,
     `The ${chalk.underline("3rd degree")} in E# dorian`,
   ];
 
@@ -20,10 +21,11 @@ describe("Test NameScaleDegree quiz", () => {
 
     (<Mock>math_floor).mockReturnValue(mathFloorReturnValue);
 
+    const s = allScaleNamesSorted
+
     const options = nameScaleDegreeOptions.map(o =>  {
       return {name : o.name, options : o.options() }
     }) as TOptionsReturnType<typeof nameScaleDegreeOptions>
-
 
     const quiz = new NameScaleDegree(options);
 
