@@ -22,7 +22,6 @@
   "author": "Niels Theil Gregersen",
   "license": "ISC",
   "dependencies": {
-    "@inquirer/core": "^6.0.0",
     "@tonaljs/tonal": "^4.8.0",
     "@types/readline-sync": "^1.4.4",
     "ascii-table": "^0.0.9",
