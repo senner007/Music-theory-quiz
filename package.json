@@ -11,10 +11,18 @@
     "prod": "npm run build && node dist/main.js",
     "test": "vitest --run"
   },
-  "keywords": ["Ear training", "Music theory", "Harmony", "Solfege", "tonal", "Typescript"],
+  "keywords": [
+    "Ear training",
+    "Music theory",
+    "Harmony",
+    "Solfege",
+    "tonal",
+    "Typescript"
+  ],
   "author": "Niels Theil Gregersen",
   "license": "ISC",
   "dependencies": {
+    "@inquirer/core": "^6.0.0",
     "@tonaljs/tonal": "^4.8.0",
     "@types/readline-sync": "^1.4.4",
     "ascii-table": "^0.0.9",
@@ -32,8 +40,11 @@
     "@type-challenges/utils": "^0.1.1",
     "@types/inquirer": "^9.0.3",
     "@types/node": "^18.11.9",
+    "ts-loader": "^9.5.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4"
   },
   "overrides": {
     "vitest": {

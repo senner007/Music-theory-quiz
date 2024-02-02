@@ -1,5 +1,5 @@
 
-import inquirer from "inquirer";
+
 import { INotePlay, play_midi } from "../../midiplay";
 import { IListener, QuizBase } from "./quizBase";
 import { bottomBar } from "../../logger/logAsync";
@@ -93,7 +93,7 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
     });
   }
 
-  private tempo_listener(): IListener {
+  private tempo_listener(bottomBar : any): IListener {
     const listener = (_: any, key: any) => {
       const tempo = (tempo: number) => {
         this.set_tempo(this.get_tempo().tempo + tempo)
@@ -131,8 +131,9 @@ export abstract class AudioQuizBase<T> extends QuizBase<T> {
   protected abstract initTempo: number
 
   async execute(): Promise<string | never> {
+    const bottomBarInstance = await bottomBar
     this.listenersArray.push(...this.create_listeners(this.audio()));
-    this.listenersArray.push(this.tempo_listener());
+    this.listenersArray.push(this.tempo_listener(bottomBarInstance));
     this.attach_listeners(this.listenersArray);
     this.audio().forEach((audioPart) => {
       if (audioPart.onInit) {
