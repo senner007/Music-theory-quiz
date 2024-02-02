@@ -9,7 +9,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
-        modules: [path.resolve(__dirname, 'node_modules'), 'node_modules', "pkg-prebuilds"]
+        modules: [path.resolve(__dirname, 'node_modules'), 'node_modules']
       },
     module: {
         rules: [
