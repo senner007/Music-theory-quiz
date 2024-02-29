@@ -91,6 +91,11 @@ export function random_index<T>(arr: T[]) {
   return math_floor(Math.random() * arr.length);
 }
 
+export function random_index_range<T>(min: number , arr: T[]) {
+  return math_floor(Math.random() * (arr.length - min) + min);
+}
+
+
 export function variant_to_base(note: TNoteAllAccidental) {
   return note.substring(0, 1) as Readonly<TBaseNote>;
 }

@@ -1,22 +1,24 @@
 import {
+  random_index_range,
   random_note_single_accidental,
   variant_to_base,
 } from "../utils";
 import { IQuizInstance, IQuiz, TOptionsReturnType, IQuizOptions } from "./quiztypes/quiz-types";
 import { TextQuizBase } from "./quizBase/textBase";
-import { allScaleNamesSorted, create_scale, scale_notes, note_variants } from "../tonal-interface";
+import { allScaleNamesSorted, create_scale, scale_notes, note_variants, scale_note_at_index } from "../tonal-interface";
 
-const options = [{ name : "Scale types", cliShort : "s", options: () => [
-  "major",
-  "minor",
-  "dorian",
-  "phrygian",
-  "lydian",
-  "mixolydian",
-  "locrian",
-  "harmonic minor",
-  "melodic minor",
-]
+const options = [{
+  name: "Scale types", cliShort: "s", options: () => [
+    "major",
+    "minor",
+    "dorian",
+    "phrygian",
+    "lydian",
+    "mixolydian",
+    "locrian",
+    "harmonic minor",
+    "melodic minor",
+  ]
 }] as const;
 
 type TOptionsType = typeof options;
@@ -28,7 +30,6 @@ export const MissingScaleNote: IQuiz<TOptionsType> = class extends TextQuizBase<
   }
 
   scale;
-  scaleStringMissingNote;
   randomNote;
   randomNoteVariants;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
@@ -36,17 +37,18 @@ export const MissingScaleNote: IQuiz<TOptionsType> = class extends TextQuizBase<
     const [scaleTypeOptions] = options
 
     this.scale = create_scale(random_note_single_accidental(), scaleTypeOptions.options.random_item());
-    this.randomNote = scale_notes(this.scale).random_item();
 
-    this.scaleStringMissingNote = this.scale.notes
-      .map((n) => (n === this.randomNote ? "- MISSING -" : n))
-      .reduce((acc, cur) => acc + cur + " ", "");
+    const randomIndex = random_index_range(1, this.scale.notes);
+    this.randomNote = scale_note_at_index(this.scale, randomIndex);
 
     this.randomNoteVariants = note_variants(variant_to_base(this.randomNote));
   }
 
   get quiz_head() {
-    return [this.scale.name, this.scaleStringMissingNote];
+    const scaleStringMissingNote = this.scale.notes
+      .map((n) => (n === this.randomNote ? "- MISSING -" : n))
+      .reduce((acc, cur) => acc + cur + " ", "");
+    return [this.scale.name, scaleStringMissingNote];
   }
   get question_options() {
     return this.randomNoteVariants;

@@ -4,7 +4,8 @@ import {
   random_note_single_accidental,
   number_to_degree,
   variant_to_base,
-  random_index
+  random_index,
+  random_index_range
 } from "../utils";
 import { TextQuizBase } from "./quizBase/textBase";
 import { allScaleNamesSorted, create_scale, scale_note_at_index, note_variants } from "../tonal-interface";
@@ -39,7 +40,7 @@ export const NameScaleDegree: IQuiz<TOptionsType> = class extends TextQuizBase<T
     const [scaleTypeOptions] = options;
 
     this.scale = create_scale(random_note_single_accidental(), scaleTypeOptions.options.random_item());
-    const randomIndex = random_index(this.scale.notes);
+    const randomIndex = random_index_range(1, this.scale.notes);
     this.randomNote = scale_note_at_index(this.scale, randomIndex);
     this.randomDegree = number_to_degree(randomIndex);
     this.randomNoteVariants = note_variants(variant_to_base(this.randomNote));
