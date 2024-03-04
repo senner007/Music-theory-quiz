@@ -31,5 +31,5 @@ export function findArgsForOption(arg: string) {
     process.argv[i] = formatProcessArgs(process.argv[i]);
     argsArray.push(process.argv[i]);
   }
-  return argsArray;
+  return argsArray.length > 0 ? argsArray : undefined
 }

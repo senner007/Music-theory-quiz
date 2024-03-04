@@ -8,6 +8,7 @@ import { findArgsForOption, ARG_PREFIX, line, everyElementIn, checkArrayOrder, H
 
 function setClassTypeOption() {
   const classType = findArgsForOption(`${ARG_PREFIX}${QUIZ_TYPE_ARG}`);
+
   const allClassTypes = quizContainer.map((q) => q.name);
 
   if (classType && classType.length > 1) {
@@ -65,7 +66,7 @@ export function getCliOptions() {
 
   program
     .showHelpAfterError()
-    .helpOption(`${ARG_PREFIX}${HELP_ARG}`, "more information")
+    .helpOption(`${ARG_PREFIX}${HELP_ARG}`, "Help")
     .addHelpText("after", `\nQuiz arguments help:\n${ARG_PREFIX}${QUIZ_TYPE_ARG} [quiz type] ${ARG_PREFIX}${HELP_ARG}`)
     .addHelpText(
       "after",
