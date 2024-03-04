@@ -87,11 +87,11 @@ export function base_notes() {
   return baseNotes.slice(0); // refactor with class an private basenotes
 }
 
-export function random_index<T>(arr: T[]) {
+export function random_index(arr: any[]) {
   return math_floor(Math.random() * arr.length);
 }
 
-export function random_index_range<T>(min: number , arr: T[]) {
+export function random_index_range(min: number , arr: any[]) {
   return math_floor(Math.random() * (arr.length - min) + min);
 }
 
