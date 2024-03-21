@@ -107,6 +107,7 @@ const romanNumeralsDict = {
   "bIII+M7": [],
   "V7/bVI": ["Eb4", "G4", "Bb4", "Db5"],
   "V/vi": ["E4", "G#4", "B4"],
+  "V64/vi": ["B3", "E4", "G#4"],
   "V7/vi": ["E4", "G#4", "B4", "D5"],
   "V65/vi": ["G#4", "B4", "D5", "E5"],
   "V43no5/vi": ["D4", "E4", "G#4"],

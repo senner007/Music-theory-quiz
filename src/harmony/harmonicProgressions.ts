@@ -25,6 +25,8 @@ const level_2 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressio
 const level_3 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level3.json") as any) as TProgressionsJSON;
 const level_5 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level5.json") as any) as TProgressionsJSON;
 const level_6 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level6.json") as any) as TProgressionsJSON;
+
+const level_600 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level600.json") as any) as TProgressionsJSON;
 const level_circle_of_fifths = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths.json") as any) as TProgressionsJSON;
 const level_circle_of_fifths_extended = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths-extended.json") as any) as TProgressionsJSON;
 const level_30_common = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-common.json") as any) as TProgressionsJSON;
@@ -41,6 +43,7 @@ export const progressions = [
   level_3,
   level_5,
   level_6,
+  level_600,
   level_circle_of_fifths,
   level_circle_of_fifths_extended,
   level_30_common,

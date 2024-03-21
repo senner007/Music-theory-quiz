@@ -1,0 +1,27 @@
+{
+    "level": 600,
+    "description": "Various - unspecified",
+    "progressions": [
+      {
+        "chords": ["I6", "VI64", "ii6", "V64", "I6"],
+        "bass": ["C3", "A2", "D3", "G2", "C3"],
+        "description": "c6-1",
+        "isMajor": true,
+        "isDiatonic": false
+      },
+      {
+        "chords": ["I-a", "VI7no5", "ii43", "V7no1", "I64"],
+        "bass": ["C4", "A3", "D4", "G3", "C3"],
+        "description": "c6-2",
+        "isMajor": true,
+        "isDiatonic": false
+      },
+      {
+        "chords": ["i6", "bVII64", "bIII6", "V64", "i6"],
+        "bass": ["C3", "Bb2", "Eb3", "G2", "C3"],
+        "description": "c6-3",
+        "isMajor": false,
+        "isDiatonic": false
+      }                                    
+    ]
+  }
