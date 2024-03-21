@@ -1,24 +1,86 @@
 {
-    "level": 6,
-    "description": "V/II and V/IV in major and V/III in minor",
-    "progressions": [
-      {
-        "chords": ["I6", "VI64", "ii6", "V64", "I6"],
-        "bass": ["C3", "A2", "D3", "G2", "C3"],
-        "description": "c6-1",
-        "isMajor": true,
-        "isDiatonic": false,
-        "tags": ["SecondaryDominants"]
-      },
-      {
-        "chords": ["i6", "bVII64", "bIII6", "V64", "i6"],
-        "bass": ["C3", "Bb2", "Eb3", "G2", "C3"],
-        "description": "c6-2",
-        "isMajor": false,
-        "isDiatonic": false,
-        "tags": ["SecondaryDominants"]
-      }
-
-
-    ]
-  }
+  "level": 6,
+  "description": "V/II and V/IV in major and V/III in minor",
+  "progressions": [
+    {
+      "chords": ["I6", "VI64", "ii6", "V64", "I6"],
+      "bass": ["C3", "A2", "D3", "G2", "C3"],
+      "description": "c6-1",
+      "isMajor": true,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["i6", "bVII64", "bIII6", "V64", "i6"],
+      "bass": ["C3", "Bb2", "Eb3", "G2", "C3"],
+      "description": "c6-2",
+      "isMajor": false,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["I", "V64/vi", "vi6", "V64", "I6"],
+      "bass": ["C3", "E3", "A2", "G2", "C3"],
+      "description": "c6-3",
+      "isMajor": true,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["i6", "bVII64", "bIII6", "V", "i6"],
+      "bass": ["C3", "Bb2", "Eb3", "G3", "C3"],
+      "description": "c6-4",
+      "isMajor": false,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["I", "V64/vi", "vi6", "V64", "I6"],
+      "bass": ["C2", "E2", "A2", "G2", "C2"],
+      "description": "c6-5",
+      "isMajor": true,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["i6", "bVII64", "bIII6", "V64", "i6"],
+      "bass": ["C3", "Bb2", "Eb2", "G2", "C2"],
+      "description": "c6-7",
+      "isMajor": false,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["i6", "bVII64", "bIII6", "V", "i6"],
+      "bass": ["C3", "Bb2", "Eb3", "G2", "C3"],
+      "description": "c6-10",
+      "isMajor": false,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["I6", "VI64", "ii6", "V7no5", "I64"],
+      "bass": ["C3", "A2", "D3", "G2", "C3"],
+      "description": "c6-11",
+      "isMajor": true,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["i6", "bVII64", "bIII6", "V7no5", "i64"],
+      "bass": ["C3", "Bb2", "Eb2", "G2", "C2"],
+      "description": "c6-13",
+      "isMajor": false,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    },
+    {
+      "chords": ["I-a", "V64/vi-a", "vi6-a", "V7no5", "I64"],
+      "bass": ["C3", "E2", "A2", "G2", "C2"],
+      "description": "c6-14",
+      "isMajor": true,
+      "isDiatonic": false,
+      "tags": ["SecondaryDominants"]
+    }
+  ]
+}
