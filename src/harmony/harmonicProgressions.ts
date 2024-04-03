@@ -37,6 +37,8 @@ const partimento = JSON.parse(fs.readFileSync("src/progressions/harmonic-progres
 const baroque = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-baroque.json") as any) as TProgressionsJSON;
 
 const experimental = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-experimental.json") as any) as TProgressionsJSON;
+const tonicExpansions = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-tonic-expansions.json") as any) as TProgressionsJSON;
+
 export const progressions = [
   level_1,
   level_2,
@@ -52,5 +54,6 @@ export const progressions = [
   level_70_jazz_walkup,
   experimental,
   partimento,
-  baroque
+  baroque,
+  tonicExpansions
 ] as const;
