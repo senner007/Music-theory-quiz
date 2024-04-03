@@ -5,8 +5,10 @@
           "fileMatch": [
             "/src/progressions/harmonic-progressions.json",
             "/src/progressions/harmonic-progressions-level2.json",
-            "src/progressions/harmonic-progressions-level3.json",
+            "/src/progressions/harmonic-progressions-level3.json",
             "/src/progressions/harmonic-progressions-level5.json",
+            "/src/progressions/harmonic-progressions-level6.json",
+            "/src/progressions/harmonic-progressions-level600.json",
             "/src/progressions/harmonic-progressions-circle-of-fifths.json",
             "/src/progressions/harmonic-progressions-circle-of-fifths-extended.json",
             "/src/progressions/harmonic-progressions-common.json",
@@ -14,8 +16,16 @@
             "/src/progressions/harmonic-progressions-experimental.json",
             "/src/progressions/harmonic-progressions-jazz-walkup.json",
             "/src/progressions/harmonic-progressions-partimento.json",
+            "/src/progressions/harmonic-progressions-baroque.json",
           ],
           "url": "./src/progressions/harmonic-progressions-schema.json"
+        },
+        {
+          "fileMatch": [
+            "/src/counterpoint/fux-parnassus-species-1.json",
+            
+          ],
+          "url": "./src/counterpoint/counterpoint-schema.json"
         }
       ]   
 }

@@ -25,7 +25,6 @@ const level_2 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressio
 const level_3 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level3.json") as any) as TProgressionsJSON;
 const level_5 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level5.json") as any) as TProgressionsJSON;
 const level_6 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level6.json") as any) as TProgressionsJSON;
-
 const level_600 = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-level600.json") as any) as TProgressionsJSON;
 const level_circle_of_fifths = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths.json") as any) as TProgressionsJSON;
 const level_circle_of_fifths_extended = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-circle-of-fifths-extended.json") as any) as TProgressionsJSON;
@@ -35,8 +34,9 @@ const level_50_common_jazz = JSON.parse(fs.readFileSync("src/progressions/harmon
 const level_70_jazz_walkup = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-jazz-walkup.json") as any) as TProgressionsJSON;
 const partimento = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-partimento.json") as any) as TProgressionsJSON;
 const baroque = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-baroque.json") as any) as TProgressionsJSON;
-
 const experimental = JSON.parse(fs.readFileSync("src/progressions/harmonic-progressions-experimental.json") as any) as TProgressionsJSON;
+
+
 export const progressions = [
   level_1,
   level_2,

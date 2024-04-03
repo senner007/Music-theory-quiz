@@ -1,0 +1,81 @@
+{
+    "title": "Counterpoint",
+    "type": "object",
+    "required": [
+      "level",
+      "description",
+      "examples"
+    ],
+    "properties": {
+      "level": {
+        "type": "number",
+        "title": "Level"
+      },
+      "description": {
+        "type": "string",
+        "title": "Level"
+      },
+      "examples": {
+        "type": "array",
+        "title": "Examples",
+        "uniqueItems": true,
+        "items": {
+          "title": "Example",
+          "type": "object",
+          "required": [
+            "cantus",
+            "counterpoint",
+            "isDiatonic",
+            "isMajor"
+          ],
+          "properties": {
+            "cantus": {
+              "type": "array",
+              "description": "Notes",
+              "minItems": 2,
+              "items": {
+                "title": "Note",
+                "type": "string"
+              }
+            },
+            "counterpoint": {
+              "type": "array",
+              "description": "Notes",
+              "minItems": 2,
+              "items": {
+                "title": "Note",
+                "type": "string"
+              }
+            },
+            "description": {
+              "type": "string",
+              "description": "Counterpoint description."
+            },
+            "isDiatonic": {
+              "description": "Is the cantus firmus diatonic",
+              "type": "boolean"
+            },
+            "isMajor": {
+              "description": "Is the progression major or minor",
+              "type": "boolean"
+            },
+            "isAbove": {
+              "description": "Is the cantus firmus above",
+              "type": "boolean"
+            },
+            "tags": {
+              "type": "array",
+              "description": "Optional tags to describe description",
+              "items": {
+                "title": "tag",
+                "type": "string",
+                "enum": [
+                  "Dorian"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }

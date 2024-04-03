@@ -4,7 +4,7 @@
   "required": [
     "level",
     "description",
-    "level"
+    "progressions"
   ],
   "properties": {
     "level": {

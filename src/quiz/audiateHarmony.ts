@@ -116,7 +116,7 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
     return true;
   }
 
-  key;
+  randomKey;
   chords;
   randomProgressionInKey;
   melody;
@@ -130,7 +130,7 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
     super(options);
     const [optionsProgressions, optiosMelodicPatterns, optionsKeys, optionsProgression] = options;
 
-    this.key = optionsKeys.options.random_item();
+    this.randomKey = optionsKeys.options.random_item();
     
     const randomProgression = progressions
     .filter((p) => optionsProgressions.options.includes(p.description))
@@ -144,7 +144,7 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
     this.progressionDescription = randomProgression.description;
     this.progressionIsDiatonic = randomProgression.isDiatonic;
     this.progressionIsMajor = randomProgression.isMajor;
-    const keyType = get_key(this.key, this.progressionIsMajor ? "major" : "minor");
+    const keyType = get_key(this.randomKey, this.progressionIsMajor ? "major" : "minor");
     this.keyInfo = keyinfo(keyType);
     
     const randomProgressionInC = {
@@ -152,7 +152,7 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
       bass: randomProgression.bass,
     };
 
-    this.randomProgressionInKey = transpose_progression(randomProgressionInC, this.key);
+    this.randomProgressionInKey = transpose_progression(randomProgressionInC, this.randomKey);
 
     try {
       this.chords = progression_to_chords(this.randomProgressionInKey, this.keyInfo, randomProgression.scale);
@@ -193,7 +193,7 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
       `${
         this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
       } progression in key of ${chalk.underline(
-        this.key + " " + (this.progressionIsMajor ? "Major" : "Minor")
+        this.randomKey + " " + (this.progressionIsMajor ? "Major" : "Minor")
       )} (${description}) ${identifiers}`,
     ];
   }
@@ -215,10 +215,10 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
       {
         noteNames: [
           // abstract me out! // major or minor version
-          to_octave(this.key, "2"),
-          to_octave(this.key, "3"),
-          to_octave(note_transpose(this.key, this.progressionIsMajor ? "3M" : "3m"), "3"),
-          to_octave(note_transpose(this.key, "5P"), "3"),
+          to_octave(this.randomKey, "2"),
+          to_octave(this.randomKey, "3"),
+          to_octave(note_transpose(this.randomKey, this.progressionIsMajor ? "3M" : "3m"), "3"),
+          to_octave(note_transpose(this.randomKey, "5P"), "3"),
         ],
         duration: 2,
       } as const,
@@ -248,7 +248,7 @@ export const AudiateHarmony: IQuiz<TOptionsType> = class extends AudiateQuizBase
       name: "Audiate harmonic progressions",
       description: "Audiate the harmonic progression as solfege degrees",
       instructions: [
-        "Audiate various lines using the notes that make the harmony.",
+        "Audiate voices that make up the harmony.",
         "Audiate with or without accompaniment.",
         "Also try to include non chord tones, passing tones, suspensions, escape tones, neighbouring tones, appogiatura and anticipation",
       ],

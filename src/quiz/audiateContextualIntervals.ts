@@ -39,7 +39,7 @@ TOptionsReturnType<TOptionsType>
     return true;
   }
 
-  key: TNoteSingleAccidental;
+  randomKey: TNoteSingleAccidental;
   randomScaleType;
   interval;
   scaleThirdOctave;
@@ -48,9 +48,9 @@ TOptionsReturnType<TOptionsType>
     super(options);
     const [scaletypes, intervals] = options;
     
-    this.key = random_note_single_accidental();
+    this.randomKey = random_note_single_accidental();
     this.randomScaleType = scaletypes.options.random_item();
-    const randomScale = create_scale(this.key, this.randomScaleType);
+    const randomScale = create_scale(this.randomKey, this.randomScaleType);
 
     this.scaleThirdOctave = scale_notes(randomScale).to_octave_ascending("3")
     const randomScaleNotes = [

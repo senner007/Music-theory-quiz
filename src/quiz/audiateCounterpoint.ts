@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { progressions, TProgression } from "../harmony/harmonicProgressions";
 import { IQuiz, TOptionsReturnType } from "./quiztypes/quiz-types";
 import {
   to_octave,
@@ -7,24 +6,26 @@ import {
 } from "../utils";
 import { AudiateQuizBase } from "./quizBase/audiateQuizBase";
 import { interval_distance, note_transpose } from "../tonal-interface";
+import { TCounterpoint, counterpointExamples } from "../counterpoint";
 
 export const bassLineOptions = [
-  { name : "Bass lines", options : () => progressions.map(p => p.description) as TProgression["description"][], cliShort : "b" },
+  { name : "Counterpoint", options : () => counterpointExamples.map(p => p.description) as TCounterpoint["description"][], cliShort : "c" },
   { name : "Keys",  options: () => commonKeys, cliShort : "k" }
 ] as const
 
 type TOptionsType = typeof bassLineOptions
 
-export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {
+export const AudiateCounterpoint: IQuiz<TOptionsType> = class extends AudiateQuizBase<TOptionsReturnType<TOptionsType>> {
   verify_options(_: TOptionsReturnType<TOptionsType>): boolean {
     return true;
   }
 
   randomKey;
-  randomBassLineInKey;
-  progressionDescription
-  progressionIsDiatonic;
-  progressionIsMajor;
+  randomExampleCantusInKey;
+  randomExampleCounterpointInKey;
+  counterpointDescription
+  counterpointIsDiatonic;
+  counterpointIsMajor;
   timeSignature = 4 as const;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
     super(options);
@@ -32,23 +33,24 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
     const [bassLinesOptions, optionsKeys] = options;
 
     this.randomKey = optionsKeys.options.random_item();
-    const selectProgressions = progressions.filter(p => bassLinesOptions.options.some(description => description === p.description));
-    const randomProgression = selectProgressions.map(p => p.progressions).flat().random_item();
+    const selectProgressions = counterpointExamples.filter(p => bassLinesOptions.options.some(description => description === p.description));
+    const randomExample = selectProgressions.map(p => p.examples).flat().random_item();
 
-    this.progressionIsDiatonic = randomProgression.isDiatonic;
-    this.progressionIsMajor = randomProgression.isMajor;
-    this.progressionDescription = randomProgression.description;
+    this.counterpointIsDiatonic = randomExample.isDiatonic;
+    this.counterpointIsMajor = randomExample.isMajor;
+    this.counterpointDescription = randomExample.description;
 
     const keyDistance = interval_distance("C", this.randomKey)
-    this.randomBassLineInKey = randomProgression.bass.transpose_by(keyDistance);
+    this.randomExampleCantusInKey = randomExample.cantus.transpose_by(keyDistance);
+    this.randomExampleCounterpointInKey = randomExample.counterpoint.transpose_by(keyDistance);
   }
 
   get quiz_head() {
-    const description = this.progressionDescription;
-    const diatonic =  this.progressionIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
-    const key = chalk.underline(this.randomKey + " " + (this.progressionIsMajor ? "Major" : "Minor"))
+    const description = this.counterpointDescription;
+    const diatonic =  this.counterpointIsDiatonic ? chalk.underline("Diatonic") : chalk.underline("Non-diationic")
+    const key = chalk.underline(this.randomKey + " " + (this.counterpointIsMajor ? "Major" : "Minor"))
     return [
-      `Description: ${description}\n${diatonic} progression bass line in key of ${key}`
+      `Description: ${description}\n${diatonic} counterpoint line in key of ${key}`
     ];
   }
 
@@ -57,7 +59,7 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
   }
 
   audio() {
-    const bassLine = this.randomBassLineInKey.map(n => {
+    const bassLine = this.randomCounterpointInKey.map(n => {
       return { noteNames: [n], duration: 1 } as const;
     });
 
@@ -67,7 +69,7 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
           // abstract me out! // major or minor version
           to_octave(this.randomKey, "2"),
           to_octave(this.randomKey, "3"),
-          to_octave(note_transpose(this.randomKey, this.progressionIsMajor ? "3M" : "3m"), "3"),
+          to_octave(note_transpose(this.randomKey, this.counterpointIsMajor ? "3M" : "3m"), "3"),
           to_octave(note_transpose(this.randomKey, "5P"), "3"),
         ],
         duration: 2,
@@ -81,7 +83,7 @@ export const AudiateBassLines: IQuiz<TOptionsType> = class extends AudiateQuizBa
   }
 
   get table_header() {
-    return this.randomBassLineInKey.map((_, index) => {
+    return this.randomCounterpointInKey.map((_, index) => {
       index++;
       return { name: index.toString().padStart(2, '0'), duration: 1 } as const;
     });

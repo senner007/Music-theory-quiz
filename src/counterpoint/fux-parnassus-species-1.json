@@ -1,0 +1,16 @@
+{
+    "level": 1,
+    "description": "Species level 1",
+    "examples": [
+      {
+        "cantus": ["C4", "Eb4", "D4", "C4", "F4", "Eb4", "G4", "F4", "Eb", "D4", "C4"],
+        "counterpoint": ["G4", "G4", "F4", "G4", "A4", "Bb4", "Bb4", "A4", "C5", "B4", "C5"],
+        "description": "fig-5",
+        "isDiatonic": false,
+        "isMajor": false,
+        "isAbove": false,
+        "tags": ["Dorian"]
+      }
+    ]
+  }
+  

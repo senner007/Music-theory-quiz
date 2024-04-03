@@ -30,7 +30,7 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends Audia
     return options.first().options.every((syllable) => Object.values(syllables_in_key_of_c).includes(syllable));
   }
 
-  key
+  randomKey
   initAudio;
   timeSignature = 1 as const;
   constructor(options: Readonly<TOptionsReturnType<TOptionsType>>) {
@@ -38,14 +38,14 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends Audia
 
     const [syllableOptions, octaveOptions, nNotesOptions, optionsKeys] = options;
 
-    this.key = optionsKeys.options.random_item();
+    this.randomKey = optionsKeys.options.random_item();
 
     const syllableKeysInC = ObjectEntries(syllables_in_key_of_c).keys 
     const optionSyllableNotesInC = syllableKeysInC.filter((key) => {
       return syllableOptions.options.includes(syllables_in_key_of_c[key]);
     });
 
-    const distanceToKey = interval_distance("C", this.key)
+    const distanceToKey = interval_distance("C", this.randomKey)
     const syllableNotesTransposed = optionSyllableNotesInC.transpose_by(distanceToKey);
 
     const notes = nNotesOptions.options.random_item();
@@ -85,10 +85,10 @@ export const AudiateFunctionalDegrees: IQuiz<TOptionsType> = class extends Audia
       {
         noteNames: [
           // abstract me out!
-          to_octave(this.key, "2"),
-          to_octave(this.key, "3"),
-          to_octave(note_transpose(this.key, "3M"), "3"),
-          to_octave(note_transpose(this.key, "5P"), "3"),
+          to_octave(this.randomKey, "2"),
+          to_octave(this.randomKey, "3"),
+          to_octave(note_transpose(this.randomKey, "3M"), "3"),
+          to_octave(note_transpose(this.randomKey, "5P"), "3"),
         ],
         duration: 2,
       } as const,
