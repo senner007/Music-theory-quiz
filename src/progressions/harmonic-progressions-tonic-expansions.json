@@ -4,70 +4,70 @@
     "progressions": [
       {
         "chords": ["I64", "V", "I6"],
-        "bass": ["C4", "D3", "E4"],
+        "bass": ["C3", "D3", "E3"],
         "description": "TE-1-MI-RE-DO",
         "isMajor": true,
         "isDiatonic": true
       },
       {
         "chords": ["I64", "V7no5", "I64"],
-        "bass": ["C4", "D3", "E4"],
+        "bass": ["C3", "D3", "E3"],
         "description": "TE-2-MI-FA-MI",
         "isMajor": true,
         "isDiatonic": true
       },
       {
         "chords": ["I-a", "V7no5", "I64"],
-        "bass": ["C4", "D3", "E4"],
+        "bass": ["C3", "D3", "E3"],
         "description": "TE-3-SO-FA-MI",
         "isMajor": true,
         "isDiatonic": true
       },
       {
         "chords": ["I6", "V42no5", "I6"],
-        "bass": ["C4", "D3", "E4"],
+        "bass": ["C3", "D3", "E3"],
         "description": "TE-4-DO-TI-DO",
         "isMajor": true,
         "isDiatonic": true
       },
       {
         "chords": ["I", "V65no5", "I"],
-        "bass": ["C4", "D3", "E4"],
+        "bass": ["C3", "D3", "E3"],
         "description": "TE-5-SO-SO-SO",
         "isMajor": true,
         "isDiatonic": true
       },
       {
         "chords": ["i64", "V", "i6"],
-        "bass": ["C4", "D3", "Eb4"],
+        "bass": ["C3", "D3", "Eb3"],
         "description": "TE-6-ME-RE-DO",
         "isMajor": false,
         "isDiatonic": true
       },
       {
         "chords": ["i64", "V7no5", "i64"],
-        "bass": ["C4", "D3", "Eb4"],
+        "bass": ["C3", "D3", "Eb3"],
         "description": "TE-7-ME-FA-ME",
         "isMajor": false,
         "isDiatonic": true
       },
       {
         "chords": ["i-a", "V7no5", "i64"],
-        "bass": ["C4", "D3", "Eb4"],
+        "bass": ["C3", "D3", "Eb3"],
         "description": "TE-8-SO-FA-ME",
         "isMajor": false,
         "isDiatonic": true
       },
       {
         "chords": ["i6", "V42no5", "i6"],
-        "bass": ["C4", "D3", "Eb4"],
+        "bass": ["C3", "D3", "Eb3"],
         "description": "TE-9-DO-TI-DO",
         "isMajor": false,
         "isDiatonic": true
       },
       {
         "chords": ["i", "V65no5", "i"],
-        "bass": ["C4", "D3", "Eb4"],
+        "bass": ["C3", "D3", "Eb3"],
         "description": "TE-10-SO-SO-SO",
         "isMajor": false,
         "isDiatonic": true
