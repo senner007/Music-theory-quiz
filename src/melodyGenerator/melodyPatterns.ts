@@ -501,6 +501,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "Soprano-PT-Alto (M3/m3)-Major",
                     conditions: [
+                        () => key === "major",
                         () => interval_integer_absolute(altoNote, sopranoNote) === 3,
                         () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
                     ],
@@ -515,6 +516,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "Soprano-PT-Alto (M3/m3)-Minor",
                     conditions: [
+                        () => key === "minor",
                         () => interval_integer_absolute(altoNote, sopranoNote) === 3,
                         () => previousNote === undefined ? true : isSecond(previousNote, sopranoNote)
                     ],
@@ -629,6 +631,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "Alto-PT-Tenor (M3/m3)-Major",
                     conditions: [
+                        () => key === "major",
                         () => tenorNote !== undefined,
                         () => interval_integer_absolute(tenorNote!, altoNote) === 3,
                         () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
@@ -644,6 +647,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "Alto-PT-Tenor (M3/m3)-Minor",
                     conditions: [
+                        () => key === "minor",
                         () => tenorNote !== undefined,
                         () => interval_integer_absolute(tenorNote!, altoNote) === 3,
                         () => previousNote === undefined ? true : isSecond(previousNote, altoNote)
@@ -802,7 +806,7 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "Soprano-(NT-below)-Soprano",
                     conditions: [
-                        (pattern) => previousNote === undefined ? true : isSecond(previousNote, pattern?.first()!)
+                        (pattern) => previousNote === undefined ? true : isSecond(previousNote, pattern?.first()!) || pattern?.first()! === previousNote
                     ],
                     isCadence: false,
                     isFallback: true,
@@ -815,7 +819,21 @@ export const MelodyPattern_004: IMelodyGeneratorBase = class extends MelodyGener
                 {
                     description: "Alto-(NT-below)-Alto",
                     conditions: [
-                        (pattern) => previousNote === undefined ? true : isSecond(previousNote, pattern?.first()!)
+                        (pattern) => previousNote === undefined ? true : isSecond(previousNote, pattern?.first()!) || pattern?.first()! === previousNote 
+                    ],
+                    isCadence: false,
+                    isFallback: true,
+                    rhythm: [
+                        { duration: 1 },
+                        { duration: 1 },
+                        { duration: 2 },
+                    ],
+                },
+                {
+                    description: "Tenor-(NT-below)-Tenor",
+                    conditions: [
+                        () => tenorNote !== undefined,
+                        (pattern) => previousNote === undefined ? true : isSecond(previousNote, pattern?.first()!) || pattern?.first()! === previousNote
                     ],
                     isCadence: false,
                     isFallback: true,

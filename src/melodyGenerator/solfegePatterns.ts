@@ -166,12 +166,12 @@ const solfegePattern_010 = {
         { index: EChordNote.Soprano, step: EStep.None },
         { index: EChordNote.Soprano, step: EStep.Below }],
     patterns: [
-        ["Do", "Ti"],
-        ["Ti", "La"],
+        // ["Do", "Ti"],
+        // ["Ti", "La"],
         ["La", "So"],
         ["So", "Fa"],
         ["So", "Fi"],
-        ["Fa", "Mi"],
+        // ["Fa", "Mi"], // not the omission of the chordal seventh Fa since it should not resolve prematurely
         ["Mi", "Re"],
         ["Re", "Do"],
     ]
@@ -207,13 +207,13 @@ const solfegePattern_014 = {
         { index: EChordNote.Soprano, step: EStep.None },
         { index: EChordNote.Soprano, step: EStep.Below }],
     patterns: [
-        ["Do", "Ti"],
+        // ["Do", "Ti"],
         ["Do", "Te"],
         ["Te", "Le"],
         ["Le", "So"],
         ["So", "Fa"],
         ["So", "Fi"],
-        ["Fa", "Me"],
+        // ["Fa", "Me"], // not the omission of the chordal seventh Fa since it should not resolve prematurely
         ["Me", "Re"],
         ["Re", "Do"],
     ]
@@ -687,6 +687,15 @@ const solfegePattern_052 = {
     patterns: solfegePattern_037.patterns
 } as const
 
+const solfegePattern_053 = {
+    description: "Tenor-(NT-below)-Tenor",
+    indexes: [
+        { index: EChordNote.Tenor, step: EStep.None },
+        { index: EChordNote.Tenor, step: EStep.Below },
+        { index: EChordNote.Tenor, step: EStep.None }],
+    patterns: solfegePattern_004.patterns
+} as const
+
 
 const solfegePatterns_pretypecheck = [
     solfegePattern_001,
@@ -740,7 +749,8 @@ const solfegePatterns_pretypecheck = [
     solfegePattern_049,
     solfegePattern_050,
     solfegePattern_051,
-    solfegePattern_052
+    solfegePattern_052,
+    solfegePattern_053
 
 
 
