@@ -6,7 +6,7 @@ Learn to audiate musical elements, structures, pitches and harmony without using
 Hear and produce diatonic relationships in your mind.
 
 ### Current status:
-Working. See the releases
+Working. Executable release pending
 
 ### Docs:
 See the /docs folder
@@ -14,8 +14,8 @@ See the /docs folder
 ### State of development:
 Active
 
-### Supported platforms:
-Windows
+### Supported platforms, requirements:
+Windows, General midi device
 
 ### Install
 Install node.js, in folder run : <code>npm install</code> and <code>npm install -g ts-node</code>. Additionally, you may have to install typecript also <code>npm install -g typescript</code>
